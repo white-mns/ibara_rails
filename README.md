@@ -1,33 +1,35 @@
-# 定期更新ゲーム過去結果データ小屋　表示用Railsアプリ
-定期更新ゲーム過去結果データ小屋は各種定期更新ゲームの過去結果を解析して得られるデータを扱った情報サイトです。  
-masterブランチは各定期更新ゲームのデータ形式に対応する前の雛形の状態です。  
-実際に運用されいているコードを見る場合は各branchを閲覧ください。  
-データ小屋の解析部分については[別リポジトリ](https://github.com/white-mns/teiki_arcive_parse)を参照ください。
+# 荊街データ小屋　表示用Railsアプリ
+荊街データ小屋は各種定期更新ゲームの過去結果を解析して得られるデータを扱った情報サイトです。  
+荊街データ小屋は[騒乱イバラシティ](http://lisge.com/ib/)を解析して得られるデータを扱った情報サイトです。  
+このプログラムは荊街データ小屋で実際に使用している表示用のRailsアプリです。  
+データ小屋の解析部分については[別リポジトリ](https://github.com/white-mns/ibara_parse)を参照ください。
 
 # サイト
-雛形用ブランチのため、masterブランチのコードで動いているサイトはありません。 
+実際に動いているサイトです。 
+[荊街データ小屋](https://data.teiki.org/ibara/)
 
 # 動作環境
 以下の環境での動作を確認しています  
   
 OS:CentOS release 6.5 (Final)  
-DB:MySQL 5.5
+DB:MySQL 8.0.13  
 Ruby:2.5.0  
-Rails:5.2.1
-gcc:5.2.1
+Rails:5.2.1  
+gcc:7.3.1
 
 ## 使い方
 ・Railsの使い方を調べてなんやかんやして自分のRailsアプリが動くようにします。  
 ・このソースコードをダウンロードします。  
 
-    git clone git://github.com/white-mns/teiki_archive_rails.git
+    git clone git://github.com/white-mns/ibara_rails.git
 
 ・動かします。  
 
-    cd teiki_arcive_rails
+    cd ibara_rails
     bundle install --path vendor/bundler
 （Gemのインストール先をアプリのディレクトリ内のvendor/bundleに指定します。  
-　この指定はなくても構いません。指定しない場合システム全体で共有されるgemを利用します）
+　この指定はなくても構いません。既に`.bundle`内に該当設定が指定されています。
+　`.bundle`ディレクトリを削除した場合その設定はなくなり、システム全体で共有されるgemを利用します）
  
 ・DBを作成し、必要なテーブルの設定を行います。
  
@@ -78,7 +80,7 @@ scaffoldで必要なものは大体用意されます。
 
 	belongs_to :p_name, :foreign_key => [:e_no, :result_no, :generate_no], :primary_key => [:e_no, :result_no, :generate_no], :class_name => 'Name'
 
-あとは[解析プログラム](https://github.com/white-mns/teiki_arcive_parse)側に圧縮ファイルを用意し、解析とアップロード機能を追加してデータを入れれば新しい解析項目が公開されます。
+あとは[解析プログラム](https://github.com/white-mns/ibara_parse)側に圧縮ファイルを用意し、解析とアップロード機能を追加してデータを入れれば新しい解析項目が公開されます。
 
 ## ライセンス
 本ソフトウェアはMIT Licenceを採用しています。 ライセンスの詳細については`LICENSE`ファイルを参照してください。
