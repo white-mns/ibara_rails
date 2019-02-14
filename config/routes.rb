@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :worlds
   resources :names
   get 'top_page/privacy'
   root 'top_page#index'
