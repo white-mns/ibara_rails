@@ -3,10 +3,14 @@ module MyUtility
   def params_to_form(params,form_params, deliver_params)
       deliver_params.each do |deliver_param|
           if deliver_param[:type] == "number" then
-            reference_number_assign(params, deliver_param[:column_name], deliver_param[:params_name])
+            function = method(:reference_number_assign)
 
           elsif deliver_param[:type] == "text" then
-            reference_text_assign(params, deliver_param[:column_name], deliver_param[:params_name])
+            function = method(:reference_text_assign)
+          end
+
+          if function then
+            function.call(params, deliver_param[:column_name], deliver_param[:params_name])
           end
 
           @form_params[ deliver_param[:params_name] ] = params[ deliver_param[:params_name] ]
