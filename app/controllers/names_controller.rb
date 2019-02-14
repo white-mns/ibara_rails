@@ -13,26 +13,25 @@ class NamesController < ApplicationController
   end
 
   def param_set
+    @form_params = {}
+    @deliver_params = []
+
     @latest_result = Name.maximum('result_no')
 
     params_clean(params)
     if !params["is_form"] then
         params["result_no_form"] ||= sprintf('%d',@latest_result)
     end
-    
-    reference_text_assign(params, "name", "pc_name_form")
-    reference_number_assign(params, "result_no", "result_no_form")
-    reference_number_assign(params, "generate_no", "generate_no_form")
-    reference_number_assign(params, "e_no", "e_no_form")
-    reference_text_assign(params, "player", "player_form")
-    
-    @pc_name_form = params["pc_name_form"]
-    @result_no_form = params["result_no_form"]
-    @generate_no_form = params["generate_no_form"]
-    @e_no_form = params["e_no_form"]
-    @name_form = params["name_form"]
-    @player_form = params["player_form"]
+
+    @deliver_params.push({column_name: "name", params_name: "pc_name_form", type: "text"})
+    @deliver_params.push({column_name: "result_no", params_name: "result_no_form", type: "number"})
+    @deliver_params.push({column_name: "generate_no", params_name: "generate_no_form", type: "number"})
+    @deliver_params.push({column_name: "e_no", params_name: "e_no_form", type: "number"})
+    @deliver_params.push({column_name: "player", params_name: "player_form", type: "text"})
+
+    params_to_form(params, @form_params, @deliver_params)
   end
+
   # GET /names/1
   #def show
   #end

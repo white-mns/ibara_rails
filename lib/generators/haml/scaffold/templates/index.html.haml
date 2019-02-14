@@ -28,20 +28,20 @@
       %tr
         %td.indent
         %td= f.label :result_no_form, '更新回'
-        %td.formNum{colspan: "3"}= text_field_tag :result_no_form, @result_no_form
+        %td.formNum{colspan: "3"}= text_field_tag :result_no_form, @form_params["result_no_form"]
       %tr
         %td.indent
         %td= f.label :e_no_form, 'Eno'
-        %td.formNum= text_field_tag :e_no_form, @e_no_form, placeholder: @placeholder["Number"]
+        %td.formNum= text_field_tag :e_no_form, @form_params["e_no_form"], placeholder: @placeholder["Number"]
       %tr
         %td.indent
         %td= f.label :pc_name_form, 'キャラクター名'
-        %td.formText= text_field_tag :pc_name_form, @pc_name_form, placeholder: @placeholder["Name"]
+        %td.formText= text_field_tag :pc_name_form, @form_params["pc_name_form"], placeholder: @placeholder["Name"]
 <% attributes.reject(&:password_digest?).each do |attribute| -%>
       %tr
         %td.indent
         %td= f.label :<%= attribute.name %>_form, '<%= attribute.human_name %>'
-        %td.formNum= text_field_tag :<%= attribute.name %>_form, @<%= attribute.name %>_form, placeholder: @placeholder["Number"]
+        %td.formNum= text_field_tag :<%= attribute.name %>_form, @form_params["<%= attribute.name %>_form"], placeholder: @placeholder["Number"]
 <% end -%>
       %tr
         %td.indent
