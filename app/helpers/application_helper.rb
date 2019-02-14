@@ -81,6 +81,17 @@ module ApplicationHelper
         end
     end
 
+    def td_form(f, form_params, placeholders, form_type, colspan, text, params_name, placeholder)
+        haml_tag :td do
+            haml_concat f.label params_name.to_sym, text
+        end
+        if !form_type.nil?  then
+            haml_tag :td, class: form_type, colspan: colspan do
+                haml_concat text_field_tag params_name.to_sym, form_params[params_name], placeholder: placeholders[placeholder]
+            end
+        end
+    end
+
     def all_assembly_text(assembly)
         if !assembly then
             return

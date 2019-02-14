@@ -27,20 +27,16 @@
       %tr
       %tr
         %td.indent
-        %td= f.label :result_no_form, '更新回'
-        %td.formNum{colspan: "3"}= text_field_tag :result_no_form, @form_params["result_no_form"]
+        - td_form(f, @form_params, @placeholder, "formNum", 3, "更新回", "result_no_form", "")
       %tr
         %td.indent
-        %td= f.label :e_no_form, 'Eno'
-        %td.formNum= text_field_tag :e_no_form, @form_params["e_no_form"], placeholder: @placeholder["Number"]
+        - td_form(f, @form_params, @placeholder, "formNum", nil, "Eno", "e_no_form", "Number")
       %tr
         %td.indent
-        %td= f.label :pc_name_form, 'キャラクター名'
-        %td.formText= text_field_tag :pc_name_form, @form_params["pc_name_form"], placeholder: @placeholder["Name"]
+        - td_form(f, @form_params, @placeholder, "formText", nil, "キャラクター名", "pc_name_form", "Name")
       %tr
         %td.indent
-        %td= f.label :player_form, 'Player'
-        %td.formText= text_field_tag :player_form, @form_params["player_form"], placeholder: @placeholder["Name"]
+        - td_form(f, @form_params, @placeholder, "formText", nil, "Player", "player_form", "Name")
       %tr
         %td.indent
         %td.indent= hidden_field_tag :is_form, 1
