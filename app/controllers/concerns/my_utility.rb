@@ -2,14 +2,14 @@ module MyUtility
   # クエリパラメータをRunsuck検索用関数とフォーム表示用変数に渡す
   def params_to_form(params,form_params, deliver_params)
       deliver_params.each do |deliver_param|
-          if deliver_param["type".to_sym] == "number" then
-            reference_number_assign(params, deliver_param["column_name".to_sym], deliver_param["params_name".to_sym])
+          if deliver_param[:type] == "number" then
+            reference_number_assign(params, deliver_param[:column_name], deliver_param[:params_name])
 
-          elsif deliver_param["type".to_sym] == "text" then
-            reference_text_assign(params, deliver_param["column_name".to_sym], deliver_param["params_name".to_sym])
+          elsif deliver_param[:type] == "text" then
+            reference_text_assign(params, deliver_param[:column_name], deliver_param[:params_name])
           end
 
-          @form_params[ deliver_param["params_name".to_sym] ] = params[ deliver_param["params_name".to_sym] ]
+          @form_params[ deliver_param[:params_name] ] = params[ deliver_param[:params_name] ]
       end
   end
 
