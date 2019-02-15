@@ -231,6 +231,10 @@ input + label:hover {
     background: linear-gradient(transparent 70%, #2A9FD6 0%);
 }
 
+span.after_space::after {
+    content: "　" ;
+}
+
 @media screen and (max-width:767px) {
     h1 {
         font-size: 1.5rem;
@@ -253,5 +257,14 @@ input + label:hover {
 
     .pagination li {
         display: inline-block;
+    }
+
+    span.mobile_br::after {
+        content: "\a" ;
+        white-space: pre ;
+    }
+
+    ul{
+        padding-left: 1rem;
     }
 }
