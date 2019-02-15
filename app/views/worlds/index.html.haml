@@ -36,7 +36,9 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "World", params_name: "world_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", placeholder: "Number", 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
       %tr
         %td.indent
         %td.indent= hidden_field_tag :is_form, 1

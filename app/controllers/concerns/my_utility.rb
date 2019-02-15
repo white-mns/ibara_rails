@@ -12,7 +12,24 @@ module MyUtility
         function.call(params, column_name, params_name)
       end
 
-      @form_params[ params_name ] = params[ params_name ]
+      form_params[ params_name ] = params[ params_name ]
+  end
+
+  # チェックボックスから取得したクエリパラメータをRunsuck検索用クエリに渡す
+  def checkbox_params_set_query(params, form_params, query_name: nil, checkboxes: nil)
+    params[:q][query_name] = []
+    if !params["is_form"] then
+        checkboxes.each do |hash|
+            if hash[:first_checked] then
+                params[ hash[:params_name] ] = "on"
+            end
+        end
+    end
+
+    checkboxes.each do |hash|
+        if params[ hash[:params_name] ] == "on" then params[:q][query_name].push(hash[:value]) end
+        form_params[ hash[:params_name] ] = params[ hash[:params_name] ]
+    end
   end
 
   # 検索文字列を分割し、Ransackが参照する配列に割り当てる

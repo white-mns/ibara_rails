@@ -91,11 +91,34 @@ module ApplicationHelper
             td_text_form(f, form_params, placeholders, class_name: class_name, colspan: colspan, params_name: params_name, placeholder: placeholder)
         end
 
+        # チェックボックス選択フォームの描画
+        if !checkboxes.nil?  then
+            td_text_checkbox(f, form_params, placeholders, class_name: class_name, colspan: colspan, checkboxes: checkboxes)
+        end
     end
 
     def td_text_form(f, form_params, placeholders, class_name: nil, colspan: nil, label: nil, params_name: nil, placeholder: nil)
         haml_tag :td, class: class_name, colspan: colspan do
             haml_concat text_field_tag params_name.to_sym, form_params[params_name], placeholder: placeholders[placeholder]
+        end
+    end
+
+    def td_text_checkbox(f, form_params, placeholders, class_name: nil, colspan: nil, checkboxes: [])
+        haml_tag :td, class: class_name, colspan: colspan do
+            checkboxes.each do |hash|
+                # チェックボックスの描画
+                if !hash[:params_name].nil? then
+                    haml_tag :span, class: hash[:class_name] do
+                        haml_concat check_box_tag hash[:params_name].to_sym, form_params[hash[:params_name]], form_params[hash[:params_name]]
+                        haml_concat label_tag hash[:params_name].to_sym, hash[:label]
+                    end
+                end
+
+                # 改行指定
+                if hash[:br] then
+                    haml_tag :br do end
+                end
+            end
         end
     end
 
