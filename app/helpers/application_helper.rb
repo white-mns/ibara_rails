@@ -122,6 +122,30 @@ module ApplicationHelper
         end
     end
 
+    def tbody_toggle(form_params, params_name: nil, label: {open: "", close: ""}, act_desc: nil, base_first: false)
+        haml_tag :tbody, class: "tbody_toggle pointer"do
+            haml_tag :tr do
+                haml_tag :td, colspan: 5 do
+                    if base_first then
+                        haml_concat hidden_field_tag :base_first, form_params["base_first"]
+                    end
+
+                    haml_concat hidden_field_tag params_name.to_sym, form_params[params_name]
+
+                    act_icon(false)
+
+                    haml_concat label_tag params_name.to_sym, "　" + label[:open],  class: "act_desc"
+                    haml_concat label_tag params_name.to_sym, "　" + label[:close], class: "act_desc closed"
+                    if act_desc then
+                        haml_tag :div, class: "act_desc" do
+                           haml_concat "　" + act_desc
+                        end
+                    end
+                end
+            end
+        end
+    end
+
     def all_assembly_text(assembly)
         if !assembly then
             return
