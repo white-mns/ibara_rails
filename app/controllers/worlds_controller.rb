@@ -14,7 +14,6 @@ class WorldsController < ApplicationController
 
   def param_set
     @form_params = {}
-    @deliver_params = []
 
     @latest_result = Name.maximum('result_no')
 
@@ -23,13 +22,11 @@ class WorldsController < ApplicationController
         params["result_no_form"] ||= sprintf('%d',@latest_result)
     end
 
-    @deliver_params.push({column_name: "pc_name_name", params_name: "pc_name_form", type: "text"})
-    @deliver_params.push({column_name: "result_no", params_name: "result_no_form", type: "number"})
-    @deliver_params.push({column_name: "generate_no", params_name: "generate_no_form", type: "number"})
-    @deliver_params.push({column_name: "e_no", params_name: "e_no_form", type: "number"})
-    @deliver_params.push({column_name: "world", params_name: "world_form", type: "number"})
-    
-    params_to_form(params, @form_params, @deliver_params)
+    params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")
+    params_to_form(params, @form_params, column_name: "result_no", params_name: "result_no_form", type: "number")
+    params_to_form(params, @form_params, column_name: "generate_no", params_name: "generate_no_form", type: "number")
+    params_to_form(params, @form_params, column_name: "e_no", params_name: "e_no_form", type: "number")
+    params_to_form(params, @form_params, column_name: "world", params_name: "world_form", type: "number")
   end
   # GET /worlds/1
   #def show

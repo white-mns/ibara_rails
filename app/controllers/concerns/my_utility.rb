@@ -1,20 +1,18 @@
 module MyUtility
   # クエリパラメータをRunsuck検索用関数とフォーム表示用変数に渡す
-  def params_to_form(params,form_params, deliver_params)
-      deliver_params.each do |deliver_param|
-          if deliver_param[:type] == "number" then
-            function = method(:reference_number_assign)
+  def params_to_form(params, form_params, column_name: nil, params_name: nil, type: nil)
+      if type == "number" then
+        function = method(:reference_number_assign)
 
-          elsif deliver_param[:type] == "text" then
-            function = method(:reference_text_assign)
-          end
-
-          if function then
-            function.call(params, deliver_param[:column_name], deliver_param[:params_name])
-          end
-
-          @form_params[ deliver_param[:params_name] ] = params[ deliver_param[:params_name] ]
+      elsif type == "text" then
+        function = method(:reference_text_assign)
       end
+
+      if function then
+        function.call(params, column_name, params_name)
+      end
+
+      @form_params[ params_name ] = params[ params_name ]
   end
 
   # 検索文字列を分割し、Ransackが参照する配列に割り当てる

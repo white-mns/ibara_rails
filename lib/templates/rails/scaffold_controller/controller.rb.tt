@@ -19,7 +19,6 @@ class <%= controller_class_name %>Controller < ApplicationController
 
   def param_set
     @form_params = {}
-    @deliver_params = []
 
     @latest_result = Name.maximum('result_no')
 
@@ -28,12 +27,10 @@ class <%= controller_class_name %>Controller < ApplicationController
         params["result_no_form"] ||= sprintf('%d',@latest_result)
     end
 
-    @deliver_params.push({column_name: "pc_name_name", params_name: "pc_name_form", type: "text"})
+    params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")
 <% attributes.reject(&:password_digest?).each do |attribute| -%>
-    @deliver_params.push({column_name: "<%= attribute.name %>", params_name: "<%= attribute.name %>_form", type: "number"})
+    params_to_form(params, @form_params, column_name: "<%= attribute.name %>", params_name: "<%= attribute.name %>_form", type: "number")
 <% end -%>
-    
-    params_to_form(params, @form_params, @deliver_params)
   end
   # GET <%= route_url %>/1
   #def show

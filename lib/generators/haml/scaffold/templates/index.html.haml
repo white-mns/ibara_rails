@@ -27,17 +27,17 @@
       %tr
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, "formNum", 3, "更新回", "result_no_form", "")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, "formNum", nil, "Eno", "e_no_form", "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, "formText", nil, "キャラクター名", "pc_name_form", "Name")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
 <% attributes.reject(&:password_digest?).each do |attribute| -%>
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, "formNum", nil, "<%= attribute.human_name %>", "<%= attribute.name %>_form", "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "<%= attribute.human_name %>", params_name: "<%= attribute.name %>_form", placeholder: "Number")
 <% end -%>
       %tr
         %td.indent
