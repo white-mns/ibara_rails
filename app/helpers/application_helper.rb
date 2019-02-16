@@ -81,13 +81,15 @@ module ApplicationHelper
         end
     end
 
-    def td_form(f, form_params, placeholders, class_name: nil, colspan: nil, label: nil, params_name: nil, placeholder: nil, checkboxes: nil)
-        haml_tag :td do
-            haml_concat f.label params_name.to_sym, label
+    def td_form(f, form_params, placeholders, class_name: nil, colspan: nil, label: nil, params_name: nil, placeholder: nil, checkboxes: nil, label_td_class_name: nil)
+        haml_tag :td, class: label_td_class_name do
+            if label then
+                haml_concat f.label params_name.to_sym, label
+            end
         end
 
         # テキストフォームの描画
-        if !class_name.nil?  then
+        if !class_name.nil? && !params_name.nil?  then
             td_text_form(f, form_params, placeholders, class_name: class_name, colspan: colspan, params_name: params_name, placeholder: placeholder)
         end
 
@@ -97,7 +99,7 @@ module ApplicationHelper
         end
     end
 
-    def td_text_form(f, form_params, placeholders, class_name: nil, colspan: nil, label: nil, params_name: nil, placeholder: nil)
+    def td_text_form(f, form_params, placeholders, class_name: nil, colspan: nil, params_name: nil, placeholder: nil)
         haml_tag :td, class: class_name, colspan: colspan do
             haml_concat text_field_tag params_name.to_sym, form_params[params_name], placeholder: placeholders[placeholder]
         end
