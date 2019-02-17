@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :items
   resources :proper_names
   resources :worlds
   resources :names
