@@ -32,7 +32,7 @@ module ApplicationHelper
         if e_no <= 0 then return end
 
         file_name = sprintf("%d",e_no)
-        link_to " 結果", "https://xxx.xxx/"+file_name+".html", :target => "_blank"
+        link_to " 結果", "http://lisge.com/ib/k/now/r"+file_name+".html", :target => "_blank"
     end
     
     def character_old_link(latest_result_no, e_no, result_no, generate_no)
@@ -42,7 +42,7 @@ module ApplicationHelper
         result_no_text = sprintf("%03d", result_no)
         generate_text  = generate_no > 0 ? "_" + sprintf("%d", generate_no) : ""
         file_name = sprintf("%d", e_no)
-        link_to " 過去結果", "https://xxx.xxx/"+result_no_text+generate_text+"/"+file_name+".html", :target => "_blank"
+        link_to " 過去結果", "http://lisge.com/ib/k/now/r"+result_no_text+generate_text+"/"+file_name+".html", :target => "_blank"
     end
 
     def search_submit_button()
