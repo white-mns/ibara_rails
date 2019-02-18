@@ -23,7 +23,6 @@
           - act_icon(true)
           絞り込み検索
           - act_desc(true)
-    - #tbody_toggle(@form_params, params_name: "test", label: {open: "表示する", close: "表示しない"}, act_desc: "　項目A、項目B", base_first: false)
     %tbody
       %tr
       %tr
@@ -37,7 +36,7 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", placeholder: "Number", 
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", 
                     checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
                                  {label: "アンジニティ", params_name: "is_ansinity"}])
       %tr
@@ -64,8 +63,8 @@
     - @worlds.each do |world|
       %tr
         %td= world.result_no
-        %td= pc_name_text(world.e_no, world.pc_name)
-        %td= world.world
+        %td{style: "#{ world_border(world) }" }= pc_name_text(world.e_no, world.pc_name)
+        %td= world_name(world)
         %td= character_link(world.e_no)
         %td= character_old_link(@latest_result, world.e_no, world.result_no, world.generate_no)
 = paginate(@worlds)

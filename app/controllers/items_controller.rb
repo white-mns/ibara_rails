@@ -6,8 +6,8 @@ class ItemsController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= Item.notnil().includes(:pc_name, :kind, :effect_1, :effect_2, :effect_3).search(params[:q]).result.count()
-    @search	= Item.notnil().includes(:pc_name, :kind, :effect_1, :effect_2, :effect_3).page(params[:page]).search(params[:q])
+    @count	= Item.notnil().includes(:pc_name, :world, :kind, :effect_1, :effect_2, :effect_3).search(params[:q]).result.count()
+    @search	= Item.notnil().includes(:pc_name, :world, :kind, :effect_1, :effect_2, :effect_3).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @items	= @search.result.per(50)
   end
@@ -45,6 +45,12 @@ class ItemsController < ApplicationController
     params_to_form(params, @form_params, column_name: "effect_1_name", params_name: "effect_1_form", type: "text")
     params_to_form(params, @form_params, column_name: "effect_2_name", params_name: "effect_2_form", type: "text")
     params_to_form(params, @form_params, column_name: "effect_3_name", params_name: "effect_3_form", type: "text")
+
+    checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",
+                             checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},
+                                          {params_name: "is_ansinity" , value: 1, first_checked: true}])
+
+    toggle_params_to_variable(params, @form_params, params_name: "show_world")
   end
   # GET /items/1
   #def show

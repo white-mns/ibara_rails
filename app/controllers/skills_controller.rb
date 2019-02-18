@@ -6,8 +6,8 @@ class SkillsController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= Skill.notnil().includes(:pc_name, [skill: :timing]).search(params[:q]).result.count()
-    @search	= Skill.notnil().includes(:pc_name, [skill: :timing]).page(params[:page]).search(params[:q])
+    @count	= Skill.notnil().includes(:pc_name, :world, [skill: :timing]).search(params[:q]).result.count()
+    @search	= Skill.notnil().includes(:pc_name, :world, [skill: :timing]).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @skills	= @search.result.per(50)
   end
@@ -30,6 +30,10 @@ class SkillsController < ApplicationController
     params_to_form(params, @form_params, column_name: "skill_id", params_name: "skill_id_form", type: "number")
     params_to_form(params, @form_params, column_name: "lv", params_name: "lv_form", type: "number")
 
+    checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",
+                             checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},
+                                          {params_name: "is_ansinity" , value: 1, first_checked: true}])
+
     params_to_form(params, @form_params, column_name: "skill_name", params_name: "skill_form", type: "number")
     params_to_form(params, @form_params, column_name: "skill_ep", params_name: "ep_form", type: "number")
     params_to_form(params, @form_params, column_name: "skill_sp", params_name: "sp_form", type: "number")
@@ -50,6 +54,7 @@ class SkillsController < ApplicationController
                                           {params_name: "element_light",  value: 5},
                                           {params_name: "element_dark",   value: 6}])
 
+    toggle_params_to_variable(params, @form_params, params_name: "show_world")
     toggle_params_to_variable(params, @form_params, params_name: "show_skill")
     toggle_params_to_variable(params, @form_params, params_name: "show_skill_name")
     toggle_params_to_variable(params, @form_params, params_name: "show_skill_text")

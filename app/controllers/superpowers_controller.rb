@@ -6,8 +6,8 @@ class SuperpowersController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= Superpower.notnil().includes(:pc_name, :superpower).search(params[:q]).result.count()
-    @search	= Superpower.notnil().includes(:pc_name, :superpower).page(params[:page]).search(params[:q])
+    @count	= Superpower.notnil().includes(:pc_name, :world, :superpower).search(params[:q]).result.count()
+    @search	= Superpower.notnil().includes(:pc_name, :world, :superpower).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @superpowers	= @search.result.per(50)
   end
@@ -27,6 +27,12 @@ class SuperpowersController < ApplicationController
     params_to_form(params, @form_params, column_name: "lv", params_name: "lv_form", type: "number")
 
     params_to_form(params, @form_params, column_name: "superpower_name", params_name: "superpower_form", type: "text")
+
+    checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",
+                             checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},
+                                          {params_name: "is_ansinity" , value: 1, first_checked: true}])
+
+    toggle_params_to_variable(params, @form_params, params_name: "show_world")
   end
   # GET /superpowers/1
   #def show

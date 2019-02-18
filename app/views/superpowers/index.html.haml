@@ -36,6 +36,20 @@
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "異能・生産", params_name: "superpower_form", placeholder: "Superpower")
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Lv", params_name: "lv_form", placeholder: "Number")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
+    %tbody
+
       %tr.sep
         %td.indent
         %td.indent= hidden_field_tag :is_form, 1
@@ -61,7 +75,7 @@
     - @superpowers.each do |superpower|
       %tr
         %td= superpower.result_no
-        %td= pc_name_text(superpower.e_no, superpower.pc_name)
+        %td{style: "#{ world_border(superpower.world) }" }= pc_name_text(superpower.e_no, superpower.pc_name)
         %td.sep= superpower.superpower.name if superpower.superpower
         %td= superpower.lv
         %td.sep= character_link(superpower.e_no)

@@ -162,6 +162,30 @@ module ApplicationHelper
         assembly_text.chop()
     end
 
+    def world_name(world)
+        if !world then 
+            return
+        end
+
+        if world.world == 0 then "イバラシティ"
+        elsif world.world == 1 then "アンジニティ"
+        else "？"
+        end
+    end
+
+    def world_border(world)
+        if !world then 
+            return
+        end
+
+        border_style = ""
+        if world.world == 0 then border_style = "0.2rem #080 solid"
+        elsif world.world == 1 then border_style = "0.4rem #800 double"
+        end
+
+        "border-right: " + border_style;
+    end
+
     def skill_type_name(skill)
         if !skill then 
             return

@@ -39,6 +39,20 @@
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "<%= attribute.human_name %>", params_name: "<%= attribute.name %>_form", placeholder: "Number")
 <% end -%>
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
+    %tbody
+
       %tr.sep
         %td.indent
         %td.indent= hidden_field_tag :is_form, 1
@@ -65,7 +79,7 @@
     - @<%= plural_table_name %>.each do |<%= singular_table_name %>|
       %tr
         %td= <%= singular_table_name %>.result_no
-        %td= pc_name_text(<%= singular_table_name %>.e_no, <%= singular_table_name %>.pc_name)
+        %td{style: "#{ world_border(<%= singular_table_name %>.world) }" }= pc_name_text(<%= singular_table_name %>.e_no, <%= singular_table_name %>.pc_name)
 <% attributes.reject(&:password_digest?).each do |attribute| -%>
         %td= <%= singular_table_name %>.<%= attribute.name %>
 <% end -%>

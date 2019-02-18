@@ -61,6 +61,19 @@
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "効果値", params_name: "effect_3_value_form")
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "必要Lv", params_name: "effect_3_need_lv_form")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
+    %tbody
       %tr.sep
         %td.indent
         %td.indent= hidden_field_tag :is_form, 1
@@ -98,7 +111,7 @@
     - @items.each do |item|
       %tr
         %td= item.result_no
-        %td= pc_name_text(item.e_no, item.pc_name)
+        %td{style: "#{ world_border(item.world) }" }= pc_name_text(item.e_no, item.pc_name)
         %td.sep= item.i_no
         %td= item.name
         %td= item.kind.name if item.kind

@@ -73,6 +73,18 @@
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "スキル名", params_name: "name_form", placeholder: "SkillName", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
     %tbody
       %tr.sep
         %td.indent
@@ -94,7 +106,7 @@
       %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
       - if @form_params["show_skill_name"] == "1"
         %th.sep= sort_link(@search, :name, "スキル名", default_order: :desc)
-      %th= sort_link(@search, :skill_name, "元スキル名", default_order: :desc)
+      %th.sep= sort_link(@search, :skill_name, "元スキル名", default_order: :desc)
       %th= sort_link(@search, :lv, "Lv", default_order: :desc)
       - if @form_params["show_skill"] == "1"
         %th.sep= sort_link(@search, :type_id, "種類", default_order: :desc)
@@ -108,10 +120,10 @@
     - @skills.each do |skill|
       %tr
         %td= skill.result_no
-        %td.sep= pc_name_text(skill.e_no, skill.pc_name)
+        %td{style: "#{ world_border(skill.world) }" }= pc_name_text(skill.e_no, skill.pc_name)
         - if @form_params["show_skill_name"] == "1"
-          %td= skill.name
-        %td= skill.skill.name if skill.skill
+          %td.sep= skill.name
+        %td.sep= skill.skill.name if skill.skill
         %td= skill.lv
         - if @form_params["show_skill"] == "1"
           %td.sep= skill_type_name(skill.skill)
