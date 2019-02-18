@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :superpowers
   resources :superpower_data
   resources :items
   resources :proper_names

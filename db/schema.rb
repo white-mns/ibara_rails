@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_18_040636) do
+ActiveRecord::Schema.define(version: 2019_02_18_041545) do
 
   create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -76,6 +76,19 @@ ActiveRecord::Schema.define(version: 2019_02_18_040636) do
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_superpower_data_on_name"
     t.index ["superpower_id"], name: "index_superpower_data_on_superpower_id"
+  end
+
+  create_table "superpowers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "superpower_id"
+    t.integer "lv"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lv"], name: "index_superpowers_on_lv"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+    t.index ["superpower_id"], name: "index_superpowers_on_superpower_id"
   end
 
   create_table "worlds", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|

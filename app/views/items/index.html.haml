@@ -93,7 +93,7 @@
       %th.sep= sort_link(@search, :effect_3_id, '効果3or装飾', default_order: :desc)
       %th= sort_link(@search, :effect_3_value, '効果値', default_order: :desc)
       %th= sort_link(@search, :effect_3_need_lv, '必要Lv', default_order: :desc)
-      %th{colspan: "2"} 結果リンク
+      %th.sep{colspan: "2"} 結果リンク
   %tbody
     - @items.each do |item|
       %tr
@@ -117,5 +117,5 @@
           = item.effect_3_value if item.effect_3_value > 0
           = "(" + sprintf("%d",item.effect_3_need_lv) + ")" if item.effect_3_need_lv > 0
         %td= character_link(item.e_no)
-        %td= character_old_link(@latest_result, item.e_no, item.result_no, item.generate_no)
+        %td.sep= character_old_link(@latest_result, item.e_no, item.result_no, item.generate_no)
 = paginate(@items)
