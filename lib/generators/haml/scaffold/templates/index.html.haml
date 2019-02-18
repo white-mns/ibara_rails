@@ -39,7 +39,7 @@
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "<%= attribute.human_name %>", params_name: "<%= attribute.name %>_form", placeholder: "Number")
 <% end -%>
-      %tr
+      %tr.sep
         %td.indent
         %td.indent= hidden_field_tag :is_form, 1
         %td{colspan: "3"}
@@ -69,6 +69,6 @@
 <% attributes.reject(&:password_digest?).each do |attribute| -%>
         %td= <%= singular_table_name %>.<%= attribute.name %>
 <% end -%>
-        %td= character_link(<%= singular_table_name %>.e_no)
+        %td.sep= character_link(<%= singular_table_name %>.e_no)
         %td= character_old_link(@latest_result, <%= singular_table_name %>.e_no, <%= singular_table_name %>.result_no, <%= singular_table_name %>.generate_no)
 = paginate(@<%= plural_table_name %>)
