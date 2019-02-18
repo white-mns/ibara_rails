@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :skills
   resources :skill_data
   resources :superpowers
   resources :superpower_data

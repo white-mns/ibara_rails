@@ -26,11 +26,11 @@ class SkillDataController < ApplicationController
     params_to_form(params, @form_params, column_name: "ep", params_name: "ep_form", type: "number")
     params_to_form(params, @form_params, column_name: "sp", params_name: "sp_form", type: "number")
     params_to_form(params, @form_params, column_name: "timing_id", params_name: "timing_id_form", type: "number")
-    params_to_form(params, @form_params, column_name: "text", params_name: "text_form", type: "number")
+    params_to_form(params, @form_params, column_name: "text", params_name: "text_form", type: "text")
 
     params_to_form(params, @form_params, column_name: "timing_name", params_name: "timing_form", type: "text")
 
-    checkbox_params_set_query_any(params, @form_params, query_name: "timing_id_eq_any",
+    checkbox_params_set_query_any(params, @form_params, query_name: "type_id_eq_any",
                              checkboxes: [{params_name: "type_active",   value: 0, first_checked: true},
                                           {params_name: "type_passive" , value: 1, first_checked: true}])
 

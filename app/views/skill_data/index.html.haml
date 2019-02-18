@@ -70,8 +70,8 @@
 %table.table.table-striped.table-bordered.table-hover
   %thead
     %tr
-      %th= sort_link(@search, :skill_id, "Skill", default_order: :desc)
-      %th= sort_link(@search, :name, "Name", default_order: :desc)
+      %th= sort_link(@search, :skill_id, "ID", default_order: :desc)
+      %th= sort_link(@search, :name, "スキル名", default_order: :desc)
       %th.sep= sort_link(@search, :type_id, "種類", default_order: :desc)
       %th= sort_link(@search, :element_id, "属性", default_order: :desc)
       %th.sep= sort_link(@search, :ep, "EP", default_order: :desc)
