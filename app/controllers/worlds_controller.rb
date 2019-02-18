@@ -12,6 +12,15 @@ class WorldsController < ApplicationController
     @worlds	= @search.result.per(50)
   end
 
+  # GET /world/graph
+  def graph
+    index
+    @library_param = {
+        backgroundColor: "#333",
+        legend: {textStyle: {color: "#fff"}}
+    }
+  end
+
   def param_set
     @form_params = {}
 

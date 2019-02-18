@@ -106,11 +106,15 @@ body { padding-top: 5rem; }
     cursor: not-allowed;
 }
 
-
 h2 {
     font-size: 1.7rem;
     font-weight: bold;
     margin-top: 0.5rem;
+}
+
+h3.graph_title {
+    border-left:#800 6px solid;
+    border-bottom:#800 2px solid;
 }
 
 label {

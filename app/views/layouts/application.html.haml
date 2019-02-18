@@ -31,10 +31,16 @@
                 = link_to "所持スキル一覧", skills_path, class: "dropdown-item"
             %li.nav-item.dropdown
               %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
-                結果データ
+                行動データ
                 %span.caret
               .dropdown-menu
                 .dropdown-divider
+            %li.nav-item.dropdown
+              %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
+                グラフデータ
+                %span.caret
+              .dropdown-menu
+                = link_to "所属世界グラフ", world_graphs_path, class: "dropdown-item"
 
     .container
       .row
