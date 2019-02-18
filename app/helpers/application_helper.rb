@@ -118,7 +118,7 @@ module ApplicationHelper
 
                 # 改行指定
                 if hash[:br] then
-                    haml_tag :br do end
+                    haml_tag :br
                 end
             end
         end
@@ -162,4 +162,47 @@ module ApplicationHelper
         assembly_text.chop()
     end
 
+    def skill_type_name(skill)
+        if !skill then 
+            return
+        end
+
+        if skill.type_id == 0 then "A"
+        elsif skill.element_id == 1 then " P"
+        else "？"
+        end
+    end
+
+    def elemental_name(skill)
+        if !skill then 
+            return
+        end
+
+        if skill.element_id == 0 then "無"
+        elsif skill.element_id == 1 then "火"
+        elsif skill.element_id == 2 then "水"
+        elsif skill.element_id == 3 then "風"
+        elsif skill.element_id == 4 then "地"
+        elsif skill.element_id == 5 then "光"
+        elsif skill.element_id == 6 then "闇"
+        end
+    end
+
+    def elemental_border(skill)
+        if !skill then 
+            return
+        end
+
+        border_style = ""
+        if skill.element_id == 0 then return
+        elsif skill.element_id == 1 then border_style = "0.2rem #c33 solid"
+        elsif skill.element_id == 2 then border_style = "0.2rem #389 solid"
+        elsif skill.element_id == 3 then border_style = "0.2rem #393 solid"
+        elsif skill.element_id == 4 then border_style = "0.2rem #840 solid"
+        elsif skill.element_id == 5 then border_style = "0.2rem #993 solid"
+        elsif skill.element_id == 6 then border_style = "0.2rem #759 solid"
+        end
+
+        "border-left: " + border_style;
+    end
 end

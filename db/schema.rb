@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_18_041545) do
+ActiveRecord::Schema.define(version: 2019_02_18_052706) do
 
   create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -66,6 +66,27 @@ ActiveRecord::Schema.define(version: 2019_02_18_041545) do
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_proper_names_on_name"
     t.index ["proper_id"], name: "index_proper_names_on_proper_id"
+  end
+
+  create_table "skill_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "skill_id"
+    t.string "name"
+    t.integer "type_id"
+    t.integer "element_id"
+    t.integer "ep"
+    t.integer "sp"
+    t.integer "timing_id"
+    t.string "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["element_id"], name: "index_skill_data_on_element_id"
+    t.index ["ep"], name: "index_skill_data_on_ep"
+    t.index ["name"], name: "index_skill_data_on_name"
+    t.index ["skill_id"], name: "index_skill_data_on_skill_id"
+    t.index ["sp"], name: "index_skill_data_on_sp"
+    t.index ["text"], name: "index_skill_data_on_text"
+    t.index ["timing_id"], name: "index_skill_data_on_timing_id"
+    t.index ["type_id"], name: "index_skill_data_on_type_id"
   end
 
   create_table "superpower_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
