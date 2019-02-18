@@ -139,6 +139,7 @@ label {
 
 .card.desc .card-header {
     margin-left: 1px;
+    cursor: pointer;
 }
 
 .formText {
@@ -194,16 +195,17 @@ table tbody:nth-child(1) td{
 }
 
 table tbody:nth-child(1) td:hover{
-    background-color: #771;
+    background-color: #660;
 }
 
 table tbody.tbody_toggle td{
-    background-color: #666;
+    background-color: #882;
+    color: #000;
     padding-left: 2em;
 }
 
 table tbody.tbody_toggle td:hover{
-    background-color: #444;
+    background-color: #660;
 }
 
 table thead th{
