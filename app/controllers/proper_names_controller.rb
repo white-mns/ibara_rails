@@ -8,14 +8,14 @@ class ProperNamesController < ApplicationController
     param_set
     @count	= ProperName.search(params[:q]).result.count()
     @search	= ProperName.page(params[:page]).search(params[:q])
-    @search.sorts = 'id asc' if @search.sorts.empty?
+    @search.sorts = "id asc" if @search.sorts.empty?
     @proper_names	= @search.result.per(50)
   end
 
   def param_set
     @form_params = {}
 
-    @latest_result = Name.maximum('result_no')
+    @latest_result = Name.maximum("result_no")
 
     params_clean(params)
 
@@ -40,25 +40,25 @@ class ProperNamesController < ApplicationController
   #  @proper_name = ProperName.new(proper_name_params)
 
   #  if @proper_name.save
-  #    redirect_to @proper_name, notice: 'Proper name was successfully created.'
+  #    redirect_to @proper_name, notice: "Proper name was successfully created."
   #  else
-  #    render action: 'new'
+  #    render action: "new"
   #  end
   #end
 
   # PATCH/PUT /proper_names/1
   #def update
   #  if @proper_name.update(proper_name_params)
-  #    redirect_to @proper_name, notice: 'Proper name was successfully updated.'
+  #    redirect_to @proper_name, notice: "Proper name was successfully updated."
   #  else
-  #    render action: 'edit'
+  #    render action: "edit"
   #  end
   #end
 
   # DELETE /proper_names/1
   #def destroy
   #  @proper_name.destroy
-  #  redirect_to proper_names_url, notice: 'Proper name was successfully destroyed.'
+  #  redirect_to proper_names_url, notice: "Proper name was successfully destroyed."
   #end
 
   private

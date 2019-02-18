@@ -8,18 +8,18 @@ class NamesController < ApplicationController
     param_set
     @count	= Name.notnil().search(params[:q]).result.count()
     @search	= Name.notnil().page(params[:page]).search(params[:q])
-    @search.sorts = 'id asc' if @search.sorts.empty?
+    @search.sorts = "id asc" if @search.sorts.empty?
     @names	= @search.result.per(50)
   end
 
   def param_set
     @form_params = {}
 
-    @latest_result = Name.maximum('result_no')
+    @latest_result = Name.maximum("result_no")
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"] ||= sprintf('%d',@latest_result)
+        params["result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
     params_to_form(params, @form_params, column_name: "name", params_name: "pc_name_form", type: "text")
@@ -47,25 +47,25 @@ class NamesController < ApplicationController
   #  @name = Name.new(name_params)
 
   #  if @name.save
-  #    redirect_to @name, notice: 'Name was successfully created.'
+  #    redirect_to @name, notice: "Name was successfully created."
   #  else
-  #    render action: 'new'
+  #    render action: "new"
   #  end
   #end
 
   # PATCH/PUT /names/1
   #def update
   #  if @name.update(name_params)
-  #    redirect_to @name, notice: 'Name was successfully updated.'
+  #    redirect_to @name, notice: "Name was successfully updated."
   #  else
-  #    render action: 'edit'
+  #    render action: "edit"
   #  end
   #end
 
   # DELETE /names/1
   #def destroy
   #  @name.destroy
-  #  redirect_to names_url, notice: 'Name was successfully destroyed.'
+  #  redirect_to names_url, notice: "Name was successfully destroyed."
   #end
 
   private

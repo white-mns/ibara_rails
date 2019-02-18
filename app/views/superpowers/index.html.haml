@@ -52,10 +52,10 @@
 %table.table.table-striped.table-bordered.table-hover
   %thead
     %tr
-      %th= sort_link(@search, :result_no,'更新回', default_order: :desc)
-      %th= sort_link(@search, :e_no,'キャラクター(Eno)', default_order: :desc)
-      %th.sep= sort_link(@search, :superpower_id, '異能', default_order: :desc)
-      %th= sort_link(@search, :lv, 'Lv', default_order: :desc)
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
+      %th.sep= sort_link(@search, :superpower_id, "異能", default_order: :desc)
+      %th= sort_link(@search, :lv, "Lv", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
     - @superpowers.each do |superpower|

@@ -47,8 +47,8 @@
 %table.table.table-striped.table-bordered.table-hover
   %thead
     %tr
-      %th= sort_link(@search, :proper_id, 'ID', default_order: :desc)
-      %th= sort_link(@search, :name, '名詞', default_order: :desc)
+      %th= sort_link(@search, :proper_id, "ID", default_order: :desc)
+      %th= sort_link(@search, :name, "名詞", default_order: :desc)
   %tbody
     - @proper_names.each do |proper_name|
       %tr

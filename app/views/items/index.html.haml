@@ -77,22 +77,22 @@
 %table.table.table-striped.table-bordered.table-hover
   %thead
     %tr
-      %th= sort_link(@search, :result_no,'更新回', default_order: :desc)
-      %th= sort_link(@search, :e_no,'キャラクター(Eno)', default_order: :desc)
-      %th.sep= sort_link(@search, :i_no, 'No', default_order: :desc)
-      %th= sort_link(@search, :name, 'アイテム名', default_order: :desc)
-      %th= sort_link(@search, :kind_id, '種類', default_order: :desc)
-      %th= sort_link(@search, :strength, '強さ', default_order: :desc)
-      %th= sort_link(@search, :range, '射程', default_order: :desc)
-      %th.sep= sort_link(@search, :effect_1_id, '効果1or武器', default_order: :desc)
-      %th= sort_link(@search, :effect_1_value, '効果値', default_order: :desc)
-      %th= sort_link(@search, :effect_1_need_lv, '必要Lv', default_order: :desc)
-      %th.sep= sort_link(@search, :effect_2_id, '効果2or防具', default_order: :desc)
-      %th= sort_link(@search, :effect_2_value, '効果値', default_order: :desc)
-      %th= sort_link(@search, :effect_2_need_lv, '必要Lv', default_order: :desc)
-      %th.sep= sort_link(@search, :effect_3_id, '効果3or装飾', default_order: :desc)
-      %th= sort_link(@search, :effect_3_value, '効果値', default_order: :desc)
-      %th= sort_link(@search, :effect_3_need_lv, '必要Lv', default_order: :desc)
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
+      %th.sep= sort_link(@search, :i_no, "No", default_order: :desc)
+      %th= sort_link(@search, :name, "アイテム名", default_order: :desc)
+      %th= sort_link(@search, :kind_id, "種類", default_order: :desc)
+      %th= sort_link(@search, :strength, "強さ", default_order: :desc)
+      %th= sort_link(@search, :range, "射程", default_order: :desc)
+      %th.sep= sort_link(@search, :effect_1_id, "効果1or武器", default_order: :desc)
+      %th= sort_link(@search, :effect_1_value, "効果値", default_order: :desc)
+      %th= sort_link(@search, :effect_1_need_lv, "必要Lv", default_order: :desc)
+      %th.sep= sort_link(@search, :effect_2_id, "効果2or防具", default_order: :desc)
+      %th= sort_link(@search, :effect_2_value, "効果値", default_order: :desc)
+      %th= sort_link(@search, :effect_2_need_lv, "必要Lv", default_order: :desc)
+      %th.sep= sort_link(@search, :effect_3_id, "効果3or装飾", default_order: :desc)
+      %th= sort_link(@search, :effect_3_value, "効果値", default_order: :desc)
+      %th= sort_link(@search, :effect_3_need_lv, "必要Lv", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
     - @items.each do |item|

@@ -8,8 +8,8 @@
     = csrf_meta_tags
     = csp_meta_tag
 
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
-    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track": "reload"
+    = javascript_include_tag "application", "data-turbolinks-track": "reload"
     = javascript_include_tag "https://www.gstatic.com/charts/loader.js"
 
   %body
@@ -49,4 +49,4 @@
           ソースコード [#{link_to "解析部分", "https://github.com/white-mns/ibara_parse"}] [#{link_to "表示部分", "https://github.com/white-mns/ibara_rails"}]
           %br
           #{link_to "その他ゲームのデータ小屋", "https://data.teiki.org/"}
-      = render 'layouts/analytics'
+      = render "layouts/analytics"

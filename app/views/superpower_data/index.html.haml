@@ -50,9 +50,9 @@
 %table.table.table-striped.table-bordered.table-hover
   %thead
     %tr
-      %th= sort_link(@search, :superpower_id, 'ID', default_order: :desc)
-      %th= sort_link(@search, :name, '名称', default_order: :desc)
-      %th= sort_link(@search, :text, '説明', default_order: :desc)
+      %th= sort_link(@search, :superpower_id, "ID", default_order: :desc)
+      %th= sort_link(@search, :name, "名称", default_order: :desc)
+      %th= sort_link(@search, :text, "説明", default_order: :desc)
   %tbody
     - @superpower_data.each do |superpower_datum|
       %tr

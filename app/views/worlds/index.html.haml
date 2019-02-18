@@ -56,9 +56,9 @@
 %table.table.table-striped.table-bordered.table-hover
   %thead
     %tr
-      %th= sort_link(@search, :result_no,'更新回', default_order: :desc)
-      %th= sort_link(@search, :e_no,'キャラクター(Eno)', default_order: :desc)
-      %th= sort_link(@search, :world, 'World', default_order: :desc)
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
+      %th= sort_link(@search, :world, "World", default_order: :desc)
       %th{colspan: "2"} 結果リンク
   %tbody
     - @worlds.each do |world|
