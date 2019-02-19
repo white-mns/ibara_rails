@@ -26,7 +26,7 @@ class SkillsController < ApplicationController
     params_to_form(params, @form_params, column_name: "result_no", params_name: "result_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "generate_no", params_name: "generate_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "e_no", params_name: "e_no_form", type: "number")
-    params_to_form(params, @form_params, column_name: "name", params_name: "name_form", type: "number")
+    params_to_form(params, @form_params, column_name: "name", params_name: "name_form", type: "text")
     params_to_form(params, @form_params, column_name: "skill_id", params_name: "skill_id_form", type: "number")
     params_to_form(params, @form_params, column_name: "lv", params_name: "lv_form", type: "number")
 
@@ -34,7 +34,7 @@ class SkillsController < ApplicationController
                              checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},
                                           {params_name: "is_ansinity" , value: 1, first_checked: true}])
 
-    params_to_form(params, @form_params, column_name: "skill_name", params_name: "skill_form", type: "number")
+    params_to_form(params, @form_params, column_name: "skill_name", params_name: "skill_form", type: "text")
     params_to_form(params, @form_params, column_name: "skill_ep", params_name: "ep_form", type: "number")
     params_to_form(params, @form_params, column_name: "skill_sp", params_name: "sp_form", type: "number")
     params_to_form(params, @form_params, column_name: "skill_text", params_name: "text_form", type: "text")
