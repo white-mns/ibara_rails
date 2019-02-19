@@ -192,7 +192,7 @@ module ApplicationHelper
         end
 
         if skill.type_id == 0 then "A"
-        elsif skill.element_id == 1 then " P"
+        elsif skill.type_id == 1 then "　P"
         else "？"
         end
     end
