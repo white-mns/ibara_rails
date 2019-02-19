@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_18_064236) do
+ActiveRecord::Schema.define(version: 2019_02_19_112454) do
 
   create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -87,6 +87,21 @@ ActiveRecord::Schema.define(version: 2019_02_18_064236) do
     t.index ["text"], name: "index_skill_data_on_text"
     t.index ["timing_id"], name: "index_skill_data_on_timing_id"
     t.index ["type_id"], name: "index_skill_data_on_type_id"
+  end
+
+  create_table "skill_masteries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "skill_id"
+    t.integer "requirement_1_id"
+    t.integer "requirement_1_lv"
+    t.integer "requirement_2_id"
+    t.integer "requirement_2_lv"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["requirement_1_id"], name: "index_skill_masteries_on_requirement_1_id"
+    t.index ["requirement_1_lv"], name: "index_skill_masteries_on_requirement_1_lv"
+    t.index ["requirement_2_id"], name: "index_skill_masteries_on_requirement_2_id"
+    t.index ["requirement_2_lv"], name: "index_skill_masteries_on_requirement_2_lv"
+    t.index ["skill_id"], name: "index_skill_masteries_on_skill_id"
   end
 
   create_table "skills", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|

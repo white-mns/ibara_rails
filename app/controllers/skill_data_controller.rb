@@ -6,8 +6,8 @@ class SkillDataController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= SkillDatum.includes(:timing).search(params[:q]).result.count()
-    @search	= SkillDatum.includes(:timing).page(params[:page]).search(params[:q])
+    @count	= SkillDatum.includes(:timing, [skill_mastery: [:requirement_1, :requirement_2]]).search(params[:q]).result.count()
+    @search	= SkillDatum.includes(:timing, [skill_mastery: [:requirement_1, :requirement_2]]).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @skill_data	= @search.result.per(50)
   end
@@ -29,6 +29,13 @@ class SkillDataController < ApplicationController
     params_to_form(params, @form_params, column_name: "text", params_name: "text_form", type: "text")
 
     params_to_form(params, @form_params, column_name: "timing_name", params_name: "timing_form", type: "text")
+
+    params_to_form(params, @form_params, column_name: "skill_mastery_requirement_1_name_or_skill_mastery_requirement_2_name", params_name: "requirement_form", type: "text")
+    params_to_form(params, @form_params, column_name: "skill_mastery_requirement_1_lv_or_requirement_2_lv", params_name: "requirement_lv_form", type: "number")
+    params_to_form(params, @form_params, column_name: "skill_mastery_requirement_1_name", params_name: "requirement_1_form", type: "text")
+    params_to_form(params, @form_params, column_name: "skill_mastery_requirement_1_lv", params_name: "requirement_1_lv_form", type: "number")
+    params_to_form(params, @form_params, column_name: "skill_mastery_requirement_2_name", params_name: "requirement_2_form", type: "text")
+    params_to_form(params, @form_params, column_name: "skill_mastery_requirement_2_lv", params_name: "requirement_2_lv_form", type: "number")
 
     checkbox_params_set_query_any(params, @form_params, query_name: "type_id_eq_any",
                              checkboxes: [{params_name: "type_active",   value: 0, first_checked: true},

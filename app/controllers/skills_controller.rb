@@ -6,8 +6,8 @@ class SkillsController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= Skill.notnil().includes(:pc_name, :world, [skill: :timing]).search(params[:q]).result.count()
-    @search	= Skill.notnil().includes(:pc_name, :world, [skill: :timing]).page(params[:page]).search(params[:q])
+    @count	= Skill.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]]).search(params[:q]).result.count()
+    @search	= Skill.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]]).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @skills	= @search.result.per(50)
   end
@@ -41,6 +41,13 @@ class SkillsController < ApplicationController
 
     params_to_form(params, @form_params, column_name: "skill_timing_name", params_name: "timing_form", type: "text")
 
+    params_to_form(params, @form_params, column_name: "skill_mastery_requirement_1_name_or_skill_mastery_requirement_2_name", params_name: "requirement_form", type: "text")
+    params_to_form(params, @form_params, column_name: "skill_mastery_requirement_1_lv_or_requirement_2_lv", params_name: "requirement_lv_form", type: "number")
+    params_to_form(params, @form_params, column_name: "skill_mastery_requirement_1_name", params_name: "requirement_1_form", type: "text")
+    params_to_form(params, @form_params, column_name: "skill_mastery_requirement_1_lv", params_name: "requirement_1_lv_form", type: "number")
+    params_to_form(params, @form_params, column_name: "skill_mastery_requirement_2_name", params_name: "requirement_2_form", type: "text")
+    params_to_form(params, @form_params, column_name: "skill_mastery_requirement_2_lv", params_name: "requirement_2_lv_form", type: "number")
+
     checkbox_params_set_query_any(params, @form_params, query_name: "skill_type_id_eq_any",
                              checkboxes: [{params_name: "type_active",   value: 0, first_checked: true},
                                           {params_name: "type_passive" , value: 1, first_checked: true}])
@@ -58,6 +65,7 @@ class SkillsController < ApplicationController
     toggle_params_to_variable(params, @form_params, params_name: "show_skill")
     toggle_params_to_variable(params, @form_params, params_name: "show_skill_name")
     toggle_params_to_variable(params, @form_params, params_name: "show_skill_text")
+    toggle_params_to_variable(params, @form_params, params_name: "show_skill_mastery")
   end
   # GET /skills/1
   #def show

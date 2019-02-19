@@ -27,8 +27,17 @@
       %tr
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "ID", params_name: "skill_id_form", placeholder: "Number", colspan: 3)
-      %tr
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "異能1or2", params_name: "requirement_form", placeholder: "Superpower")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "必要lv", params_name: "requirement_lv_form", placeholder: "Number")
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "異能1", params_name: "requirement_1_form", placeholder: "Superpower")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "必要lv", params_name: "requirement_1_lv_form", placeholder: "Number")
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "異能2", params_name: "requirement_2_form", placeholder: "Superpower")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "必要lv", params_name: "requirement_2_lv_form", placeholder: "Number")
+      %tr.sep
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "スキル名", params_name: "name_form", placeholder: "Skill", colspan: 3)
       %tr
@@ -70,8 +79,11 @@
 %table.table.table-striped.table-bordered.table-hover
   %thead
     %tr
-      %th= sort_link(@search, :skill_id, "ID", default_order: :desc)
-      %th= sort_link(@search, :name, "スキル名", default_order: :desc)
+      %th.sep= sort_link(@search, :skill_mastery_requirement_1_id, "異能1", default_order: :desc)
+      %th= sort_link(@search, :skill_mastery_requirement_1_lv, "必要Lv", default_order: :desc)
+      %th.sep= sort_link(@search, :skill_mastery_requirement_2_id, "異能2", default_order: :desc)
+      %th= sort_link(@search, :skill_mastery_requirement_2_lv, "必要Lv", default_order: :desc)
+      %th.sep= sort_link(@search, :name, "スキル名", default_order: :desc)
       %th.sep= sort_link(@search, :type_id, "種類", default_order: :desc)
       %th= sort_link(@search, :element_id, "属性", default_order: :desc)
       %th.sep= sort_link(@search, :ep, "EP", default_order: :desc)
@@ -81,8 +93,11 @@
   %tbody
     - @skill_data.each do |skill_datum|
       %tr
-        %td= skill_datum.skill_id
-        %td= skill_datum.name
+        %td.sep= skill_datum.skill_mastery.requirement_1.name if skill_datum.skill_mastery && skill_datum.skill_mastery.requirement_1 && skill_datum.skill_mastery.requirement_1.name
+        %td= skill_datum.skill_mastery.requirement_1_lv if skill_datum.skill_mastery && skill_datum.skill_mastery.requirement_1
+        %td.sep= skill_datum.skill_mastery.requirement_2.name if skill_datum.skill_mastery && skill_datum.skill_mastery.requirement_2 && skill_datum.skill_mastery.requirement_2.name
+        %td= skill_datum.skill_mastery.requirement_2_lv if skill_datum.skill_mastery && skill_datum.skill_mastery.requirement_2
+        %td.sep= skill_datum.name
         %td.sep= skill_type_name(skill_datum)
         %td{style: "#{ elemental_border(skill_datum) }" }= elemental_name(skill_datum)
         %td.sep= skill_datum.ep
