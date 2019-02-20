@@ -27,23 +27,32 @@
       %tr
       %tr
         %td.indent
-        %td= f.label :result_no_form, '更新回'
-        %td.formNum{colspan: "3"}= text_field_tag :result_no_form, @result_no_form
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
       %tr
         %td.indent
-        %td= f.label :e_no_form, 'Eno'
-        %td.formNum= text_field_tag :e_no_form, @e_no_form, placeholder: @placeholder["Number"]
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
       %tr
         %td.indent
-        %td= f.label :pc_name_form, 'キャラクター名'
-        %td.formText= text_field_tag :pc_name_form, @pc_name_form, placeholder: @placeholder["Name"]
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
 <% attributes.reject(&:password_digest?).each do |attribute| -%>
       %tr
         %td.indent
-        %td= f.label :<%= attribute.name %>_form, '<%= attribute.human_name %>'
-        %td.formNum= text_field_tag :<%= attribute.name %>_form, @<%= attribute.name %>_form, placeholder: @placeholder["Number"]
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "<%= attribute.human_name %>", params_name: "<%= attribute.name %>_form", placeholder: "Number")
 <% end -%>
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
       %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
+    %tbody
+      %tr.sep
         %td.indent
         %td.indent= hidden_field_tag :is_form, 1
         %td{colspan: "3"}
@@ -59,20 +68,20 @@
 %table.table.table-striped.table-bordered.table-hover
   %thead
     %tr
-      %th= sort_link(@search, :result_no,'更新回', default_order: :desc)
-      %th= sort_link(@search, :e_no,'キャラクター(Eno)', default_order: :desc)
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
 <% attributes.reject(&:password_digest?).each do |attribute| -%>
-      %th= sort_link(@search, :<%= attribute.name %>, <%= '\'' +  attribute.human_name + '\'' %>, default_order: :desc)
+      %th= sort_link(@search, :<%= attribute.name %>, <%= "\"" +  attribute.human_name + "\"" %>, default_order: :desc)
 <% end -%>
-      %th{colspan: "2"} 結果リンク
+      %th.sep{colspan: "2"} 結果リンク
   %tbody
     - @<%= plural_table_name %>.each do |<%= singular_table_name %>|
       %tr
         %td= <%= singular_table_name %>.result_no
-        %td= pc_name_text(<%= singular_table_name %>.e_no, <%= singular_table_name %>.pc_name)
+        %td{style: "#{ world_border(<%= singular_table_name %>.world) }" }= pc_name_text(<%= singular_table_name %>.e_no, <%= singular_table_name %>.pc_name)
 <% attributes.reject(&:password_digest?).each do |attribute| -%>
         %td= <%= singular_table_name %>.<%= attribute.name %>
 <% end -%>
-        %td= character_link(<%= singular_table_name %>.e_no)
+        %td.sep= character_link(<%= singular_table_name %>.e_no)
         %td= character_old_link(@latest_result, <%= singular_table_name %>.e_no, <%= singular_table_name %>.result_no, <%= singular_table_name %>.generate_no)
 = paginate(@<%= plural_table_name %>)

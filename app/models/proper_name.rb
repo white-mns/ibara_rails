@@ -1,0 +1,2 @@
+class ProperName < ApplicationRecord
+end

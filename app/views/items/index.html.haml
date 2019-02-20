@@ -1,0 +1,163 @@
+- @page_title = "所持アイテム一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "アイテム名", params_name: "name_form", placeholder: "Item")
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "種類", params_name: "kind_form", placeholder: "ItemKind")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "強さ", params_name: "strength_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "射程", params_name: "range_form")
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "効果1or武器", params_name: "effect_1_form", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "効果値", params_name: "effect_1_value_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "必要Lv", params_name: "effect_1_need_lv_form", placeholder: "Number")
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "効果2or防具", params_name: "effect_2_form", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "効果値", params_name: "effect_2_value_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "必要Lv", params_name: "effect_2_need_lv_form")
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "効果3or装飾", params_name: "effect_3_form", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "効果値", params_name: "effect_3_value_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "必要Lv", params_name: "effect_3_need_lv_form")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_place",
+                    label: {open: "現在地を表示する", close: "現在地を表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "区", params_name: "field_form", placeholder: "Field", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "列", params_name: "area_column_form", placeholder: "AreaColumn")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "行", params_name: "area_row_form", placeholder: "Number")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_girth",
+                    label: {open: "特定キャラの現在地＋周囲8エリアで絞り込む", close: "特定キャラの現在地＋周囲8エリアで絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "place_e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "place_pc_name_form", placeholder: "Name")
+
+    - #==========================================================================================================================
+    %tbody
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+
+= paginate(@items)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
+      %th.sep= sort_link(@search, :i_no, "No", default_order: :desc)
+      %th= sort_link(@search, :name, "アイテム名", default_order: :desc)
+      %th= sort_link(@search, :kind_id, "種類", default_order: :desc)
+      %th= sort_link(@search, :strength, "強さ", default_order: :desc)
+      %th= sort_link(@search, :range, "射程", default_order: :desc)
+      %th.sep= sort_link(@search, :effect_1_id, "効果1or武器", default_order: :desc)
+      %th= sort_link(@search, :effect_1_value, "効果値", default_order: :desc)
+      %th= sort_link(@search, :effect_1_need_lv, "必要Lv", default_order: :desc)
+      %th.sep= sort_link(@search, :effect_2_id, "効果2or防具", default_order: :desc)
+      %th= sort_link(@search, :effect_2_value, "効果値", default_order: :desc)
+      %th= sort_link(@search, :effect_2_need_lv, "必要Lv", default_order: :desc)
+      %th.sep= sort_link(@search, :effect_3_id, "効果3or装飾", default_order: :desc)
+      %th= sort_link(@search, :effect_3_value, "効果値", default_order: :desc)
+      %th= sort_link(@search, :effect_3_need_lv, "必要Lv", default_order: :desc)
+      - if @form_params["show_place"] == "1" || @form_params["show_girth"] == "1" 
+        %th.sep= sort_link(@search, :place_field_id, "区", default_order: :desc)
+        %th= sort_link(@search, :place_area_column, "列", default_order: :desc)
+        %th= sort_link(@search, :place_area_row, "行", default_order: :desc)
+      %th.sep{colspan: "2"} 結果リンク
+  %tbody
+    - @items.each do |item|
+      %tr
+        %td= item.result_no
+        %td{style: "#{ world_border(item.world) }" }= pc_name_text(item.e_no, item.pc_name)
+        %td.sep= item.i_no
+        %td= item.name
+        %td= item.kind.name if item.kind
+        %td= item.strength
+        %td= item.range if item.range > 0
+        %td.sep{colspan: 3}
+          = item.effect_1.name if item.effect_1
+          = item.effect_1_value if item.effect_1_value > 0
+          = "(" + sprintf("%d",item.effect_1_need_lv) + ")" if item.effect_1_need_lv > 0
+        %td.sep{colspan: 3}
+          = item.effect_2.name if item.effect_2
+          = item.effect_2_value if item.effect_2_value > 0
+          = "(" + sprintf("%d",item.effect_2_need_lv) + ")" if item.effect_2_need_lv > 0
+        %td.sep{colspan: 3}
+          = item.effect_3.name if item.effect_3
+          = item.effect_3_value if item.effect_3_value > 0
+          = "(" + sprintf("%d",item.effect_3_need_lv) + ")" if item.effect_3_need_lv > 0
+        - if @form_params["show_place"] == "1" || @form_params["show_girth"] == "1" 
+          %td.sep= item.place.field.name if item.place && item.place.field
+          %td{colspan: 2, align: "center"}
+            = item.place.area_column + "-" + sprintf("%d", item.place.area_row) if item.place
+        %td= character_link(item.e_no)
+        %td.sep= character_old_link(@latest_result, item.e_no, item.result_no, item.generate_no)
+= paginate(@items)

@@ -1,0 +1,2 @@
+class SuperpowerDatum < ApplicationRecord
+end

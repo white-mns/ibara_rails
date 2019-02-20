@@ -1,11 +1,11 @@
 %h1 荊街データ小屋
 %p
   このサイトでは
-  %a{:href => "http://lisge.com/ib/", :target => "_blank"} 騒乱イバラシティ
+  %a.animation{:href => "http://lisge.com/ib/", :target => "_blank"} 騒乱イバラシティ
   を解析して得られる情報を扱っています。
 %br
 %p 
-  #{top_result_no(nil,nil)}更新結果まで反映済です。
+  #{top_result_no(@latest_result, @latest_generate)}更新結果まで反映済です。
 
 .card.top
   .card-body
@@ -15,14 +15,24 @@
         %ul
           %li 個人データ
           %ul  
+            %li= link_to "現在地一覧", places_path
+            %br
+            %li= link_to "所持アイテム一覧", items_path
+            %li= link_to "所持異能・生産一覧", superpowers_path
+            %li= link_to "所持スキル一覧", skills_path
       .col-md-6
         %ul
           %li 結果データ
+          %ul  
+          %li グラフデータ
+          %ul  
+            %li= link_to "所属世界グラフ", world_graphs_path
+          %ul  
 
 .card.top
   .card-body
     %h2 更新履歴
     %ul
-      %li 20--/-/-
+      %li 2019/2/20
       %ul
         %li サイト公開
