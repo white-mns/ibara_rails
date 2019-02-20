@@ -1,15 +1,15 @@
-class SuperpowersController < ApplicationController
+class PlacesController < ApplicationController
   include MyUtility
-  before_action :set_superpower, only: [:show, :edit, :update, :destroy]
+  before_action :set_place, only: [:show, :edit, :update, :destroy]
 
-  # GET /superpowers
+  # GET /places
   def index
     placeholder_set
     param_set
-    @count	= Superpower.notnil().includes(:pc_name, :world, :superpower, :place).search(params[:q]).result.count()
-    @search	= Superpower.notnil().includes(:pc_name, :world, :superpower, :place).page(params[:page]).search(params[:q])
+    @count	= Place.notnil().includes(:pc_name, :world, :field).search(params[:q]).result.count()
+    @search	= Place.notnil().includes(:pc_name, :world, :field).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
-    @superpowers	= @search.result.per(50)
+    @places	= @search.result.per(50)
   end
 
   def param_set
@@ -18,6 +18,9 @@ class SuperpowersController < ApplicationController
     @latest_result = Name.maximum("result_no")
 
     params_clean(params)
+    if !params["is_form"] then
+        params["result_no_form"] ||= sprintf("%d",@latest_result)
+    end
 
     if params["area_column_form"] then
         params["area_column_form"].upcase!
@@ -27,18 +30,17 @@ class SuperpowersController < ApplicationController
     params_to_form(params, @form_params, column_name: "result_no", params_name: "result_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "generate_no", params_name: "generate_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "e_no", params_name: "e_no_form", type: "number")
-    params_to_form(params, @form_params, column_name: "superpower_id", params_name: "superpower_id_form", type: "number")
-    params_to_form(params, @form_params, column_name: "lv", params_name: "lv_form", type: "number")
-
-    params_to_form(params, @form_params, column_name: "superpower_name", params_name: "superpower_form", type: "text")
-
-    params_to_form(params, @form_params, column_name: "place_area_column", params_name: "area_column_form", type: "text")
-    params_to_form(params, @form_params, column_name: "place_area_row", params_name: "area_row_form", type: "number")
-    params_to_form(params, @form_params, column_name: "place_field_name", params_name: "field_form", type: "text")
+    params_to_form(params, @form_params, column_name: "field_id", params_name: "field_id_form", type: "number")
+    params_to_form(params, @form_params, column_name: "area_column", params_name: "area_column_form", type: "text")
+    params_to_form(params, @form_params, column_name: "area_row", params_name: "area_row_form", type: "number")
+    
+    params_to_form(params, @form_params, column_name: "field_name", params_name: "field_form", type: "text")
 
     checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",
                              checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},
                                           {params_name: "is_ansinity" , value: 1, first_checked: true}])
+
+
     # キャラ周囲絞り込み用
     params2 = {}
     params2[:q] = {}
@@ -50,64 +52,63 @@ class SuperpowersController < ApplicationController
 
     if params["place_e_no_form"] || params["place_pc_name_form"]
         place_array = Place.pc_to_place_array(params2)
-        params[:q]["place_area_cont_any"] = place_array
+        params[:q]["area_cont_any"] = place_array
     end
     
     @form_params["place_e_no_form"] = params["place_e_no_form"]
     @form_params["place_pc_name_form"] = params["place_pc_name_form"]
-    
+
     # toggle操作用
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
-    toggle_params_to_variable(params, @form_params, params_name: "show_place")
     toggle_params_to_variable(params, @form_params, params_name: "show_girth")
   end
-  # GET /superpowers/1
+  # GET /places/1
   #def show
   #end
 
-  # GET /superpowers/new
+  # GET /places/new
   #def new
-  #  @superpower = Superpower.new
+  #  @place = Place.new
   #end
 
-  # GET /superpowers/1/edit
+  # GET /places/1/edit
   #def edit
   #end
 
-  # POST /superpowers
+  # POST /places
   #def create
-  #  @superpower = Superpower.new(superpower_params)
+  #  @place = Place.new(place_params)
 
-  #  if @superpower.save
-  #    redirect_to @superpower, notice: "Superpower was successfully created."
+  #  if @place.save
+  #    redirect_to @place, notice: "Place was successfully created."
   #  else
   #    render action: "new"
   #  end
   #end
 
-  # PATCH/PUT /superpowers/1
+  # PATCH/PUT /places/1
   #def update
-  #  if @superpower.update(superpower_params)
-  #    redirect_to @superpower, notice: "Superpower was successfully updated."
+  #  if @place.update(place_params)
+  #    redirect_to @place, notice: "Place was successfully updated."
   #  else
   #    render action: "edit"
   #  end
   #end
 
-  # DELETE /superpowers/1
+  # DELETE /places/1
   #def destroy
-  #  @superpower.destroy
-  #  redirect_to superpowers_url, notice: "Superpower was successfully destroyed."
+  #  @place.destroy
+  #  redirect_to places_url, notice: "Place was successfully destroyed."
   #end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_superpower
-      @superpower = Superpower.find(params[:id])
+    def set_place
+      @place = Place.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
-    def superpower_params
-      params.require(:superpower).permit(:result_no, :generate_no, :e_no, :superpower_id, :lv)
+    def place_params
+      params.require(:place).permit(:result_no, :generate_no, :e_no, :field_id, :area, :area_column, :area_row)
     end
 end

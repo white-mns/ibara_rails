@@ -73,6 +73,27 @@
                                  {label: "アンジニティ", params_name: "is_ansinity"}])
 
     - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_place",
+                    label: {open: "現在地を表示する", close: "現在地を表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "区", params_name: "field_form", placeholder: "Field", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "列", params_name: "area_column_form", placeholder: "AreaColumn")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "行", params_name: "area_row_form", placeholder: "Number")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_girth",
+                    label: {open: "特定キャラの現在地＋周囲8エリアで絞り込む", close: "特定キャラの現在地＋周囲8エリアで絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "place_e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "place_pc_name_form", placeholder: "Name")
+
+    - #==========================================================================================================================
     %tbody
       %tr.sep
         %td.indent
@@ -106,6 +127,10 @@
       %th.sep= sort_link(@search, :effect_3_id, "効果3or装飾", default_order: :desc)
       %th= sort_link(@search, :effect_3_value, "効果値", default_order: :desc)
       %th= sort_link(@search, :effect_3_need_lv, "必要Lv", default_order: :desc)
+      - if @form_params["show_place"] == "1" || @form_params["show_girth"] == "1" 
+        %th.sep= sort_link(@search, :place_field_id, "区", default_order: :desc)
+        %th= sort_link(@search, :place_area_column, "列", default_order: :desc)
+        %th= sort_link(@search, :place_area_row, "行", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
     - @items.each do |item|
@@ -129,6 +154,10 @@
           = item.effect_3.name if item.effect_3
           = item.effect_3_value if item.effect_3_value > 0
           = "(" + sprintf("%d",item.effect_3_need_lv) + ")" if item.effect_3_need_lv > 0
+        - if @form_params["show_place"] == "1" || @form_params["show_girth"] == "1" 
+          %td.sep= item.place.field.name if item.place && item.place.field
+          %td{colspan: 2, align: "center"}
+            = item.place.area_column + "-" + sprintf("%d", item.place.area_row) if item.place
         %td= character_link(item.e_no)
         %td.sep= character_old_link(@latest_result, item.e_no, item.result_no, item.generate_no)
 = paginate(@items)

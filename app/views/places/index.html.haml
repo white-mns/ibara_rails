@@ -1,4 +1,4 @@
-- @page_title = "所持異能・生産一覧"
+- @page_title = "現在地一覧"
 %h1= @page_title
 
 .card.desc
@@ -32,25 +32,6 @@
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
         - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
-      %tr.sep
-        %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "異能・生産", params_name: "superpower_form", placeholder: "Superpower")
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Lv", params_name: "lv_form", placeholder: "Number")
-
-    - #==========================================================================================================================
-    - tbody_toggle(@form_params, params_name: "show_world",
-                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
-    %tbody.closed
-      %tr
-        %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
-                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
-                                 {label: "アンジニティ", params_name: "is_ansinity"}])
-
-    - #==========================================================================================================================
-    - tbody_toggle(@form_params, params_name: "show_place",
-                    label: {open: "現在地を表示する", close: "現在地を表示しない"}, base_first: false)
-    %tbody.closed
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "区", params_name: "field_form", placeholder: "Field", colspan: 3)
@@ -69,16 +50,24 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "place_pc_name_form", placeholder: "Name")
 
     - #==========================================================================================================================
-    %tbody
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
 
+    - #==========================================================================================================================
+    %tbody
       %tr.sep
         %td.indent
         %td.indent= hidden_field_tag :is_form, 1
         %td{colspan: "3"}
           - search_submit_button
 
-
-= paginate(@superpowers)
+= paginate(@places)
 %br
 ヒット数：#{ @count }件
 %br
@@ -89,24 +78,18 @@
     %tr
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
       %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
-      %th.sep= sort_link(@search, :superpower_id, "異能", default_order: :desc)
-      %th= sort_link(@search, :lv, "Lv", default_order: :desc)
-      - if @form_params["show_place"] == "1" || @form_params["show_girth"] == "1" 
-        %th.sep= sort_link(@search, :place_field_id, "区", default_order: :desc)
-        %th= sort_link(@search, :place_area_column, "列", default_order: :desc)
-        %th= sort_link(@search, :place_area_row, "行", default_order: :desc)
+      %th.sep= sort_link(@search, :field_id, "区", default_order: :desc)
+      %th= sort_link(@search, :area_column, "列", default_order: :desc)
+      %th= sort_link(@search, :area_row, "行", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
-    - @superpowers.each do |superpower|
+    - @places.each do |place|
       %tr
-        %td= superpower.result_no
-        %td{style: "#{ world_border(superpower.world) }" }= pc_name_text(superpower.e_no, superpower.pc_name)
-        %td.sep= superpower.superpower.name if superpower.superpower
-        %td= superpower.lv
-        - if @form_params["show_place"] == "1" || @form_params["show_girth"] == "1" 
-          %td.sep= superpower.place.field.name if superpower.place && superpower.place.field
-          %td{colspan: 2, align: "center"}
-            = superpower.place.area_column + "-" + sprintf("%d", superpower.place.area_row) if superpower.place
-        %td.sep= character_link(superpower.e_no)
-        %td= character_old_link(@latest_result, superpower.e_no, superpower.result_no, superpower.generate_no)
-= paginate(@superpowers)
+        %td= place.result_no
+        %td{style: "#{ world_border(place.world) }" }= pc_name_text(place.e_no, place.pc_name)
+        %td.sep= place.field.name if place.field
+        %td{colspan: 2, align: "center"}
+          = place.area_column + "-" + sprintf("%d", place.area_row)
+        %td.sep= character_link(place.e_no)
+        %td= character_old_link(@latest_result, place.e_no, place.result_no, place.generate_no)
+= paginate(@places)

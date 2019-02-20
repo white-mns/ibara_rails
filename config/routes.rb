@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :places
   resources :skill_masteries
   resources :skills
   resources :skill_data
