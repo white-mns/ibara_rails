@@ -55,7 +55,7 @@ module MyUtility
         return
     end
 
-    texts = (params[param_key].match(/ /)) ? params[param_key].split(" ") : [params[param_key].dup]
+    texts = (params[param_key].match(/ /)) ? params[param_key].gsub(/[“”]/, "\"").split(" ") : [params[param_key].dup.gsub(/[“”]/,"\"")]
 
     if texts.is_a?(Array) then
         for text in texts do
