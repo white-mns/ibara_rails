@@ -19,7 +19,8 @@ class ItemsController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"] ||= sprintf("%d",@latest_result)
+        params["result_no_form"]       ||= sprintf("%d",@latest_result)
+        params["place_result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
     if params["area_column_form"] then
@@ -60,9 +61,11 @@ class ItemsController < ApplicationController
     # キャラ周囲絞り込み用
     params2 = {}
     params2[:q] = {}
+    params2["place_result_no_form"] = params["place_result_no_form"]
     params2["place_e_no_form"] = params["place_e_no_form"]
     params2["place_pc_name_form"] = params["place_pc_name_form"]
 
+    params_to_form(params2, @form_params, column_name: "result_no", params_name: "place_result_no_form", type: "number")
     params_to_form(params2, @form_params, column_name: "e_no", params_name: "place_e_no_form", type: "number")
     params_to_form(params2, @form_params, column_name: "pc_name_name", params_name: "place_pc_name_form", type: "text")
 
@@ -71,6 +74,7 @@ class ItemsController < ApplicationController
         params[:q]["place_area_cont_any"] = place_array
     end
     
+    @form_params["place_result_no_form"] = params["place_result_no_form"]
     @form_params["place_e_no_form"] = params["place_e_no_form"]
     @form_params["place_pc_name_form"] = params["place_pc_name_form"]
     

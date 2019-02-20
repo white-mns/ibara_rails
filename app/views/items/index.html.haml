@@ -90,6 +90,9 @@
     %tbody.closed
       %tr
         %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "place_result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "place_e_no_form", placeholder: "Number")
         - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "place_pc_name_form", placeholder: "Name")
 
