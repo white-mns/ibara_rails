@@ -157,6 +157,10 @@ module MyUtility
 
   # キャラ周囲絞り込み用
   def girth_matching(params, form_params)
+      if !params["is_form"] then
+          params["place_result_no_form"] ||= sprintf("%d",@latest_result)
+      end
+
       params_tmp = {}
       params_tmp[:q] = {}
       params_tmp["place_result_no_form"] = params["place_result_no_form"]
@@ -177,6 +181,48 @@ module MyUtility
       form_params["place_pc_name_form"] = params["place_pc_name_form"]
 
       toggle_params_to_variable(params, form_params, params_name: "show_girth")
+  end
+
+  # キャラ周囲絞り込み用
+  def pm_matching(params, form_params)
+      if !params["is_form"] then
+          params["pm_result_no_form"] ||= sprintf("%d",@latest_result)
+      end
+
+      params_tmp = {}
+      params_tmp[:q] = {}
+      params_tmp["is_form"] = "1"
+      params_tmp["pm_result_no_form"] = params["pm_result_no_form"]
+      params_tmp["pm_e_no_form"] = params["pm_e_no_form"]
+      params_tmp["pm_pc_name_form"] = params["pm_pc_name_form"]
+      params_tmp["pm_party_type_form"] = params["pm_party_type_form"]
+      params_tmp["pm_battle"] = params["pm_battle"]
+      params_tmp["pm_next"]   = params["pm_next"]
+
+      params_to_form(params_tmp, @form_params, column_name: "result_no", params_name: "pm_result_no_form", type: "number")
+      params_to_form(params_tmp, @form_params, column_name: "e_no", params_name: "pm_e_no_form", type: "number")
+      params_to_form(params_tmp, @form_params, column_name: "pc_name_name", params_name: "pm_pc_name_form", type: "text")
+      checkbox_params_set_query_any(params_tmp, @form_params, query_name: "party_type_eq_any",
+                               checkboxes: [{params_name: "pm_battle", value: 0, first_checked: false},
+                                            {params_name: "pm_next" ,  value: 1, first_checked: true}])
+
+      if params["pm_e_no_form"] || params["pm_pc_name_form"]
+          party_member_array = Party.pc_to_party_member_array(params_tmp)
+          params[:q]["party_party_eq_any"] = party_member_array
+      end
+      
+      # フォームに値を受け渡す用の空実行
+      checkbox_params_set_query_any(params, @form_params, query_name: "xxx",
+                               checkboxes: [{params_name: "pm_battle", value: 0, first_checked: false},
+                                            {params_name: "pm_next" ,  value: 1, first_checked: true}])
+
+      form_params["pm_result_no_form"] = params["pm_result_no_form"]
+      form_params["pm_e_no_form"] = params["pm_e_no_form"]
+      form_params["pm_pc_name_form"] = params["pm_pc_name_form"]
+      form_params["pm_battle"] = params["pm_battle"]
+      form_params["pm_next"] = params["pm_next"]
+
+      toggle_params_to_variable(params, form_params, params_name: "show_pm")
   end
 
   private

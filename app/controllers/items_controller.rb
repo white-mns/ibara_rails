@@ -6,8 +6,8 @@ class ItemsController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= Item.notnil().includes(:pc_name, :world, :kind, :effect_1, :effect_2, :effect_3, :place).search(params[:q]).result.count()
-    @search	= Item.notnil().includes(:pc_name, :world, :kind, :effect_1, :effect_2, :effect_3, :place).page(params[:page]).search(params[:q])
+    @count	= Item.notnil().includes(:pc_name, :world, :kind, :effect_1, :effect_2, :effect_3, :place, :party).resultno_eno_group().group(:i_no).search(params[:q]).result.count().keys().size
+    @search	= Item.notnil().includes(:pc_name, :world, :kind, :effect_1, :effect_2, :effect_3, :place, :party).resultno_eno_group().group(:i_no).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @items	= @search.result.per(50)
   end
@@ -19,8 +19,7 @@ class ItemsController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"]       ||= sprintf("%d",@latest_result)
-        params["place_result_no_form"] ||= sprintf("%d",@latest_result)
+        params["result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
     if params["area_column_form"] then
@@ -60,6 +59,7 @@ class ItemsController < ApplicationController
                                           {params_name: "is_ansinity" , value: 1, first_checked: true}])
 
     girth_matching(params, @form_params)
+    pm_matching(params, @form_params)
    
     # toggle操作用
     toggle_params_to_variable(params, @form_params, params_name: "show_world")

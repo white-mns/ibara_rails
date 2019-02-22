@@ -6,8 +6,8 @@ class SuperpowersController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= Superpower.notnil().includes(:pc_name, :world, :superpower, :place).search(params[:q]).result.count()
-    @search	= Superpower.notnil().includes(:pc_name, :world, :superpower, :place).page(params[:page]).search(params[:q])
+    @count	= Superpower.notnil().includes(:pc_name, :world, :superpower, :place, :party).resultno_eno_group().group(:superpower_id).search(params[:q]).result.count().keys().size
+    @search	= Superpower.notnil().includes(:pc_name, :world, :superpower, :place, :party).resultno_eno_group().group(:superpower_id).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @superpowers	= @search.result.per(50)
   end
@@ -19,8 +19,7 @@ class SuperpowersController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"]       ||= sprintf("%d",@latest_result)
-        params["place_result_no_form"] ||= sprintf("%d",@latest_result)
+        params["result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
     if params["area_column_form"] then
@@ -45,10 +44,7 @@ class SuperpowersController < ApplicationController
                                           {params_name: "is_ansinity" , value: 1, first_checked: true}])
     
     girth_matching(params, @form_params)
-    
-    @form_params["place_result_no_form"] = params["place_result_no_form"]
-    @form_params["place_e_no_form"] = params["place_e_no_form"]
-    @form_params["place_pc_name_form"] = params["place_pc_name_form"]
+    pm_matching(params, @form_params)
     
     # toggle操作用
     toggle_params_to_variable(params, @form_params, params_name: "show_world")

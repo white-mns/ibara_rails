@@ -5,6 +5,10 @@ class ApplicationRecord < ActiveRecord::Base
     where.not(result_no: nil)
   }
 
+  scope :resultno_eno_group, -> () {
+    group(:result_no, :generate_no, :e_no)
+  }
+
   scope :to_range_graph, -> (column) {
       max = self.pluck(column).max
       figure_length = max.to_s.length # 最大桁数の取得

@@ -228,4 +228,15 @@ module ApplicationHelper
 
         "border-left: " + border_style;
     end
+
+    def party_type_name(party)
+        if !party then 
+            return
+        end
+
+        if party.party_type == 0 then "今回戦闘"
+        elsif party.party_type == 1 then "次回予告"
+        else "？"
+        end
+    end
 end

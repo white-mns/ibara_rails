@@ -3,8 +3,8 @@ class Place < ApplicationRecord
 	belongs_to :world,   :foreign_key => [:e_no, :result_no, :generate_no], :primary_key => [:e_no, :result_no, :generate_no], :class_name => "World"
 	belongs_to :field, :foreign_key => :field_id, :primary_key => :proper_id, :class_name => "ProperName"
 
-    scope :pc_to_place_array, ->(place_params)   {
-        pcs = Place.notnil().includes(:pc_name).search(place_params[:q]).result.pluck(:area_column, :area_row)
+    scope :pc_to_place_array, ->(params)   {
+        pcs = Place.notnil().includes(:pc_name).search(params[:q]).result.pluck(:area_column, :area_row)
         areas = []
         pcs.each do |array| 
             columns = [array[0].ord, array[0].ord - 1, array[0].ord + 1]
