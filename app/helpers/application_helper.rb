@@ -12,7 +12,7 @@ module ApplicationHelper
         num = 2
         while num <= generate_no do
             num += 1
-            generate_text += "々"
+            generate_text += "再"
         end
         text = "第" + sprintf("%d", result_no) + "回" + generate_text
         text
