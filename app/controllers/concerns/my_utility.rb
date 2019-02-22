@@ -155,6 +155,30 @@ module MyUtility
     end
   end
 
+  # キャラ周囲絞り込み用
+  def girth_matching(params, form_params)
+      params_tmp = {}
+      params_tmp[:q] = {}
+      params_tmp["place_result_no_form"] = params["place_result_no_form"]
+      params_tmp["place_e_no_form"] = params["place_e_no_form"]
+      params_tmp["place_pc_name_form"] = params["place_pc_name_form"]
+
+      params_to_form(params_tmp, form_params, column_name: "result_no", params_name: "place_result_no_form", type: "number")
+      params_to_form(params_tmp, form_params, column_name: "e_no", params_name: "place_e_no_form", type: "number")
+      params_to_form(params_tmp, form_params, column_name: "pc_name_name", params_name: "place_pc_name_form", type: "text")
+
+      if params["place_e_no_form"] || params["place_pc_name_form"]
+          place_array = Place.pc_to_place_array(params_tmp)
+          params[:q]["place_area_cont_any"] = place_array
+      end
+      
+      form_params["place_result_no_form"] = params["place_result_no_form"]
+      form_params["place_e_no_form"] = params["place_e_no_form"]
+      form_params["place_pc_name_form"] = params["place_pc_name_form"]
+
+      toggle_params_to_variable(params, form_params, params_name: "show_girth")
+  end
+
   private
 
 end
