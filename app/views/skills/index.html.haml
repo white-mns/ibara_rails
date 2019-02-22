@@ -102,6 +102,23 @@
                                  {label: "アンジニティ", params_name: "is_ansinity"}])
 
     - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_pm",
+                    label: {open: "指定キャラのパーティメンバーで絞り込む", close: "指定キャラのパーティメンバーで絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "pm_result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "pm_e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pm_pc_name_form", placeholder: "Name")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, params_name: "pm_party_type_form", colspan: 3, 
+                    checkboxes: [{label: "戦闘PTM",     params_name: "pm_battle", class_name: "after_space mobile_br"},
+                                 {label: "次回予告PTM", params_name: "pm_next"}])
+
+    - #==========================================================================================================================
     %tbody
       %tr.sep
         %td.indent

@@ -6,8 +6,8 @@ class SkillsController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= Skill.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]]).search(params[:q]).result.count()
-    @search	= Skill.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]]).page(params[:page]).search(params[:q])
+    @count	= Skill.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]], :party).resultno_eno_group().group(:skill_id).search(params[:q]).result.count().keys().size
+    @search	= Skill.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]], :party).resultno_eno_group().group(:skill_id).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @skills	= @search.result.per(50)
   end
@@ -60,6 +60,8 @@ class SkillsController < ApplicationController
                                           {params_name: "element_ground", value: 4},
                                           {params_name: "element_light",  value: 5},
                                           {params_name: "element_dark",   value: 6}])
+    
+    pm_matching(params, @form_params)
 
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
     toggle_params_to_variable(params, @form_params, params_name: "show_skill")
