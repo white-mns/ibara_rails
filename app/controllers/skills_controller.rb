@@ -6,8 +6,8 @@ class SkillsController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= Skill.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]], :party).resultno_eno_group().group(:skill_id).search(params[:q]).result.count().keys().size
-    @search	= Skill.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]], :party).resultno_eno_group().group(:skill_id).page(params[:page]).search(params[:q])
+    @count	= Skill.distinct.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]], :party).search(params[:q]).result.count()
+    @search	= Skill.distinct.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]], :party).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @skills	= @search.result.per(50)
   end
