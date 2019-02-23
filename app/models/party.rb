@@ -4,6 +4,10 @@ class Party < ApplicationRecord
 
     scope :pc_to_party_member_array, ->(params)   {
         parties = Party.notnil().includes(:pc_name).search(params[:q]).result.pluck(:party)
-        parties
+        e_nos = []
+        parties.each do |party|
+            e_nos.push(Party.notnil().includes(:pc_name).where(party: parties).pluck(:e_no))
+        end
+        e_nos.flatten.uniq
     }
 end
