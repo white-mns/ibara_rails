@@ -145,15 +145,15 @@
         %th= sort_link(@search, :skill_mastery_requirement_2_lv, "必要Lv", default_order: :desc)
       - if @form_params["show_skill_name"] == "1"
         %th.sep= sort_link(@search, :name, "スキル名", default_order: :desc)
-      %th.sep= sort_link(@search, :skill_name, "元スキル名", default_order: :desc)
+      %th.sep= sort_link(@search, :skill_id, "元スキル名", default_order: :desc)
       %th= sort_link(@search, :lv, "Lv", default_order: :desc)
       - if @form_params["show_skill"] == "1"
-        %th.sep= sort_link(@search, :type_id, "種類", default_order: :desc)
-        %th= sort_link(@search, :element_id, "属性", default_order: :desc)
-        %th.sep= sort_link(@search, :ep, "EP", default_order: :desc)
-        %th= sort_link(@search, :sp, "SP", default_order: :desc)
-        %th.sep= sort_link(@search, :timing_id, "タイミング", default_order: :desc)
-        %th= sort_link(@search, :text, "説明", default_order: :desc)
+        %th.sep= sort_link(@search, :skill_type_id, "種類", default_order: :desc)
+        %th= sort_link(@search, :skill_element_id, "属性", default_order: :desc)
+        %th.sep= sort_link(@search, :skill_ep, "EP", default_order: :desc)
+        %th= sort_link(@search, :skill_sp, "SP", default_order: :desc)
+        %th.sep= sort_link(@search, :skill_timing_id, "タイミング", default_order: :desc)
+        %th= sort_link(@search, :skill_text, "説明", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
     - @skills.each do |skill|
