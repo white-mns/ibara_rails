@@ -6,9 +6,9 @@ class StudiesController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= Study.distinct.notnil().includes(:pc_name, :world, [skill: :timing], :party).search(params[:q]).result.count()
-    @search	= Study.distinct.notnil().includes(:pc_name, :world, [skill: :timing], :party).page(params[:page]).search(params[:q])
-    @search.sorts = "id asc" if @search.sorts.empty?
+    @count	= Study.distinct.notnil().includes(:pc_name, :world, [skill: :timing], :party).groups(action_name, params).search(params[:q]).result.count().keys().size
+    @search	= Study.distinct.notnil().includes(:pc_name, :world, [skill: :timing], :party).groups(action_name, params).for_group_select(action_name, params).having_order(params).page(params[:page]).search(params[:q])
+    @search.sorts = "id asc" if params["group_skill"] != "on" && @search.sorts.empty?
     @studies	= @search.result.per(50)
   end
 
@@ -52,8 +52,11 @@ class StudiesController < ApplicationController
                                           {params_name: "element_ground", value: 4},
                                           {params_name: "element_light",  value: 5},
                                           {params_name: "element_dark",   value: 6}])
+
     
     pm_matching(params, @form_params)
+
+    @form_params["group_skill"] = params["group_skill"]
 
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
     toggle_params_to_variable(params, @form_params, params_name: "show_skill")

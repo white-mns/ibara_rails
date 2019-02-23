@@ -93,6 +93,11 @@
                     checkboxes: [{label: "戦闘PTM",     params_name: "pm_battle", class_name: "after_space mobile_br"},
                                  {label: "次回予告PTM", params_name: "pm_next"}])
 
+    %tbody
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, params_name: "group_form", colspan: 3, 
+                    checkboxes: [{label: "スキル名で深度を合算",     params_name: "group_skill", class_name: "after_space mobile_br"}])
 
     - #==========================================================================================================================
     %tbody
@@ -113,8 +118,12 @@
   %thead
     %tr
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
-      %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
-      %th.sep= sort_link(@search, :depth, "深度", default_order: :desc)
+      - if @form_params["group_skill"] != "on"
+        %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
+      - if @form_params["group_skill"] == "on"
+        %th.sep= sort_link(@search, :depth_sum, "深度", default_order: :desc)
+      - else
+        %th.sep= sort_link(@search, :depth, "深度", default_order: :desc)
       %th.sep= sort_link(@search, :skill_id, "元スキル名", default_order: :desc)
       - if @form_params["show_skill"] == "1"
         %th.sep= sort_link(@search, :skill_type_id, "種類", default_order: :desc)
@@ -123,13 +132,19 @@
         %th= sort_link(@search, :skill_sp, "SP", default_order: :desc)
         %th.sep= sort_link(@search, :skill_timing_id, "タイミング", default_order: :desc)
         %th= sort_link(@search, :skill_text, "説明", default_order: :desc)
-      %th.sep{colspan: "2"} 結果リンク
+      - if @form_params["group_skill"] != "on"
+        %th.sep{colspan: "2"} 結果リンク
   %tbody
     - @studies.each do |study|
       %tr
         %td= study.result_no
-        %td{style: "#{ world_border(study.world) }" }= pc_name_text(study.e_no, study.pc_name)
-        %td.sep= study.depth
+        - if @form_params["group_skill"] != "on"
+          %td{style: "#{ world_border(study.world) }" }= pc_name_text(study.e_no, study.pc_name)
+        %td.sep
+          - if @form_params["group_skill"] == "on"
+            = study.depth_sum
+          - else
+            = study.depth
         %td.sep= study.skill.name if study.skill
         - if @form_params["show_skill"] == "1"
           %td.sep= skill_type_name(study.skill)
@@ -138,6 +153,7 @@
           %td= study.skill.sp
           %td.sep= study.skill.timing.name if study.skill.timing
           %td= study.skill.text
-        %td.sep= character_link(study.e_no)
-        %td= character_old_link(@latest_result, study.e_no, study.result_no, study.generate_no)
+        - if @form_params["group_skill"] != "on"
+          %td.sep= character_link(study.e_no)
+          %td= character_old_link(@latest_result, study.e_no, study.result_no, study.generate_no)
 = paginate(@studies)
