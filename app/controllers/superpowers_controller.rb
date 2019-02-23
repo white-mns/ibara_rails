@@ -6,8 +6,8 @@ class SuperpowersController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= Superpower.notnil().includes(:pc_name, :world, :superpower, :place, :party).resultno_eno_group().group(:superpower_id).search(params[:q]).result.count().keys().size
-    @search	= Superpower.notnil().includes(:pc_name, :world, :superpower, :place, :party).resultno_eno_group().group(:superpower_id).page(params[:page]).search(params[:q])
+    @count	= Superpower.distinct.notnil().includes(:pc_name, :world, :superpower, :place, :party).search(params[:q]).result.count()
+    @search	= Superpower.distinct.notnil().includes(:pc_name, :world, :superpower, :place, :party).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @superpowers	= @search.result.per(50)
   end

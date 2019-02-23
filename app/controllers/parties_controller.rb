@@ -57,7 +57,7 @@ class PartiesController < ApplicationController
 
     if params["pm_e_no_form"] || params["pm_pc_name_form"]
         party_member_array = Party.pc_to_party_member_array(params2)
-        params[:q]["party_eq_any"] = party_member_array.uniq
+        params[:q]["e_no_eq_any"] = party_member_array.uniq
     end
     
     # フォームに値を受け渡す用の空実行

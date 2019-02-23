@@ -1,15 +1,15 @@
-class SkillsController < ApplicationController
+class CardsController < ApplicationController
   include MyUtility
-  before_action :set_skill, only: [:show, :edit, :update, :destroy]
+  before_action :set_card, only: [:show, :edit, :update, :destroy]
 
-  # GET /skills
+  # GET /cards
   def index
     placeholder_set
     param_set
-    @count	= Skill.distinct.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]], :party).search(params[:q]).result.count()
-    @search	= Skill.distinct.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]], :party).page(params[:page]).search(params[:q])
+    @count	= Card.distinct.notnil().includes(:pc_name, :world, [skill: :timing], :party).search(params[:q]).result.count()
+    @search	= Card.distinct.notnil().includes(:pc_name, :world, [skill: :timing], :party).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
-    @skills	= @search.result.per(50)
+    @cards	= @search.result.per(50)
   end
 
   def param_set
@@ -28,7 +28,7 @@ class SkillsController < ApplicationController
     params_to_form(params, @form_params, column_name: "e_no", params_name: "e_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "name", params_name: "name_form", type: "text")
     params_to_form(params, @form_params, column_name: "skill_id", params_name: "skill_id_form", type: "number")
-    params_to_form(params, @form_params, column_name: "lv", params_name: "lv_form", type: "number")
+    params_to_form(params, @form_params, column_name: "made_e_no", params_name: "made_e_no_form", type: "number")
 
     checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",
                              checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},
@@ -40,13 +40,6 @@ class SkillsController < ApplicationController
     params_to_form(params, @form_params, column_name: "skill_text", params_name: "text_form", type: "text")
 
     params_to_form(params, @form_params, column_name: "skill_timing_name", params_name: "timing_form", type: "text")
-
-    params_to_form(params, @form_params, column_name: "skill_mastery_requirement_1_name_or_skill_mastery_requirement_2_name", params_name: "requirement_form", type: "text")
-    params_to_form(params, @form_params, column_name: "skill_mastery_requirement_1_lv_or_requirement_2_lv", params_name: "requirement_lv_form", type: "number")
-    params_to_form(params, @form_params, column_name: "skill_mastery_requirement_1_name", params_name: "requirement_1_form", type: "text")
-    params_to_form(params, @form_params, column_name: "skill_mastery_requirement_1_lv", params_name: "requirement_1_lv_form", type: "number")
-    params_to_form(params, @form_params, column_name: "skill_mastery_requirement_2_name", params_name: "requirement_2_form", type: "text")
-    params_to_form(params, @form_params, column_name: "skill_mastery_requirement_2_lv", params_name: "requirement_2_lv_form", type: "number")
 
     checkbox_params_set_query_any(params, @form_params, query_name: "skill_type_id_eq_any",
                              checkboxes: [{params_name: "type_active",   value: 0, first_checked: true},
@@ -65,57 +58,57 @@ class SkillsController < ApplicationController
 
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
     toggle_params_to_variable(params, @form_params, params_name: "show_skill")
-    toggle_params_to_variable(params, @form_params, params_name: "show_skill_name")
     toggle_params_to_variable(params, @form_params, params_name: "show_skill_text")
-    toggle_params_to_variable(params, @form_params, params_name: "show_skill_mastery")
+    toggle_params_to_variable(params, @form_params, params_name: "show_card_name", first_opened: true)
+    @form_params["base_first"]    = (!params["is_form"]) ? "1" : "0"
   end
-  # GET /skills/1
+  # GET /cards/1
   #def show
   #end
 
-  # GET /skills/new
+  # GET /cards/new
   #def new
-  #  @skill = Skill.new
+  #  @card = Card.new
   #end
 
-  # GET /skills/1/edit
+  # GET /cards/1/edit
   #def edit
   #end
 
-  # POST /skills
+  # POST /cards
   #def create
-  #  @skill = Skill.new(skill_params)
+  #  @card = Card.new(card_params)
 
-  #  if @skill.save
-  #    redirect_to @skill, notice: "Skill was successfully created."
+  #  if @card.save
+  #    redirect_to @card, notice: "Card was successfully created."
   #  else
   #    render action: "new"
   #  end
   #end
 
-  # PATCH/PUT /skills/1
+  # PATCH/PUT /cards/1
   #def update
-  #  if @skill.update(skill_params)
-  #    redirect_to @skill, notice: "Skill was successfully updated."
+  #  if @card.update(card_params)
+  #    redirect_to @card, notice: "Card was successfully updated."
   #  else
   #    render action: "edit"
   #  end
   #end
 
-  # DELETE /skills/1
+  # DELETE /cards/1
   #def destroy
-  #  @skill.destroy
-  #  redirect_to skills_url, notice: "Skill was successfully destroyed."
+  #  @card.destroy
+  #  redirect_to cards_url, notice: "Card was successfully destroyed."
   #end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_skill
-      @skill = Skill.find(params[:id])
+    def set_card
+      @card = Card.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
-    def skill_params
-      params.require(:skill).permit(:result_no, :generate_no, :e_no, :name, :skill_id, :lv)
+    def card_params
+      params.require(:card).permit(:result_no, :generate_no, :e_no, :name, :skill_id, :made_e_no)
     end
 end

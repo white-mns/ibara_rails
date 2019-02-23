@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :cards
+  resources :studies
   resources :parties
   resources :places
   resources :skill_masteries

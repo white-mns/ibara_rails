@@ -1,4 +1,4 @@
-- @page_title = "所持スキル一覧"
+- @page_title = "スキル研究一覧"
 %h1= @page_title
 
 .card.desc
@@ -34,25 +34,8 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "元スキル名", params_name: "skill_form", placeholder: "Skill")
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Lv", params_name: "lv_form", placeholder: "Number")
-
-    - #==========================================================================================================================
-    - tbody_toggle(@form_params, params_name: "show_skill_mastery",
-                    label: {open: "習得条件を表示する", close: "習得条件を表示しない"}, base_first: false)
-    %tbody.closed
-      %tr
-        %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "異能1or2", params_name: "requirement_form", placeholder: "Superpower")
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "必要lv", params_name: "requirement_lv_form", placeholder: "Number")
-      %tr.sep
-        %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "異能1", params_name: "requirement_1_form", placeholder: "Superpower")
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "必要lv", params_name: "requirement_1_lv_form", placeholder: "Number")
-      %tr.sep
-        %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "異能2", params_name: "requirement_2_form", placeholder: "Superpower")
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "必要lv", params_name: "requirement_2_lv_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "深度", params_name: "depth_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "スキル名", params_name: "skill_form", placeholder: "Skill")
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_skill",
@@ -84,14 +67,6 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "説明", params_name: "text_form")
 
     - #==========================================================================================================================
-    - tbody_toggle(@form_params, params_name: "show_skill_name",
-                    label: {open: "改名後スキル名を表示する", close: "改名後スキル名を表示しない"}, base_first: false)
-    %tbody.closed
-      %tr
-        %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "スキル名", params_name: "name_form", placeholder: "SkillName", colspan: 3)
-
-    - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_world",
                     label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
     %tbody.closed
@@ -118,6 +93,12 @@
                     checkboxes: [{label: "戦闘PTM",     params_name: "pm_battle", class_name: "after_space mobile_br"},
                                  {label: "次回予告PTM", params_name: "pm_next"}])
 
+    %tbody
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, params_name: "group_form", colspan: 3, 
+                    checkboxes: [{label: "スキル名で深度を合算",     params_name: "group_skill", class_name: "after_space mobile_br"}])
+
     - #==========================================================================================================================
     %tbody
       %tr.sep
@@ -127,7 +108,7 @@
           - search_submit_button
 
 
-= paginate(@skills)
+= paginate(@studies)
 %br
 ヒット数：#{ @count }件
 %br
@@ -137,16 +118,13 @@
   %thead
     %tr
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
-      %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
-      - if @form_params["show_skill_mastery"] == "1"
-        %th.sep= sort_link(@search, :skill_mastery_requirement_1_id, "異能1", default_order: :desc)
-        %th= sort_link(@search, :skill_mastery_requirement_1_lv, "必要Lv", default_order: :desc)
-        %th.sep= sort_link(@search, :skill_mastery_requirement_2_id, "異能2", default_order: :desc)
-        %th= sort_link(@search, :skill_mastery_requirement_2_lv, "必要Lv", default_order: :desc)
-      - if @form_params["show_skill_name"] == "1"
-        %th.sep= sort_link(@search, :name, "スキル名", default_order: :desc)
+      - if @form_params["group_skill"] != "on"
+        %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
+      - if @form_params["group_skill"] == "on"
+        %th.sep= sort_link(@search, :depth_sum, "深度", default_order: :desc)
+      - else
+        %th.sep= sort_link(@search, :depth, "深度", default_order: :desc)
       %th.sep= sort_link(@search, :skill_id, "元スキル名", default_order: :desc)
-      %th= sort_link(@search, :lv, "Lv", default_order: :desc)
       - if @form_params["show_skill"] == "1"
         %th.sep= sort_link(@search, :skill_type_id, "種類", default_order: :desc)
         %th= sort_link(@search, :skill_element_id, "属性", default_order: :desc)
@@ -154,28 +132,28 @@
         %th= sort_link(@search, :skill_sp, "SP", default_order: :desc)
         %th.sep= sort_link(@search, :skill_timing_id, "タイミング", default_order: :desc)
         %th= sort_link(@search, :skill_text, "説明", default_order: :desc)
-      %th.sep{colspan: "2"} 結果リンク
+      - if @form_params["group_skill"] != "on"
+        %th.sep{colspan: "2"} 結果リンク
   %tbody
-    - @skills.each do |skill|
+    - @studies.each do |study|
       %tr
-        %td= skill.result_no
-        %td{style: "#{ world_border(skill.world) }" }= pc_name_text(skill.e_no, skill.pc_name)
-        - if @form_params["show_skill_mastery"] == "1"
-          %td.sep= skill.skill_mastery.requirement_1.name if skill.skill_mastery && skill.skill_mastery.requirement_1 && skill.skill_mastery.requirement_1.name
-          %td= skill.skill_mastery.requirement_1_lv if skill.skill_mastery && skill.skill_mastery.requirement_1
-          %td.sep= skill.skill_mastery.requirement_2.name if skill.skill_mastery && skill.skill_mastery.requirement_2 && skill.skill_mastery.requirement_2.name
-          %td= skill.skill_mastery.requirement_2_lv if skill.skill_mastery && skill.skill_mastery.requirement_2
-        - if @form_params["show_skill_name"] == "1"
-          %td.sep= skill.name
-        %td.sep= skill.skill.name if skill.skill
-        %td= skill.lv
+        %td= study.result_no
+        - if @form_params["group_skill"] != "on"
+          %td{style: "#{ world_border(study.world) }" }= pc_name_text(study.e_no, study.pc_name)
+        %td.sep
+          - if @form_params["group_skill"] == "on"
+            = study.depth_sum
+          - else
+            = study.depth
+        %td.sep= study.skill.name if study.skill
         - if @form_params["show_skill"] == "1"
-          %td.sep= skill_type_name(skill.skill)
-          %td{style: "#{ elemental_border(skill.skill) }" }= elemental_name(skill.skill)
-          %td.sep= skill.skill.ep
-          %td= skill.skill.sp
-          %td.sep= skill.skill.timing.name if skill.skill.timing
-          %td= skill.skill.text
-        %td.sep= character_link(skill.e_no)
-        %td= character_old_link(@latest_result, skill.e_no, skill.result_no, skill.generate_no)
-= paginate(@skills)
+          %td.sep= skill_type_name(study.skill)
+          %td{style: "#{ elemental_border(study.skill) }" }= elemental_name(study.skill)
+          %td.sep= study.skill.ep
+          %td= study.skill.sp
+          %td.sep= study.skill.timing.name if study.skill.timing
+          %td= study.skill.text
+        - if @form_params["group_skill"] != "on"
+          %td.sep= character_link(study.e_no)
+          %td= character_old_link(@latest_result, study.e_no, study.result_no, study.generate_no)
+= paginate(@studies)

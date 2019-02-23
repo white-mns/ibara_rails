@@ -1,4 +1,4 @@
-- @page_title = "所持スキル一覧"
+- @page_title = "所持カード一覧"
 %h1= @page_title
 
 .card.desc
@@ -34,36 +34,21 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "元スキル名", params_name: "skill_form", placeholder: "Skill")
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Lv", params_name: "lv_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "元スキル名", params_name: "skill_form", placeholder: "Skill", colspan: 3)
 
     - #==========================================================================================================================
-    - tbody_toggle(@form_params, params_name: "show_skill_mastery",
-                    label: {open: "習得条件を表示する", close: "習得条件を表示しない"}, base_first: false)
-    %tbody.closed
+    - tbody_toggle(@form_params, params_name: "show_card_name",
+                    label: {open: "カード名を表示する", close: "カード名を表示しない"}, base_first: true)
+    %tbody
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "異能1or2", params_name: "requirement_form", placeholder: "Superpower")
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "必要lv", params_name: "requirement_lv_form", placeholder: "Number")
-      %tr.sep
-        %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "異能1", params_name: "requirement_1_form", placeholder: "Superpower")
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "必要lv", params_name: "requirement_1_lv_form", placeholder: "Number")
-      %tr.sep
-        %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "異能2", params_name: "requirement_2_form", placeholder: "Superpower")
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "必要lv", params_name: "requirement_2_lv_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "カード名", params_name: "name_form", placeholder: "SkillName", colspan: 3)
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_skill",
                     label: {open: "スキル情報を表示する", close: "スキル情報を表示しない"},
                     act_desc: "　種類（アクティブorパッシブ）、属性、EP、SP、発動タイミング、説明", base_first: false)
     %tbody.closed
-      %tr
-        %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "種類", params_name: "type_form", colspan: 3,
-                    checkboxes: [{label: "アクティブ", params_name: "type_active", class_name: "after_space mobile_br"},
-                                 {label: "パッシブ",   params_name: "type_passive"}])
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "属性", params_name: "element_form", colspan: 3,
@@ -80,16 +65,8 @@
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "SP", params_name: "sp_form")
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "発動タイミング", params_name: "timing_form", placeholder: "Timing")
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "説明", params_name: "text_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "説明", params_name: "text_form", colspan: 3)
 
-    - #==========================================================================================================================
-    - tbody_toggle(@form_params, params_name: "show_skill_name",
-                    label: {open: "改名後スキル名を表示する", close: "改名後スキル名を表示しない"}, base_first: false)
-    %tbody.closed
-      %tr
-        %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "スキル名", params_name: "name_form", placeholder: "SkillName", colspan: 3)
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_world",
@@ -127,7 +104,7 @@
           - search_submit_button
 
 
-= paginate(@skills)
+= paginate(@cards)
 %br
 ヒット数：#{ @count }件
 %br
@@ -138,44 +115,28 @@
     %tr
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
       %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
-      - if @form_params["show_skill_mastery"] == "1"
-        %th.sep= sort_link(@search, :skill_mastery_requirement_1_id, "異能1", default_order: :desc)
-        %th= sort_link(@search, :skill_mastery_requirement_1_lv, "必要Lv", default_order: :desc)
-        %th.sep= sort_link(@search, :skill_mastery_requirement_2_id, "異能2", default_order: :desc)
-        %th= sort_link(@search, :skill_mastery_requirement_2_lv, "必要Lv", default_order: :desc)
-      - if @form_params["show_skill_name"] == "1"
-        %th.sep= sort_link(@search, :name, "スキル名", default_order: :desc)
+      - if @form_params["show_card_name"] == "1"
+        %th.sep= sort_link(@search, :name, "カード名", default_order: :desc)
       %th.sep= sort_link(@search, :skill_id, "元スキル名", default_order: :desc)
-      %th= sort_link(@search, :lv, "Lv", default_order: :desc)
       - if @form_params["show_skill"] == "1"
-        %th.sep= sort_link(@search, :skill_type_id, "種類", default_order: :desc)
         %th= sort_link(@search, :skill_element_id, "属性", default_order: :desc)
         %th.sep= sort_link(@search, :skill_ep, "EP", default_order: :desc)
         %th= sort_link(@search, :skill_sp, "SP", default_order: :desc)
-        %th.sep= sort_link(@search, :skill_timing_id, "タイミング", default_order: :desc)
         %th= sort_link(@search, :skill_text, "説明", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
-    - @skills.each do |skill|
+    - @cards.each do |card|
       %tr
-        %td= skill.result_no
-        %td{style: "#{ world_border(skill.world) }" }= pc_name_text(skill.e_no, skill.pc_name)
-        - if @form_params["show_skill_mastery"] == "1"
-          %td.sep= skill.skill_mastery.requirement_1.name if skill.skill_mastery && skill.skill_mastery.requirement_1 && skill.skill_mastery.requirement_1.name
-          %td= skill.skill_mastery.requirement_1_lv if skill.skill_mastery && skill.skill_mastery.requirement_1
-          %td.sep= skill.skill_mastery.requirement_2.name if skill.skill_mastery && skill.skill_mastery.requirement_2 && skill.skill_mastery.requirement_2.name
-          %td= skill.skill_mastery.requirement_2_lv if skill.skill_mastery && skill.skill_mastery.requirement_2
-        - if @form_params["show_skill_name"] == "1"
-          %td.sep= skill.name
-        %td.sep= skill.skill.name if skill.skill
-        %td= skill.lv
+        %td= card.result_no
+        %td{style: "#{ world_border(card.world) }" }= pc_name_text(card.e_no, card.pc_name)
+        - if @form_params["show_card_name"] == "1"
+          %td.sep= card.name
+        %td.sep= card.skill.name if card.skill
         - if @form_params["show_skill"] == "1"
-          %td.sep= skill_type_name(skill.skill)
-          %td{style: "#{ elemental_border(skill.skill) }" }= elemental_name(skill.skill)
-          %td.sep= skill.skill.ep
-          %td= skill.skill.sp
-          %td.sep= skill.skill.timing.name if skill.skill.timing
-          %td= skill.skill.text
-        %td.sep= character_link(skill.e_no)
-        %td= character_old_link(@latest_result, skill.e_no, skill.result_no, skill.generate_no)
-= paginate(@skills)
+          %td{style: "#{ elemental_border(card.skill) }" }= elemental_name(card.skill)
+          %td.sep= card.skill.ep
+          %td= card.skill.sp
+          %td= card.skill.text
+        %td.sep= character_link(card.e_no)
+        %td= character_old_link(@latest_result, card.e_no, card.result_no, card.generate_no)
+= paginate(@cards)
