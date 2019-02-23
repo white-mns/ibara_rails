@@ -1,0 +1,142 @@
+- @page_title = "所持カード一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "元スキル名", params_name: "skill_form", placeholder: "Skill", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_card_name",
+                    label: {open: "カード名を表示する", close: "カード名を表示しない"}, base_first: true)
+    %tbody
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "カード名", params_name: "name_form", placeholder: "SkillName", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_skill",
+                    label: {open: "スキル情報を表示する", close: "スキル情報を表示しない"},
+                    act_desc: "　種類（アクティブorパッシブ）、属性、EP、SP、発動タイミング、説明", base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "属性", params_name: "element_form", colspan: 3,
+                    checkboxes: [{label: "無", params_name: "element_none",   class_name: "after_space", br: true},
+                                 {label: "火", params_name: "element_fire",   class_name: "after_space"},
+                                 {label: "水", params_name: "element_water",  class_name: "after_space"},
+                                 {label: "風", params_name: "element_wind",   class_name: "after_space", br: true},
+                                 {label: "地", params_name: "element_ground", class_name: "after_space"},
+                                 {label: "光", params_name: "element_light",  class_name: "after_space"},
+                                 {label: "闇", params_name: "element_dark",   class_name: "after_space"}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "EP", params_name: "ep_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "SP", params_name: "sp_form")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "説明", params_name: "text_form", colspan: 3)
+
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_pm",
+                    label: {open: "指定キャラのパーティメンバーで絞り込む", close: "指定キャラのパーティメンバーで絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "pm_result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "pm_e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pm_pc_name_form", placeholder: "Name")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, params_name: "pm_party_type_form", colspan: 3, 
+                    checkboxes: [{label: "戦闘PTM",     params_name: "pm_battle", class_name: "after_space mobile_br"},
+                                 {label: "次回予告PTM", params_name: "pm_next"}])
+
+    - #==========================================================================================================================
+    %tbody
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+
+= paginate(@cards)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
+      - if @form_params["show_card_name"] == "1"
+        %th.sep= sort_link(@search, :name, "カード名", default_order: :desc)
+      %th.sep= sort_link(@search, :skill_id, "元スキル名", default_order: :desc)
+      - if @form_params["show_skill"] == "1"
+        %th= sort_link(@search, :skill_element_id, "属性", default_order: :desc)
+        %th.sep= sort_link(@search, :skill_ep, "EP", default_order: :desc)
+        %th= sort_link(@search, :skill_sp, "SP", default_order: :desc)
+        %th= sort_link(@search, :skill_text, "説明", default_order: :desc)
+      %th.sep{colspan: "2"} 結果リンク
+  %tbody
+    - @cards.each do |card|
+      %tr
+        %td= card.result_no
+        %td{style: "#{ world_border(card.world) }" }= pc_name_text(card.e_no, card.pc_name)
+        - if @form_params["show_card_name"] == "1"
+          %td.sep= card.name
+        %td.sep= card.skill.name if card.skill
+        - if @form_params["show_skill"] == "1"
+          %td{style: "#{ elemental_border(card.skill) }" }= elemental_name(card.skill)
+          %td.sep= card.skill.ep
+          %td= card.skill.sp
+          %td= card.skill.text
+        %td.sep= character_link(card.e_no)
+        %td= character_old_link(@latest_result, card.e_no, card.result_no, card.generate_no)
+= paginate(@cards)

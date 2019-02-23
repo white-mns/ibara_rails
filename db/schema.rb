@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_23_041553) do
+ActiveRecord::Schema.define(version: 2019_02_23_060549) do
+
+  create_table "cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.string "name"
+    t.integer "skill_id"
+    t.integer "made_e_no"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["made_e_no"], name: "index_cards_on_made_e_no"
+    t.index ["name"], name: "index_cards_on_name"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+    t.index ["skill_id"], name: "index_cards_on_skill_id"
+  end
 
   create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
