@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_22_190622) do
+ActiveRecord::Schema.define(version: 2019_02_23_041553) do
 
   create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -149,6 +149,19 @@ ActiveRecord::Schema.define(version: 2019_02_22_190622) do
     t.index ["name"], name: "index_skills_on_name"
     t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
     t.index ["skill_id"], name: "index_skills_on_skill_id"
+  end
+
+  create_table "studies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "skill_id"
+    t.integer "depth"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["depth"], name: "index_studies_on_depth"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+    t.index ["skill_id"], name: "index_studies_on_skill_id"
   end
 
   create_table "superpower_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
