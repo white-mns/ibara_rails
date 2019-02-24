@@ -31,7 +31,7 @@ $navbar-light-active-color:         $white;
 $navbar-light-toggler-border-color: transparent;
 $dropdown-link-hover-bg:            $link-color;
 $dropdown-link-active-bg:           $link-color;
-$table-border-color:                #444 ;
+$table-border-color:                #666 ;
 $table-hover-bg:                    $gray;
 $nav-border-color:                  #db123d;
 
@@ -255,6 +255,12 @@ input + label:hover {
     background-size: 200% auto;
     background-repeat: no-repeat;
     background-position: 0% 0%;
+}
+
+img.style_img {
+    height: 20px;
+    width:  20px;
+    object-fit: cover;
 }
 
 @media screen and (min-width:768px) {

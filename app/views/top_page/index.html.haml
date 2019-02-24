@@ -16,6 +16,7 @@
           %li 個人データ
           %ul  
             %li= link_to "現在地一覧", places_path
+            %li= link_to "その他ステータス一覧", statuses_path
             %br
             %li= link_to "所持アイテム一覧", items_path
             %li= link_to "所持異能・生産一覧", superpowers_path
@@ -35,6 +36,11 @@
   .card-body
     %h2 更新履歴
     %ul
+      %li 2019/2/23
+      %ul
+        %li 
+          = link_to "その他ステータス一覧", statuses_path
+          を公開
       %li 2019/2/23
       %ul
         %li 

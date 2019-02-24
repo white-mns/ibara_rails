@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_23_060549) do
+ActiveRecord::Schema.define(version: 2019_02_24_031321) do
 
   create_table "cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -164,6 +164,31 @@ ActiveRecord::Schema.define(version: 2019_02_23_060549) do
     t.index ["name"], name: "index_skills_on_name"
     t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
     t.index ["skill_id"], name: "index_skills_on_skill_id"
+  end
+
+  create_table "statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "style_id"
+    t.integer "effect"
+    t.integer "mhp"
+    t.integer "msp"
+    t.integer "landform_id"
+    t.integer "condition"
+    t.integer "max_condition"
+    t.integer "ps"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["condition"], name: "index_statuses_on_condition"
+    t.index ["effect"], name: "index_statuses_on_effect"
+    t.index ["landform_id"], name: "index_statuses_on_landform_id"
+    t.index ["max_condition"], name: "index_statuses_on_max_condition"
+    t.index ["mhp"], name: "index_statuses_on_mhp"
+    t.index ["msp"], name: "index_statuses_on_msp"
+    t.index ["ps"], name: "index_statuses_on_ps"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+    t.index ["style_id"], name: "index_statuses_on_style_id"
   end
 
   create_table "studies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
