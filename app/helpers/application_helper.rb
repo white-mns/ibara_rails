@@ -38,10 +38,9 @@ module ApplicationHelper
         if e_no <= 0 then return end
         if result_no == latest_result_no then return end
 
-        result_no_text = sprintf("%03d", result_no)
-        generate_text  = generate_no > 0 ? "_" + sprintf("%d", generate_no) : ""
+        result_no_text = sprintf("%d", result_no)
         file_name = sprintf("%d", e_no)
-        link_to " 過去結果", "http://lisge.com/ib/k/now/r"+result_no_text+generate_text+"/"+file_name+".html", :target => "_blank"
+        link_to " "+result_no_text+":00", "http://lisge.com/ib/k/"+result_no_text+"/r"+file_name+".html", :target => "_blank"
     end
 
     def search_submit_button()
