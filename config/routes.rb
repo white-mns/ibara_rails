@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "styles",  :to => "statuses#style",  :as => "styles"
+  get "effects", :to => "statuses#effect", :as => "effects"
   resources :statuses
   resources :cards
   resources :studies

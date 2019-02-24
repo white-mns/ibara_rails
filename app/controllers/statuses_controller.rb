@@ -12,6 +12,16 @@ class StatusesController < ApplicationController
     @statuses	= @search.result.per(50)
   end
 
+  # GET /styles
+  def style
+      index
+  end
+
+  # GET /effects
+  def effect
+      index
+  end
+
   def param_set
     @form_params = {}
 

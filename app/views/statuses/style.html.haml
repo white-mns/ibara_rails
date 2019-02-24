@@ -1,4 +1,4 @@
-- @page_title = "その他ステータス一覧"
+- @page_title = "スタイル一覧"
 %h1= @page_title
 
 .card.desc
@@ -32,7 +32,7 @@
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
         - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
-      %tr.sep
+      %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "スタイル", params_name: "style_id_form", colspan: 3, 
                     checkboxes: [{label: "行動順１【瞬速】", params_name: "style_1", class_name: "after_space"},
@@ -44,28 +44,6 @@
                                  {label: "７【援助】", params_name: "style_7", class_name: "after_space"},
                                  {label: "８【虎視】", params_name: "style_8", class_name: "after_space", br: true},
                                  {label: "９【日和】", params_name: "style_9"}])
-      %tr
-        %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "影響力", params_name: "effect_form", placeholder: "Number", colspan: 3)
-      %tr
-        %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "MHP", params_name: "mhp_form", placeholder: "Number")
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "MSP", params_name: "msp_form", placeholder: "Number")
-      %tr
-        %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "現在地地形", params_name: "landform_form", colspan: 3, 
-                    checkboxes: [{label: "道路", params_name: "landform_1", class_name: "after_space"},
-                                 {label: "草原", params_name: "landform_2", class_name: "after_space"},
-                                 {label: "沼地", params_name: "landform_3", class_name: "after_space", br: true},
-                                 {label: "森林", params_name: "landform_4", class_name: "after_space"},
-                                 {label: "山岳", params_name: "landform_5", class_name: "after_space"}])
-      %tr
-        %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "体調", params_name: "condition_form", placeholder: "Number")
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "体調MAX", params_name: "max_condition_form", placeholder: "Number")
-      %tr
-        %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "PS", params_name: "ps_form", placeholder: "Number", colspan: 3)
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_world",
@@ -127,13 +105,6 @@
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
       %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
       %th.sep= sort_link(@search, :style_id, "スタイル", default_order: :desc)
-      %th= sort_link(@search, :effect, "影響力", default_order: :desc)
-      %th= sort_link(@search, :mhp, "MHP", default_order: :desc)
-      %th= sort_link(@search, :msp, "MSP", default_order: :desc)
-      %th= sort_link(@search, :landform_id, "地形", default_order: :desc)
-      %th= sort_link(@search, :condition, "体調", default_order: :desc)
-      %th= sort_link(@search, :max_condition, "体調MAX", default_order: :desc)
-      %th= sort_link(@search, :ps, "PS", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
     - @statuses.each do |status|
@@ -142,14 +113,6 @@
         %td{style: "#{ world_border(status.world) }" }= pc_name_text(status.e_no, status.pc_name)
         %td.text-nowrap.sep
           - style_img_name(status)
-        %td= status.effect
-        %td= status.mhp
-        %td= status.msp
-        %td.text-nowrap
-          - landform_img_name(status)
-        %td= status.condition
-        %td= status.max_condition
-        %td= status.ps
         %td.sep= character_link(status.e_no)
         %td= character_old_link(@latest_result, status.e_no, status.result_no, status.generate_no)
 = paginate(@statuses)
