@@ -49,7 +49,6 @@ class SuperpowersController < ApplicationController
     # toggle操作用
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
     toggle_params_to_variable(params, @form_params, params_name: "show_place")
-    toggle_params_to_variable(params, @form_params, params_name: "show_girth")
   end
   # GET /superpowers/1
   #def show

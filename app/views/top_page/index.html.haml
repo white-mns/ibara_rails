@@ -16,6 +16,9 @@
           %li 個人データ
           %ul  
             %li= link_to "現在地一覧", places_path
+            %li= link_to "スタイル一覧", styles_path
+            %li= link_to "影響力一覧", effects_path
+            %li= link_to "その他ステータス一覧", statuses_path
             %br
             %li= link_to "所持アイテム一覧", items_path
             %li= link_to "所持異能・生産一覧", superpowers_path
@@ -35,6 +38,18 @@
   .card-body
     %h2 更新履歴
     %ul
+      %li 2019/2/24
+      %ul
+        %li 
+          = link_to "スタイル一覧", styles_path
+          、
+          = link_to "影響力一覧", effects_path
+          、
+          = link_to "その他ステータス一覧", statuses_path
+          を公開
+        %li 
+          = link_to "所持スキル一覧", skills_path
+          にスタイルでの絞り込み機能を追加
       %li 2019/2/23
       %ul
         %li 
@@ -46,8 +61,7 @@
           に指定キャラのパーティメンバーでの絞り込み機能を追加
         %li 
           = link_to "所持カード一覧", cards_path
-          を公開
-        %li 
+          、
           = link_to "スキル研究一覧", studies_path
           を公開
       %li 2019/2/20

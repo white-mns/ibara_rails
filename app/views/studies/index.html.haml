@@ -124,7 +124,7 @@
         %th.sep= sort_link(@search, :depth_sum, "深度", default_order: :desc)
       - else
         %th.sep= sort_link(@search, :depth, "深度", default_order: :desc)
-      %th.sep= sort_link(@search, :skill_id, "元スキル名", default_order: :desc)
+      %th.sep= sort_link(@search, :skill_id, "スキル名", default_order: :desc)
       - if @form_params["show_skill"] == "1"
         %th.sep= sort_link(@search, :skill_type_id, "種類", default_order: :desc)
         %th= sort_link(@search, :skill_element_id, "属性", default_order: :desc)

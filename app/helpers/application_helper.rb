@@ -38,10 +38,9 @@ module ApplicationHelper
         if e_no <= 0 then return end
         if result_no == latest_result_no then return end
 
-        result_no_text = sprintf("%03d", result_no)
-        generate_text  = generate_no > 0 ? "_" + sprintf("%d", generate_no) : ""
+        result_no_text = sprintf("%d", result_no)
         file_name = sprintf("%d", e_no)
-        link_to " 過去結果", "http://lisge.com/ib/k/now/r"+result_no_text+generate_text+"/"+file_name+".html", :target => "_blank"
+        link_to " "+result_no_text+":00", "http://lisge.com/ib/k/"+result_no_text+"/r"+file_name+".html", :target => "_blank"
     end
 
     def search_submit_button()
@@ -237,6 +236,42 @@ module ApplicationHelper
         if party.party_type == 0 then "今回戦闘"
         elsif party.party_type == 1 then "次回予告"
         else "？"
+        end
+    end
+
+    def style_img_name(style)
+        if !style then 
+            return
+        end
+
+        haml_tag :img, src: "https://archives.teiki.org/risu/ibara/0/p/si" + sprintf("%d", style.style_id) + ".png", class:"style_img"
+
+        if style.style_id == 1 then haml_concat "瞬速"
+        elsif style.style_id == 2 then haml_concat "疾駆"
+        elsif style.style_id == 3 then haml_concat "強襲"
+        elsif style.style_id == 4 then haml_concat "特攻"
+        elsif style.style_id == 5 then haml_concat "順応"
+        elsif style.style_id == 6 then haml_concat "堅固"
+        elsif style.style_id == 7 then haml_concat "援助"
+        elsif style.style_id == 8 then haml_concat "虎視"
+        elsif style.style_id == 9 then haml_concat "日和"
+        else haml_concat "？"
+        end
+    end
+
+    def landform_img_name(landform)
+        if !landform then 
+            return
+        end
+
+        haml_tag :img, src: "https://archives.teiki.org/risu/ibara/0/p/a" + sprintf("%d", landform.landform_id) + ".png", class:"style_img"
+
+        if landform.landform_id == 1 then haml_concat "道路"
+        elsif landform.landform_id == 2 then haml_concat "草原"
+        elsif landform.landform_id == 3 then haml_concat "沼地"
+        elsif landform.landform_id == 4 then haml_concat "森林"
+        elsif landform.landform_id == 5 then haml_concat "山岳"
+        else haml_concat "？"
         end
     end
 end
