@@ -119,6 +119,23 @@
                                  {label: "次回予告PTM", params_name: "pm_next"}])
 
     - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_style",
+                    label: {open: "スタイルを表示する", close: "スタイルを表示しない"}, base_first: false)
+    %tbody.closed
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "スタイル", params_name: "style_id_form", colspan: 3, 
+                    checkboxes: [{label: "行動順１【瞬速】", params_name: "style_1", class_name: "after_space"},
+                                 {label: "２【疾駆】", params_name: "style_2", class_name: "after_space", br: true},
+                                 {label: "３【強襲】", params_name: "style_3", class_name: "after_space"},
+                                 {label: "４【特攻】", params_name: "style_4", class_name: "after_space", br: true},
+                                 {label: "５【順応】", params_name: "style_5", class_name: "after_space"},
+                                 {label: "６【堅固】", params_name: "style_6", class_name: "after_space", br: true},
+                                 {label: "７【援助】", params_name: "style_7", class_name: "after_space"},
+                                 {label: "８【虎視】", params_name: "style_8", class_name: "after_space", br: true},
+                                 {label: "９【日和】", params_name: "style_9"}])
+
+    - #==========================================================================================================================
     %tbody
       %tr.sep
         %td.indent
@@ -154,6 +171,8 @@
         %th= sort_link(@search, :skill_sp, "SP", default_order: :desc)
         %th.sep= sort_link(@search, :skill_timing_id, "タイミング", default_order: :desc)
         %th= sort_link(@search, :skill_text, "説明", default_order: :desc)
+      - if @form_params["show_style"] == "1"
+        %th.sep= sort_link(@search, :style_id, "スタイル", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
     - @skills.each do |skill|
@@ -176,6 +195,9 @@
           %td= skill.skill.sp
           %td.sep= skill.skill.timing.name if skill.skill.timing
           %td= skill.skill.text
+        - if @form_params["show_style"] == "1"
+          %td.text-nowrap.sep
+            - style_img_name(skill.status)
         %td.sep= character_link(skill.e_no)
         %td= character_old_link(@latest_result, skill.e_no, skill.result_no, skill.generate_no)
 = paginate(@skills)

@@ -6,8 +6,8 @@ class SkillsController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= Skill.distinct.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]], :party).search(params[:q]).result.count()
-    @search	= Skill.distinct.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]], :party).page(params[:page]).search(params[:q])
+    @count	= Skill.distinct.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]], :party, :status).search(params[:q]).result.count()
+    @search	= Skill.distinct.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]], :party, :status).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @skills	= @search.result.per(50)
   end
@@ -61,6 +61,17 @@ class SkillsController < ApplicationController
                                           {params_name: "element_light",  value: 5},
                                           {params_name: "element_dark",   value: 6}])
     
+    checkbox_params_set_query_any(params, @form_params, query_name: "status_style_id_eq_any",
+                             checkboxes: [{params_name: "style_1", value: 1},
+                                          {params_name: "style_2", value: 2},
+                                          {params_name: "style_3", value: 3},
+                                          {params_name: "style_4", value: 4},
+                                          {params_name: "style_5", value: 5},
+                                          {params_name: "style_6", value: 6},
+                                          {params_name: "style_7", value: 7},
+                                          {params_name: "style_8", value: 8},
+                                          {params_name: "style_9", value: 9}])
+
     pm_matching(params, @form_params)
 
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
@@ -68,6 +79,7 @@ class SkillsController < ApplicationController
     toggle_params_to_variable(params, @form_params, params_name: "show_skill_name")
     toggle_params_to_variable(params, @form_params, params_name: "show_skill_text")
     toggle_params_to_variable(params, @form_params, params_name: "show_skill_mastery")
+    toggle_params_to_variable(params, @form_params, params_name: "show_style")
   end
   # GET /skills/1
   #def show
