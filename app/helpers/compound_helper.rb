@@ -7,7 +7,7 @@ module CompoundHelper
         if compound.is_success == 1 then "合成"
         elsif compound.is_success == 2 then "合成実験"
         elsif compound.is_success == -1 then "Lv不足"
-        elsif compound.is_success == -2 then "指定ミス"
+        elsif compound.is_success == -2 then "素材なし"
         else "？"
         end
     end
