@@ -40,7 +40,9 @@
                 行動データ
                 %span.caret
               .dropdown-menu
-                .dropdown-divider
+                = link_to "合成一覧", compounds_path, class: "dropdown-item"
+                = link_to ">　合成結果一覧", compounds_path + "?result_no_form=""&group_result=on", class: "dropdown-item"
+                = link_to ">　合成組み合わせ一覧", compounds_path + "?result_no_form=""&group_source=on", class: "dropdown-item"
             %li.nav-item.dropdown
               %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
                 グラフデータ

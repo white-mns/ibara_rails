@@ -29,6 +29,10 @@
         %ul
           %li 行動データ
           %ul  
+            %li= link_to "合成一覧", compounds_path
+            %ul
+              %li= link_to "合成結果一覧", compounds_path + "?result_no_form=""&compound_deficient_lv=off&group_result=on"
+              %li= link_to "合成組み合わせ一覧", compounds_path + "?result_no_form=""&group_source=on"
           %li グラフデータ
           %ul  
             %li= link_to "所属世界グラフ", world_graphs_path
@@ -38,6 +42,16 @@
   .card-body
     %h2 更新履歴
     %ul
+      %li 2019/2/25
+      %ul
+        %li 
+          = link_to "合成一覧", compounds_path
+          を公開
+        %li 
+          合成一覧の検索条件を事前に指定したリンクとして
+          = link_to "合成結果一覧", compounds_path + "?result_no_form=""&group_result=on"
+          = link_to "合成組み合わせ一覧", compounds_path + "?result_no_form=""&group_source=on"
+          を公開
       %li 2019/2/24
       %ul
         %li 

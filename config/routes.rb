@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :compounds
   get "styles",  :to => "statuses#style",  :as => "styles"
   get "effects", :to => "statuses#effect", :as => "effects"
   resources :statuses

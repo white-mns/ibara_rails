@@ -1,0 +1,126 @@
+- @page_title = "合成一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "素材1アイテム名", params_name: "source_1_name_form", placeholder: "Item")
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "素材2アイテム名", params_name: "source_2_name_form", placeholder: "Item")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "素材1or2", params_name: "sources_name_form", placeholder: "Item", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "合成結果", params_name: "is_success_form", colspan: 3, 
+                    checkboxes: [{label: "○ 合成",     params_name: "compound_success",      class_name: "after_space"},
+                                 {label: "○ 合成実験", params_name: "compound_test_success", class_name: "after_space", br: true},
+                                 {label: "× Lv不足",   params_name: "compound_deficient_lv", class_name: "after_space"},
+                                 {label: "× 指定ミス", params_name: "compound_nihility",     class_name: "after_space"}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "獲得アイテム", params_name: "compound_result_form", placeholder: "Compound", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "合成Lv", params_name: "compound_lv_form", placeholder: "Number", colspan: 3)
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, params_name: "group_form", colspan: 3, 
+                    checkboxes: [{label: "合成結果でまとめて表示",         params_name: "group_result", class_name: "after_space", br: true},
+                                 {label: "素材の組み合わせでまとめて表示", params_name: "group_source", class_name: "after_space"}])
+    - #==========================================================================================================================
+    %tbody
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+
+= paginate(@compounds)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      - if params["group_result"] != "on" && params["group_source"] != "on"
+        %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+        %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
+      - if params["group_result"] != "on"
+        %th.sep= sort_link(@search, :source_1_name, "素材1", default_order: :desc)
+        %th= sort_link(@search, :source_2_name, "素材2", default_order: :desc)
+        %th.sep= sort_link(@search, :is_success, "結果", default_order: :desc)
+      %th.sep= sort_link(@search, :compound_result_id, "獲得アイテム", default_order: :desc)
+      - if params["group_result"] != "on" && params["group_source"] != "on"
+        %th= sort_link(@search, :compound_lv,"合成Lv", default_order: :desc)
+      - if params["group_source"] == "on"
+        %th 最高失敗Lv
+      - if params["group_result"] == "on" || params["group_source"] == "on"
+        %th 最低成功Lv
+      - if params["group_result"] != "on" && params["group_source"] != "on"
+        %th.sep{colspan: "2"} 結果リンク
+      - if params["group_source"] == "on"
+        %th.sep 詳細
+      - if params["group_result"] == "on"
+        %th.sep 詳細
+  %tbody
+    - @compounds.each do |compound|
+      %tr
+        - if params["group_result"] != "on" && params["group_source"] != "on"
+          %td= compound.result_no
+          %td{style: "#{ world_border(compound.world) }" }= pc_name_text(compound.e_no, compound.pc_name)
+        - if params["group_result"] != "on"
+          %td.sep= compound.source_1_name
+          %td= compound.source_2_name
+          %td.sep= compound_is_success_text(compound)
+        %td.sep= compound.compound_result.name if compound.compound_result
+        - if params["group_result"] != "on" && params["group_source"] != "on"
+          %td
+            - if compound.compound
+              = compound.compound.lv 
+        - if params["group_source"] == "on"
+          %td= compound.failed_max
+        - if params["group_result"] == "on" || params["group_source"] == "on"
+          %td= compound.success_min
+        - if params["group_result"] != "on" && params["group_source"] != "on"
+          %td.sep= character_link(compound.e_no)
+          %td= character_old_link(@latest_result, compound.e_no, compound.result_no, compound.generate_no)
+        - if params["group_source"] == "on"
+          %td= link_to "詳細", compounds_path + "?result_no_form="+params["result_no_form"]+"&sources_name_form="+compound.source_1_name+" "+compound.source_2_name+""
+        - if params["group_result"] == "on"
+          %td
+            - result_no_form_text = params["result_no_form"] ? params["result_no_form"] : ""
+            =link_to "詳細", compounds_path + "?result_no_form="+result_no_form_text+"&compound_result_form=\""+compound.compound_result.name+"\""
+= paginate(@compounds)
