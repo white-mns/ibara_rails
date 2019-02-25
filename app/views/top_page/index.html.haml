@@ -25,6 +25,8 @@
             %li= link_to "所持スキル一覧", skills_path
             %li= link_to "所持カード一覧", cards_path
             %li= link_to "スキル研究一覧", studies_path
+            %ul
+              %li= link_to "スキル研究ランキング", studies_path + "?group_skill=on"
       .col-md-6
         %ul
           %li 行動データ
@@ -48,9 +50,14 @@
           = link_to "合成一覧", compounds_path
           を公開
         %li 
-          合成一覧の検索条件を事前に指定したリンクとして
-          = link_to "合成結果一覧", compounds_path + "?result_no_form=""&group_result=on"
+          合成一覧の検索条件を指定した
+          = link_to "合成結果一覧", compounds_path + "?result_no_form=""&compound_deficient_lv=off&group_result=on"
+          、
           = link_to "合成組み合わせ一覧", compounds_path + "?result_no_form=""&group_source=on"
+          を公開
+        %li 
+          スキル研究一覧の検索条件を指定した
+          = link_to "スキル研究ランキング", studies_path + "?group_skill=on"
           を公開
       %li 2019/2/24
       %ul
