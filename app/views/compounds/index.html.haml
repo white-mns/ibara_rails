@@ -38,7 +38,7 @@
                     checkboxes: [{label: "○ 合成",     params_name: "compound_success",      class_name: "after_space"},
                                  {label: "○ 合成実験", params_name: "compound_test_success", class_name: "after_space", br: true},
                                  {label: "× Lv不足",   params_name: "compound_deficient_lv", class_name: "after_space"},
-                                 {label: "× 指定ミス", params_name: "compound_nihility",     class_name: "after_space"}])
+                                 {label: "× 素材なし", params_name: "compound_nihility",     class_name: "after_space"}])
       %tr.sep
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "素材1アイテム名", params_name: "source_1_name_form", placeholder: "Item")
