@@ -21,7 +21,11 @@ module MyUtility
     if !params["is_form"] then
         checkboxes.each do |hash|
             if hash[:first_checked] then
-                params[ hash[:params_name] ] = "on"
+                if params[ hash[:params_name] ] == "off" then
+                    params.delete( hash[:params_name] )
+                else
+                    params[ hash[:params_name] ] = "on"
+                end
             end
         end
     end
