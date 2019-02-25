@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_24_031321) do
+ActiveRecord::Schema.define(version: 2019_02_25_105910) do
 
   create_table "cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -25,6 +25,32 @@ ActiveRecord::Schema.define(version: 2019_02_24_031321) do
     t.index ["name"], name: "index_cards_on_name"
     t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
     t.index ["skill_id"], name: "index_cards_on_skill_id"
+  end
+
+  create_table "compounds", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "last_result_no"
+    t.integer "last_generate_no"
+    t.integer "source_1_i_no"
+    t.string "source_1_name"
+    t.integer "source_2_i_no"
+    t.string "source_2_name"
+    t.string "sources_name"
+    t.integer "is_success"
+    t.integer "compound_result_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["compound_result_id"], name: "index_compounds_on_compound_result_id"
+    t.index ["is_success"], name: "index_compounds_on_is_success"
+    t.index ["result_no", "compound_result_id", "e_no", "generate_no"], name: "resultno_compoundid_eno"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+    t.index ["source_1_i_no"], name: "index_compounds_on_source_1_i_no"
+    t.index ["source_1_name"], name: "index_compounds_on_source_1_name"
+    t.index ["source_2_i_no"], name: "index_compounds_on_source_2_i_no"
+    t.index ["source_2_name"], name: "index_compounds_on_source_2_name"
+    t.index ["sources_name"], name: "index_compounds_on_sources_name"
   end
 
   create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|

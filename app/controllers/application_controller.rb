@@ -13,5 +13,6 @@ class ApplicationController < ActionController::Base
         @placeholder["Timing"]      = "例）戦闘開始時"
         @placeholder["Field"]       = "例）チナミ/ヒノデ区"
         @placeholder["AreaColumn"]  = "例）A/b/c/d"
+        @placeholder["Compound"]    = "例）どうでも/柔らか"
     end
 end
