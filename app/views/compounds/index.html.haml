@@ -32,13 +32,6 @@
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
         - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
-      %tr.sep
-        %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "素材1アイテム名", params_name: "source_1_name_form", placeholder: "Item")
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "素材2アイテム名", params_name: "source_2_name_form", placeholder: "Item")
-      %tr
-        %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "素材1or2", params_name: "sources_name_form", placeholder: "Item", colspan: 3)
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "合成結果", params_name: "is_success_form", colspan: 3, 
@@ -46,6 +39,13 @@
                                  {label: "○ 合成実験", params_name: "compound_test_success", class_name: "after_space", br: true},
                                  {label: "× Lv不足",   params_name: "compound_deficient_lv", class_name: "after_space"},
                                  {label: "× 指定ミス", params_name: "compound_nihility",     class_name: "after_space"}])
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "素材1アイテム名", params_name: "source_1_name_form", placeholder: "Item")
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "素材2アイテム名", params_name: "source_2_name_form", placeholder: "Item")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "素材1or2", params_name: "sources_name_form", placeholder: "Item", colspan: 3)
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "獲得アイテム", params_name: "compound_result_form", placeholder: "Compound", colspan: 3)
@@ -79,9 +79,9 @@
         %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
         %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
       - if params["group_result"] != "on"
+        %th.sep= sort_link(@search, :is_success, "結果", default_order: :desc)
         %th.sep= sort_link(@search, :source_1_name, "素材1", default_order: :desc)
         %th= sort_link(@search, :source_2_name, "素材2", default_order: :desc)
-        %th.sep= sort_link(@search, :is_success, "結果", default_order: :desc)
       %th.sep= sort_link(@search, :compound_result_id, "獲得アイテム", default_order: :desc)
       - if params["group_result"] != "on" && params["group_source"] != "on"
         %th= sort_link(@search, :compound_lv,"合成Lv", default_order: :desc)
@@ -102,9 +102,9 @@
           %td= compound.result_no
           %td{style: "#{ world_border(compound.world) }" }= pc_name_text(compound.e_no, compound.pc_name)
         - if params["group_result"] != "on"
+          %td.sep= compound_is_success_text(compound)
           %td.sep= compound.source_1_name
           %td= compound.source_2_name
-          %td.sep= compound_is_success_text(compound)
         %td.sep= compound.compound_result.name if compound.compound_result
         - if params["group_result"] != "on" && params["group_source"] != "on"
           %td
