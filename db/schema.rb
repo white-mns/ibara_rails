@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_25_105910) do
+ActiveRecord::Schema.define(version: 2019_02_27_005523) do
 
   create_table "cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -105,10 +105,10 @@ ActiveRecord::Schema.define(version: 2019_02_25_105910) do
     t.integer "generate_no"
     t.integer "e_no"
     t.integer "party_type"
-    t.integer "party"
+    t.integer "party_no"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["party"], name: "index_parties_on_party"
+    t.index ["party_no"], name: "index_parties_on_party_no"
     t.index ["party_type"], name: "index_parties_on_party_type"
     t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
   end
