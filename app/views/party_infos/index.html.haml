@@ -1,0 +1,124 @@
+- @page_title = "パーティ情報一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "パーティ名", params_name: "name_form", placeholder: "Text", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "パーティ人数", params_name: "member_num_form", placeholder: "Number", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "戦闘", params_name: "party_type_form", colspan: 3, 
+                    checkboxes: [{label: "今回戦闘", params_name: "is_battle", class_name: "after_space mobile_br"},
+                                 {label: "次回予告", params_name: "is_next"}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_place",
+                    label: {open: "現在地を表示する", close: "現在地を表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "区", params_name: "field_form", placeholder: "Field", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "列", params_name: "area_column_form", placeholder: "AreaColumn")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "行", params_name: "area_row_form", placeholder: "Number")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_girth",
+                    label: {open: "指定キャラの現在地＋周囲8エリアで絞り込む", close: "指定キャラの現在地＋周囲8エリアで絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "place_result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "place_e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "place_pc_name_form", placeholder: "Name")
+
+    - #==========================================================================================================================
+    %tbody
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+
+= paginate(@party_infos)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :name, "パーティ名", default_order: :desc)
+      %th= sort_link(@search, :member_num, "パーティ人数", default_order: :desc)
+      %th= sort_link(@search, :party_type, "戦闘", default_order: :desc)
+      %th= sort_link(@search, :party_no,"キャラクター(Eno)", default_order: :desc)
+      - if @form_params["show_place"] == "1" || @form_params["show_girth"] == "1" 
+        %th.sep= sort_link(@search, :place_field_id, "区", default_order: :desc)
+        %th= sort_link(@search, :place_area_column, "列", default_order: :desc)
+        %th= sort_link(@search, :place_area_row, "行", default_order: :desc)
+      %th.sep{colspan: "2"} 結果リンク
+  %tbody
+    - @party_infos.each do |party_info|
+      %tr
+        %td= party_info.result_no
+        %td{style: "#{ world_border(party_info.world) }" }= party_info.name
+        %td= party_info.member_num
+        %td= party_type_name(party_info)
+        %td
+          - party_members_name(party_info.party_members)
+        - if @form_params["show_place"] == "1" || @form_params["show_girth"] == "1" 
+          %td.sep= party_info.place.field.name if party_info.place && party_info.place.field
+          %td{colspan: 2, align: "center"}
+            = party_info.place.area_column + "-" + sprintf("%d", party_info.place.area_row) if party_info.place
+        %td.sep= character_link(party_info.party_no)
+        %td= character_old_link(@latest_result, party_info.party_no, party_info.result_no, party_info.generate_no)
+= paginate(@party_infos)
