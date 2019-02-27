@@ -39,7 +39,7 @@
                                  {label: "次回予告", params_name: "is_next"}])
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "パーティ番号", params_name: "party_form", placeholder: "Number", colspan: 3)
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "パーティ番号", params_name: "party_no_form", placeholder: "Number", colspan: 3)
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_world",
@@ -88,7 +88,7 @@
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
       %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
       %th= sort_link(@search, :party_type, "戦闘", default_order: :desc)
-      %th= sort_link(@search, :party, "パーティ番号", default_order: :desc)
+      %th= sort_link(@search, :party_no, "パーティ番号", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
     - @parties.each do |party|
@@ -96,7 +96,7 @@
         %td= party.result_no
         %td{style: "#{ world_border(party.world) }" }= pc_name_text(party.e_no, party.pc_name)
         %td= party_type_name(party)
-        %td= party.party
+        %td= party.party_no
         %td.sep= character_link(party.e_no)
         %td= character_old_link(@latest_result, party.e_no, party.result_no, party.generate_no)
 = paginate(@parties)
