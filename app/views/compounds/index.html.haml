@@ -9,6 +9,12 @@
   .card-body
     = render "layouts/base_desc"
     %p
+      「素材1+2」の入力枠は、内部的には「素材1アイテム名 素材2アイテム名」という2つのアイテム名をくっつけた文字列になってます。
+      %br
+      そのため、「不思議な牙 不思議な石」と入力すると、不思議な牙と不思議な石を合成した結果（順不同）が検索できます。
+      %br
+      逆に、完全一致検索はこの入力枠では機能しません。完全一致が必要な場合は「素材1アイテム名」、「素材2アイテム名」の入力枠をご利用ください。
+    %p
       %span.example_select.example_toggle.pointer
         - help_icon
         入力例
@@ -45,7 +51,7 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "素材2アイテム名", params_name: "source_2_name_form", placeholder: "Item")
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "素材1or2", params_name: "sources_name_form", placeholder: "Item", colspan: 3)
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "素材1+2", params_name: "sources_name_form", placeholder: "Item", colspan: 3)
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "獲得アイテム", params_name: "compound_result_form", placeholder: "Compound", colspan: 3)
