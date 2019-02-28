@@ -275,7 +275,9 @@ module ApplicationHelper
             return
         end
 
-        haml_tag :img, src: "https://archives.teiki.org/risu/ibara/0/p/a" + sprintf("%d", landform.landform_id) + ".png", class:"style_img"
+        if landform.landform_id > 0 then
+            haml_tag :img, src: "https://archives.teiki.org/risu/ibara/0/p/a" + sprintf("%d", landform.landform_id) + ".png", class:"style_img"
+        end
 
         if landform.landform_id == 1 then haml_concat "道路"
         elsif landform.landform_id == 2 then haml_concat "草原"
