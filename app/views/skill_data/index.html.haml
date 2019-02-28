@@ -47,7 +47,7 @@
                                  {label: "パッシブ",   params_name: "type_passive"}])
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "属性", params_name: "element_form", colspan: 3,
+        - td_form(f, @form_params, @placeholder,                         label: "属性スキル", params_name: "element_form", colspan: 3,
                     checkboxes: [{label: "無", params_name: "element_none",   class_name: "after_space", br: true},
                                  {label: "火", params_name: "element_fire",   class_name: "after_space"},
                                  {label: "水", params_name: "element_water",  class_name: "after_space"},
@@ -62,7 +62,7 @@
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "発動タイミング", params_name: "timing_form", placeholder: "Timing")
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "説明", params_name: "text_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "説明", params_name: "text_form", placeholder: "SkillText")
       %tr.sep
         %td.indent
         %td.indent= hidden_field_tag :is_form, 1

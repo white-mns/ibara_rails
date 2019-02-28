@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
         @placeholder["Name"]        = "例）太郎/\"次郎\""
         @placeholder["Skill"]       = "例）ブレイク/\"ヒール\""
         @placeholder["SkillName"]   = "つよブレイク/\"すごヒール\""
+        @placeholder["SkillText"]   = "例）火撃 光撃"
         @placeholder["Item"]        = "例）不思議な食材"
         @placeholder["ItemKind"]    = "例）武器/素材/食材"
         @placeholder["Fuka"]        = "例）活力/\"鎮痛\""
