@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_27_010916) do
+ActiveRecord::Schema.define(version: 2019_02_28_045059) do
 
   create_table "cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -87,6 +87,27 @@ ActiveRecord::Schema.define(version: 2019_02_27_010916) do
     t.index ["range"], name: "index_items_on_range"
     t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
     t.index ["strength"], name: "index_items_on_strength"
+  end
+
+  create_table "moves", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "move_no"
+    t.integer "field_id"
+    t.string "area"
+    t.string "area_column"
+    t.integer "area_row"
+    t.integer "landform_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["area"], name: "index_moves_on_area"
+    t.index ["area_column"], name: "index_moves_on_area_column"
+    t.index ["area_row"], name: "index_moves_on_area_row"
+    t.index ["field_id"], name: "index_moves_on_field_id"
+    t.index ["landform_id"], name: "index_moves_on_landform_id"
+    t.index ["move_no"], name: "index_moves_on_move_no"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
   end
 
   create_table "names", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|

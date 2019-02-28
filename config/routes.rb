@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :moves
   resources :party_infos
   resources :compounds
   get "styles",  :to => "statuses#style",  :as => "styles"
