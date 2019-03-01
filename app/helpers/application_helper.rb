@@ -19,11 +19,16 @@ module ApplicationHelper
     end
 
     def pc_name_text(e_no, pc_name)
-        e_no_text = "(" + sprintf("%d",e_no) + ")"
-        if pc_name then
-            pc_name.name.html_safe + e_no_text
-        else
-            e_no_text
+        capture_haml do
+            e_no_text = "(" + sprintf("%d",e_no) + ")"
+            if pc_name then
+                haml_tag :div, class: "name_div" do
+                    haml_concat pc_name.name
+                end
+            end
+            haml_tag :span do
+                haml_concat e_no_text
+            end
         end
     end
 
