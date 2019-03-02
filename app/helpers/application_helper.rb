@@ -292,4 +292,15 @@ module ApplicationHelper
         else haml_concat "？"
         end
     end
+
+    def battle_type_text(object)
+        if !object then 
+            return
+        end
+
+        if object.battle_type == 0 then "ENCOUNTER"
+        elsif object.battle_type == 1 then "MISSION"
+        else "？"
+        end
+    end
 end

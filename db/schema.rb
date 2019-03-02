@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_28_045059) do
+ActiveRecord::Schema.define(version: 2019_03_02_033455) do
 
   create_table "cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -119,6 +119,21 @@ ActiveRecord::Schema.define(version: 2019_02_28_045059) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+  end
+
+  create_table "next_battle_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "party_no"
+    t.integer "battle_type"
+    t.integer "enemy_party_name_id"
+    t.integer "member_num"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["battle_type"], name: "index_next_battle_infos_on_battle_type"
+    t.index ["enemy_party_name_id"], name: "index_next_battle_infos_on_enemy_party_name_id"
+    t.index ["member_num"], name: "index_next_battle_infos_on_member_num"
+    t.index ["result_no", "party_no", "generate_no"], name: "resultno_partyno"
   end
 
   create_table "parties", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|

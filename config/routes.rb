@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :next_battle_infos
   resources :moves
   resources :party_infos
   resources :compounds

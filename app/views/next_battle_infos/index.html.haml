@@ -1,0 +1,103 @@
+- @page_title = "次回NPC戦予告一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "戦闘の種類", params_name: "battle_type_form", colspan: 3, 
+                    checkboxes: [{label: "ENCOUNTER - 『遭遇戦』『採集』", params_name: "is_encounter", class_name: "after_space", br: true},
+                                 {label: "MISSION - 『開放戦』『特殊戦』", params_name: "is_mission"}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "敵人数", params_name: "member_num_form", placeholder: "Number", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_party_name",
+                    label: {open: "パーティ名を表示する", close: "パーティ名を表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "PT名", params_name: "party_name_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "敵PT名", params_name: "enemy_party_name_form")
+    - #==========================================================================================================================
+    %tbody
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+
+= paginate(@next_battle_infos)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      - if @form_params["show_party_name"] == "1"
+        %th= sort_link(@search, :party_info_name, "PT名", default_order: :desc)
+      %th= sort_link(@search, :party_no,"キャラクター(Eno)", default_order: :desc)
+      %th= sort_link(@search, :battle_type, "戦闘", default_order: :desc)
+      - if @form_params["show_party_name"] == "1"
+        %th= sort_link(@search, :enemy_party_name_id, "敵PT名", default_order: :desc)
+      %th= sort_link(@search, :member_num, "敵人数", default_order: :desc)
+      %th.sep{colspan: "2"} 結果リンク
+  %tbody
+    - @next_battle_infos.each do |next_battle_info|
+      %tr
+        %td= next_battle_info.result_no
+        - if @form_params["show_party_name"] == "1"
+          %td= next_battle_info.party_info.name if next_battle_info.party_info
+        %td{style: "#{ world_border(next_battle_info.world) }" }
+          - party_members_name(next_battle_info.party_info.party_members)
+        %td= battle_type_text(next_battle_info)
+        - if @form_params["show_party_name"] == "1"
+          %td= next_battle_info.enemy_party_name.name if next_battle_info.enemy_party_name
+        %td= next_battle_info.member_num
+        %td.sep= character_link(next_battle_info.party_no)
+        %td= character_old_link(@latest_result, next_battle_info.party_no, next_battle_info.result_no, next_battle_info.generate_no)
+= paginate(@next_battle_infos)
