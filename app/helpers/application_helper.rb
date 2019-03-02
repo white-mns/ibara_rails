@@ -260,11 +260,9 @@ module ApplicationHelper
             return
         end
 
-        capture_haml do
-            members.each do |member|
-                haml_concat member.enemy.name
-                haml_tag :br
-            end
+        members.each do |member|
+            haml_concat member.enemy.name
+            haml_tag :br
         end
     end
 
@@ -273,21 +271,19 @@ module ApplicationHelper
             return
         end
 
-        capture_haml do
-            party_members.each do |party_member|
-                if !party_member.move then
-                    break
-                end
-
-                party_member.move.each_with_index do |move, i|
-                     landform_img_text(move)
-                     if i < (party_member.move.length - 1) then
-                        haml_concat "→"
-                     end
-                end
-
-                haml_tag :br
+        party_members.each do |party_member|
+            if !party_member.move then
+                break
             end
+
+            party_member.move.each_with_index do |move, i|
+                 landform_img_text(move)
+                 if i < (party_member.move.length - 1) then
+                    haml_concat "→"
+                 end
+            end
+
+            haml_tag :br
         end
     end
 

@@ -119,13 +119,15 @@
         %td{style: "#{ world_border(next_battle_info.world) }" }
           - party_members_pc_name_text(next_battle_info.party_info.party_members)
         - if @form_params["show_move"] == "1"
-          %td.text-nowrap= party_members_move(next_battle_info.party_info.party_members)
+          %td.text-nowrap
+            - party_members_move(next_battle_info.party_info.party_members)
         - if @form_params["show_move_statistics"] == "1"
           %td 1
         %td= battle_type_text(next_battle_info)
         - if @form_params["show_party_name"] == "1"
           %td= next_battle_info.enemy_party_name.name if next_battle_info.enemy_party_name
-        %td= enemy_members_text(next_battle_info.enemy_members)
+        %td
+          - enemy_members_text(next_battle_info.enemy_members)
         %td= next_battle_info.member_num
         %td.sep= character_link(next_battle_info.party_no)
         %td= character_old_link(@latest_result, next_battle_info.party_no, next_battle_info.result_no, next_battle_info.generate_no)
