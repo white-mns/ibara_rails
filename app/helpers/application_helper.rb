@@ -255,6 +255,42 @@ module ApplicationHelper
         end
     end
 
+    def enemy_members_name(members)
+        if !members then 
+            return
+        end
+
+        capture_haml do
+            members.each do |member|
+                haml_concat member.enemy.name
+                haml_tag :br
+            end
+        end
+    end
+
+    def party_members_move(party_members)
+        if !party_members then 
+            return
+        end
+
+        capture_haml do
+            party_members.each do |party_member|
+                if !party_member.move then
+                    break
+                end
+
+                party_member.move.each_with_index do |move, i|
+                     landform_img_name(move)
+                     if i < (party_member.move.length - 1) then
+                        haml_concat "→"
+                     end
+                end
+
+                haml_tag :br
+            end
+        end
+    end
+
     def style_img_name(style)
         if !style then 
             return
@@ -284,14 +320,23 @@ module ApplicationHelper
             haml_tag :img, src: "https://archives.teiki.org/risu/ibara/0/p/a" + sprintf("%d", landform.landform_id) + ".png", class:"style_img"
         end
 
-        if landform.landform_id == 1 then haml_concat "道路"
-        elsif landform.landform_id == 2 then haml_concat "草原"
-        elsif landform.landform_id == 3 then haml_concat "沼地"
-        elsif landform.landform_id == 4 then haml_concat "森林"
-        elsif landform.landform_id == 5 then haml_concat "山岳"
-        else haml_concat "？"
+        haml_concat landform_text(landform)
+    end
+
+    def landform_text(object)
+        if !object then 
+            return
+        end
+
+        if object.landform_id == 1 then "道路"
+        elsif object.landform_id == 2 then "草原"
+        elsif object.landform_id == 3 then "沼地"
+        elsif object.landform_id == 4 then "森林"
+        elsif object.landform_id == 5 then "山岳"
+        else "？"
         end
     end
+
 
     def battle_type_text(object)
         if !object then 

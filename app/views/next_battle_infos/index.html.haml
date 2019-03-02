@@ -59,6 +59,25 @@
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "PT名", params_name: "party_name_form")
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "敵PT名", params_name: "enemy_party_name_form")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_move",
+                    label: {open: "移動ルートを表示する", close: "移動ルートを表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+          %td{colspan: 5}
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_move_statistics",
+                    label: {open: "移動統計を表示する", close: "移動統計を表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "PT名", params_name: "party_name_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "敵PT名", params_name: "enemy_party_name_form")
+
+
     - #==========================================================================================================================
     %tbody
       %tr.sep
@@ -81,9 +100,14 @@
       - if @form_params["show_party_name"] == "1"
         %th= sort_link(@search, :party_info_name, "PT名", default_order: :desc)
       %th= sort_link(@search, :party_no,"キャラクター(Eno)", default_order: :desc)
+      - if @form_params["show_move"] == "1"
+        %th= sort_link(@search, :party_info_members_move, "移動", default_order: :desc)
+      - if @form_params["show_move_statistics"] == "1"
+        %th 道路
       %th= sort_link(@search, :battle_type, "戦闘", default_order: :desc)
       - if @form_params["show_party_name"] == "1"
         %th= sort_link(@search, :enemy_party_name_id, "敵PT名", default_order: :desc)
+      %th= sort_link(@search, :enemy_members_enemy_name, "敵一覧", default_order: :desc)
       %th= sort_link(@search, :member_num, "敵人数", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
@@ -94,9 +118,14 @@
           %td= next_battle_info.party_info.name if next_battle_info.party_info
         %td{style: "#{ world_border(next_battle_info.world) }" }
           - party_members_name(next_battle_info.party_info.party_members)
+        - if @form_params["show_move"] == "1"
+          %td.text-nowrap= party_members_move(next_battle_info.party_info.party_members)
+        - if @form_params["show_move_statistics"] == "1"
+          %td 1
         %td= battle_type_text(next_battle_info)
         - if @form_params["show_party_name"] == "1"
           %td= next_battle_info.enemy_party_name.name if next_battle_info.enemy_party_name
+        %td= enemy_members_name(next_battle_info.enemy_members)
         %td= next_battle_info.member_num
         %td.sep= character_link(next_battle_info.party_no)
         %td= character_old_link(@latest_result, next_battle_info.party_no, next_battle_info.result_no, next_battle_info.generate_no)

@@ -6,8 +6,8 @@ class NextBattleInfosController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= NextBattleInfo.notnil().includes(:world, :place, party_info: [party_members: :pc_name]).search(params[:q]).result.count()
-    @search	= NextBattleInfo.notnil().includes(:world, :place, party_info: [party_members: :pc_name]).page(params[:page]).search(params[:q])
+    @count	= NextBattleInfo.notnil().includes(:world, :place, party_info: [party_members: [:pc_name, :move]], enemy_members: :enemy).search(params[:q]).result.count()
+    @search	= NextBattleInfo.notnil().includes(:world, :place, party_info: [party_members: [:pc_name, :move]], enemy_members: :enemy).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @next_battle_infos	= @search.result.per(50)
   end
@@ -34,6 +34,8 @@ class NextBattleInfosController < ApplicationController
 
     params_to_form(params, @form_params, column_name: "enemy_party_name_name", params_name: "enemy_party_name_form", type: "text")
     params_to_form(params, @form_params, column_name: "party_info_name", params_name: "party_name_form", type: "text")
+    
+    params_to_form(params, @form_params, column_name: "enemy_members_enemy_name", params_name: "enemy_form", type: "text")
 
     checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",
                              checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},
@@ -46,6 +48,8 @@ class NextBattleInfosController < ApplicationController
 
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
     toggle_params_to_variable(params, @form_params, params_name: "show_party_name")
+    toggle_params_to_variable(params, @form_params, params_name: "show_move")
+    toggle_params_to_variable(params, @form_params, params_name: "show_move_statistics")
   end
   # GET /next_battle_infos/1
   #def show
