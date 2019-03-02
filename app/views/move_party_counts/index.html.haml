@@ -1,0 +1,90 @@
+- @page_title = "PT別移動地形数合計一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "PT番号", params_name: "party_no_form", placeholder: "Number")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "地形", params_name: "landform_form", colspan: 3, 
+                    checkboxes: [{label: "道路", params_name: "landform_1", class_name: "after_space"},
+                                 {label: "草原", params_name: "landform_2", class_name: "after_space"},
+                                 {label: "沼地", params_name: "landform_3", class_name: "after_space", br: true},
+                                 {label: "森林", params_name: "landform_4", class_name: "after_space"},
+                                 {label: "山岳", params_name: "landform_5", class_name: "after_space"}])
+
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "移動回数", params_name: "move_count_form", placeholder: "Number")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
+    %tbody
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+
+= paginate(@move_party_counts)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :party_no, "PT番号", default_order: :desc)
+      %th= sort_link(@search, :landform_id, "地形", default_order: :desc)
+      %th= sort_link(@search, :move_count, "移動回数", default_order: :desc)
+      %th.sep{colspan: "2"} 結果リンク
+  %tbody
+    - @move_party_counts.each do |move_party_count|
+      %tr
+        %td= move_party_count.result_no
+        %td= move_party_count.party_no
+        %td
+          - landform_img_text(move_party_count)
+        %td= move_party_count.move_count
+        %td.sep= character_link(move_party_count.party_no)
+        %td= character_old_link(@latest_result, move_party_count.party_no, move_party_count.result_no, move_party_count.generate_no)
+= paginate(@move_party_counts)

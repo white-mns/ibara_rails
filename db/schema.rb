@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_02_043455) do
+ActiveRecord::Schema.define(version: 2019_03_02_154302) do
 
   create_table "cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -87,6 +87,19 @@ ActiveRecord::Schema.define(version: 2019_03_02_043455) do
     t.index ["range"], name: "index_items_on_range"
     t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
     t.index ["strength"], name: "index_items_on_strength"
+  end
+
+  create_table "move_party_counts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "party_no"
+    t.integer "landform_id"
+    t.integer "move_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["landform_id"], name: "index_move_party_counts_on_landform_id"
+    t.index ["move_count"], name: "index_move_party_counts_on_move_count"
+    t.index ["result_no", "party_no", "generate_no"], name: "resultno_partyno"
   end
 
   create_table "moves", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
