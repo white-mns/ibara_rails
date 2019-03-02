@@ -64,7 +64,7 @@
       %tr
         %td= world.result_no
         %td{style: "#{ world_border(world) }" }= pc_name_text(world.e_no, world.pc_name)
-        %td= world_name(world)
+        %td= world_text(world)
         %td= character_link(world.e_no)
         %td= character_old_link(@latest_result, world.e_no, world.result_no, world.generate_no)
 = paginate(@worlds)

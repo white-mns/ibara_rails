@@ -98,8 +98,8 @@
         %td.sep= skill_datum.skill_mastery.requirement_2.name if skill_datum.skill_mastery && skill_datum.skill_mastery.requirement_2 && skill_datum.skill_mastery.requirement_2.name
         %td= skill_datum.skill_mastery.requirement_2_lv if skill_datum.skill_mastery && skill_datum.skill_mastery.requirement_2
         %td.sep= skill_datum.name
-        %td.sep= skill_type_name(skill_datum)
-        %td{style: "#{ elemental_border(skill_datum) }" }= elemental_name(skill_datum)
+        %td.sep= skill_type_text(skill_datum)
+        %td{style: "#{ elemental_border(skill_datum) }" }= elemental_text(skill_datum)
         %td.sep= skill_datum.ep
         %td= skill_datum.sp
         %td.sep= skill_datum.timing.name if skill_datum.timing

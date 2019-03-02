@@ -112,9 +112,9 @@
         %td= party_info.result_no
         %td{style: "#{ world_border(party_info.world) }" }= party_info.name
         %td= party_info.member_num
-        %td= party_type_name(party_info)
+        %td= party_type_text(party_info)
         %td
-          - party_members_name(party_info.party_members)
+          - party_members_pc_name_text(party_info.party_members)
         - if @form_params["show_place"] == "1" || @form_params["show_girth"] == "1" 
           %td.sep= party_info.place.field.name if party_info.place && party_info.place.field
           %td{colspan: 2, align: "center"}

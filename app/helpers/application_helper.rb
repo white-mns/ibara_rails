@@ -165,7 +165,7 @@ module ApplicationHelper
         assembly_text.chop()
     end
 
-    def world_name(world)
+    def world_text(world)
         if !world then 
             return
         end
@@ -189,7 +189,7 @@ module ApplicationHelper
         "border-right: " + border_style;
     end
 
-    def skill_type_name(skill)
+    def skill_type_text(skill)
         if !skill then 
             return
         end
@@ -200,7 +200,7 @@ module ApplicationHelper
         end
     end
 
-    def elemental_name(skill)
+    def elemental_text(skill)
         if !skill then 
             return
         end
@@ -233,7 +233,7 @@ module ApplicationHelper
         "border-left: " + border_style;
     end
 
-    def party_type_name(party)
+    def party_type_text(party)
         if !party then 
             return
         end
@@ -244,7 +244,7 @@ module ApplicationHelper
         end
     end
 
-    def party_members_name(party_members)
+    def party_members_pc_name_text(party_members)
         if !party_members then 
             return
         end
@@ -255,7 +255,7 @@ module ApplicationHelper
         end
     end
 
-    def enemy_members_name(members)
+    def enemy_members_text(members)
         if !members then 
             return
         end
@@ -280,7 +280,7 @@ module ApplicationHelper
                 end
 
                 party_member.move.each_with_index do |move, i|
-                     landform_img_name(move)
+                     landform_img_text(move)
                      if i < (party_member.move.length - 1) then
                         haml_concat "→"
                      end
@@ -291,7 +291,7 @@ module ApplicationHelper
         end
     end
 
-    def style_img_name(style)
+    def style_img_text(style)
         if !style then 
             return
         end
@@ -311,7 +311,7 @@ module ApplicationHelper
         end
     end
 
-    def landform_img_name(landform)
+    def landform_img_text(landform)
         if !landform then 
             return
         end

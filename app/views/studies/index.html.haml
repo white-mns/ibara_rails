@@ -147,8 +147,8 @@
             = study.depth
         %td.sep= study.skill.name if study.skill
         - if @form_params["show_skill"] == "1"
-          %td.sep= skill_type_name(study.skill)
-          %td{style: "#{ elemental_border(study.skill) }" }= elemental_name(study.skill)
+          %td.sep= skill_type_text(study.skill)
+          %td{style: "#{ elemental_border(study.skill) }" }= elemental_text(study.skill)
           %td.sep= study.skill.ep
           %td= study.skill.sp
           %td.sep= study.skill.timing.name if study.skill.timing

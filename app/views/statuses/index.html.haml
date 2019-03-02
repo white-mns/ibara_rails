@@ -141,12 +141,12 @@
         %td= status.result_no
         %td{style: "#{ world_border(status.world) }" }= pc_name_text(status.e_no, status.pc_name)
         %td.text-nowrap.sep
-          - style_img_name(status)
+          - style_img_text(status)
         %td= status.effect
         %td= status.mhp
         %td= status.msp
         %td.text-nowrap
-          - landform_img_name(status)
+          - landform_img_text(status)
         %td= status.condition
         %td= status.max_condition
         %td= status.ps

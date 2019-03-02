@@ -115,7 +115,7 @@
         %td{colspan: 2, align: "center"}
           = move.area_column + "-" + sprintf("%d", move.area_row)
         %td.text-nowrap
-          - landform_img_name(move)
+          - landform_img_text(move)
         %td.sep= character_link(move.e_no)
         %td= character_old_link(@latest_result, move.e_no, move.result_no, move.generate_no)
 = paginate(@moves)
