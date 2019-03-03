@@ -7,7 +7,7 @@ class Compound < ApplicationRecord
 	belongs_to :compound,  -> { where(superpower_id: compound)}, :foreign_key => [:e_no, :result_no, :generate_no], :primary_key => [:e_no, :result_no, :generate_no], :class_name => "Superpower"
 	belongs_to :compound_result, :foreign_key => :compound_result_id, :primary_key => :proper_id, :class_name => "ProperName"
 
-    scope :compound_include, ->(params) {
+    scope :compound_includes, ->(params) {
         if params["group_result"] == "on" || params["group_source"] then
             joins(:compound)
         else

@@ -133,7 +133,7 @@
           %td.sep= card.name
         %td.sep= card.skill.name if card.skill
         - if @form_params["show_skill"] == "1"
-          %td{style: "#{ elemental_border(card.skill) }" }= elemental_name(card.skill)
+          %td{style: "#{ elemental_border(card.skill) }" }= elemental_text(card.skill)
           %td.sep= card.skill.ep
           %td= card.skill.sp
           %td= card.skill.text

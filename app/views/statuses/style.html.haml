@@ -15,7 +15,7 @@
         - act_desc(false)
     #example.closed
       = render "layouts/input_desc"
-= search_form_for @search do |f|
+= search_form_for @search, url: styles_path do |f|
   %table.search_toggle.table.table-striped.table-bordered.table-hover
     %tbody.pointer
       %tr
@@ -112,7 +112,7 @@
         %td= status.result_no
         %td{style: "#{ world_border(status.world) }" }= pc_name_text(status.e_no, status.pc_name)
         %td.text-nowrap.sep
-          - style_img_name(status)
+          - style_img_text(status)
         %td.sep= character_link(status.e_no)
         %td= character_old_link(@latest_result, status.e_no, status.result_no, status.generate_no)
 = paginate(@statuses)

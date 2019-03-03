@@ -66,7 +66,7 @@
                                  {label: "パッシブ",   params_name: "type_passive"}])
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "属性", params_name: "element_form", colspan: 3,
+        - td_form(f, @form_params, @placeholder,                         label: "属性スキル", params_name: "element_form", colspan: 3,
                     checkboxes: [{label: "無", params_name: "element_none",   class_name: "after_space", br: true},
                                  {label: "火", params_name: "element_fire",   class_name: "after_space"},
                                  {label: "水", params_name: "element_water",  class_name: "after_space"},
@@ -81,7 +81,7 @@
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "発動タイミング", params_name: "timing_form", placeholder: "Timing")
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "説明", params_name: "text_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "説明", params_name: "text_form", placeholder: "SkillText")
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_skill_name",
@@ -189,15 +189,15 @@
         %td.sep= skill.skill.name if skill.skill
         %td= skill.lv
         - if @form_params["show_skill"] == "1"
-          %td.sep= skill_type_name(skill.skill)
-          %td{style: "#{ elemental_border(skill.skill) }" }= elemental_name(skill.skill)
+          %td.sep= skill_type_text(skill.skill)
+          %td{style: "#{ elemental_border(skill.skill) }" }= elemental_text(skill.skill)
           %td.sep= skill.skill.ep
           %td= skill.skill.sp
           %td.sep= skill.skill.timing.name if skill.skill.timing
           %td= skill.skill.text
         - if @form_params["show_style"] == "1"
           %td.text-nowrap.sep
-            - style_img_name(skill.status)
+            - style_img_text(skill.status)
         %td.sep= character_link(skill.e_no)
         %td= character_old_link(@latest_result, skill.e_no, skill.result_no, skill.generate_no)
 = paginate(@skills)

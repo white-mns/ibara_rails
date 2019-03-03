@@ -1,0 +1,121 @@
+- @page_title = "移動一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "区", params_name: "field_form", placeholder: "Field", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "列", params_name: "area_column_form", placeholder: "AreaColumn")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "行", params_name: "area_row_form", placeholder: "Number")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "地形", params_name: "landform_form", colspan: 3, 
+                    checkboxes: [{label: "道路", params_name: "landform_1", class_name: "after_space"},
+                                 {label: "草原", params_name: "landform_2", class_name: "after_space"},
+                                 {label: "沼地", params_name: "landform_3", class_name: "after_space", br: true},
+                                 {label: "森林", params_name: "landform_4", class_name: "after_space"},
+                                 {label: "山岳", params_name: "landform_5", class_name: "after_space"}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "○歩目", params_name: "move_no_form", placeholder: "Number", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_pm",
+                    label: {open: "指定キャラのパーティメンバーで絞り込む", close: "指定キャラのパーティメンバーで絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "pm_result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "pm_e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pm_pc_name_form", placeholder: "Name")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, params_name: "pm_party_type_form", colspan: 3, 
+                    checkboxes: [{label: "戦闘PTM",     params_name: "pm_battle", class_name: "after_space mobile_br"},
+                                 {label: "次回予告PTM", params_name: "pm_next"}])
+
+
+    - #==========================================================================================================================
+    %tbody
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+
+= paginate(@moves)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
+      %th= sort_link(@search, :move_no, "○歩目", default_order: :desc)
+      %th= sort_link(@search, :field_id, "区", default_order: :desc)
+      %th= sort_link(@search, :area_column, "列", default_order: :desc)
+      %th= sort_link(@search, :area_row, "行", default_order: :desc)
+      %th= sort_link(@search, :landform_id, "地形", default_order: :desc)
+      %th.sep{colspan: "2"} 結果リンク
+  %tbody
+    - @moves.each do |move|
+      %tr
+        %td= move.result_no
+        %td{style: "#{ world_border(move.world) }" }= pc_name_text(move.e_no, move.pc_name)
+        %td= move_no_text(move)
+        %td.sep= move.field.name if move.field
+        %td{colspan: 2, align: "center"}
+          = move.area_column + "-" + sprintf("%d", move.area_row)
+        %td.text-nowrap
+          - landform_img_text(move)
+        %td.sep= character_link(move.e_no)
+        %td= character_old_link(@latest_result, move.e_no, move.result_no, move.generate_no)
+= paginate(@moves)

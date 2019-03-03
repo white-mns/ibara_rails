@@ -47,7 +47,7 @@
                                  {label: "パッシブ",   params_name: "type_passive"}])
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "属性", params_name: "element_form", colspan: 3,
+        - td_form(f, @form_params, @placeholder,                         label: "属性スキル", params_name: "element_form", colspan: 3,
                     checkboxes: [{label: "無", params_name: "element_none",   class_name: "after_space", br: true},
                                  {label: "火", params_name: "element_fire",   class_name: "after_space"},
                                  {label: "水", params_name: "element_water",  class_name: "after_space"},
@@ -62,7 +62,7 @@
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "発動タイミング", params_name: "timing_form", placeholder: "Timing")
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "説明", params_name: "text_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "説明", params_name: "text_form", placeholder: "SkillText")
       %tr.sep
         %td.indent
         %td.indent= hidden_field_tag :is_form, 1
@@ -98,8 +98,8 @@
         %td.sep= skill_datum.skill_mastery.requirement_2.name if skill_datum.skill_mastery && skill_datum.skill_mastery.requirement_2 && skill_datum.skill_mastery.requirement_2.name
         %td= skill_datum.skill_mastery.requirement_2_lv if skill_datum.skill_mastery && skill_datum.skill_mastery.requirement_2
         %td.sep= skill_datum.name
-        %td.sep= skill_type_name(skill_datum)
-        %td{style: "#{ elemental_border(skill_datum) }" }= elemental_name(skill_datum)
+        %td.sep= skill_type_text(skill_datum)
+        %td{style: "#{ elemental_border(skill_datum) }" }= elemental_text(skill_datum)
         %td.sep= skill_datum.ep
         %td= skill_datum.sp
         %td.sep= skill_datum.timing.name if skill_datum.timing

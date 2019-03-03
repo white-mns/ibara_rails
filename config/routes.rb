@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :move_party_counts
+  resources :next_battle_enemies
+  resources :next_battle_infos
+  resources :moves
   resources :party_infos
   resources :compounds
   get "styles",  :to => "statuses#style",  :as => "styles"

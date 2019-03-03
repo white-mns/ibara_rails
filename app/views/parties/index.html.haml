@@ -95,7 +95,7 @@
       %tr
         %td= party.result_no
         %td{style: "#{ world_border(party.world) }" }= pc_name_text(party.e_no, party.pc_name)
-        %td= party_type_name(party)
+        %td= party_type_text(party)
         %td= party.party_no
         %td.sep= character_link(party.e_no)
         %td= character_old_link(@latest_result, party.e_no, party.result_no, party.generate_no)
