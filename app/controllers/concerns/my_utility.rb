@@ -169,6 +169,13 @@ module MyUtility
             if detection_arrays[:and].length > 1 then 
                 detection_arrays[:and] += nos
                 detection_arrays[:and] = detection_arrays[:and].flatten.group_by{ |e| e }.select { |k, v| v.size > 1 }.map(&:first)
+
+                # 絞り込んだ結果ヒット件数が0になった場合、ダミー値で絞り込ませる
+                # 　0件で配列を返すと、絞り込みが行われず全件ヒットするため
+                if detection_arrays[:and].length == 0 then 
+                    detection_arrays[:and] = [-99999]
+                    return
+                end
             else
                 detection_arrays[:and] += nos
             end
