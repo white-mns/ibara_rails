@@ -159,6 +159,44 @@ module MyUtility
     end
   end
 
+  # has_manyで結合した要素について、AND検索で絞り込む
+  # 　・取得した配列から、重複したデータのみを取り出し返す
+  def add_and_param_for_has_many(params, params_tmp, detection_arrays, dummy_param, param, record, column)
+    if params[:q][dummy_param] then
+        params[:q][dummy_param].each do |tmp_param|
+            params_tmp[:q][param] = tmp_param
+            nos = record.search(params_tmp[:q]).result.pluck(column).uniq
+            if detection_arrays[:and].length > 1 then 
+                detection_arrays[:and] += nos
+                detection_arrays[:and] = detection_arrays[:and].flatten.group_by{ |e| e }.select { |k, v| v.size > 1 }.map(&:first)
+            else
+                detection_arrays[:and] += nos
+            end
+            params_tmp[:q].delete(param)
+        end
+    end
+  end
+
+  # has_manyで結合した要素について、OR検索で絞り込む
+  def add_or_param_for_has_many(params, params_tmp, detection_arrays, dummy_param, param, record, column)
+    if params[:q][dummy_param] then
+        params_tmp[:q][param] = params[:q][dummy_param]
+        nos = record.search(params_tmp[:q]).result.pluck(column)
+        detection_arrays[:or] += nos
+        params_tmp[:q].delete(param)
+    end
+  end
+
+  # has_manyで結合した要素について、NT検索で絞り込む
+  def add_not_param_for_has_many(params, params_tmp, detection_arrays, dummy_param, param, record, column)
+    if params[:q][dummy_param] then
+        params_tmp[:q][param] = params[:q][dummy_param]
+        nos = record.search(params_tmp[:q]).result.pluck(column)
+        detection_arrays[:not] += nos
+        params_tmp[:q].delete(param)
+    end
+  end
+
   # キャラ周囲絞り込み用
   def girth_matching(params, form_params)
       if !params["is_form"] then
