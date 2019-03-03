@@ -37,7 +37,9 @@ class NextBattleInfosController < ApplicationController
     params_to_form(params, @form_params, column_name: "enemy_party_name_name", params_name: "enemy_party_name_form", type: "text")
     params_to_form(params, @form_params, column_name: "party_info_name", params_name: "party_name_form", type: "text")
     
-    params_to_form(params, @form_params, column_name: "enemy_members_enemy_name", params_name: "enemy_form", type: "text")
+    params_to_form(params, @form_params, column_name: "enemy_members_enemy_dummy", params_name: "enemy_form", type: "text")
+
+    detection_party_no_from_enemy_name(params, @form_params)
 
     params_to_form(params, @form_params, column_name: "road_move_count",     params_name: "road_form",     type: "number")
     params_to_form(params, @form_params, column_name: "grass_move_count",    params_name: "grass_form",    type: "number")
@@ -59,6 +61,33 @@ class NextBattleInfosController < ApplicationController
     toggle_params_to_variable(params, @form_params, params_name: "show_party_name")
     toggle_params_to_variable(params, @form_params, params_name: "show_move")
     toggle_params_to_variable(params, @form_params, params_name: "show_move_statistics")
+  end
+
+  def detection_party_no_from_enemy_name(params, form_params)
+    params_tmp = {}
+    params_tmp[:q] = {}
+    params_to_form(params_tmp, @form_params, column_name: "result_no", params_name: "result_no_form", type: "number")
+    params_to_form(params_tmp, @form_params, column_name: "party_no",  params_name: "party_no_form", type: "number")
+
+    detection_arrays = {and: [], or: [], not: []}
+
+    add_and_param_for_has_many(params, params_tmp, detection_arrays, "enemy_members_enemy_dummy_cont_all",     "enemy_name_cont_all", NextBattleEnemy.includes(:enemy), :party_no)
+    add_and_param_for_has_many(params, params_tmp, detection_arrays, "enemy_members_enemy_dummy_eq_all",       "enemy_name_eq_all",   NextBattleEnemy.includes(:enemy), :party_no)
+    add_or_param_for_has_many( params, params_tmp, detection_arrays, "enemy_members_enemy_dummy_cont_any",     "enemy_name_cont_any", NextBattleEnemy.includes(:enemy), :party_no)
+    add_or_param_for_has_many( params, params_tmp, detection_arrays, "enemy_members_enemy_dummy_eq_any",       "enemy_name_eq_any",   NextBattleEnemy.includes(:enemy), :party_no)
+    add_not_param_for_has_many(params, params_tmp, detection_arrays, "enemy_members_enemy_dummy_not_cont_all", "enemy_name_cont_all", NextBattleEnemy.includes(:enemy), :party_no)
+    add_not_param_for_has_many(params, params_tmp, detection_arrays, "enemy_members_enemy_dummy_not_eq_all",   "enemy_name_eq_all",   NextBattleEnemy.includes(:enemy), :party_no)
+
+    params[:q]["party_no_eq_any"] = detection_arrays[:or].flatten.uniq
+
+    if params[:q]["party_no_eq_any"].length > 1 then 
+        params[:q]["party_no_eq_any"] += detection_arrays[:or].flatten.uniq
+        params[:q]["party_no_eq_any"] = params[:q]["party_no_eq_any"].flatten.group_by{ |e| e }.select { |k, v| v.size > 1 }.map(&:first)
+    else
+        params[:q]["party_no_eq_any"] = detection_arrays[:and].flatten.uniq
+    end
+
+    params[:q]["party_no_not_eq_all"] = detection_arrays[:not].flatten.uniq
   end
 
   # GET /next_battle_infos/1
