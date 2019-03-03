@@ -6,8 +6,8 @@ class NextBattleInfosController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= NextBattleInfo.notnil().includes(:world, :place, party_info: [party_members: [:pc_name, :move]], enemy_members: :enemy).search(params[:q]).result.count()
-    @search	= NextBattleInfo.notnil().includes(:world, :place, party_info: [party_members: [:pc_name, :move]], enemy_members: :enemy).page(params[:page]).search(params[:q])
+    @count	= NextBattleInfo.distinct.notnil().includes(:world, :place, [party_info: [party_members: [:pc_name, :move]]], [enemy_members: :enemy], :road, :grass, :swamp, :forest, :mountain).search(params[:q]).result.count()
+    @search	= NextBattleInfo.distinct.notnil().includes(:world, :place, [party_info: [party_members: [:pc_name, :move]]], [enemy_members: :enemy], :road, :grass, :swamp, :forest, :mountain).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @next_battle_infos	= @search.result.per(50)
   end
@@ -27,7 +27,9 @@ class NextBattleInfosController < ApplicationController
     params_to_form(params, @form_params, column_name: "party_no", params_name: "party_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "battle_type", params_name: "battle_type_form", type: "number")
     params_to_form(params, @form_params, column_name: "enemy_party_name_id", params_name: "enemy_party_name_id_form", type: "number")
-    params_to_form(params, @form_params, column_name: "member_num", params_name: "member_num_form", type: "number")
+
+    params_to_form(params, @form_params, column_name: "party_info_member_num", params_name: "member_num_form", type: "number")
+    params_to_form(params, @form_params, column_name: "member_num", params_name: "enemy_member_num_form", type: "number")
 
     params_to_form(params, @form_params, column_name: "party_info_party_members_e_no", params_name: "e_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "party_info_party_members_pc_name_name", params_name: "pc_name_form", type: "text")
@@ -36,6 +38,12 @@ class NextBattleInfosController < ApplicationController
     params_to_form(params, @form_params, column_name: "party_info_name", params_name: "party_name_form", type: "text")
     
     params_to_form(params, @form_params, column_name: "enemy_members_enemy_name", params_name: "enemy_form", type: "text")
+
+    params_to_form(params, @form_params, column_name: "road_move_count",     params_name: "road_form",     type: "number")
+    params_to_form(params, @form_params, column_name: "grass_move_count",    params_name: "grass_form",    type: "number")
+    params_to_form(params, @form_params, column_name: "swamp_move_count",    params_name: "swamp_form",    type: "number")
+    params_to_form(params, @form_params, column_name: "forest_move_count",   params_name: "forest_form",   type: "number")
+    params_to_form(params, @form_params, column_name: "mountain_move_count", params_name: "mountain_form", type: "number")
 
     checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",
                              checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},
@@ -47,10 +55,12 @@ class NextBattleInfosController < ApplicationController
 
 
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
+    toggle_params_to_variable(params, @form_params, params_name: "show_member_num")
     toggle_params_to_variable(params, @form_params, params_name: "show_party_name")
     toggle_params_to_variable(params, @form_params, params_name: "show_move")
     toggle_params_to_variable(params, @form_params, params_name: "show_move_statistics")
   end
+
   # GET /next_battle_infos/1
   #def show
   #end
