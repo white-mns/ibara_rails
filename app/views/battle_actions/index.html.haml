@@ -1,0 +1,153 @@
+- @page_title = "スキル・付加発動結果一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "戦闘の種類", params_name: "battle_type_form", colspan: 3, 
+                    checkboxes: [{label: "ENCOUNTER - 『遭遇戦』『採集』", params_name: "is_encounter",  br: true},
+                                 {label: "MISSION - 『開放戦』『特殊戦』", params_name: "is_mission",    br: true},
+                                 {label: "DUEL　- 『決闘』",               params_name: "is_duel",       br: true},
+                                 {label: "GAME　- 『練習戦』",             params_name: "is_game",       br: true},
+                                 {label: "闘技大会",                       params_name: "is_tournament", br: true}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "スキルor付加", params_name: "act_type_form", colspan: 3, 
+                    checkboxes: [{label: "スキル",   params_name: "act_type_skill", class_name: "after_space"},
+                                 {label: "付加",     params_name: "act_type_fuka",  class_name: "after_space mobile_br"},
+                                 {label: "通常攻撃", params_name: "act_type_normal"}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "スキル・付加名", params_name: "act_form", placeholder: "Skill", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_group",
+                    label: {open: "特定の要素で結果をまとめる", close: "特定の要素で結果をまとめる選択肢を隠す"},
+                    act_desc: "ターン別、結果別", base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, params_name: "group_turn", label_td_class_name: "indent", 
+                    checkboxes: [{label: "ターン別で表示",     params_name: "group_turn", class_name: "after_space mobile_br"}])
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "ターン", params_name: "turn_form", placeholder: "Number")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, params_name: "group_page", colspan: 3, label_td_class_name: "indent", 
+                    checkboxes: [{label: "結果別で表示",     params_name: "group_page", class_name: "after_space mobile_br"}])
+      %tr.sep
+        %td.indent
+        %td{colspan:4} まとめた合計数を表示
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, params_name: "group_page", colspan: 3, label_td_class_name: "indent", 
+                    checkboxes: [{label: "発動回数",   params_name: "total_use", class_name: "after_space mobile_br"},
+                                 {label: "発動結果数", params_name: "total_page", class_name: "after_space mobile_br"}])
+
+    - #==========================================================================================================================
+    %tbody
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+
+= paginate(@battle_actions)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      - if @form_params["group_page"] == "on"
+        %th= sort_link(@search, :battle_action_battle_type, "戦闘の種類", default_order: :desc)
+      - if @form_params["group_turn"] == "on"
+        %th= sort_link(@search, :turn, "ターン", default_order: :desc)
+      %th= sort_link(@search, :skill_id, "スキル", default_order: :desc)
+      %th= sort_link(@search, :fuka_id, "付加", default_order: :desc)
+      - if @form_params["group_page"] != "on" && @form_params["group_turn"] != "on"
+        -if @form_params["total_use"] == "on"
+          %th= sort_link(@search, :use_count, "発動回数", default_order: :desc)
+        -if @form_params["total_page"] == "on"
+          %th= sort_link(@search, :page_count, "発動結果数", default_order: :desc)
+      - if @form_params["group_page"] == "on"
+        %th= sort_link(@search, :battle_info_battle_page, "ファイル名", default_order: :desc)
+      %th.sep{colspan: "2"} 結果リンク
+  %tbody
+    - @battle_actions.each do |battle_action|
+      %tr
+        %td= battle_action.result_no
+        - if @form_params["group_page"] == "on"
+          %td= battle_type_text(battle_action.battle_info)
+        - if @form_params["group_turn"] == "on"
+          %td= battle_action.turn
+        - if battle_action.act_type == 0 || battle_action.act_type == 1
+          %td{colspan: 2}= battle_action.skill.name if battle_action.skill
+        - elsif battle_action.act_type == 2
+          %td{colspan: 2}= battle_action.fuka.name if battle_action.fuka
+        - if @form_params["group_page"] != "on" && @form_params["group_turn"] != "on"
+          -if @form_params["total_use"] == "on"
+            %td= battle_action.use_count
+          -if @form_params["total_page"] == "on"
+            %td= battle_action.page_count
+        - if @form_params["group_page"] == "on"
+          %td= battle_action.battle_info.battle_page + ".html" if battle_action.battle_info
+        - if @form_params["group_page"] == "on"
+          %td.sep= battle_link(@latest_result, battle_action.battle_info.battle_type, battle_action.battle_info.battle_page, battle_action.battle_info.result_no, battle_action.battle_info.generate_no)
+          %td= battle_old_link(@latest_result, battle_action.battle_info.battle_type, battle_action.battle_info.battle_page, battle_action.battle_info.result_no, battle_action.battle_info.generate_no)
+        - else
+          - turn_tex = ""
+          - act_text = ""
+          - if @form_params["group_turn"] == "on"
+            - turn_text = "&group_turn=on&turn_form=" + sprintf("%d", battle_action.turn)
+          - else
+            - turn_text = ""
+          - if (battle_action.act_type == 0 || battle_action.act_type == 1) && battle_action.skill
+            - act_text = "act_form=\"" + battle_action.skill.name + "\""
+          - elsif battle_action.act_type == 2 && battle_action.fuka
+            - act_text = "act_form=\"" + battle_action.fuka.name + "\""
+          %td.sep= link_to "発動結果一覧", battle_actions_path + "?" + act_text + turn_text
+= paginate(@battle_actions)

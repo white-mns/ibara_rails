@@ -10,7 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_07_034747) do
+ActiveRecord::Schema.define(version: 2019_03_07_045129) do
+
+  create_table "battle_actions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "battle_id"
+    t.integer "turn"
+    t.integer "act_id"
+    t.integer "act_type"
+    t.integer "skill_id"
+    t.integer "fuka_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["act_type"], name: "index_battle_actions_on_act_type"
+    t.index ["fuka_id"], name: "index_battle_actions_on_fuka_id"
+    t.index ["result_no", "battle_id", "act_id", "generate_no"], name: "resultno_battleid"
+    t.index ["result_no", "battle_id", "turn", "act_id", "generate_no"], name: "resultno_turn"
+    t.index ["skill_id"], name: "index_battle_actions_on_skill_id"
+    t.index ["turn"], name: "index_battle_actions_on_turn"
+  end
 
   create_table "battle_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
