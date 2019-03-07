@@ -48,6 +48,21 @@ module ApplicationHelper
         link_to " "+result_no_text+":00", "http://lisge.com/ib/k/"+result_no_text+"/r"+file_name+".html", :target => "_blank"
     end
 
+    def battle_link(latest_result_no, battle_type, battle_page, result_no, generate_no)
+        if battle_page == "" then return end
+        if result_no != latest_result_no then return end
+
+        link_to " 結果", "http://lisge.com/ib/k/now/"+battle_page+".html", :target => "_blank"
+    end
+    
+    def battle_old_link(latest_result_no, battle_type, battle_page, result_no, generate_no)
+        if battle_page == "" then return end
+        if result_no == latest_result_no then return end
+
+        result_no_text = sprintf("%d", result_no)
+        link_to " "+result_no_text+":00", "http://lisge.com/ib/k/"+result_no_text+"/"+battle_page+".html", :target => "_blank"
+    end
+
     def search_submit_button()
         haml_tag :button, class: "btn submit", type: "submit" do
             haml_concat fa_icon "search", text: "検索する"
@@ -341,6 +356,9 @@ module ApplicationHelper
 
         if object.battle_type == 0 then "ENCOUNTER"
         elsif object.battle_type == 1 then "MISSION"
+        elsif object.battle_type == 10 then "DUEL"
+        elsif object.battle_type == 11 then "GAME"
+        elsif object.battle_type == 20 then "闘技大会"
         else "？"
         end
     end

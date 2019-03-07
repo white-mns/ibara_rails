@@ -1,0 +1,2 @@
+class BattleInfo < ApplicationRecord
+end
