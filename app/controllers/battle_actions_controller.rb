@@ -76,6 +76,10 @@ class BattleActionsController < ApplicationController
     @form_params["total_acter"] = params["total_acter"]
     @form_params["total_page"] = params["total_page"]
     @form_params["ex_sort"] = params["ex_sort"]
+    
+    if !params["is_form"] && params["ex_sort"] == "on" then
+        params["is_form"] = 1
+    end
 
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
     toggle_params_to_variable(params, @form_params, params_name: "show_place")
