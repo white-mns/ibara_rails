@@ -6,8 +6,8 @@ class BattleActionsController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= BattleAction.notnil().includes(:battle_info, :skill, :fuka).groups(params).search(params[:q]).result.hit_count()
-    @search	= BattleAction.notnil().includes(:battle_info, :skill, :fuka).groups(params).total(params).includes_or_joins_and_total(params).having_order(params).page(params[:page]).search(params[:q])
+    @count	= BattleAction.notnil().includes_or_joins(params).groups(params).search(params[:q]).result.hit_count()
+    @search	= BattleAction.notnil().includes_or_joins(params).groups(params).total(params).having_order(params).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if params["group_page"] == "on" && @search.sorts.empty?
     @battle_actions	= @search.result.per(50)
   end
@@ -28,7 +28,6 @@ class BattleActionsController < ApplicationController
         params.delete("group_page")
     end
 
-    params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")
     params_to_form(params, @form_params, column_name: "result_no", params_name: "result_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "generate_no", params_name: "generate_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "battle_id", params_name: "battle_id_form", type: "number")
@@ -38,15 +37,20 @@ class BattleActionsController < ApplicationController
     params_to_form(params, @form_params, column_name: "skill_id", params_name: "skill_id_form", type: "number")
     params_to_form(params, @form_params, column_name: "fuka_id", params_name: "fuka_id_form", type: "number")
 
+    params_to_form(params, @form_params, column_name: "battle_info_battle_page", params_name: "battle_page_form", type: "text")
+
     params_to_form(params, @form_params, column_name: "skill_name_or_fuka_name", params_name: "act_form", type: "text")
     params_to_form(params, @form_params, column_name: "skill_ep", params_name: "ep_form", type: "number")
     params_to_form(params, @form_params, column_name: "skill_sp", params_name: "sp_form", type: "number")
     params_to_form(params, @form_params, column_name: "skill_text", params_name: "text_form", type: "text")
 
+    params_to_form(params, @form_params, column_name: "acter_e_no", params_name: "e_no_form", type: "number")
+    params_to_form(params, @form_params, column_name: "acter_pc_name_name", params_name: "pc_name_form", type: "text")
+    params_to_form(params, @form_params, column_name: "acter_enemy_name", params_name: "enemy_form", type: "text")
 
-    checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",
-                             checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},
-                                          {params_name: "is_ansinity" , value: 1, first_checked: true}])
+    checkbox_params_set_query_any(params, @form_params, query_name: "acter_world_world_eq_any",
+                             checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: false},
+                                          {params_name: "is_ansinity" , value: 1, first_checked: false}])
 
     checkbox_params_set_query_any(params, @form_params, query_name: "act_type_eq_any",
                              checkboxes: [{params_name: "act_type_normal", value: 0},
@@ -60,12 +64,23 @@ class BattleActionsController < ApplicationController
                                           {params_name: "is_game",       value: 11, first_checked: false},
                                           {params_name: "is_tournament", value: 20, first_checked: false}])
 
+    checkbox_params_set_query_any(params, @form_params, query_name: "acter_acter_type_eq_any",
+                             checkboxes: [{params_name: "acter_pc",   value: 0, first_checked: true},
+                                          {params_name: "acter_npc" , value: 1, first_checked: false}])
+
+    pm_matching(params, @form_params)
+
     @form_params["group_turn"] = params["group_turn"]
     @form_params["group_page"] = params["group_page"]
-    @form_params["total_use"]  = params["total_use"]
+    @form_params["group_acter"] = params["group_acter"]
+    @form_params["total_act"]  = params["total_act"]
+    @form_params["total_acter"] = params["total_acter"]
     @form_params["total_page"] = params["total_page"]
 
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
+    toggle_params_to_variable(params, @form_params, params_name: "show_place")
+    toggle_params_to_variable(params, @form_params, params_name: "show_battle_page")
+    toggle_params_to_variable(params, @form_params, params_name: "show_acter")
     toggle_params_to_variable(params, @form_params, params_name: "show_group")
   end
   # GET /battle_actions/1
