@@ -69,6 +69,18 @@ module ApplicationHelper
         end
     end
 
+    def ex_sort_text(params, sort_column, text)
+        if params["ex_sort"] == "on" && params["ex_sort_text"] && params["ex_sort_text"].include?(sort_column) then
+            if params["ex_sort_text"].include?("desc")
+                text = text + "▼"
+
+            else
+                text = text + "▲"
+            end
+        end
+        text
+    end
+
     def help_icon()
         haml_concat fa_icon "question-circle"
     end

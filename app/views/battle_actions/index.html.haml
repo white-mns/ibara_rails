@@ -110,7 +110,7 @@
     - #==========================================================================================================================
     %tbody
       %tr.sep
-        %td.indent
+        %td.indent= hidden_field_tag :ex_sort, @form_params["ex_sort"]
         %td.indent= hidden_field_tag :is_form, 1
         %td{colspan: "3"}
           - search_submit_button
@@ -135,11 +135,11 @@
       %th= sort_link(@search, :skill_id, "スキル", default_order: :desc)
       %th= sort_link(@search, :fuka_id, "付加", default_order: :desc)
       -if @form_params["total_act"] == "on"
-        %th= sort_link(@search, :act_count, "発動回数", default_order: :desc)
+        %th= sort_link(@search, :act_count, ex_sort_text(params, "act_count", "発動回数"), default_order: :desc)
       -if @form_params["total_acter"] == "on"
-        %th= sort_link(@search, :acter_count, "発動者数", default_order: :desc)
+        %th= sort_link(@search, :acter_count, ex_sort_text(params, "acter_count", "発動者数"), default_order: :desc)
       -if @form_params["total_page"] == "on"
-        %th= sort_link(@search, :page_count, "発動結果数", default_order: :desc)
+        %th= sort_link(@search, :page_count, ex_sort_text(params, "page_count", "発動結果数"), default_order: :desc)
       - if @form_params["group_page"] == "on"
         %th= sort_link(@search, :battle_info_battle_page, "結果名", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
