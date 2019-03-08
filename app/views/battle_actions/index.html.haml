@@ -30,7 +30,7 @@
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "使用者", params_name: "acter_form", colspan: 3, 
+        - td_form(f, @form_params, @placeholder,                         label: "発動者", params_name: "acter_form", colspan: 3, 
                     checkboxes: [{label: "PC",  params_name: "acter_pc", class_name: "after_space"},
                                  {label: "NPC", params_name: "acter_npc"}])
       %tr
@@ -61,11 +61,11 @@
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_acter",
-                    label: {open: "使用者を表示する", close: "使用者を表示する"}, base_first: false)
+                    label: {open: "発動者を表示する", close: "発動者を表示する"}, base_first: false)
     %tbody.closed
       %tr
         %td.indent
-        %td{colspan: 5} ※戦闘内で使用者が複数いて「使用者別で表示」にチェックをしていない場合、代表で一人だけ名前が表示されます
+        %td{colspan: 5} ※戦闘内で発動者が複数いて「発動者別で表示」にチェックをしていない場合、代表で一人だけ名前が表示されます
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
@@ -96,7 +96,7 @@
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder, params_name: "group_page", colspan: 3, label_td_class_name: "indent", 
-                    checkboxes: [{label: "使用者別で表示",   params_name: "group_acter", class_name: "after_space mobile_br"}])
+                    checkboxes: [{label: "発動者別で表示",   params_name: "group_acter", class_name: "after_space mobile_br"}])
       %tr.sep
         %td.indent
         %td{colspan:4} まとめた合計数を表示
