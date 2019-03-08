@@ -22,7 +22,7 @@
           %ul.navbar-nav
             %li.nav-item.dropdown
               %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
-                個人データ
+                個人
                 %span.caret
               .dropdown-menu
                 = link_to "現在地一覧", places_path, class: "dropdown-item"
@@ -39,7 +39,7 @@
                 = link_to ">　スキル研究ランキング", studies_path + "?group_skill=on", class: "dropdown-item"
             %li.nav-item.dropdown
               %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
-                行動データ
+                行動
                 %span.caret
               .dropdown-menu
                 = link_to "合成一覧", compounds_path, class: "dropdown-item"
@@ -49,7 +49,15 @@
                 = link_to "次回予告NPC戦一覧", next_battle_infos_path, class: "dropdown-item"
             %li.nav-item.dropdown
               %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
-                グラフデータ
+                戦闘
+                %span.caret
+              .dropdown-menu
+                = link_to "スキル・付加発動結果一覧", battle_actions_path, class: "dropdown-item"
+                = link_to ">　スキル発動回数ランキング", battle_actions_path + "?act_type_fuka=off&show_group=1&group_page=off&total_act=on", class: "dropdown-item"
+                = link_to ">　付加発動回数ランキング", battle_actions_path +   "?act_type_skill=off&show_group=1&group_page=off&total_act=on", class: "dropdown-item"
+            %li.nav-item.dropdown
+              %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
+                グラフ
                 %span.caret
               .dropdown-menu
                 = link_to "所属世界グラフ", world_graphs_path, class: "dropdown-item"

@@ -9,6 +9,17 @@ class ApplicationRecord < ActiveRecord::Base
     group(:result_no, :generate_no, :e_no)
   }
 
+  # 検索ヒット件数の取得
+  #   通常時：      整数
+  #   グループ化時：ハッシュのキーの数(グループ化後のヒット数)
+  scope :hit_count, -> () {
+    if count().kind_of?(Hash) then
+        count().keys().size
+    else
+        count()
+    end
+  }
+
   scope :to_range_graph, -> (column) {
       max = self.pluck(column).max
       figure_length = max.to_s.length # 最大桁数の取得

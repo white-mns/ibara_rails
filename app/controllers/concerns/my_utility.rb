@@ -160,15 +160,14 @@ module MyUtility
   end
 
   # has_manyで結合した要素について、AND検索で絞り込む
-  # 　・取得した配列から、重複したデータのみを取り出し返す
+  # 　・取得した配列に対して積集合を繰り返し、残ったデータのみを取り出し返す
   def add_and_param_for_has_many(params, params_tmp, detection_arrays, dummy_param, param, record, column)
     if params[:q][dummy_param] then
         params[:q][dummy_param].each do |tmp_param|
             params_tmp[:q][param] = tmp_param
             nos = record.search(params_tmp[:q]).result.pluck(column).uniq
             if detection_arrays[:and].length > 1 then 
-                detection_arrays[:and] += nos
-                detection_arrays[:and] = detection_arrays[:and].flatten.group_by{ |e| e }.select { |k, v| v.size > 1 }.map(&:first)
+                detection_arrays[:and] = detection_arrays[:and] & nos
 
                 # 絞り込んだ結果ヒット件数が0になった場合、ダミー値で絞り込ませる
                 # 　0件で配列を返すと、絞り込みが行われず全件ヒットするため

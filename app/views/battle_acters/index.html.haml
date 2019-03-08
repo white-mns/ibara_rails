@@ -1,0 +1,94 @@
+- @page_title = "スキル・付加発動者情報一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "使用者", params_name: "acter_form", colspan: 3, 
+                    checkboxes: [{label: "PC",  params_name: "acter_pc", class_name: "after_space mobile_br"},
+                                 {label: "NPC", params_name: "acter_npc"}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "敵名", params_name: "enemy_form", placeholder: "Enemy", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
+    %tbody
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+
+= paginate(@battle_acters)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :battle_id, "戦闘ID", default_order: :desc)
+      %th= sort_link(@search, :act_id, "行動ID", default_order: :desc)
+      %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
+      %th= sort_link(@search, :enemy_id, "Enemy", default_order: :desc)
+      %th.sep{colspan: "2"} 結果リンク
+  %tbody
+    - @battle_acters.each do |battle_acter|
+      %tr
+        %td= battle_acter.result_no
+        %td= battle_acter.battle_id
+        %td= battle_acter.act_id
+        - if battle_acter.acter_type == 0
+          %td{colspan: 2, style: "#{ world_border(battle_acter.world) }" }= pc_name_text(battle_acter.e_no, battle_acter.pc_name)
+        - elsif battle_acter.acter_type == 1
+          %td{colspan: "2"}
+            = battle_acter.enemy.name if battle_acter.enemy
+            = battle_acter.suffix.name if battle_acter.suffix
+        - else
+          %td{colspan: "2"}
+        %td.sep= battle_link(@latest_result, battle_acter.battle_info.battle_type, battle_acter.battle_info.battle_page, battle_acter.battle_info.result_no, battle_acter.battle_info.generate_no)
+        %td= battle_old_link(@latest_result, battle_acter.battle_info.battle_type, battle_acter.battle_info.battle_page, battle_acter.battle_info.result_no, battle_acter.battle_info.generate_no)
+= paginate(@battle_acters)
