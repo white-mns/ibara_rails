@@ -111,6 +111,7 @@
     %tbody
       %tr.sep
         %td.indent
+          = hidden_field_tag :ex_sort, @form_params["ex_sort"]
         %td.indent= hidden_field_tag :is_form, 1
         %td{colspan: "3"}
           - search_submit_button

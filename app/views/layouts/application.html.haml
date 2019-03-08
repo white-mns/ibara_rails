@@ -53,8 +53,8 @@
                 %span.caret
               .dropdown-menu
                 = link_to "スキル・付加発動結果一覧", battle_actions_path, class: "dropdown-item"
-                = link_to ">　スキル発動回数ランキング", battle_actions_path + "?act_type_fuka=off&show_group=1&group_page=off&total_act=on", class: "dropdown-item"
-                = link_to ">　付加発動回数ランキング", battle_actions_path +   "?act_type_skill=off&show_group=1&group_page=off&total_act=on", class: "dropdown-item"
+                = link_to ">　スキル発動回数ランキング", battle_actions_path + "?act_type_fuka=off&show_group=1&group_page=off&total_act=on&ex_sort=on", class: "dropdown-item"
+                = link_to ">　付加発動回数ランキング", battle_actions_path +   "?act_type_skill=off&show_group=1&group_page=off&total_act=on&ex_sort=on", class: "dropdown-item"
             %li.nav-item.dropdown
               %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
                 グラフ

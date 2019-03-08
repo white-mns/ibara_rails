@@ -42,8 +42,8 @@
           %ul  
             %li= link_to "スキル・付加発動結果一覧", battle_actions_path
             %ul
-              %li= link_to "スキル発動回数ランキング", battle_actions_path + "?act_type_fuka=off&show_group=1&group_page=off&total_act=on"
-              %li= link_to "付加発動回数ランキング", battle_actions_path +   "?act_type_skill=off&show_group=1&group_page=off&total_act=on"
+              %li= link_to "スキル発動回数ランキング", battle_actions_path + "?act_type_fuka=off&show_group=1&group_page=off&total_act=on&ex_sort=on"
+              %li= link_to "付加発動回数ランキング", battle_actions_path +   "?act_type_skill=off&show_group=1&group_page=off&total_act=on&ex_sort=on"
           %li グラフデータ
           %ul  
             %li= link_to "所属世界グラフ", world_graphs_path
@@ -60,9 +60,9 @@
           を公開
         %li 
           スキル・付加発動結果一覧の検索条件を指定した
-          = link_to "スキル発動回数ランキング", battle_actions_path + "?act_type_fuka=off&show_group=1&group_page=off&total_act=on"
+          = link_to "スキル発動回数ランキング", battle_actions_path + "?act_type_fuka=off&show_group=1&group_page=off&total_act=on&ex_sort=on"
           、
-          = link_to "付加発動回数ランキング", battle_actions_path +   "?act_type_skill=off&show_group=1&group_page=off&total_act=on"
+          = link_to "付加発動回数ランキング", battle_actions_path +   "?act_type_skill=off&show_group=1&group_page=off&total_act=on&ex_sort=on"
           を公開
       %li 2019/3/3
       %ul

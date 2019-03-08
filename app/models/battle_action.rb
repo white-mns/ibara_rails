@@ -79,16 +79,14 @@ class BattleAction < ApplicationRecord
     }
 
     scope :having_order, ->(params) {
-        if params["group_page"] == "on" then
-            return
-        end
-
+        ex_sorts = {"act_count desc" => 1, "acter_count desc" => 1, "page_count desc" => 1}
         if !params[:q][:s] then
             return order("act_count desc")
 
-        elsif params[:q][:s].include?(" ") then
+        elsif ex_sorts.has_key?(params[:q][:s]) then
             sort = params[:q][:s]
             params[:q].delete(:s)
+            params["ex_sort"] = "on"
             return order(sort)
         end
         nil

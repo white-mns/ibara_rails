@@ -8,7 +8,7 @@ class BattleActionsController < ApplicationController
     param_set
     @count	= BattleAction.notnil().includes_or_joins(params).groups(params).search(params[:q]).result.hit_count()
     @search	= BattleAction.notnil().includes_or_joins(params).groups(params).total(params).having_order(params).page(params[:page]).search(params[:q])
-    @search.sorts = "id asc" if params["group_page"] == "on" && @search.sorts.empty?
+    @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
     @battle_actions	= @search.result.per(50)
   end
 
@@ -21,7 +21,6 @@ class BattleActionsController < ApplicationController
     if !params["is_form"] then
         params["result_no_form"] ||= sprintf("%d",@latest_result)
         params["group_page"]     ||= "on"
-        params["total_use"]      ||= "on"
     end
 
     if params["group_page"] == "off" then
@@ -76,6 +75,7 @@ class BattleActionsController < ApplicationController
     @form_params["total_act"]  = params["total_act"]
     @form_params["total_acter"] = params["total_acter"]
     @form_params["total_page"] = params["total_page"]
+    @form_params["ex_sort"] = params["ex_sort"]
 
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
     toggle_params_to_variable(params, @form_params, params_name: "show_place")
