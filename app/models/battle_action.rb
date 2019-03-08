@@ -29,7 +29,8 @@ class BattleAction < ApplicationRecord
         group_page(params).
         group_turn(params).
         group_acter(params).
-        group("battle_actions.skill_id, battle_actions.fuka_id")
+        group_skill(params).
+        group_fuka(params)
     }
   
     scope :group_page, ->(params) {
@@ -45,8 +46,35 @@ class BattleAction < ApplicationRecord
     }
 
     scope :group_acter, ->(params) {
+        group_e_no(params).
+        group_enemy(params)
+    }
+  
+    scope :group_e_no, ->(params) {
         if params["group_acter"] == "on" then
-            group("battle_acters.e_no, battle_acters.enemy_id")
+            if params["acter_pc"] == "on" ||  params[:q]["acter_acter_type_eq_any"].size == 0 then
+                group("battle_acters.e_no")
+            end
+        end
+    }
+ 
+    scope :group_enemy, ->(params) {
+        if params["group_acter"] == "on" then
+            if params["acter_npc"] == "on" ||  params[:q]["acter_acter_type_eq_any"].size == 0 then
+                group("battle_acters.enemy_id")
+            end
+        end
+    }
+
+    scope :group_skill, ->(params) {
+        if params["act_type_skill"] == "on" || params["act_type_normal"] == "on" || params[:q]["act_type_eq_any"].size == 0 then
+            group("battle_actions.skill_id")
+        end
+    }
+
+    scope :group_fuka, ->(params) {
+        if params["act_type_fuka"] == "on" || !params[:q]["act_type_eq_any"]  || params[:q]["act_type_eq_any"].size == 0 then
+            group("battle_actions.fuka_id")
         end
     }
 

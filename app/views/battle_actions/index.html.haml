@@ -81,8 +81,8 @@
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_group",
-                    label: {open: "特定の要素で結果をまとめる", close: "特定の要素で結果をまとめる選択肢を隠す"},
-                    act_desc: "ターン別、結果別", base_first: false)
+                    label: {open: "特定の要素で結果を詳細化する", close: "結果を詳細化する選択肢を隠す"},
+                    act_desc: "ターン別、結果別、発動者別", base_first: false)
     %tbody.closed
       %tr
         %td.indent
@@ -115,7 +115,6 @@
         %td{colspan: "3"}
           - search_submit_button
 
-
 = paginate(@battle_actions)
 %br
 ヒット数：#{ @count }件
@@ -135,13 +134,12 @@
         %th= sort_link(@search, :turn, "ターン", default_order: :desc)
       %th= sort_link(@search, :skill_id, "スキル", default_order: :desc)
       %th= sort_link(@search, :fuka_id, "付加", default_order: :desc)
-      - if @form_params["group_page"] != "on" || @form_params["group_turn"] != "on"
-        -if @form_params["total_act"] == "on"
-          %th= sort_link(@search, :act_count, "発動回数", default_order: :desc)
-        -if @form_params["total_acter"] == "on"
-          %th= sort_link(@search, :acter_count, "発動者数", default_order: :desc)
-        -if @form_params["total_page"] == "on"
-          %th= sort_link(@search, :page_count, "発動結果数", default_order: :desc)
+      -if @form_params["total_act"] == "on"
+        %th= sort_link(@search, :act_count, "発動回数", default_order: :desc)
+      -if @form_params["total_acter"] == "on"
+        %th= sort_link(@search, :acter_count, "発動者数", default_order: :desc)
+      -if @form_params["total_page"] == "on"
+        %th= sort_link(@search, :page_count, "発動結果数", default_order: :desc)
       - if @form_params["group_page"] == "on"
         %th= sort_link(@search, :battle_info_battle_page, "結果名", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
@@ -167,13 +165,12 @@
           %td{colspan: 2}= battle_action.skill.name if battle_action.skill
         - elsif battle_action.act_type == 2
           %td{colspan: 2}= battle_action.fuka.name if battle_action.fuka
-        - if @form_params["group_page"] != "on" || @form_params["group_turn"] != "on"
-          -if @form_params["total_act"] == "on"
-            %td= battle_action.act_count
-          -if @form_params["total_acter"] == "on"
-            %td= battle_action.acter_count
-          -if @form_params["total_page"] == "on"
-            %td= battle_action.page_count
+        -if @form_params["total_act"] == "on"
+          %td= battle_action.act_count
+        -if @form_params["total_acter"] == "on"
+          %td= battle_action.acter_count
+        -if @form_params["total_page"] == "on"
+          %td= battle_action.page_count
         - if @form_params["group_page"] == "on"
           %td= battle_action.battle_info.battle_page if battle_action.battle_info
         - if @form_params["group_page"] == "on" && battle_action.battle_info
