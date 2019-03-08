@@ -28,19 +28,22 @@ class Study < ApplicationRecord
     }
 
     scope :having_order, ->(params) {
-        if params["group_skill"] != "on"then
-            return
-        end
+        ex_sorts = {"depth_sum desc" => 1}
 
         if !params[:q][:s] then
+            params["ex_sort_text"] = "depth_sum desc"
             return order("depth_sum desc")
 
-        elsif params[:q][:s].include?(" ") then
+        elsif ex_sorts.has_key?(params[:q][:s]) then
             sort = params[:q][:s]
-            if sort.split(" ")[0] == "depth_sum" then
-                params[:q].delete(:s)
-                return order(sort)
-            end
+            params[:q].delete(:s)
+            params["ex_sort"] = "on"
+            params["ex_sort_text"] = sort
+            return order(sort)
+
+        else
+            params["ex_sort_text"] = ""
+
         end
         nil
     }

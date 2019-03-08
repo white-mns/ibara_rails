@@ -36,7 +36,7 @@
                 = link_to "所持スキル一覧", skills_path, class: "dropdown-item"
                 = link_to "所持カード一覧", cards_path, class: "dropdown-item"
                 = link_to "スキル研究一覧", studies_path, class: "dropdown-item"
-                = link_to ">　スキル研究ランキング", studies_path + "?group_skill=on", class: "dropdown-item"
+                = link_to ">　スキル研究ランキング", studies_path + "?group_skill=on&ex_sort=on", class: "dropdown-item"
             %li.nav-item.dropdown
               %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
                 行動

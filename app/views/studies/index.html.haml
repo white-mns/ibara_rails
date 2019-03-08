@@ -121,7 +121,7 @@
       - if @form_params["group_skill"] != "on"
         %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
       - if @form_params["group_skill"] == "on"
-        %th.sep= sort_link(@search, :depth_sum, "深度", default_order: :desc)
+        %th.sep= sort_link(@search, :depth_sum, ex_sort_text(params, "depth_sum", "深度"), default_order: :desc)
       - else
         %th.sep= sort_link(@search, :depth, "深度", default_order: :desc)
       %th.sep= sort_link(@search, :skill_id, "スキル名", default_order: :desc)
