@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :uploaded_checks
   resources :battle_acters
   resources :battle_actions
   resources :battle_infos
