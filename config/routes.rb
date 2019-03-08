@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :battle_acters
   resources :battle_actions
   resources :battle_infos
   resources :move_party_counts

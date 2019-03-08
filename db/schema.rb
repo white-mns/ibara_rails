@@ -10,7 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_07_045129) do
+ActiveRecord::Schema.define(version: 2019_03_08_012310) do
+
+  create_table "battle_acters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "battle_id"
+    t.integer "act_id"
+    t.integer "acter_type"
+    t.integer "e_no"
+    t.integer "enemy_id"
+    t.integer "suffix_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["acter_type"], name: "index_battle_acters_on_acter_type"
+    t.index ["e_no"], name: "index_battle_acters_on_e_no"
+    t.index ["enemy_id"], name: "index_battle_acters_on_enemy_id"
+    t.index ["result_no", "acter_type", "battle_id", "generate_no"], name: "resultno_acttype"
+    t.index ["result_no", "battle_id", "act_id", "generate_no"], name: "resultno_battleid"
+    t.index ["suffix_id"], name: "index_battle_acters_on_suffix_id"
+  end
 
   create_table "battle_actions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -25,6 +44,8 @@ ActiveRecord::Schema.define(version: 2019_03_07_045129) do
     t.datetime "updated_at", null: false
     t.index ["act_type"], name: "index_battle_actions_on_act_type"
     t.index ["fuka_id"], name: "index_battle_actions_on_fuka_id"
+    t.index ["result_no", "act_type", "battle_id", "generate_no"], name: "resultno_acttype_battleid"
+    t.index ["result_no", "act_type", "turn", "generate_no"], name: "resultno_acttype_turn"
     t.index ["result_no", "battle_id", "act_id", "generate_no"], name: "resultno_battleid"
     t.index ["result_no", "battle_id", "turn", "act_id", "generate_no"], name: "resultno_turn"
     t.index ["skill_id"], name: "index_battle_actions_on_skill_id"
