@@ -26,7 +26,7 @@ class BattleInfosController < ApplicationController
     params_to_form(params, @form_params, column_name: "result_no", params_name: "result_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "generate_no", params_name: "generate_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "battle_id", params_name: "battle_id_form", type: "number")
-    params_to_form(params, @form_params, column_name: "battle_page", params_name: "battle_page_form", type: "number")
+    params_to_form(params, @form_params, column_name: "battle_page", params_name: "battle_page_form", type: "text")
     params_to_form(params, @form_params, column_name: "battle_type", params_name: "battle_type_form", type: "number")
 
     checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",
