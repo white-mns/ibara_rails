@@ -23,6 +23,8 @@
             %li= link_to "所持アイテム一覧", items_path
             %li= link_to "所持異能・生産一覧", superpowers_path
             %li= link_to "所持スキル一覧", skills_path
+            %ul
+              %li= link_to "スキル習得者数ランキング", skills_path + "?show_total=1&exclude_initial_active=on&exclude_initial_passive=on&ex_sort=on"
             %li= link_to "所持カード一覧", cards_path
             %li= link_to "スキル研究一覧", studies_path
             %ul
@@ -52,11 +54,20 @@
   .card-body
     %h2 更新履歴
     %ul
+      %li 2019/3/11
+      %ul
+        %li
+          = link_to "所持スキル一覧", skills_path
+          にスキル習得者数の表示機能、初期アクティブスキル・パッシブスキルの除外機能を追加
+        %li
+          所持スキル一覧の検索条件を指定した
+          = link_to "スキル習得者数ランキング", skills_path + "?show_total=1&exclude_initial_active=on&exclude_initial_passive=on&ex_sort=on"
+          を公開
       %li 2019/3/9
       %ul
         %li
           = link_to "スキル・付加発動結果一覧", battle_actions_path
-          において、「結果別に表示」選択時に「発動回数」など一部項目でソートができない不具合を修正。
+          において、「結果別に表示」選択時に「発動回数」など一部項目でソートができない不具合を修正
           %br
           また、「発動回数ランキング」リンクからページを見た直後にソートすると表示項目が変わってしまう不具合を修正
         %li
