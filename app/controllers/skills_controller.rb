@@ -6,9 +6,9 @@ class SkillsController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= Skill.distinct.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]], :party, :status).search(params[:q]).result.count()
-    @search	= Skill.distinct.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]], :party, :status).page(params[:page]).search(params[:q])
-    @search.sorts = "id asc" if @search.sorts.empty?
+    @count	= Skill.distinct.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]], :party, :status).groups(params).search(params[:q]).result.hit_count()
+    @search	= Skill.distinct.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]], :party, :status).groups(params).total(params).having_order(params).page(params[:page]).search(params[:q])
+    @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
     @skills	= @search.result.per(50)
   end
 
@@ -73,6 +73,7 @@ class SkillsController < ApplicationController
                                           {params_name: "style_9", value: 9}])
 
     pm_matching(params, @form_params)
+    initial_skill_matching(params, @form_params)
 
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
     toggle_params_to_variable(params, @form_params, params_name: "show_skill")
@@ -80,7 +81,34 @@ class SkillsController < ApplicationController
     toggle_params_to_variable(params, @form_params, params_name: "show_skill_text")
     toggle_params_to_variable(params, @form_params, params_name: "show_skill_mastery")
     toggle_params_to_variable(params, @form_params, params_name: "show_style")
+    toggle_params_to_variable(params, @form_params, params_name: "show_total")
   end
+
+  def initial_skill_matching(params, form_params)
+      params_tmp = {}
+      params_tmp[:q] = {}
+      if params["exclude_initial_active"] && params["exclude_initial_passive"]
+          params_tmp["ex_name_form"] = "ブレイク/ピンポイント/ヒール/クイック/ブラスト/攻撃/防御/器用/敏捷/回復/活力/体力/治癒/鎮痛/幸運"
+      elsif params["exclude_initial_active"]
+          params_tmp["ex_name_form"] = "ブレイク/ピンポイント/ヒール/クイック/ブラスト"
+      elsif params["exclude_initial_passive"]
+          params_tmp["ex_name_form"] = "攻撃/防御/器用/敏捷/回復/活力/体力/治癒/鎮痛/幸運"
+      end
+    
+      params_to_form(params_tmp, form_params, column_name: "name", params_name: "ex_name_form", type: "number")
+
+      if params["exclude_initial_active"] || params["exclude_initial_passive"]
+          exclude_array = SkillDatum.search(params_tmp[:q]).result.pluck(:skill_id)
+          params[:q]["skill_id_not_eq_all"] = exclude_array
+          
+      end
+
+      form_params["exclude_initial_active"] = params["exclude_initial_active"]
+      form_params["exclude_initial_passive"] = params["exclude_initial_passive"]
+  end
+
+
+
   # GET /skills/1
   #def show
   #end

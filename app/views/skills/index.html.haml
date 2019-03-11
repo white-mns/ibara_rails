@@ -136,14 +136,27 @@
                                  {label: "９【日和】", params_name: "style_9"}])
 
     - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_total",
+                    label: {open: "スキル別習得者数を表示する", close: "スキル別習得者数を表示しない"}, base_first: false)
+    %tbody.closed
+      %tr.sep
+        %td.indent
+        %td{colspan: 5}
+
+    - #==========================================================================================================================
     %tbody
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, params_name: "exclude_initial_skill_form", colspan: 3, label_td_class_name: "indent", 
+          checkboxes: [{label: "初期アクティブスキルを非表示にする", params_name: "exclude_initial_active",  class_name: "after_space mobile_br"},
+                       {label: "初期パッシブスキルを非表示にする",   params_name: "exclude_initial_passive", class_name: "after_space mobile_br"}])
       %tr.sep
         %td.indent
         %td.indent= hidden_field_tag :is_form, 1
         %td{colspan: "3"}
           - search_submit_button
 
-
+= params["skill_form"]
 = paginate(@skills)
 %br
 ヒット数：#{ @count }件
@@ -154,7 +167,8 @@
   %thead
     %tr
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
-      %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
+      - if @form_params["show_total"] != "1"
+        %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
       - if @form_params["show_skill_mastery"] == "1"
         %th.sep= sort_link(@search, :skill_mastery_requirement_1_id, "異能1", default_order: :desc)
         %th= sort_link(@search, :skill_mastery_requirement_1_lv, "必要Lv", default_order: :desc)
@@ -173,12 +187,15 @@
         %th= sort_link(@search, :skill_text, "説明", default_order: :desc)
       - if @form_params["show_style"] == "1"
         %th.sep= sort_link(@search, :style_id, "スタイル", default_order: :desc)
+      - if @form_params["show_total"] == "1"
+        %th.sep= sort_link(@search, :user_count, ex_sort_text(params, "user_count", "習得者数"), default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
     - @skills.each do |skill|
       %tr
         %td= skill.result_no
-        %td{style: "#{ world_border(skill.world) }" }= pc_name_text(skill.e_no, skill.pc_name)
+        - if @form_params["show_total"] != "1"
+          %td{style: "#{ world_border(skill.world) }" }= pc_name_text(skill.e_no, skill.pc_name)
         - if @form_params["show_skill_mastery"] == "1"
           %td.sep= skill.skill_mastery.requirement_1.name if skill.skill_mastery && skill.skill_mastery.requirement_1 && skill.skill_mastery.requirement_1.name
           %td= skill.skill_mastery.requirement_1_lv if skill.skill_mastery && skill.skill_mastery.requirement_1
@@ -198,6 +215,8 @@
         - if @form_params["show_style"] == "1"
           %td.text-nowrap.sep
             - style_img_text(skill.status)
+        - if @form_params["show_total"] == "1"
+          %td.text-nowrap.sep= skill.user_count
         %td.sep= character_link(skill.e_no)
         %td= character_old_link(@latest_result, skill.e_no, skill.result_no, skill.generate_no)
 = paginate(@skills)
