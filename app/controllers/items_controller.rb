@@ -46,6 +46,7 @@ class ItemsController < ApplicationController
     params_to_form(params, @form_params, column_name: "effect_3_need_lv", params_name: "effect_3_need_lv_form", type: "number")
 
     params_to_form(params, @form_params, column_name: "kind_name", params_name: "kind_form", type: "text")
+    params_to_form(params, @form_params, column_name: "effect_1_name_or_effect_2_name_or_effect_3_name", params_name: "effect_form", type: "text")
     params_to_form(params, @form_params, column_name: "effect_1_name", params_name: "effect_1_form", type: "text")
     params_to_form(params, @form_params, column_name: "effect_2_name", params_name: "effect_2_form", type: "text")
     params_to_form(params, @form_params, column_name: "effect_3_name", params_name: "effect_3_form", type: "text")
