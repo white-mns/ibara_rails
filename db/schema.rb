@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_08_212628) do
+ActiveRecord::Schema.define(version: 2019_03_12_134817) do
 
   create_table "battle_acters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -42,8 +42,10 @@ ActiveRecord::Schema.define(version: 2019_03_08_212628) do
     t.integer "fuka_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "lv"
     t.index ["act_type"], name: "index_battle_actions_on_act_type"
     t.index ["fuka_id"], name: "index_battle_actions_on_fuka_id"
+    t.index ["lv"], name: "index_battle_actions_on_lv"
     t.index ["result_no", "act_type", "battle_id", "generate_no"], name: "resultno_acttype_battleid"
     t.index ["result_no", "act_type", "turn", "generate_no"], name: "resultno_acttype_turn"
     t.index ["result_no", "battle_id", "act_id", "generate_no"], name: "resultno_battleid"
