@@ -326,7 +326,9 @@ module ApplicationHelper
             return
         end
 
-        if landform.landform_id > 0 then
+        if landform.landform_id == 6 then
+            haml_tag :img, src: "https://archives.teiki.org/risu/ibara/0/p/a" + sprintf("%d", 1) + ".png", class:"style_img"
+        elsif landform.landform_id > 0 then
             haml_tag :img, src: "https://archives.teiki.org/risu/ibara/0/p/a" + sprintf("%d", landform.landform_id) + ".png", class:"style_img"
         end
 
@@ -343,6 +345,7 @@ module ApplicationHelper
         elsif object.landform_id == 3 then "沼地"
         elsif object.landform_id == 4 then "森林"
         elsif object.landform_id == 5 then "山岳"
+        elsif object.landform_id == 6 then "チェックポイント"
         else "？"
         end
     end
