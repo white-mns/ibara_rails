@@ -49,7 +49,8 @@
                                  {label: "通常攻撃", params_name: "act_type_normal"}])
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "スキル・付加名", params_name: "act_form", placeholder: "Skill", colspan: 3)
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "スキル・付加名", params_name: "act_form", placeholder: "Skill")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",   label: "付加LV",         params_name: "lv_form",  placeholder: "Number")
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_battle_page",
@@ -164,7 +165,9 @@
         - if battle_action.act_type == 0 || battle_action.act_type == 1
           %td{colspan: 2}= battle_action.skill.name if battle_action.skill
         - elsif battle_action.act_type == 2
-          %td{colspan: 2}= battle_action.fuka.name if battle_action.fuka
+          %td{colspan: 2}
+            = battle_action.fuka.name if battle_action.fuka
+            = "LV" + sprintf("%d", battle_action.lv) if battle_action.lv >= 0
         -if @form_params["total_act"] == "on"
           %td= battle_action.act_count
         -if @form_params["total_acter"] == "on"

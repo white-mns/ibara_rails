@@ -35,6 +35,7 @@ class BattleActionsController < ApplicationController
     params_to_form(params, @form_params, column_name: "act_type", params_name: "act_type_form", type: "number")
     params_to_form(params, @form_params, column_name: "skill_id", params_name: "skill_id_form", type: "number")
     params_to_form(params, @form_params, column_name: "fuka_id", params_name: "fuka_id_form", type: "number")
+    params_to_form(params, @form_params, column_name: "lv", params_name: "lv_form", type: "number")
 
     params_to_form(params, @form_params, column_name: "battle_info_battle_page", params_name: "battle_page_form", type: "text")
 
@@ -82,6 +83,7 @@ class BattleActionsController < ApplicationController
     end
 
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
+    toggle_params_to_variable(params, @form_params, params_name: "show_fuka")
     toggle_params_to_variable(params, @form_params, params_name: "show_place")
     toggle_params_to_variable(params, @form_params, params_name: "show_battle_page")
     toggle_params_to_variable(params, @form_params, params_name: "show_acter")
