@@ -62,6 +62,13 @@
                 %span.caret
               .dropdown-menu
                 = link_to "所属世界グラフ", world_graphs_path, class: "dropdown-item"
+            %li.nav-item.dropdown
+              %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
+                新出
+                %span.caret
+              .dropdown-menu
+                = link_to "新出アイテム付加一覧", new_item_fukas_path, class: "dropdown-item"
+                = link_to "新出発動スキル・付加一覧", new_actions_path, class: "dropdown-item"
 
     .container
       .row
