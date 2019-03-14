@@ -1,5 +1,5 @@
 module NewItemFukaHelper
-    def detail_link(object)
+    def detail_new_item_fuka_link(object)
         if !object || !object.fuka then 
             return
         end
