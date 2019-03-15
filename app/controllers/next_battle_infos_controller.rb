@@ -66,6 +66,8 @@ class NextBattleInfosController < ApplicationController
   def detection_party_no_from_enemy_name(params, form_params)
     params_tmp = {}
     params_tmp[:q] = {}
+    params_tmp["result_no_form"] = params["result_no_form"]
+    params_tmp["party_no_form"]  = params["party_no_form"]
     params_to_form(params_tmp, @form_params, column_name: "result_no", params_name: "result_no_form", type: "number")
     params_to_form(params_tmp, @form_params, column_name: "party_no",  params_name: "party_no_form", type: "number")
 
