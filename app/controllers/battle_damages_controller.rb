@@ -33,7 +33,7 @@ class BattleDamagesController < ApplicationController
 
     params_to_form(params, @form_params, column_name: "battle_info_battle_page", params_name: "battle_page_form", type: "text")
 
-    params_to_form(params, @form_params, column_name: "battle_action_skill_name_or_fuka_name", params_name: "act_form", type: "text")
+    params_to_form(params, @form_params, column_name: "battle_action_skill_name_or_battle_action_fuka_name", params_name: "act_form", type: "text")
     params_to_form(params, @form_params, column_name: "battle_action_skill_ep", params_name: "ep_form", type: "number")
     params_to_form(params, @form_params, column_name: "battle_action_skill_sp", params_name: "sp_form", type: "number")
     params_to_form(params, @form_params, column_name: "battle_action_skill_text", params_name: "text_form", type: "text")
