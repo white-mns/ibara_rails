@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_14_020720) do
+ActiveRecord::Schema.define(version: 2019_03_20_104202) do
 
   create_table "battle_acters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -54,6 +54,39 @@ ActiveRecord::Schema.define(version: 2019_03_14_020720) do
     t.index ["turn"], name: "index_battle_actions_on_turn"
   end
 
+  create_table "battle_buffers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "battle_id"
+    t.integer "act_id"
+    t.integer "act_sub_id"
+    t.integer "buffer_type"
+    t.integer "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["buffer_type"], name: "index_battle_buffers_on_buffer_type"
+    t.index ["result_no", "battle_id", "act_id", "act_sub_id", "generate_no"], name: "resultno_battleid"
+    t.index ["result_no", "buffer_type", "battle_id", "act_id", "act_sub_id", "generate_no"], name: "resultno_buffertype"
+    t.index ["value"], name: "index_battle_buffers_on_value"
+  end
+
+  create_table "battle_damages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "battle_id"
+    t.integer "act_id"
+    t.integer "act_sub_id"
+    t.integer "damage_type"
+    t.integer "element_id"
+    t.integer "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["element_id"], name: "index_battle_damages_on_element_id"
+    t.index ["result_no", "battle_id", "act_id", "act_sub_id", "generate_no"], name: "resultno_battleid"
+    t.index ["result_no", "damage_type", "battle_id", "act_id", "act_sub_id", "generate_no"], name: "resultno_damagetype"
+    t.index ["value"], name: "index_battle_damages_on_value"
+  end
+
   create_table "battle_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
     t.integer "generate_no"
@@ -64,6 +97,26 @@ ActiveRecord::Schema.define(version: 2019_03_14_020720) do
     t.datetime "updated_at", null: false
     t.index ["battle_type"], name: "index_battle_infos_on_battle_type"
     t.index ["result_no", "battle_id", "generate_no"], name: "resultno_battleid"
+  end
+
+  create_table "battle_targets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "battle_id"
+    t.integer "act_id"
+    t.integer "act_sub_id"
+    t.integer "target_type"
+    t.integer "e_no"
+    t.integer "enemy_id"
+    t.integer "suffix_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["e_no"], name: "index_battle_targets_on_e_no"
+    t.index ["enemy_id"], name: "index_battle_targets_on_enemy_id"
+    t.index ["result_no", "battle_id", "act_id", "act_sub_id", "generate_no"], name: "resultno_battleid"
+    t.index ["result_no", "target_type", "battle_id", "generate_no"], name: "resultno_targettype"
+    t.index ["suffix_id"], name: "index_battle_targets_on_suffix_id"
+    t.index ["target_type"], name: "index_battle_targets_on_target_type"
   end
 
   create_table "cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
