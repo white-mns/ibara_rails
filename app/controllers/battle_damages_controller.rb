@@ -22,7 +22,6 @@ class BattleDamagesController < ApplicationController
         params["result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
-    params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")
     params_to_form(params, @form_params, column_name: "result_no", params_name: "result_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "generate_no", params_name: "generate_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "battle_id", params_name: "battle_id_form", type: "number")
@@ -43,10 +42,18 @@ class BattleDamagesController < ApplicationController
     params_to_form(params, @form_params, column_name: "battle_action_acter_pc_name_name", params_name: "pc_name_form", type: "text")
     params_to_form(params, @form_params, column_name: "battle_action_acter_enemy_name", params_name: "enemy_form", type: "text")
 
+    params_to_form(params, @form_params, column_name: "target_e_no", params_name: "target_e_no_form", type: "number")
+    params_to_form(params, @form_params, column_name: "target_pc_name_name", params_name: "target_pc_name_form", type: "text")
+    params_to_form(params, @form_params, column_name: "target_enemy_name", params_name: "target_enemy_form", type: "text")
 
-    checkbox_params_set_query_any(params, @form_params, query_name: "battle_action_world_world_eq_any",
-                             checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},
-                                          {params_name: "is_ansinity" , value: 1, first_checked: true}])
+    checkbox_params_set_query_any(params, @form_params, query_name: "battle_action_acter_world_world_eq_any",
+                             checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: false},
+                                          {params_name: "is_ansinity" , value: 1, first_checked: false}])
+
+    checkbox_params_set_query_any(params, @form_params, query_name: "target_world_world_eq_any",
+                             checkboxes: [{params_name: "target_ibaracity", value: 0, first_checked: false},
+                                          {params_name: "target_ansinity" , value: 1, first_checked: false}])
+
 
     checkbox_params_set_query_any(params, @form_params, query_name: "damage_type_eq_any",
                              checkboxes: [{params_name: "damage_type_dodge",     value: 0, first_checked: false},
@@ -68,8 +75,12 @@ class BattleDamagesController < ApplicationController
                                           {params_name: "is_tournament", value: 20, first_checked: false}])
 
     checkbox_params_set_query_any(params, @form_params, query_name: "battle_action_acter_acter_type_eq_any",
-                             checkboxes: [{params_name: "acter_pc",   value: 0, first_checked: true},
+                             checkboxes: [{params_name: "acter_pc",   value: 0, first_checked: false},
                                           {params_name: "acter_npc" , value: 1, first_checked: false}])
+
+    checkbox_params_set_query_any(params, @form_params, query_name: "target_target_type_eq_any",
+                             checkboxes: [{params_name: "target_pc",   value: 0, first_checked: false},
+                                          {params_name: "target_npc" , value: 1, first_checked: false}])
 
     @form_params["ex_sort"] = params["ex_sort"]
     
@@ -82,6 +93,7 @@ class BattleDamagesController < ApplicationController
     toggle_params_to_variable(params, @form_params, params_name: "show_place")
     toggle_params_to_variable(params, @form_params, params_name: "show_battle_page")
     toggle_params_to_variable(params, @form_params, params_name: "show_acter")
+    toggle_params_to_variable(params, @form_params, params_name: "show_target")
     toggle_params_to_variable(params, @form_params, params_name: "show_group")
   end
   # GET /battle_damages/1
