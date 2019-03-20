@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :battle_buffers
   resources :battle_targets
   resources :battle_damages
   resources :new_actions

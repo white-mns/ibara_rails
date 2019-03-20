@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_20_102140) do
+ActiveRecord::Schema.define(version: 2019_03_20_104202) do
 
   create_table "battle_acters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -52,6 +52,22 @@ ActiveRecord::Schema.define(version: 2019_03_20_102140) do
     t.index ["result_no", "battle_id", "turn", "act_id", "generate_no"], name: "resultno_turn"
     t.index ["skill_id"], name: "index_battle_actions_on_skill_id"
     t.index ["turn"], name: "index_battle_actions_on_turn"
+  end
+
+  create_table "battle_buffers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "battle_id"
+    t.integer "act_id"
+    t.integer "act_sub_id"
+    t.integer "buffer_type"
+    t.integer "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["buffer_type"], name: "index_battle_buffers_on_buffer_type"
+    t.index ["result_no", "battle_id", "act_id", "act_sub_id", "generate_no"], name: "resultno_battleid"
+    t.index ["result_no", "buffer_type", "battle_id", "act_id", "act_sub_id", "generate_no"], name: "resultno_buffertype"
+    t.index ["value"], name: "index_battle_buffers_on_value"
   end
 
   create_table "battle_damages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
