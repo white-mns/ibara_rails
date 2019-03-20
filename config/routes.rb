@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :battle_damages
   resources :new_actions
   resources :new_item_fukas
   resources :uploaded_checks
