@@ -1,4 +1,4 @@
-- @page_title = "ダメージ一覧"
+- @page_title = "戦闘ランキング(単発)"
 %h1= @page_title
 
 .card.desc
@@ -15,7 +15,7 @@
         - act_desc(false)
     #example.closed
       = render "layouts/input_desc"
-= search_form_for @search do |f|
+= search_form_for @search, url: battle_ranking_singles_path do |f|
   %table.search_toggle.table.table-striped.table-bordered.table-hover
     %tbody.pointer
       %tr
@@ -36,9 +36,6 @@
                                  {label: "SPダメージ", params_name: "damage_type_sp_damage", br: true},
                                  {label: "HP回復",     params_name: "damage_type_heal",      class_name: "after_space"},
                                  {label: "SP回復",     params_name: "damage_type_sp_heal",   br: true}])
-      %tr
-        %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "効果量", params_name: "value_form", placeholder: "Number", colspan: 3)
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "発動者", params_name: "acter_form", 
@@ -109,6 +106,22 @@
           - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "敵名", params_name: "target_enemy_form", placeholder: "Enemy", colspan: 3)
 
     - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_damage",
+                    label: {open: "ダメージ・回復量を表示する", close: "ダメージ・回復量を表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "ダメージ・回復", params_name: "value_form", placeholder: "Number", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_critical",
+                    label: {open: "クリティカル数を表示する", close: "クリティカル数を表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "クリティカル数", params_name: "critical_form", placeholder: "Number", colspan: 3)
+
+    - #==========================================================================================================================
     %tbody
       %tr.sep
         %td.indent
@@ -127,9 +140,6 @@
   %thead
     %tr
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
-      %th= sort_link(@search, :battle_id, "戦闘ID", default_order: :desc)
-      %th= sort_link(@search, :act_id, "行動ID", default_order: :desc)
-      %th= sort_link(@search, :act_sub_id, "ダメージID", default_order: :desc)
       - if @form_params["show_acter"] == "1"
         %th= sort_link(@search, :battle_action_acter_e_no,"発動者(Eno)", default_order: :desc)
         %th= sort_link(@search, :battle_action_acter_enemy_id, "敵", default_order: :desc)
@@ -137,12 +147,15 @@
         %th= sort_link(@search, :battle_action_acter_e_no,"対象(Eno)", default_order: :desc)
         %th= sort_link(@search, :battle_action_acter_enemy_id, "敵", default_order: :desc)
       %th= sort_link(@search, :battle_action_battle_type, "戦闘の種類", default_order: :desc)
-      %th= sort_link(@search, :battle_action_turn, "ターン", default_order: :desc)
+      - if params["show_turn"]
+        %th= sort_link(@search, :battle_action_turn, "ターン", default_order: :desc)
       %th= sort_link(@search, :battle_action_skill_id, "スキル", default_order: :desc)
       %th= sort_link(@search, :battle_action_fuka_id, "付加", default_order: :desc)
-      %th= sort_link(@search, :damage_type, "種類", default_order: :desc)
-      %th= sort_link(@search, :value, "効果量", default_order: :desc)
-      %th= sort_link(@search, :critical_value, "クリティカル数", default_order: :desc)
+      - if params["show_damage"]
+        %th= sort_link(@search, :damage_type, "種類", default_order: :desc)
+        %th= sort_link(@search, :value, "効果量", default_order: :desc)
+      - if params["show_critical"]
+        %th= sort_link(@search, :critical_value, "クリティカル数", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
     - @battle_damages.each do |battle_damage|
@@ -150,9 +163,6 @@
         - if battle_damage.battle_action
           - battle_action = battle_damage.battle_action
         %td= battle_damage.result_no
-        %td= battle_damage.battle_id
-        %td= battle_damage.act_id
-        %td= battle_damage.act_sub_id
         - if @form_params["show_acter"] == "1"
           - if battle_action && battle_action.acter 
             - if battle_action.acter.acter_type == 0
@@ -177,16 +187,19 @@
             %td{colspan: 2}
 
         %td= battle_type_text(battle_damage.battle_info)
-        %td= battle_action.turn
+        - if params["show_turn"]
+          %td= battle_action.turn
         - if battle_action.act_type == 0 || battle_action.act_type == 1
           %td{colspan: 2}= battle_action.skill.name if battle_action.skill
         - elsif battle_action.act_type == 2
           %td{colspan: 2}
             = battle_action.fuka.name if battle_action.fuka
             = "LV" + sprintf("%d", battle_action.lv) if battle_action.lv && battle_action.lv >= 0
-        %td= damage_type_text(battle_damage)
-        %td= battle_damage.value
-        %td= battle_damage.critical.value if battle_damage.critical
+        - if params["show_damage"]
+          %td= damage_type_text(battle_damage)
+          %td= battle_damage.value
+        - if params["show_critical"]
+          %td= battle_damage.critical.value if battle_damage.critical
         %td.sep= battle_link(@latest_result, battle_damage.battle_info.battle_type, battle_damage.battle_info.battle_page, battle_damage.battle_info.result_no, battle_damage.battle_info.generate_no)
         %td= battle_old_link(@latest_result, battle_damage.battle_info.battle_type, battle_damage.battle_info.battle_page, battle_damage.battle_info.result_no, battle_damage.battle_info.generate_no)
 = paginate(@battle_damages)

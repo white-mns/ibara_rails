@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "b_rank/totals",  :to => "battle_damages#total",  :as => "battle_ranking_totals"
+  get "b_rank/singles", :to => "battle_damages#single", :as => "battle_ranking_singles"
   resources :battle_buffers
   resources :battle_targets
   resources :battle_damages

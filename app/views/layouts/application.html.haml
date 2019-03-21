@@ -56,6 +56,10 @@
                 = link_to "スキル・付加発動結果一覧", battle_actions_path, class: "dropdown-item"
                 = link_to ">　スキル発動回数ランキング", battle_actions_path + "?act_type_fuka=off&show_group=1&group_page=off&total_act=on&ex_sort=on", class: "dropdown-item"
                 = link_to ">　付加発動回数ランキング", battle_actions_path +   "?act_type_skill=off&show_group=1&group_page=off&total_act=on&ex_sort=on", class: "dropdown-item"
+                .dropdown-divider
+                .dropdown-item 戦闘ランキング（単発）
+                = link_to ">　最大与ダメージランキング", battle_ranking_singles_path + "?damage_type_damage=on&show_acter=1&show_damage=1&sort_damage=on", class: "dropdown-item"
+                = link_to ">　最大クリティカルランキング", battle_ranking_singles_path + "?damage_type_damage=on&show_acter=1&show_damage=1&show_critical=1&sort_critical=on", class: "dropdown-item"
             %li.nav-item.dropdown
               %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
                 グラフ
