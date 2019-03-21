@@ -12,6 +12,31 @@ class BattleDamagesController < ApplicationController
     @battle_damages	= @search.result.per(50)
   end
 
+  # GET /b_rank/singles
+  def single
+    index
+  end
+
+  # GET /b_rank/totals
+  def total
+    placeholder_set
+    param_set
+    @count	= BattleDamage.notnil().includes_or_joins(params).groups(params).search(params[:q]).result.hit_count()
+    @search	= BattleDamage.notnil().includes_or_joins(params).groups(params).total(params).having_order(params).page(params[:page]).search(params[:q])
+    @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
+    @battle_damages	= @search.result.per(50)
+  end
+
+  # GET /b_rank/pt_totals
+  def pt_total
+    placeholder_set
+    param_set
+    @count	= BattleDamage.notnil().includes_or_joins(params).pt_groups(params).search(params[:q]).result.hit_count()
+    @search	= BattleDamage.notnil().includes_or_joins(params).pt_groups(params).total(params).having_order(params).page(params[:page]).search(params[:q])
+    @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
+    @battle_damages	= @search.result.per(50)
+  end
+
   def param_set
     @form_params = {}
 
@@ -20,6 +45,20 @@ class BattleDamagesController < ApplicationController
     params_clean(params)
     if !params["is_form"] then
         params["result_no_form"] ||= sprintf("%d",@latest_result)
+    end
+
+    if params["sort_damage"] == "on" then
+        params[:q][:s] = "value desc"
+    end
+
+    if params["sort_critical"] == "on" then
+        params[:q][:s] = "critical_value desc"
+    end
+
+    if action_name == "total" then
+        params[:q]["battle_info_battle_type_not_eq"] = -1
+        params[:q]["target_party_party_type_eq"] = 1
+        params[:q]["target_party_party_no_not_eq"] = 0
     end
 
     params_to_form(params, @form_params, column_name: "result_no", params_name: "result_no_form", type: "number")
@@ -46,6 +85,8 @@ class BattleDamagesController < ApplicationController
     params_to_form(params, @form_params, column_name: "target_pc_name_name", params_name: "target_pc_name_form", type: "text")
     params_to_form(params, @form_params, column_name: "target_enemy_name", params_name: "target_enemy_form", type: "text")
 
+    params_to_form(params, @form_params, column_name: "critical_value", params_name: "critical_form", type: "number")
+
     checkbox_params_set_query_any(params, @form_params, query_name: "battle_action_acter_world_world_eq_any",
                              checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: false},
                                           {params_name: "is_ansinity" , value: 1, first_checked: false}])
@@ -64,8 +105,8 @@ class BattleDamagesController < ApplicationController
 
     checkbox_params_set_query_any(params, @form_params, query_name: "battle_action_act_type_eq_any",
                              checkboxes: [{params_name: "act_type_normal", value: 0},
-                                          {params_name: "act_type_skill",  value: 1, first_checked: true},
-                                          {params_name: "act_type_fuka",   value: 2, first_checked: true}])
+                                          {params_name: "act_type_skill",  value: 1},
+                                          {params_name: "act_type_fuka",   value: 2}])
 
     checkbox_params_set_query_any(params, @form_params, query_name: "battle_info_battle_type_eq_any",
                              checkboxes: [{params_name: "is_encounter",  value: 0,  first_checked: false},
@@ -95,6 +136,8 @@ class BattleDamagesController < ApplicationController
     toggle_params_to_variable(params, @form_params, params_name: "show_acter")
     toggle_params_to_variable(params, @form_params, params_name: "show_target")
     toggle_params_to_variable(params, @form_params, params_name: "show_group")
+    toggle_params_to_variable(params, @form_params, params_name: "show_damage")
+    toggle_params_to_variable(params, @form_params, params_name: "show_critical")
   end
   # GET /battle_damages/1
   #def show

@@ -45,6 +45,10 @@
             %ul
               %li= link_to "スキル発動回数ランキング", battle_actions_path + "?act_type_fuka=off&show_group=1&group_page=off&total_act=on&ex_sort=on"
               %li= link_to "付加発動回数ランキング", battle_actions_path +   "?act_type_skill=off&show_group=1&group_page=off&total_act=on&ex_sort=on"
+            %li 戦闘ランキング（単発）
+            %ul
+              %li= link_to "最大与ダメージランキング", battle_ranking_singles_path + "?damage_type_damage=on&show_acter=1&show_damage=1&sort_damage=on"
+              %li= link_to "最大クリティカルランキング", battle_ranking_singles_path + "?damage_type_damage=on&show_acter=1&show_damage=1&show_critical=1&sort_critical=on"
           %li グラフデータ
           %ul  
             %li= link_to "所属世界グラフ", world_graphs_path
@@ -58,6 +62,13 @@
   .card-body
     %h2 更新履歴
     %ul
+      %li 2019/3/21
+      %ul
+        %li
+          = link_to "最大与ダメージランキング", battle_ranking_singles_path + "?damage_type_damage=on&show_acter=1&show_damage=1&sort_damage=on"
+          、
+          = link_to "最大クリティカルランキング", battle_ranking_singles_path + "?damage_type_damage=on&show_acter=1&show_damage=1&show_critical=1&sort_critical=on"
+          を公開
       %li 2019/3/15
       %ul
         %li
