@@ -141,18 +141,15 @@ class BattleDamagesController < ApplicationController
 
   def link_sort
     if params["sort_damage"] == "on" then
-        params[:q][:s] = "value desc"
-        params.delete("sort_damage")
+        params[:q][:s] ||= "value desc"
     end
 
     if params["sort_critical"] == "on" then
-        params[:q][:s] = "critical_value desc"
-        params.delete("sort_critical")
+        params[:q][:s] ||= "critical_value desc"
     end
 
     if params["sort_total_dodge"] == "on" then
-        params[:q][:s] = "dodge_count desc"
-        params.delete("sort_total_dodge")
+        params[:q][:s] ||= "dodge_count desc"
     end
   end
 
