@@ -29,8 +29,7 @@
             %li= link_to "スキル研究一覧", studies_path
             %ul
               %li= link_to "スキル研究ランキング", studies_path + "?group_skill=on&ex_sort=on"
-      .col-md-6
-        %ul
+          %br
           %li 行動データ
           %ul  
             %li= link_to "合成一覧", compounds_path
@@ -39,6 +38,8 @@
               %li= link_to "合成組み合わせ一覧", compounds_path + "?result_no_form=""&group_source=on"
             %li= link_to "移動一覧", moves_path
             %li= link_to "次回予告NPC戦一覧", next_battle_infos_path
+      .col-md-6
+        %ul
           %li 戦闘データ
           %ul  
             %li= link_to "スキル・付加発動結果一覧", battle_actions_path
@@ -49,9 +50,14 @@
             %ul
               %li= link_to "最大与ダメージランキング", battle_ranking_singles_path + "?damage_type_damage=on&show_acter=1&show_damage=1&sort_damage=on"
               %li= link_to "最大クリティカルランキング", battle_ranking_singles_path + "?damage_type_damage=on&show_acter=1&show_damage=1&show_critical=1&sort_critical=on"
+            %li 戦闘ランキング（合計）
+            %ul
+              %li= link_to "ふふぁさーランキング", battle_ranking_totals_path + "?damage_type_dodge=on&show_target=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on"
+          %br
           %li グラフデータ
           %ul  
             %li= link_to "所属世界グラフ", world_graphs_path
+          %br
           %li 新出データ
           %ul  
             %li= link_to "新出アイテム付加一覧", new_item_fukas_path
@@ -62,6 +68,11 @@
   .card-body
     %h2 更新履歴
     %ul
+      %li 2019/3/23
+      %ul
+        %li
+          = link_to "ふふぁさーランキング", battle_ranking_totals_path + "?damage_type_dodge=on&show_target=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on"
+          を公開
       %li 2019/3/21
       %ul
         %li

@@ -9,13 +9,32 @@ class BattleDamage < ApplicationRecord
 
     scope :total, ->(params) {
         select("*").
-        select("COUNT(battle_damages.damage_type = 0 or null) AS dodge_count").
-        select("SUM(CASE WHEN battle_damages.value >= 0 THEN battle_damages.value ELSE 0 END) AS damage_sum")
+        total_damage(params).
+        total_dodge(params).
+        total_critical(params)
+    }
+
+    scope :total_damage, ->(params) {
+        if params["show_damage"] == "1" then
+            select("SUM(CASE WHEN battle_damages.value >= 0 THEN battle_damages.value ELSE 0 END) AS damage_sum")
+        end
+    }
+
+    scope :total_dodge, ->(params) {
+        if params["show_dodge"] == "1" then
+            select("COUNT(battle_damages.damage_type = 0 or null) AS dodge_count")
+        end
+    }
+
+    scope :total_critical, ->(params) {
+        if params["show_critical"] == "1" then
+            select("SUM(CASE WHEN battle_buffers.buffer_type = " + sprintf("%d", buffer_type) + " AND battle_buffers.value >= 0 THEN battle_buffers.value ELSE 0 END) AS critical_sum")
+        end
     }
 
     scope :groups, ->(params) {
         group("battle_damages.result_no").
-        group("battle_infos.battle_type").
+        battle_type_group(params).
         group("battle_damages.damage_type").
         group("battle_targets.e_no").
         group("battle_targets.enemy_id")
@@ -25,6 +44,10 @@ class BattleDamage < ApplicationRecord
         group("battle_damages.result_no").
         group("battle_damages.damage_type").
         group("parties.party_no")
+    }
+
+    scope :battle_type_group, ->(params) {
+        if params["group_battle_type"] == "1" then group("battle_infos.battle_type") end
     }
 
     scope :includes_or_joins, ->(params) {
