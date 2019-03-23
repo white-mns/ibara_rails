@@ -47,15 +47,13 @@ class BattleDamagesController < ApplicationController
         params["result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
-    if params["sort_damage"] == "on" then
-        params[:q][:s] = "value desc"
-    end
-
-    if params["sort_critical"] == "on" then
-        params[:q][:s] = "critical_value desc"
-    end
+    link_sort
 
     if action_name == "total" then
+        params[:q]["target_e_no_not_eq"] = -1
+    end
+
+    if action_name == "pt_total" then
         params[:q]["battle_info_battle_type_not_eq"] = -1
         params[:q]["target_party_party_type_eq"] = 1
         params[:q]["target_party_party_no_not_eq"] = 0
@@ -138,7 +136,26 @@ class BattleDamagesController < ApplicationController
     toggle_params_to_variable(params, @form_params, params_name: "show_group")
     toggle_params_to_variable(params, @form_params, params_name: "show_damage")
     toggle_params_to_variable(params, @form_params, params_name: "show_critical")
+    toggle_params_to_variable(params, @form_params, params_name: "show_dodge")
   end
+
+  def link_sort
+    if params["sort_damage"] == "on" then
+        params[:q][:s] = "value desc"
+        params.delete("sort_damage")
+    end
+
+    if params["sort_critical"] == "on" then
+        params[:q][:s] = "critical_value desc"
+        params.delete("sort_critical")
+    end
+
+    if params["sort_total_dodge"] == "on" then
+        params[:q][:s] = "dodge_count desc"
+        params.delete("sort_total_dodge")
+    end
+  end
+
   # GET /battle_damages/1
   #def show
   #end
