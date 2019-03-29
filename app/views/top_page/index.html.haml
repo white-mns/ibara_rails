@@ -53,6 +53,9 @@
             %li 戦闘ランキング（合計）
             %ul
               %li= link_to "ふふぁさーランキング", battle_ranking_totals_path + "?damage_type_dodge=on&show_target=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on"
+            %li 戦闘ランキング（PT合計）
+            %ul
+              %li= link_to "ふふぁさーPTランキング", battle_ranking_pt_totals_path + "?damage_type_dodge=on&show_target_pt=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on"
           %br
           %li グラフデータ
           %ul  
@@ -68,6 +71,14 @@
   .card-body
     %h2 更新履歴
     %ul
+      %li 2019/3/29
+      %ul
+        %li
+          = link_to "ふふぁさーPTランキング", battle_ranking_pt_totals_path + "?damage_type_dodge=on&show_target_pt=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on"
+          を公開
+        %li
+          = link_to "ふふぁさーランキング", battle_ranking_totals_path + "?damage_type_dodge=on&show_target=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on"
+          に対象PTでの絞り込みを追加
       %li 2019/3/23
       %ul
         %li

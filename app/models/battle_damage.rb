@@ -55,6 +55,7 @@ class BattleDamage < ApplicationRecord
         includes(battle_action: [:skill, :fuka]).
         acter_includes(params).
         target_includes(params).
+        target_pt_includes(params).
         critical_includes(params)
     }
 
@@ -66,6 +67,10 @@ class BattleDamage < ApplicationRecord
     scope :target_includes, ->(params) {
         #if params["show_target"] == "1" then includes([target: [:pc_name, :world, :party, :enemy]]) end
         includes([target: [:pc_name, :world, :party, :enemy]])
+    }
+
+    scope :target_pt_includes, ->(params) {
+        if params["show_target_pt"] == "1" then includes([target: [party: [party_info: [party_members: :pc_name]]]]) end
     }
 
     scope :critical_includes, ->(params) {
