@@ -1,4 +1,4 @@
-- @page_title = "戦闘結果ランキング一覧（合計）"
+- @page_title = "戦闘結果ランキング一覧（PT合計）"
 %h1= @page_title
 
 .card.desc
@@ -15,7 +15,7 @@
         - act_desc(false)
     #example.closed
       = render "layouts/input_desc"
-= search_form_for @search, url: battle_ranking_totals_path do |f|
+= search_form_for @search, url: battle_ranking_pt_totals_path do |f|
   %table.search_toggle.table.table-striped.table-bordered.table-hover
     %tbody.pointer
       %tr
@@ -39,11 +39,9 @@
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "発動者", params_name: "acter_form", 
-                    checkboxes: [{label: "PC",  params_name: "acter_pc", class_name: "after_space"},
-                                 {label: "NPC", params_name: "acter_npc"}])
+                    checkboxes: [{label: "PC",  params_name: "acter_pc", class_name: "after_space"}])
         - td_form(f, @form_params, @placeholder,                         label: "対象", params_name: "target_form",
-                    checkboxes: [{label: "PC",  params_name: "target_pc", class_name: "after_space"},
-                                 {label: "NPC", params_name: "target_npc"}])
+                    checkboxes: [{label: "PC",  params_name: "target_pc", class_name: "after_space"}])
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "戦闘の種類", params_name: "battle_type_form", colspan: 3, 
@@ -72,25 +70,8 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "結果名", params_name: "battle_page_form", placeholder: "", colspan: 3)
 
     - #==========================================================================================================================
-    - tbody_toggle(@form_params, params_name: "show_target",
-                    label: {open: "対象を表示する", close: "対象を表示しない"}, base_first: false)
-    %tbody.closed
-      %tr
-        %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "target_world_form", colspan: 3, 
-                    checkboxes: [{label: "イバラシティ", params_name: "target_ibaracity", class_name: "after_space mobile_br"},
-                                 {label: "アンジニティ", params_name: "target_ansinity"}])
-      %tr
-        %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "target_e_no_form", placeholder: "Number")
-        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "target_pc_name_form", placeholder: "Name")
-      %tr
-        %td.indent
-          - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "敵名", params_name: "target_enemy_form", placeholder: "Enemy", colspan: 3)
-
-    - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_target_pt",
-                    label: {open: "対象PTで絞り込む", close: "対象PTで絞り込みを表示しない"}, base_first: false)
+                    label: {open: "対象PTを表示する", close: "対象を表示しない"}, base_first: false)
     %tbody.closed
       %tr
         %td.indent
@@ -109,6 +90,7 @@
         - td_form(f, @form_params, @placeholder, params_name: "target_pm_party_type_form", colspan: 3, 
                     checkboxes: [{label: "戦闘PTM",     params_name: "target_pm_battle", class_name: "after_space mobile_br"},
                                  {label: "次回予告PTM", params_name: "target_pm_next"}])
+
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_dodge",
@@ -140,9 +122,8 @@
       - if @form_params["show_acter"] == "1"
         %th= sort_link(@search, :battle_action_acter_e_no,"発動者(Eno)", default_order: :desc)
         %th= sort_link(@search, :battle_action_acter_enemy_id, "敵", default_order: :desc)
-      - if @form_params["show_target"] == "1"
+      - if @form_params["show_target_pt"] == "1"
         %th= sort_link(@search, :battle_action_acter_e_no,"対象(Eno)", default_order: :desc)
-        %th= sort_link(@search, :battle_action_acter_enemy_id, "敵", default_order: :desc)
       - if params["group_battle_type"] == "1"
         %th= sort_link(@search, :battle_action_battle_type, "戦闘の種類", default_order: :desc)
       - if params["group_act"] == "1"
@@ -162,30 +143,31 @@
         - if battle_damage.battle_action
           - battle_action = battle_damage.battle_action
         %td= battle_damage.result_no
-        - if @form_params["show_acter"] == "1"
+        - if @form_params["show_acter_pt"] == "1"
           - if battle_action && battle_action.acter 
             - if battle_action.acter.acter_type == 0
-              %td{colspan: 2, style: "#{ world_border(battle_action.acter.world) }" }= pc_name_text(battle_action.acter.e_no, battle_action.acter.pc_name)
+              %td{colspan: 1, style: "#{ world_border(battle_action.acter.world) }" }= pc_name_text(battle_action.acter.e_no, battle_action.acter.pc_name)
             - elsif battle_action.acter.acter_type == 1
-              %td{colspan: "2"}
+              %td{colspan: 1}
                 = battle_action.acter.enemy.name if battle_action.acter.enemy
                 = battle_action.acter.suffix.name if battle_action.acter.suffix
             - else
-              %td{colspan: 2}
+              %td{colspan: 1}
           - else
-            %td{colspan: 2}
-        - if @form_params["show_target"] == "1"
+            %td{colspan: 1}
+        - if @form_params["show_target_pt"] == "1"
           - if battle_damage.target
             - if battle_damage.target.target_type == 0
-              %td{colspan: 2, style: "#{ world_border(battle_damage.target.world) }" }= pc_name_text(battle_damage.target.e_no, battle_damage.target.pc_name)
+              %td{colspan: 1, style: "#{ world_border(battle_damage.target.world) }" }
+                - party_members_pc_name_text(battle_damage.target.party.party_info.party_members)
             - elsif battle_damage.target.target_type == 1
-              %td{colspan: "2"}
+              %td{colspan: 1}
                 = battle_damage.target.enemy.name if battle_damage.target.enemy
                 = battle_damage.target.suffix.name if battle_damage.target.suffix
             - else
-              %td{colspan: 2}
+              %td{colspan: 1}
           - else
-            %td{colspan: 2}
+            %td{colspan: 1}
         - if params["group_battle_type"] == "1"
           %td= battle_type_text(battle_damage.battle_info)
         - if params["group_act"] == "1"

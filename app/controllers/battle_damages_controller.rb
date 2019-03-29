@@ -123,6 +123,8 @@ class BattleDamagesController < ApplicationController
 
     @form_params["ex_sort"] = params["ex_sort"]
     
+    target_pm_matching(params, @form_params)
+
     if !params["is_form"] && params["ex_sort"] == "on" then
         params["is_form"] = 1
     end
@@ -133,6 +135,8 @@ class BattleDamagesController < ApplicationController
     toggle_params_to_variable(params, @form_params, params_name: "show_battle_page")
     toggle_params_to_variable(params, @form_params, params_name: "show_acter")
     toggle_params_to_variable(params, @form_params, params_name: "show_target")
+    toggle_params_to_variable(params, @form_params, params_name: "show_acter_pt")
+    toggle_params_to_variable(params, @form_params, params_name: "show_target_pt")
     toggle_params_to_variable(params, @form_params, params_name: "show_group")
     toggle_params_to_variable(params, @form_params, params_name: "show_damage")
     toggle_params_to_variable(params, @form_params, params_name: "show_critical")
@@ -152,6 +156,53 @@ class BattleDamagesController < ApplicationController
         params[:q][:s] ||= "dodge_count desc"
     end
   end
+
+  # キャラ周囲絞り込み用
+  def target_pm_matching(params, form_params)
+      if !params["is_form"] then
+          params["target_pm_result_no_form"] ||= sprintf("%d",@latest_result)
+      end
+
+      params_tmp = {}
+      params_tmp[:q] = {}
+      params_tmp["is_form"] = "1"
+      params_tmp["target_pm_result_no_form"] = params["target_pm_result_no_form"]
+      params_tmp["target_pm_e_no_form"] = params["target_pm_e_no_form"]
+      params_tmp["target_pm_pc_name_form"] = params["target_pm_pc_name_form"]
+      params_tmp["target_pm_party_type_form"] = params["target_pm_party_type_form"]
+      params_tmp["target_pm_battle"] = params["target_pm_battle"]
+      params_tmp["target_pm_next"]   = params["target_pm_next"]
+
+      params_to_form(params_tmp, @form_params, column_name: "result_no", params_name: "target_pm_result_no_form", type: "number")
+      params_to_form(params_tmp, @form_params, column_name: "e_no", params_name: "target_pm_e_no_form", type: "number")
+      params_to_form(params_tmp, @form_params, column_name: "pc_name_name", params_name: "target_pm_pc_name_form", type: "text")
+      checkbox_params_set_query_any(params_tmp, @form_params, query_name: "target_party_type_eq_any",
+                               checkboxes: [{params_name: "target_pm_battle", value: 0, first_checked: false},
+                                            {params_name: "target_pm_next" ,  value: 1, first_checked: true}])
+
+      if params["target_pm_e_no_form"] || params["target_pm_pc_name_form"]
+          party_member_array = Party.pc_to_party_member_array(params_tmp)
+          if params[:q]["target_e_no_eq_any"] then
+            params[:q]["target_e_no_eq_any"] = params[:q]["target_e_no_eq_any"].push(party_member_array).flatten
+
+          else
+            params[:q]["target_e_no_eq_any"] = party_member_array
+          end
+
+      end
+      
+      # フォームに値を受け渡す用の空実行
+      checkbox_params_set_query_any(params, @form_params, query_name: "xxx",
+                               checkboxes: [{params_name: "target_pm_battle", value: 0, first_checked: false},
+                                            {params_name: "target_pm_next" ,  value: 1, first_checked: true}])
+
+      form_params["target_pm_result_no_form"] = params["target_pm_result_no_form"]
+      form_params["target_pm_e_no_form"]      = params["target_pm_e_no_form"]
+      form_params["target_pm_pc_name_form"]   = params["target_pm_pc_name_form"]
+      form_params["target_pm_battle"]         = params["target_pm_battle"]
+      form_params["target_pm_next"]           = params["target_pm_next"]
+  end
+
 
   # GET /battle_damages/1
   #def show
