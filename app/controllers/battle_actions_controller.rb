@@ -68,6 +68,7 @@ class BattleActionsController < ApplicationController
                              checkboxes: [{params_name: "acter_pc",   value: 0, first_checked: true},
                                           {params_name: "acter_npc" , value: 1, first_checked: false}])
 
+    acter_pm_matching(params, @form_params)
     pm_matching(params, @form_params)
 
     @form_params["group_turn"] = params["group_turn"]
@@ -87,8 +88,56 @@ class BattleActionsController < ApplicationController
     toggle_params_to_variable(params, @form_params, params_name: "show_place")
     toggle_params_to_variable(params, @form_params, params_name: "show_battle_page")
     toggle_params_to_variable(params, @form_params, params_name: "show_acter")
+    toggle_params_to_variable(params, @form_params, params_name: "show_acter_pt")
     toggle_params_to_variable(params, @form_params, params_name: "show_group")
   end
+
+  # 発動キャラ周囲絞り込み用
+  def acter_pm_matching(params, form_params)
+      if !params["is_form"] then
+          params["acter_pm_result_no_form"] ||= sprintf("%d",@latest_result)
+      end
+
+      params_tmp = {}
+      params_tmp[:q] = {}
+      params_tmp["is_form"] = "1"
+      params_tmp["acter_pm_result_no_form"] = params["acter_pm_result_no_form"]
+      params_tmp["acter_pm_e_no_form"] = params["acter_pm_e_no_form"]
+      params_tmp["acter_pm_pc_name_form"] = params["acter_pm_pc_name_form"]
+      params_tmp["acter_pm_party_type_form"] = params["acter_pm_party_type_form"]
+      params_tmp["acter_pm_battle"] = params["acter_pm_battle"]
+      params_tmp["acter_pm_next"]   = params["acter_pm_next"]
+
+      params_to_form(params_tmp, @form_params, column_name: "result_no", params_name: "acter_pm_result_no_form", type: "number")
+      params_to_form(params_tmp, @form_params, column_name: "e_no", params_name: "acter_pm_e_no_form", type: "number")
+      params_to_form(params_tmp, @form_params, column_name: "pc_name_name", params_name: "acter_pm_pc_name_form", type: "text")
+      checkbox_params_set_query_any(params_tmp, @form_params, query_name: "party_type_eq_any",
+                               checkboxes: [{params_name: "acter_pm_battle", value: 0, first_checked: false},
+                                            {params_name: "acter_pm_next" ,  value: 1, first_checked: true}])
+
+      if params["acter_pm_e_no_form"] || params["acter_pm_pc_name_form"]
+          party_member_array = Party.pc_to_party_member_array(params_tmp)
+          if params[:q]["acter_e_no_eq_any"] then
+            params[:q]["acter_e_no_eq_any"] = params[:q]["acter_e_no_eq_any"].push(party_member_array).flatten
+
+          else
+            params[:q]["acter_e_no_eq_any"] = party_member_array
+          end
+
+      end
+
+      # フォームに値を受け渡す用の空実行
+      checkbox_params_set_query_any(params, @form_params, query_name: "xxx",
+                               checkboxes: [{params_name: "acter_pm_battle", value: 0, first_checked: false},
+                                            {params_name: "acter_pm_next" ,  value: 1, first_checked: true}])
+
+      form_params["acter_pm_result_no_form"] = params["acter_pm_result_no_form"]
+      form_params["acter_pm_e_no_form"]      = params["acter_pm_e_no_form"]
+      form_params["acter_pm_pc_name_form"]   = params["acter_pm_pc_name_form"]
+      form_params["acter_pm_battle"]         = params["acter_pm_battle"]
+      form_params["acter_pm_next"]           = params["acter_pm_next"]
+  end
+
   # GET /battle_actions/1
   #def show
   #end

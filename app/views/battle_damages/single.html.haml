@@ -89,6 +89,28 @@
           - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "敵名", params_name: "enemy_form", placeholder: "Enemy", colspan: 3)
 
     - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_acter_pt",
+                    label: {open: "発動者所属PTで絞り込む", close: "発動者所属PTで絞り込みを表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "acter_world_form", colspan: 3,
+                    checkboxes: [{label: "イバラシティ", params_name: "acter_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "acter_ansinity"}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "acter_pm_result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "acter_pm_e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "acter_pm_pc_name_form", placeholder: "Name")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, params_name: "acter_pm_party_type_form", colspan: 3,
+                    checkboxes: [{label: "戦闘PTM",     params_name: "acter_pm_battle", class_name: "after_space mobile_br"},
+                                 {label: "次回予告PTM", params_name: "acter_pm_next"}])
+
+    - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_target",
                     label: {open: "対象を表示する", close: "対象を表示しない"}, base_first: false)
     %tbody.closed
@@ -104,6 +126,28 @@
       %tr
         %td.indent
           - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "敵名", params_name: "target_enemy_form", placeholder: "Enemy", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_target_pt",
+                    label: {open: "対象所属PTで絞り込む", close: "対象所属PTで絞り込みを表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "target_world_form", colspan: 3,
+                    checkboxes: [{label: "イバラシティ", params_name: "target_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "target_ansinity"}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "target_pm_result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "target_pm_e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "target_pm_pc_name_form", placeholder: "Name")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, params_name: "target_pm_party_type_form", colspan: 3,
+                    checkboxes: [{label: "戦闘PTM",     params_name: "target_pm_battle", class_name: "after_space mobile_br"},
+                                 {label: "次回予告PTM", params_name: "target_pm_next"}])
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_damage",
@@ -191,12 +235,15 @@
         %td= battle_type_text(battle_damage.battle_info)
         - if params["show_turn"]
           %td= battle_action.turn
-        - if battle_action.act_type == 0 || battle_action.act_type == 1
-          %td{colspan: 2}= battle_action.skill.name if battle_action.skill
-        - elsif battle_action.act_type == 2
+        - if battle_action && battle_action.act_type
+          - if battle_action.act_type == 0 || battle_action.act_type == 1
+            %td{colspan: 2}= battle_action.skill.name if battle_action.skill
+          - elsif battle_action.act_type == 2
+            %td{colspan: 2}
+              = battle_action.fuka.name if battle_action.fuka
+              = "LV" + sprintf("%d", battle_action.lv) if battle_action.lv && battle_action.lv >= 0
+        - else
           %td{colspan: 2}
-            = battle_action.fuka.name if battle_action.fuka
-            = "LV" + sprintf("%d", battle_action.lv) if battle_action.lv && battle_action.lv >= 0
         - if params["show_damage"]
           %td= damage_type_text(battle_damage)
           %td= battle_damage.value
