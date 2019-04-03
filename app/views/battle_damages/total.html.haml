@@ -90,11 +90,11 @@
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_target_pt",
-                    label: {open: "対象PTで絞り込む", close: "対象PTで絞り込みを表示しない"}, base_first: false)
+                    label: {open: "対象所属PTで絞り込む", close: "対象所属PTで絞り込みを表示しない"}, base_first: false)
     %tbody.closed
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "target_world_form", colspan: 3, 
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "target_world_form", colspan: 3,
                     checkboxes: [{label: "イバラシティ", params_name: "target_ibaracity", class_name: "after_space mobile_br"},
                                  {label: "アンジニティ", params_name: "target_ansinity"}])
       %tr
@@ -106,7 +106,7 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "target_pm_pc_name_form", placeholder: "Name")
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, params_name: "target_pm_party_type_form", colspan: 3, 
+        - td_form(f, @form_params, @placeholder, params_name: "target_pm_party_type_form", colspan: 3,
                     checkboxes: [{label: "戦闘PTM",     params_name: "target_pm_battle", class_name: "after_space mobile_br"},
                                  {label: "次回予告PTM", params_name: "target_pm_next"}])
 
