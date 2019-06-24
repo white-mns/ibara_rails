@@ -1,4 +1,4 @@
-- @page_title = "キャラクター名・プレイヤー名一覧"
+- @page_title = "キャラクター名・PL名一覧"
 %h1= @page_title
 
 .card.desc
@@ -36,8 +36,21 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "Player", params_name: "player_form", placeholder: "Name")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "PL", params_name: "player_form", placeholder: "Name")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
       %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
+    %tbody
+      %tr.sep
         %td.indent
         %td.indent= hidden_field_tag :is_form, 1
         %td{colspan: "3"}
@@ -60,7 +73,7 @@
     - @names.each do |name|
       %tr
         %td= name.result_no
-        %td= pc_name_text(name.e_no, name)
+        %td{style: "#{ world_border(name.world) }" }= pc_name_text(name.e_no, name)
         %td= name.player
         %td= character_link(name.e_no)
         %td= character_old_link(@latest_result, name.e_no, name.result_no, name.generate_no)

@@ -6,8 +6,8 @@ class NamesController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= Name.notnil().search(params[:q]).result.count()
-    @search	= Name.notnil().page(params[:page]).search(params[:q])
+    @count	= Name.notnil().includes(:world).search(params[:q]).result.count()
+    @search	= Name.notnil().includes(:world).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @names	= @search.result.per(50)
   end
@@ -27,6 +27,13 @@ class NamesController < ApplicationController
     params_to_form(params, @form_params, column_name: "generate_no", params_name: "generate_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "e_no", params_name: "e_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "player", params_name: "player_form", type: "text")
+    
+    checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",
+                             checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},
+                                          {params_name: "is_ansinity" , value: 1, first_checked: true}])
+
+    # toggle操作用
+    toggle_params_to_variable(params, @form_params, params_name: "show_world")
   end
 
   # GET /names/1

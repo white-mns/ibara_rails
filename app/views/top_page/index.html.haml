@@ -3,6 +3,10 @@
   このサイトでは
   %a.animation{:href => "http://lisge.com/ib/", :target => "_blank"} 騒乱イバラシティ
   を解析して得られる情報を扱っています。
+  %br
+  テストプレイ結果消滅に伴い、結果のリンク先を
+  = link_to "データ小屋アーカイブス", "https://archives.teiki.org/risu/ibara/0/"
+  に変更しています。
 %br
 %p= top_text(@latest_result, @latest_generate, @uploaded_result)
 
@@ -14,6 +18,8 @@
         %ul
           %li 個人データ
           %ul  
+            %li= link_to "キャラクター名・PL名一覧", names_path
+            %br
             %li= link_to "現在地一覧", places_path
             %li= link_to "パーティ情報一覧", party_infos_path
             %li= link_to "スタイル一覧", styles_path
@@ -71,6 +77,16 @@
   .card-body
     %h2 更新履歴
     %ul
+      %li 2019/6/24
+      %ul
+        %li
+          = link_to "キャラクター名・PL名一覧", names_path
+          を公開。
+          %br
+        %li
+          テストプレイ結果消滅に伴い、結果のリンク先を
+          = link_to "データ小屋アーカイブス", "https://archives.teiki.org/risu/ibara/0/"
+          に変更
       %li 2019/4/3
       %ul
         %li
