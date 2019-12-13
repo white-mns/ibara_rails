@@ -65,6 +65,7 @@ class ItemsController < ApplicationController
     # toggle操作用
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
     toggle_params_to_variable(params, @form_params, params_name: "show_place")
+    toggle_params_to_variable(params, @form_params, params_name: "show_fuka")
   end
   # GET /items/1
   #def show
