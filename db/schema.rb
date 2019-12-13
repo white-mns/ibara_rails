@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_20_104202) do
+ActiveRecord::Schema.define(version: 2019_12_13_071148) do
 
   create_table "battle_acters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -194,6 +194,35 @@ ActiveRecord::Schema.define(version: 2019_03_20_104202) do
     t.index ["range"], name: "index_items_on_range"
     t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
     t.index ["strength"], name: "index_items_on_strength"
+  end
+
+  create_table "meals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "last_result_no"
+    t.integer "last_generate_no"
+    t.integer "i_no"
+    t.string "name"
+    t.integer "recovery"
+    t.integer "effect_1_id"
+    t.integer "effect_1_value"
+    t.integer "effect_2_id"
+    t.integer "effect_2_value"
+    t.integer "effect_3_id"
+    t.integer "effect_3_value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["effect_1_id"], name: "index_meals_on_effect_1_id"
+    t.index ["effect_1_value"], name: "index_meals_on_effect_1_value"
+    t.index ["effect_2_id"], name: "index_meals_on_effect_2_id"
+    t.index ["effect_2_value"], name: "index_meals_on_effect_2_value"
+    t.index ["effect_3_id"], name: "index_meals_on_effect_3_id"
+    t.index ["effect_3_value"], name: "index_meals_on_effect_3_value"
+    t.index ["last_result_no", "e_no", "i_no", "last_generate_no"], name: "last_item"
+    t.index ["name"], name: "index_meals_on_name"
+    t.index ["recovery"], name: "index_meals_on_recovery"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
   end
 
   create_table "move_party_counts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -474,7 +503,7 @@ ActiveRecord::Schema.define(version: 2019_03_20_104202) do
     t.integer "world"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+    t.index ["result_no", "e_no", "world", "generate_no"], name: "resultno_eno"
     t.index ["world"], name: "index_worlds_on_world"
   end
 

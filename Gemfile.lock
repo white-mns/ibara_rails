@@ -249,6 +249,7 @@ DEPENDENCIES
   rack-mini-profiler
   rails (~> 5.2.1)
   ransack
+  sassc (~> 2.0.1)
   sassc-rails
   spring
   spring-watcher-listen (~> 2.0.0)
