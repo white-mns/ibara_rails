@@ -79,12 +79,12 @@ class BattleResultsController < ApplicationController
 
     detection_arrays = {and: [], or: [], not: []}
 
-    add_and_param_for_has_many(params, params_tmp, detection_arrays, "enemy_members_enemy_dummy_cont_all",     "enemy_name_cont_all", NextBattleEnemy.includes(:enemy), :party_no)
-    add_and_param_for_has_many(params, params_tmp, detection_arrays, "enemy_members_enemy_dummy_eq_all",       "enemy_name_eq_all",   NextBattleEnemy.includes(:enemy), :party_no)
-    add_or_param_for_has_many( params, params_tmp, detection_arrays, "enemy_members_enemy_dummy_cont_any",     "enemy_name_cont_any", NextBattleEnemy.includes(:enemy), :party_no)
-    add_or_param_for_has_many( params, params_tmp, detection_arrays, "enemy_members_enemy_dummy_eq_any",       "enemy_name_eq_any",   NextBattleEnemy.includes(:enemy), :party_no)
-    add_not_param_for_has_many(params, params_tmp, detection_arrays, "enemy_members_enemy_dummy_not_cont_all", "enemy_name_cont_all", NextBattleEnemy.includes(:enemy), :party_no)
-    add_not_param_for_has_many(params, params_tmp, detection_arrays, "enemy_members_enemy_dummy_not_eq_all",   "enemy_name_eq_all",   NextBattleEnemy.includes(:enemy), :party_no)
+    add_and_param_for_has_many(params, params_tmp, detection_arrays, "enemy_members_enemy_dummy_cont_all",     "enemy_name_cont_all", BattleEnemy.includes(:enemy), :party_no)
+    add_and_param_for_has_many(params, params_tmp, detection_arrays, "enemy_members_enemy_dummy_eq_all",       "enemy_name_eq_all",   BattleEnemy.includes(:enemy), :party_no)
+    add_or_param_for_has_many( params, params_tmp, detection_arrays, "enemy_members_enemy_dummy_cont_any",     "enemy_name_cont_any", BattleEnemy.includes(:enemy), :party_no)
+    add_or_param_for_has_many( params, params_tmp, detection_arrays, "enemy_members_enemy_dummy_eq_any",       "enemy_name_eq_any",   BattleEnemy.includes(:enemy), :party_no)
+    add_not_param_for_has_many(params, params_tmp, detection_arrays, "enemy_members_enemy_dummy_not_cont_all", "enemy_name_cont_all", BattleEnemy.includes(:enemy), :party_no)
+    add_not_param_for_has_many(params, params_tmp, detection_arrays, "enemy_members_enemy_dummy_not_eq_all",   "enemy_name_eq_all",   BattleEnemy.includes(:enemy), :party_no)
 
     params[:q]["party_no_eq_any"] = detection_arrays[:or].flatten.uniq
 

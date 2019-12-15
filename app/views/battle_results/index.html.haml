@@ -9,6 +9,10 @@
   .card-body
     = render "layouts/base_desc"
     %p
+      ※1　敵名でのAND検索では、「敵A 敵B」と検索すると「敵Aと敵B」が同時に出現した結果のみ表示します。
+      %br
+      「歩行 雑草」で検索した場合は『「歩行」を含む敵』と『雑草を含む敵』が同時に出現した結果のみ表示するため、他の文字列AND検索のように歩行雑草では絞り込まれません。
+    %p
       %span.example_select.example_toggle.pointer
         - help_icon
         入力例
@@ -179,7 +183,7 @@
           - if @form_params["show_party_name"] == "1"
             %td= battle_result.last_battle_info.enemy_party_name.name if battle_result.last_battle_info.enemy_party_name
           %td.text-nowrap
-            - enemy_members_text(battle_result.last_battle_info.enemy_members)
+            - enemy_members_text(battle_result.enemy_members)
           %td.sep= battle_link(@latest_result, battle_result.battle_type, battle_result.battle_info.battle_page, battle_result.result_no, battle_result.generate_no)
           %td= battle_old_link(@latest_result, battle_result.battle_type, battle_result.battle_info.battle_page, battle_result.result_no, battle_result.generate_no)
 = paginate(@battle_results)
