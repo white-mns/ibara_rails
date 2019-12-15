@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :battle_results
   resources :meals
   get "b_rank/pt_totals",  :to => "battle_damages#pt_total",  :as => "battle_ranking_pt_totals"
   get "b_rank/totals",  :to => "battle_damages#total",  :as => "battle_ranking_totals"

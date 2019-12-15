@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_13_071148) do
+ActiveRecord::Schema.define(version: 2019_12_14_140634) do
 
   create_table "battle_acters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -97,6 +97,24 @@ ActiveRecord::Schema.define(version: 2019_12_13_071148) do
     t.datetime "updated_at", null: false
     t.index ["battle_type"], name: "index_battle_infos_on_battle_type"
     t.index ["result_no", "battle_id", "generate_no"], name: "resultno_battleid"
+  end
+
+  create_table "battle_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "party_no"
+    t.integer "battle_type"
+    t.integer "last_result_no"
+    t.integer "last_generate_no"
+    t.integer "battle_id"
+    t.integer "battle_result"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["battle_result"], name: "index_battle_results_on_battle_result"
+    t.index ["last_generate_no"], name: "index_battle_results_on_last_generate_no"
+    t.index ["last_result_no", "party_no", "last_generate_no"], name: "lastresultno_partyno"
+    t.index ["last_result_no"], name: "index_battle_results_on_last_result_no"
+    t.index ["result_no", "party_no", "generate_no"], name: "resultno_partyno"
   end
 
   create_table "battle_targets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|

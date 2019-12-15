@@ -1,0 +1,185 @@
+- @page_title = "NPC戦勝敗一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "戦闘の種類", params_name: "battle_type_form", colspan: 3, 
+                    checkboxes: [{label: "ENCOUNTER - 『遭遇戦』『採集』", params_name: "is_encounter", class_name: "after_space", br: true},
+                                 {label: "MISSION - 『開放戦』『特殊戦』", params_name: "is_mission"}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "敵名(※1)", params_name: "enemy_form", placeholder: "Enemy", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "勝敗", params_name: "battle_result_form", colspan: 3, 
+                    checkboxes: [{label: "勝利", params_name: "result_win", class_name: "after_space"},
+                                 {label: "引分", params_name: "result_draw", class_name: "after_space"},
+                                 {label: "敗北", params_name: "result_lose"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_member_num",
+                    label: {open: "人数を表示する", close: "人数を表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "PT人数", params_name: "member_num_form",       placeholder: "Number", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_party_name",
+                    label: {open: "パーティ名を表示する", close: "パーティ名を表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "PT名", params_name: "party_name_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "敵PT名", params_name: "enemy_party_name_form")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_move",
+                    label: {open: "移動ルートを表示する", close: "移動ルートを表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+          %td{colspan: 5}
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_move_statistics",
+                    label: {open: "移動地形合計を表示する", close: "移動地形合計を表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        %td
+          %img.style_img{src: "https://archives.teiki.org/risu/ibara/0/p/a1.png"}
+          = f.label "road_form", "道路"
+        %td.formNum= text_field_tag :road_form,     @form_params["road_form"]
+        %td
+          %img.style_img{src: "https://archives.teiki.org/risu/ibara/0/p/a2.png"}
+          = f.label "road_form", "草原"
+        %td.formNum= text_field_tag :grass_form,    @form_params["grass_form"]
+      %tr
+        %td.indent
+        %td
+          %img.style_img{src: "https://archives.teiki.org/risu/ibara/0/p/a3.png"}
+          = f.label "road_form", "沼地"
+        %td.formNum= text_field_tag :swamp_form,    @form_params["swamp_form"]
+        %td
+          %img.style_img{src: "https://archives.teiki.org/risu/ibara/0/p/a4.png"}
+          = f.label "road_form", "森林"
+        %td.formNum= text_field_tag :forest_form,   @form_params["forest_form"]
+      %tr
+        %td.indent
+        %td
+          %img.style_img{src: "https://archives.teiki.org/risu/ibara/0/p/a5.png"}
+          = f.label "road_form", "山岳"
+        %td.formNum{colspan: 3}= text_field_tag :mountain_form, @form_params["mountain_form"]
+
+    - #==========================================================================================================================
+    %tbody
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+
+= paginate(@battle_results)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      - if @form_params["show_party_name"] == "1"
+        %th= sort_link(@search, :party_info_name, "PT名", default_order: :desc)
+      %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
+      %th.sep= sort_link(@search, :battle_result, "勝敗", default_order: :desc)
+      - if @form_params["show_member_num"] == "1"
+        %th.sep= sort_link(@search, :party_info_member_num,"PT人数", default_order: :desc)
+      - if @form_params["show_move"] == "1"
+        %th.sep= sort_link(@search, :party_info_members_move, "移動", default_order: :desc)
+      - if @form_params["show_move_statistics"] == "1"
+        %th.sep= sort_link(@search, :last_battle_info_road_move_count, "道路", default_order: :desc)
+        %th= sort_link(@search, :last_battle_info_grass_move_count, "草原", default_order: :desc)
+        %th= sort_link(@search, :last_battle_info_swamp_move_count, "沼地", default_order: :desc)
+        %th= sort_link(@search, :last_battle_info_forest_move_count, "森林", default_order: :desc)
+        %th= sort_link(@search, :last_battle_info_mountain_move_count, "山岳", default_order: :desc)
+      %th.sep= sort_link(@search, :battle_type, "戦闘", default_order: :desc)
+      - if @form_params["show_party_name"] == "1"
+        %th= sort_link(@search, :enemy_party_name_id, "敵PT名", default_order: :desc)
+      %th= sort_link(@search, :enemy_members_enemy_name, "敵一覧", default_order: :desc)
+      %th.sep{colspan: "2"} 結果リンク
+  %tbody
+    - @battle_results.each do |battle_result|
+      - if battle_result.last_battle_info
+        %tr
+          %td= battle_result.result_no
+          - if @form_params["show_party_name"] == "1"
+            %td= battle_result.party_info.name if battle_result.party_info
+          %td.text-nowrap{style: "#{ world_border(battle_result.last_battle_info.world) }" }
+            - party_members_pc_name_text(battle_result.party_info.party_members)
+          %td.sep
+            = "勝利" if battle_result.battle_result == 1
+            = "　引分" if battle_result.battle_result == 0
+            = "　　敗北" if battle_result.battle_result == -1
+          - if @form_params["show_member_num"] == "1"
+            %td.sep= battle_result.last_battle_info.party_info.member_num if battle_result.last_battle_info.party_info
+          - if @form_params["show_move"] == "1"
+            %td.text-nowrap
+              - party_members_move(battle_result.last_battle_info.party_info.party_members)
+          - if @form_params["show_move_statistics"] == "1"
+            %td= battle_result.last_battle_info.road.move_count if battle_result.last_battle_info.road
+            %td= battle_result.last_battle_info.grass.move_count if battle_result.last_battle_info.grass
+            %td= battle_result.last_battle_info.swamp.move_count if battle_result.last_battle_info.swamp
+            %td= battle_result.last_battle_info.forest.move_count if battle_result.last_battle_info.forest
+            %td= battle_result.last_battle_info.mountain.move_count if battle_result.last_battle_info.mountain
+          %td.sep= battle_type_text(battle_result.last_battle_info)
+          - if @form_params["show_party_name"] == "1"
+            %td= battle_result.last_battle_info.enemy_party_name.name if battle_result.last_battle_info.enemy_party_name
+          %td.text-nowrap
+            - enemy_members_text(battle_result.last_battle_info.enemy_members)
+          %td.sep= battle_link(@latest_result, battle_result.battle_type, battle_result.battle_info.battle_page, battle_result.result_no, battle_result.generate_no)
+          %td= battle_old_link(@latest_result, battle_result.battle_type, battle_result.battle_info.battle_page, battle_result.result_no, battle_result.generate_no)
+= paginate(@battle_results)
