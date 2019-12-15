@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_14_140634) do
+ActiveRecord::Schema.define(version: 2019_12_15_055734) do
 
   create_table "battle_acters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -85,6 +85,19 @@ ActiveRecord::Schema.define(version: 2019_12_14_140634) do
     t.index ["result_no", "battle_id", "act_id", "act_sub_id", "generate_no"], name: "resultno_battleid"
     t.index ["result_no", "damage_type", "battle_id", "act_id", "act_sub_id", "generate_no"], name: "resultno_damagetype"
     t.index ["value"], name: "index_battle_damages_on_value"
+  end
+
+  create_table "battle_enemies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "party_no"
+    t.integer "battle_type"
+    t.integer "enemy_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["battle_type"], name: "index_battle_enemies_on_battle_type"
+    t.index ["enemy_id"], name: "index_battle_enemies_on_enemy_id"
+    t.index ["result_no", "party_no", "generate_no"], name: "resultno_partyno"
   end
 
   create_table "battle_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
