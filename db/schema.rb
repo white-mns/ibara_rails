@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_15_055734) do
+ActiveRecord::Schema.define(version: 2019_12_16_140805) do
 
   create_table "battle_acters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -313,6 +313,16 @@ ActiveRecord::Schema.define(version: 2019_12_15_055734) do
     t.index ["skill_id"], name: "index_new_actions_on_skill_id"
   end
 
+  create_table "new_battle_enemies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "enemy_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["enemy_id"], name: "index_new_battle_enemies_on_enemy_id"
+    t.index ["result_no", "generate_no"], name: "resultno_generateno"
+  end
+
   create_table "new_item_fukas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
     t.integer "generate_no"
@@ -320,6 +330,16 @@ ActiveRecord::Schema.define(version: 2019_12_15_055734) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["fuka_id"], name: "index_new_item_fukas_on_fuka_id"
+    t.index ["result_no", "generate_no"], name: "resultno_generateno"
+  end
+
+  create_table "new_next_enemies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "enemy_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["enemy_id"], name: "index_new_next_enemies_on_enemy_id"
     t.index ["result_no", "generate_no"], name: "resultno_generateno"
   end
 

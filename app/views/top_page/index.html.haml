@@ -73,6 +73,8 @@
           %ul  
             %li= link_to "新出アイテム付加一覧", new_item_fukas_path
             %li= link_to "新出発動スキル・付加一覧", new_actions_path
+            %li= link_to "新出予告NPC一覧", new_next_enemies_path
+            %li= link_to "初戦闘NPC一覧", new_battle_enemies_path
           %ul  
 
 .card.top
@@ -83,7 +85,12 @@
       %ul
         %li
           = link_to "食事一覧", meals_path
+          、
           = link_to "NPC戦勝敗一覧", battle_results_path
+          、
+          = link_to "新出予告NPC一覧", new_next_enemies_path
+          、
+          = link_to "初戦闘NPC一覧", new_battle_enemies_path
           を公開。
       %li 2019/6/24
       %ul
