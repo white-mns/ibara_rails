@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  resources :duel_infos
+  resources :next_duel_infos
+  resources :new_battle_enemies
+  resources :new_next_enemies
+  resources :battle_enemies
+  resources :battle_results
+  resources :meals
   get "b_rank/pt_totals",  :to => "battle_damages#pt_total",  :as => "battle_ranking_pt_totals"
   get "b_rank/totals",  :to => "battle_damages#total",  :as => "battle_ranking_totals"
   get "b_rank/singles", :to => "battle_damages#single", :as => "battle_ranking_singles"

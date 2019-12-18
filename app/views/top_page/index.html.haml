@@ -38,16 +38,20 @@
           %br
           %li 行動データ
           %ul  
+            %li= link_to "食事一覧", meals_path
             %li= link_to "合成一覧", compounds_path
             %ul
               %li= link_to "合成結果一覧", compounds_path + "?result_no_form=""&compound_deficient_lv=off&group_result=on"
               %li= link_to "合成組み合わせ一覧", compounds_path + "?result_no_form=""&group_source=on"
             %li= link_to "移動一覧", moves_path
             %li= link_to "次回予告NPC戦一覧", next_battle_infos_path
+            %li= link_to "次回予告対人戦一覧", next_duel_infos_path
       .col-md-6
         %ul
           %li 戦闘データ
           %ul  
+            %li= link_to "NPC戦勝敗一覧", battle_results_path
+            %li= link_to "対人戦勝敗一覧", duel_infos_path
             %li= link_to "スキル・付加発動結果一覧", battle_actions_path
             %ul
               %li= link_to "スキル発動回数ランキング", battle_actions_path + "?act_type_fuka=off&show_group=1&group_page=off&total_act=on&ex_sort=on"
@@ -71,12 +75,29 @@
           %ul  
             %li= link_to "新出アイテム付加一覧", new_item_fukas_path
             %li= link_to "新出発動スキル・付加一覧", new_actions_path
+            %li= link_to "新出予告NPC一覧", new_next_enemies_path
+            %li= link_to "初戦闘NPC一覧", new_battle_enemies_path
           %ul  
 
 .card.top
   .card-body
     %h2 更新履歴
     %ul
+      %li 2019/12/18
+      %ul
+        %li
+          = link_to "食事一覧", meals_path
+          、
+          = link_to "NPC戦勝敗一覧", battle_results_path
+          、
+          = link_to "新出予告NPC一覧", new_next_enemies_path
+          、
+          = link_to "初戦闘NPC一覧", new_battle_enemies_path
+          、
+          = link_to "次回予告対人戦一覧", next_duel_infos_path
+          、
+          = link_to "対人戦勝敗一覧", duel_infos_path
+          を公開。
       %li 2019/6/24
       %ul
         %li

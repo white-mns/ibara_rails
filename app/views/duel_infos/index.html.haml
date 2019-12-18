@@ -1,0 +1,138 @@
+- @page_title = "対人戦勝敗一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno(左PT)", params_name: "left_e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名(左PT)", params_name: "left_pc_name_form", placeholder: "Name")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno(右PT)", params_name: "right_e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名(右PT)", params_name: "right_pc_name_form", placeholder: "Name")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "戦闘の種類", params_name: "battle_type_form", colspan: 3, 
+                    checkboxes: [{label: "DUEL - 『決闘』", params_name: "is_duel", class_name: "after_space", br: true},
+                                 {label: "GAME - 『練習戦』", params_name: "is_game"}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "勝敗", params_name: "battle_result_form", colspan: 3, 
+                    checkboxes: [{label: "左PTが勝利", params_name: "result_win", class_name: "after_space"},
+                                 {label: "引分", params_name: "result_draw", class_name: "after_space"},
+                                 {label: "右PTが勝利", params_name: "result_lose"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "（練習試合のみ）所属世界で絞り込む", close: "（練習試合のみ）所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_member_num",
+                    label: {open: "人数を表示する", close: "人数を表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "左PT人数", params_name: "left_member_num_form",       placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "右PT人数", params_name: "right_member_num_form",       placeholder: "Number")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_party_name",
+                    label: {open: "パーティ名を表示する", close: "パーティ名を表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "左PT名", params_name: "left_party_name_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "右PT名", params_name: "right_party_name_form")
+
+    - #==========================================================================================================================
+    %tbody
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+
+= paginate(@duel_infos)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :battle_result_battle_result,"勝敗", default_order: :desc)
+      - if @form_params["show_member_num"] == "1"
+        %th.sep= sort_link(@search, :left_party_info_member_num,"PT人数", default_order: :desc)
+      - if @form_params["show_party_name"] == "1"
+        %th= sort_link(@search, :left_party_info_name, "PT名", default_order: :desc)
+      %th= sort_link(@search, :left_party_no, "キャラクター(Eno)", default_order: :desc)
+      %th
+      %th= sort_link(@search, :right_party_no, "キャラクター(Eno)", default_order: :desc)
+      - if @form_params["show_party_name"] == "1"
+        %th= sort_link(@search, :right_party_info_name, "PT名", default_order: :desc)
+      - if @form_params["show_member_num"] == "1"
+        %th.sep= sort_link(@search, :right_party_info_member_num,"PT人数", default_order: :desc)
+      %th= sort_link(@search, :battle_result_battle_result,"勝敗", default_order: :desc)
+      %th.sep{colspan: "2"} 結果リンク
+  %tbody
+    - @duel_infos.each do |duel_info|
+      %tr
+        %td= duel_info.result_no
+        %td.sep
+          = "勝利" if duel_info.battle_result.battle_result == 1
+          = "　引分" if duel_info.battle_result.battle_result == 0
+        - if @form_params["show_member_num"] == "1"
+          %td.sep= duel_info.left_party_info.member_num if duel_info.left_party_info
+        - if @form_params["show_party_name"] == "1"
+          %td= duel_info.left_party_info.name if duel_info.left_party_info
+        %td.text-nowrap{style: "#{ world_border(duel_info.left_world) }" }
+          - party_members_pc_name_text(duel_info.left_party_info.party_members) if duel_info.left_party_info
+        %td.text-nowrap{style: "#{ world_border(duel_info.right_world) }" }
+          VS
+        %td
+          - party_members_pc_name_text(duel_info.right_party_info.party_members) if duel_info.right_party_info
+        - if @form_params["show_party_name"] == "1"
+          %td= duel_info.right_party_info.name if duel_info.right_party_info
+        - if @form_params["show_member_num"] == "1"
+          %td.sep= duel_info.right_party_info.member_num if duel_info.right_party_info
+        %td.sep
+          = "　勝利" if duel_info.battle_result.battle_result == -1
+          = "引分" if duel_info.battle_result.battle_result == 0
+        %td.sep= battle_link(@latest_result, duel_info.battle_info.battle_type, duel_info.battle_info.battle_page, duel_info.result_no, duel_info.generate_no)
+        %td= battle_old_link(@latest_result, duel_info.battle_info.battle_type, duel_info.battle_info.battle_page, duel_info.result_no, duel_info.generate_no)
+= paginate(@duel_infos)

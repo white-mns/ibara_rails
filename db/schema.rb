@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_20_104202) do
+ActiveRecord::Schema.define(version: 2019_12_17_145235) do
 
   create_table "battle_acters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -87,6 +87,19 @@ ActiveRecord::Schema.define(version: 2019_03_20_104202) do
     t.index ["value"], name: "index_battle_damages_on_value"
   end
 
+  create_table "battle_enemies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "party_no"
+    t.integer "battle_type"
+    t.integer "enemy_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["battle_type"], name: "index_battle_enemies_on_battle_type"
+    t.index ["enemy_id"], name: "index_battle_enemies_on_enemy_id"
+    t.index ["result_no", "party_no", "generate_no"], name: "resultno_partyno"
+  end
+
   create_table "battle_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
     t.integer "generate_no"
@@ -97,6 +110,24 @@ ActiveRecord::Schema.define(version: 2019_03_20_104202) do
     t.datetime "updated_at", null: false
     t.index ["battle_type"], name: "index_battle_infos_on_battle_type"
     t.index ["result_no", "battle_id", "generate_no"], name: "resultno_battleid"
+  end
+
+  create_table "battle_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "party_no"
+    t.integer "battle_type"
+    t.integer "last_result_no"
+    t.integer "last_generate_no"
+    t.integer "battle_id"
+    t.integer "battle_result"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["battle_result"], name: "index_battle_results_on_battle_result"
+    t.index ["last_generate_no"], name: "index_battle_results_on_last_generate_no"
+    t.index ["last_result_no", "party_no", "last_generate_no"], name: "lastresultno_partyno"
+    t.index ["last_result_no"], name: "index_battle_results_on_last_result_no"
+    t.index ["result_no", "party_no", "generate_no"], name: "resultno_partyno"
   end
 
   create_table "battle_targets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -160,6 +191,20 @@ ActiveRecord::Schema.define(version: 2019_03_20_104202) do
     t.index ["sources_name"], name: "index_compounds_on_sources_name"
   end
 
+  create_table "duel_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "battle_id"
+    t.integer "left_party_no"
+    t.integer "right_party_no"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["battle_id"], name: "index_duel_infos_on_battle_id"
+    t.index ["left_party_no"], name: "index_duel_infos_on_left_party_no"
+    t.index ["result_no", "generate_no"], name: "resultno_generateno"
+    t.index ["right_party_no"], name: "index_duel_infos_on_right_party_no"
+  end
+
   create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
     t.integer "generate_no"
@@ -194,6 +239,35 @@ ActiveRecord::Schema.define(version: 2019_03_20_104202) do
     t.index ["range"], name: "index_items_on_range"
     t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
     t.index ["strength"], name: "index_items_on_strength"
+  end
+
+  create_table "meals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "last_result_no"
+    t.integer "last_generate_no"
+    t.integer "i_no"
+    t.string "name"
+    t.integer "recovery"
+    t.integer "effect_1_id"
+    t.integer "effect_1_value"
+    t.integer "effect_2_id"
+    t.integer "effect_2_value"
+    t.integer "effect_3_id"
+    t.integer "effect_3_value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["effect_1_id"], name: "index_meals_on_effect_1_id"
+    t.index ["effect_1_value"], name: "index_meals_on_effect_1_value"
+    t.index ["effect_2_id"], name: "index_meals_on_effect_2_id"
+    t.index ["effect_2_value"], name: "index_meals_on_effect_2_value"
+    t.index ["effect_3_id"], name: "index_meals_on_effect_3_id"
+    t.index ["effect_3_value"], name: "index_meals_on_effect_3_value"
+    t.index ["last_result_no", "e_no", "i_no", "last_generate_no"], name: "last_item"
+    t.index ["name"], name: "index_meals_on_name"
+    t.index ["recovery"], name: "index_meals_on_recovery"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
   end
 
   create_table "move_party_counts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -253,6 +327,16 @@ ActiveRecord::Schema.define(version: 2019_03_20_104202) do
     t.index ["skill_id"], name: "index_new_actions_on_skill_id"
   end
 
+  create_table "new_battle_enemies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "enemy_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["enemy_id"], name: "index_new_battle_enemies_on_enemy_id"
+    t.index ["result_no", "generate_no"], name: "resultno_generateno"
+  end
+
   create_table "new_item_fukas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
     t.integer "generate_no"
@@ -260,6 +344,16 @@ ActiveRecord::Schema.define(version: 2019_03_20_104202) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["fuka_id"], name: "index_new_item_fukas_on_fuka_id"
+    t.index ["result_no", "generate_no"], name: "resultno_generateno"
+  end
+
+  create_table "new_next_enemies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "enemy_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["enemy_id"], name: "index_new_next_enemies_on_enemy_id"
     t.index ["result_no", "generate_no"], name: "resultno_generateno"
   end
 
@@ -289,6 +383,20 @@ ActiveRecord::Schema.define(version: 2019_03_20_104202) do
     t.index ["enemy_party_name_id"], name: "index_next_battle_infos_on_enemy_party_name_id"
     t.index ["member_num"], name: "index_next_battle_infos_on_member_num"
     t.index ["result_no", "party_no", "generate_no"], name: "resultno_partyno"
+  end
+
+  create_table "next_duel_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "left_party_no"
+    t.integer "right_party_no"
+    t.integer "battle_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["battle_type"], name: "index_next_duel_infos_on_battle_type"
+    t.index ["left_party_no"], name: "index_next_duel_infos_on_left_party_no"
+    t.index ["result_no", "generate_no"], name: "resultno_generateno"
+    t.index ["right_party_no"], name: "index_next_duel_infos_on_right_party_no"
   end
 
   create_table "parties", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -474,7 +582,7 @@ ActiveRecord::Schema.define(version: 2019_03_20_104202) do
     t.integer "world"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+    t.index ["result_no", "e_no", "world", "generate_no"], name: "resultno_eno"
     t.index ["world"], name: "index_worlds_on_world"
   end
 
