@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :duel_infos
+  resources :next_duel_infos
   resources :new_battle_enemies
   resources :new_next_enemies
   resources :battle_enemies

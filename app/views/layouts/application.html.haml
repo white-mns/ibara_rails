@@ -51,12 +51,14 @@
                 = link_to ">　合成組み合わせ一覧", compounds_path + "?result_no_form=""&group_source=on", class: "dropdown-item"
                 = link_to "移動一覧", moves_path, class: "dropdown-item"
                 = link_to "次回予告NPC戦一覧", next_battle_infos_path, class: "dropdown-item"
+                = link_to "次回予告対人戦一覧", next_duel_infos_path, class: "dropdown-item"
             %li.nav-item.dropdown
               %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
                 戦闘
                 %span.caret
               .dropdown-menu
                 = link_to "NPC戦勝敗一覧", battle_results_path, class: "dropdown-item"
+                = link_to "対人戦勝敗一覧", duel_infos_path, class: "dropdown-item"
                 .dropdown-divider
                 = link_to "スキル・付加発動結果一覧", battle_actions_path, class: "dropdown-item"
                 = link_to ">　スキル発動回数ランキング", battle_actions_path + "?act_type_fuka=off&show_group=1&group_page=off&total_act=on&ex_sort=on", class: "dropdown-item"
