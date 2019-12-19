@@ -15,7 +15,7 @@
   %body
     %nav.navbar.navbar-expand-md.fixed-top.navbar-light.bg-light.navbar-custom.p-0
       .container
-        = link_to "荊街データ小屋", root_path, :class => "navbar-brand"
+        = link_to "荊街テストプレイ データ小屋", root_path, :class => "navbar-brand"
         %button.navbar-toggler{type: "button", data: {toggle: "collapse", target: "#navbarResponsive"}, area: {controls: "navbarResponsive", expanded: "false", label: "Toggle navigation"}}
           %span.navbar-toggler-icon
         .collapse.navbar-collapse#navbarResponsive
@@ -100,6 +100,8 @@
           %br
           %br
           ソースコード [#{link_to "解析部分", "https://github.com/white-mns/ibara_parse"}] [#{link_to "表示部分", "https://github.com/white-mns/ibara_rails"}]
+          %br
+          #{link_to "本番：荊街データ小屋", "https://data.teiki.org/ibara/"}
           %br
           #{link_to "その他ゲームのデータ小屋", "https://data.teiki.org/"}
       = render "layouts/analytics"

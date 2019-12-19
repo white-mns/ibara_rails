@@ -1,6 +1,6 @@
 module ApplicationHelper
     def page_title
-        title = "荊街データ小屋"
+        title = "荊街テストプレイ データ小屋"
         title = @page_title + " | " + title if @page_title
         title
     end

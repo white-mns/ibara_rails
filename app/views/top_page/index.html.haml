@@ -1,12 +1,14 @@
-%h1 荊街データ小屋
+%h1 荊街テストプレイ データ小屋
 %p
   このサイトでは
   %a.animation{:href => "http://lisge.com/ib/", :target => "_blank"} 騒乱イバラシティ
-  を解析して得られる情報を扱っています。
+  テストプレイ時の結果を解析して得られる情報を扱っていました。
   %br
   テストプレイ結果消滅に伴い、結果のリンク先を
   = link_to "データ小屋アーカイブス", "https://archives.teiki.org/risu/ibara/0/"
   に変更しています。
+%p{style: "font-size:x-large;"} 
+  = link_to "⇒本番：荊街データ小屋", "https://data.teiki.org/ibara/"
 %br
 %p= top_text(@latest_result, @latest_generate, @uploaded_result)
 
