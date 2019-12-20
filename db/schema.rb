@@ -582,7 +582,7 @@ ActiveRecord::Schema.define(version: 2019_12_17_145235) do
     t.integer "world"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["result_no", "e_no", "world", "generate_no"], name: "resultno_eno"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
     t.index ["world"], name: "index_worlds_on_world"
   end
 
