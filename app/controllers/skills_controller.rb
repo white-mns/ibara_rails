@@ -6,8 +6,8 @@ class SkillsController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= Skill.distinct.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]], :party, :status).groups(params).search(params[:q]).result.hit_count()
-    @search	= Skill.distinct.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]], :party, :status).groups(params).total(params).having_order(params).page(params[:page]).search(params[:q])
+    @count	= Skill.distinct.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]], :place, :party, :status).groups(params).search(params[:q]).result.hit_count()
+    @search	= Skill.distinct.notnil().includes(:pc_name, :world, [skill: :timing], [skill_mastery: [:requirement_1, :requirement_2]], :place, :party, :status).groups(params).total(params).having_order(params).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
     @skills	= @search.result.per(50)
   end
@@ -72,6 +72,7 @@ class SkillsController < ApplicationController
                                           {params_name: "style_8", value: 8},
                                           {params_name: "style_9", value: 9}])
 
+    girth_matching(params, @form_params)
     pm_matching(params, @form_params)
     initial_skill_matching(params, @form_params)
 
@@ -82,6 +83,7 @@ class SkillsController < ApplicationController
     toggle_params_to_variable(params, @form_params, params_name: "show_skill_mastery")
     toggle_params_to_variable(params, @form_params, params_name: "show_style")
     toggle_params_to_variable(params, @form_params, params_name: "show_total")
+    toggle_params_to_variable(params, @form_params, params_name: "show_place")
   end
 
   def initial_skill_matching(params, form_params)
