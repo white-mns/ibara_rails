@@ -90,11 +90,11 @@ class SkillsController < ApplicationController
       params_tmp = {}
       params_tmp[:q] = {}
       if params["exclude_initial_active"] && params["exclude_initial_passive"]
-          params_tmp["ex_name_form"] = "ブレイク/ピンポイント/ヒール/クイック/ブラスト/攻撃/防御/器用/敏捷/回復/活力/体力/治癒/鎮痛/幸運"
+          params_tmp["ex_name_form"] = "ブレイク/ピンポイント/ヒール/クイック/ブラスト/ドレイン/ペネトレイト/スイープ/猛攻/堅守/攻勢/守勢/献身/太陽/隠者"
       elsif params["exclude_initial_active"]
-          params_tmp["ex_name_form"] = "ブレイク/ピンポイント/ヒール/クイック/ブラスト"
+          params_tmp["ex_name_form"] = "ブレイク/ピンポイント/ヒール/クイック/ブラスト/ドレイン/ペネトレイト/スイープ"
       elsif params["exclude_initial_passive"]
-          params_tmp["ex_name_form"] = "攻撃/防御/器用/敏捷/回復/活力/体力/治癒/鎮痛/幸運"
+          params_tmp["ex_name_form"] = "猛攻/堅守/攻勢/守勢/献身/太陽/隠者"
       end
     
       params_to_form(params_tmp, form_params, column_name: "name", params_name: "ex_name_form", type: "number")
