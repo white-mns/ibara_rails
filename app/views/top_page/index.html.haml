@@ -81,178 +81,197 @@
 .card.top
   .card-body
     %h2 更新履歴
-    %ul
-      %li 2019/12/30
+    %div
       %ul
-        %li
-          = link_to "所持スキル一覧", skills_path
-          に指定キャラの現在地＋周囲8エリアでの絞り込み機能を追加
-      %li 2019/12/18
+        %li 2019/1/2
+        %ul
+          %li
+            = link_to "所持スキル一覧", skills_path
+            において、初期スキルを非表示にする機能が正しく動いていなかった（テストプレイ時の初期スキルのみ除外していた）不具合を修正
+        %li 2019/12/30
+        %ul
+          %li
+            = link_to "所持スキル一覧", skills_path
+            に指定キャラの現在地＋周囲8エリアでの絞り込み機能を追加
+        %li 2019/12/20
+        %ul
+          %li
+            本番データに対応。
+            %br
+            = link_to "⇒前期：荊街テストプレイ データ小屋", "https://data.teiki.org/ibara_0/"
+        %li 2019/12/18
+        %ul
+          %li
+            = link_to "食事一覧", meals_path
+            、
+            = link_to "NPC戦勝敗一覧", battle_results_path
+            、
+            = link_to "新出予告NPC一覧", new_next_enemies_path
+            、
+            = link_to "初戦闘NPC一覧", new_battle_enemies_path
+            、
+            = link_to "次回予告対人戦一覧", next_duel_infos_path
+            、
+            = link_to "対人戦勝敗一覧", duel_infos_path
+            を公開。
+    %p
+      %span.example_select.example_toggle.pointer
+        = fa_icon "history"
+        古い履歴
+        - act_desc(false)
+    .closed
       %ul
-        %li
-          = link_to "食事一覧", meals_path
-          、
-          = link_to "NPC戦勝敗一覧", battle_results_path
-          、
-          = link_to "新出予告NPC一覧", new_next_enemies_path
-          、
-          = link_to "初戦闘NPC一覧", new_battle_enemies_path
-          、
-          = link_to "次回予告対人戦一覧", next_duel_infos_path
-          、
-          = link_to "対人戦勝敗一覧", duel_infos_path
-          を公開。
-      %li 2019/6/24
-      %ul
-        %li
-          = link_to "キャラクター名・PL名一覧", names_path
-          を公開。
-          %br
-        %li
-          テストプレイ結果消滅に伴い、結果のリンク先を
-          = link_to "データ小屋アーカイブス", "https://archives.teiki.org/risu/ibara/0/"
-          に変更
-      %li 2019/4/3
-      %ul
-        %li
-          = link_to "スキル・付加発動結果一覧", battle_actions_path
-          、
-          = link_to "最大与ダメージランキング", battle_ranking_singles_path + "?damage_type_damage=on&show_acter=1&show_damage=1&sort_damage=on"
-          、
-          = link_to "最大クリティカルランキング", battle_ranking_singles_path + "?damage_type_damage=on&show_acter=1&show_damage=1&show_critical=1&sort_critical=on"
-          に発動者所属PTでの絞り込みを追加
-      %li 2019/3/29
-      %ul
-        %li
-          = link_to "ふふぁさーPTランキング", battle_ranking_pt_totals_path + "?damage_type_dodge=on&show_target_pt=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on"
-          を公開
-        %li
-          = link_to "ふふぁさーランキング", battle_ranking_totals_path + "?damage_type_dodge=on&show_target=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on"
-          に対象PTでの絞り込みを追加
-      %li 2019/3/23
-      %ul
-        %li
-          = link_to "ふふぁさーランキング", battle_ranking_totals_path + "?damage_type_dodge=on&show_target=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on"
-          を公開
-      %li 2019/3/21
-      %ul
-        %li
-          = link_to "最大与ダメージランキング", battle_ranking_singles_path + "?damage_type_damage=on&show_acter=1&show_damage=1&sort_damage=on"
-          、
-          = link_to "最大クリティカルランキング", battle_ranking_singles_path + "?damage_type_damage=on&show_acter=1&show_damage=1&show_critical=1&sort_critical=on"
-          を公開
-      %li 2019/3/15
-      %ul
-        %li
-          = link_to "次回予告NPC戦一覧", next_battle_infos_path
-          において、第2回更新データ追加以降敵名での検索結果がおかしくなっていた不具合を修正。
-      %li 2019/3/14
-      %ul
-        %li
-          = link_to "新出アイテム付加一覧", new_item_fukas_path
-          、
-          = link_to "新出発動スキル・付加一覧", new_actions_path
-          を公開
-      %li 2019/3/12
-      %ul
-        %li
-          = link_to "スキル・付加発動結果一覧", battle_actions_path
-          において、戦闘の種類が全てENCOUNTERになっていた不具合を修正
-        %li
-          = link_to "移動一覧", moves_path
-          において、チェックポイントを正しく取得できなかった不具合を修正（本家プロフィール画面で道路アイコンとなっているため、移動地形合計では道路として扱います）
-        %li
-          = link_to "所持アイテム一覧", items_path
-          において、効果1～3の付加枠をまとめて検索するフォームを追加。付加枠ごとの個別検索を初期表示で非表示に
-        %li
-          = link_to "スキル・付加発動結果一覧", battle_actions_path
-          において、付加LVでの検索を追加
-      %li 2019/3/11
-      %ul
-        %li
-          = link_to "所持スキル一覧", skills_path
-          にスキル習得者数の表示機能、初期アクティブスキル・パッシブスキルの除外機能を追加
-        %li
-          所持スキル一覧の検索条件を指定した
-          = link_to "スキル習得者数ランキング", skills_path + "?show_total=1&exclude_initial_active=on&exclude_initial_passive=on&ex_sort=on"
-          を公開
-      %li 2019/3/9
-      %ul
-        %li
-          = link_to "スキル・付加発動結果一覧", battle_actions_path
-          において、「結果別に表示」選択時に「発動回数」など一部項目でソートができない不具合を修正
-          %br
-          また、「発動回数ランキング」リンクからページを見た直後にソートすると表示項目が変わってしまう不具合を修正
-        %li
-          = link_to "スキル研究ランキング", studies_path + "?group_skill=on&ex_sort=on"
-          、
-          = link_to "スキル・付加発動結果一覧", battle_actions_path
-          の「発動回数」など一部の項目でのソート時に、他の項目のように「▼」を表示するように
+        %li 2019/6/24
+        %ul
+          %li
+            = link_to "キャラクター名・PL名一覧", names_path
+            を公開。
+            %br
+          %li
+            テストプレイ結果消滅に伴い、結果のリンク先を
+            = link_to "データ小屋アーカイブス", "https://archives.teiki.org/risu/ibara/0/"
+            に変更
+        %li 2019/4/3
+        %ul
+          %li
+            = link_to "スキル・付加発動結果一覧", battle_actions_path
+            、
+            = link_to "最大与ダメージランキング", battle_ranking_singles_path + "?damage_type_damage=on&show_acter=1&show_damage=1&sort_damage=on"
+            、
+            = link_to "最大クリティカルランキング", battle_ranking_singles_path + "?damage_type_damage=on&show_acter=1&show_damage=1&show_critical=1&sort_critical=on"
+            に発動者所属PTでの絞り込みを追加
+        %li 2019/3/29
+        %ul
+          %li
+            = link_to "ふふぁさーPTランキング", battle_ranking_pt_totals_path + "?damage_type_dodge=on&show_target_pt=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on"
+            を公開
+          %li
+            = link_to "ふふぁさーランキング", battle_ranking_totals_path + "?damage_type_dodge=on&show_target=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on"
+            に対象PTでの絞り込みを追加
+        %li 2019/3/23
+        %ul
+          %li
+            = link_to "ふふぁさーランキング", battle_ranking_totals_path + "?damage_type_dodge=on&show_target=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on"
+            を公開
+        %li 2019/3/21
+        %ul
+          %li
+            = link_to "最大与ダメージランキング", battle_ranking_singles_path + "?damage_type_damage=on&show_acter=1&show_damage=1&sort_damage=on"
+            、
+            = link_to "最大クリティカルランキング", battle_ranking_singles_path + "?damage_type_damage=on&show_acter=1&show_damage=1&show_critical=1&sort_critical=on"
+            を公開
+        %li 2019/3/15
+        %ul
+          %li
+            = link_to "次回予告NPC戦一覧", next_battle_infos_path
+            において、第2回更新データ追加以降敵名での検索結果がおかしくなっていた不具合を修正。
+        %li 2019/3/14
+        %ul
+          %li
+            = link_to "新出アイテム付加一覧", new_item_fukas_path
+            、
+            = link_to "新出発動スキル・付加一覧", new_actions_path
+            を公開
+        %li 2019/3/12
+        %ul
+          %li
+            = link_to "スキル・付加発動結果一覧", battle_actions_path
+            において、戦闘の種類が全てENCOUNTERになっていた不具合を修正
+          %li
+            = link_to "移動一覧", moves_path
+            において、チェックポイントを正しく取得できなかった不具合を修正（本家プロフィール画面で道路アイコンとなっているため、移動地形合計では道路として扱います）
+          %li
+            = link_to "所持アイテム一覧", items_path
+            において、効果1～3の付加枠をまとめて検索するフォームを追加。付加枠ごとの個別検索を初期表示で非表示に
+          %li
+            = link_to "スキル・付加発動結果一覧", battle_actions_path
+            において、付加LVでの検索を追加
+        %li 2019/3/11
+        %ul
+          %li
+            = link_to "所持スキル一覧", skills_path
+            にスキル習得者数の表示機能、初期アクティブスキル・パッシブスキルの除外機能を追加
+          %li
+            所持スキル一覧の検索条件を指定した
+            = link_to "スキル習得者数ランキング", skills_path + "?show_total=1&exclude_initial_active=on&exclude_initial_passive=on&ex_sort=on"
+            を公開
+        %li 2019/3/9
+        %ul
+          %li
+            = link_to "スキル・付加発動結果一覧", battle_actions_path
+            において、「結果別に表示」選択時に「発動回数」など一部項目でソートができない不具合を修正
+            %br
+            また、「発動回数ランキング」リンクからページを見た直後にソートすると表示項目が変わってしまう不具合を修正
+          %li
+            = link_to "スキル研究ランキング", studies_path + "?group_skill=on&ex_sort=on"
+            、
+            = link_to "スキル・付加発動結果一覧", battle_actions_path
+            の「発動回数」など一部の項目でのソート時に、他の項目のように「▼」を表示するように
 
-      %li 2019/3/8
-      %ul
-        %li 
-          = link_to "スキル・付加発動結果一覧", battle_actions_path
-          を公開
-        %li 
-          スキル・付加発動結果一覧の検索条件を指定した
-          = link_to "スキル発動回数ランキング", battle_actions_path + "?act_type_fuka=off&show_group=1&group_page=off&total_act=on&ex_sort=on"
-          、
-          = link_to "付加発動回数ランキング", battle_actions_path +   "?act_type_skill=off&show_group=1&group_page=off&total_act=on&ex_sort=on"
-          を公開
-      %li 2019/3/3
-      %ul
-        %li 
-          = link_to "移動一覧", moves_path
-          、
-          = link_to "次回予告NPC戦一覧", next_battle_infos_path
-          を公開
-      %li 2019/2/27
-      %ul
-        %li 
-          = link_to "パーティ情報一覧", party_infos_path
-          を公開
-      %li 2019/2/25
-      %ul
-        %li 
-          = link_to "合成一覧", compounds_path
-          を公開
-        %li 
-          合成一覧の検索条件を指定した
-          = link_to "合成結果一覧", compounds_path + "?result_no_form=""&compound_deficient_lv=off&group_result=on"
-          、
-          = link_to "合成組み合わせ一覧", compounds_path + "?result_no_form=""&group_source=on"
-          を公開
-        %li 
-          スキル研究一覧の検索条件を指定した
-          = link_to "スキル研究ランキング", studies_path + "?group_skill=on&ex_sort=on"
-          を公開
-      %li 2019/2/24
-      %ul
-        %li 
-          = link_to "スタイル一覧", styles_path
-          、
-          = link_to "影響力一覧", effects_path
-          、
-          = link_to "その他ステータス一覧", statuses_path
-          を公開
-        %li 
-          = link_to "所持スキル一覧", skills_path
-          にスタイルでの絞り込み機能を追加
-      %li 2019/2/23
-      %ul
-        %li 
-          = link_to "所持アイテム一覧", items_path
-          、
-          = link_to "所持異能・生産一覧", superpowers_path
-          、
-          = link_to "所持スキル一覧", skills_path
-          に指定キャラのパーティメンバーでの絞り込み機能を追加
-        %li 
-          = link_to "所持カード一覧", cards_path
-          、
-          = link_to "スキル研究一覧", studies_path
-          を公開
-      %li 2019/2/20
-      %ul
-        %li サイト公開
+        %li 2019/3/8
+        %ul
+          %li 
+            = link_to "スキル・付加発動結果一覧", battle_actions_path
+            を公開
+          %li 
+            スキル・付加発動結果一覧の検索条件を指定した
+            = link_to "スキル発動回数ランキング", battle_actions_path + "?act_type_fuka=off&show_group=1&group_page=off&total_act=on&ex_sort=on"
+            、
+            = link_to "付加発動回数ランキング", battle_actions_path +   "?act_type_skill=off&show_group=1&group_page=off&total_act=on&ex_sort=on"
+            を公開
+        %li 2019/3/3
+        %ul
+          %li 
+            = link_to "移動一覧", moves_path
+            、
+            = link_to "次回予告NPC戦一覧", next_battle_infos_path
+            を公開
+        %li 2019/2/27
+        %ul
+          %li 
+            = link_to "パーティ情報一覧", party_infos_path
+            を公開
+        %li 2019/2/25
+        %ul
+          %li 
+            = link_to "合成一覧", compounds_path
+            を公開
+          %li 
+            合成一覧の検索条件を指定した
+            = link_to "合成結果一覧", compounds_path + "?result_no_form=""&compound_deficient_lv=off&group_result=on"
+            、
+            = link_to "合成組み合わせ一覧", compounds_path + "?result_no_form=""&group_source=on"
+            を公開
+          %li 
+            スキル研究一覧の検索条件を指定した
+            = link_to "スキル研究ランキング", studies_path + "?group_skill=on&ex_sort=on"
+            を公開
+        %li 2019/2/24
+        %ul
+          %li 
+            = link_to "スタイル一覧", styles_path
+            、
+            = link_to "影響力一覧", effects_path
+            、
+            = link_to "その他ステータス一覧", statuses_path
+            を公開
+          %li 
+            = link_to "所持スキル一覧", skills_path
+            にスタイルでの絞り込み機能を追加
+        %li 2019/2/23
+        %ul
+          %li 
+            = link_to "所持アイテム一覧", items_path
+            、
+            = link_to "所持異能・生産一覧", superpowers_path
+            、
+            = link_to "所持スキル一覧", skills_path
+            に指定キャラのパーティメンバーでの絞り込み機能を追加
+          %li 
+            = link_to "所持カード一覧", cards_path
+            、
+            = link_to "スキル研究一覧", studies_path
+            を公開
+        %li 2019/2/20
+        %ul
+          %li サイト公開
