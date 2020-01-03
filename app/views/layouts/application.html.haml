@@ -45,6 +45,7 @@
                 行動
                 %span.caret
               .dropdown-menu
+                = link_to "作製一覧", makes_path, class: "dropdown-item"
                 = link_to "食事一覧", meals_path, class: "dropdown-item"
                 = link_to "合成一覧", compounds_path, class: "dropdown-item"
                 = link_to ">　合成結果一覧", compounds_path + "?result_no_form=""&compound_deficient_lv=off&group_result=on", class: "dropdown-item"
