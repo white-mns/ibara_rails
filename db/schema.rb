@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_17_145235) do
+ActiveRecord::Schema.define(version: 2020_01_03_134846) do
 
   create_table "battle_acters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -239,6 +239,25 @@ ActiveRecord::Schema.define(version: 2019_12_17_145235) do
     t.index ["range"], name: "index_items_on_range"
     t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
     t.index ["strength"], name: "index_items_on_strength"
+  end
+
+  create_table "makes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "last_result_no"
+    t.integer "last_generate_no"
+    t.integer "i_no"
+    t.string "name"
+    t.integer "kind_id"
+    t.integer "strength"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["i_no"], name: "index_makes_on_i_no"
+    t.index ["kind_id"], name: "index_makes_on_kind_id"
+    t.index ["last_result_no", "e_no", "i_no", "last_generate_no"], name: "last_item"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+    t.index ["strength"], name: "index_makes_on_strength"
   end
 
   create_table "meals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|

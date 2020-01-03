@@ -37,6 +37,7 @@
           %br
           %li 行動データ
           %ul  
+            %li= link_to "作製一覧", makes_path
             %li= link_to "食事一覧", meals_path
             %li= link_to "合成一覧", compounds_path
             %ul
@@ -83,7 +84,12 @@
     %h2 更新履歴
     %div
       %ul
-        %li 2019/1/2
+        %li 2020/1/3
+        %ul
+          %li
+            = link_to "作製一覧", makes_path
+            を公開。
+        %li 2020/1/2
         %ul
           %li
             = link_to "所持スキル一覧", skills_path
