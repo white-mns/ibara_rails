@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_03_134846) do
+ActiveRecord::Schema.define(version: 2020_01_11_191404) do
 
   create_table "battle_acters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -363,6 +363,16 @@ ActiveRecord::Schema.define(version: 2020_01_03_134846) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["fuka_id"], name: "index_new_item_fukas_on_fuka_id"
+    t.index ["result_no", "generate_no"], name: "resultno_generateno"
+  end
+
+  create_table "new_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_new_items_on_name"
     t.index ["result_no", "generate_no"], name: "resultno_generateno"
   end
 
