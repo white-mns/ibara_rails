@@ -31,7 +31,7 @@
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "種類", params_name: "damage_type_form", colspan: 3, 
-                    checkboxes: [{label: "回避",       params_name: "damage_type_dodge",     br: true},
+                    checkboxes: [{label: "回避",       params_name: "damage_type_dodge",    class_name: "after_space"},
                                  {label: "ダメージ",   params_name: "damage_type_damage",    class_name: "after_space"},
                                  {label: "SPダメージ", params_name: "damage_type_sp_damage", br: true},
                                  {label: "HP回復",     params_name: "damage_type_heal",      class_name: "after_space"},
@@ -166,6 +166,22 @@
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "クリティカル数", params_name: "critical_form", placeholder: "Number", colspan: 3)
 
     - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_prot_refl",
+                    label: {open: "守護・反射減少深度を表示する", close: "守護・反射減少深度を表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "守護減少深度", params_name: "protection_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, params_name: "dummy_form",
+                    checkboxes: [{label: "守護なし", params_name: "no_protection"}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "反射減少深度", params_name: "reflection_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, params_name: "dummy_form",
+                    checkboxes: [{label: "反射なし", params_name: "no_reflection"}])
+
+
+    - #==========================================================================================================================
     %tbody
       %tr.sep
         %td.indent
@@ -188,8 +204,8 @@
         %th= sort_link(@search, :battle_action_acter_e_no,"発動者(Eno)", default_order: :desc)
         %th= sort_link(@search, :battle_action_acter_enemy_id, "敵", default_order: :desc)
       - if @form_params["show_target"] == "1"
-        %th= sort_link(@search, :battle_action_acter_e_no,"対象(Eno)", default_order: :desc)
-        %th= sort_link(@search, :battle_action_acter_enemy_id, "敵", default_order: :desc)
+        %th= sort_link(@search, :battle_action_target_e_no,"対象(Eno)", default_order: :desc)
+        %th= sort_link(@search, :battle_action_target_enemy_id, "敵", default_order: :desc)
       %th= sort_link(@search, :battle_action_battle_type, "戦闘の種類", default_order: :desc)
       - if params["show_turn"]
         %th= sort_link(@search, :battle_action_turn, "ターン", default_order: :desc)
@@ -200,6 +216,9 @@
         %th= sort_link(@search, :value, "効果量", default_order: :desc)
       - if params["show_critical"]
         %th= sort_link(@search, :critical_value, "クリティカル数", default_order: :desc)
+      - if params["show_prot_refl"]
+        %th= sort_link(@search, :protection_value, "守護減", default_order: :desc)
+        %th= sort_link(@search, :reflection_value, "反射減", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
     - @battle_damages.each do |battle_damage|
@@ -249,6 +268,9 @@
           %td= battle_damage.value
         - if params["show_critical"]
           %td= battle_damage.critical.value if battle_damage.critical
+        - if params["show_prot_refl"]
+          %td= battle_damage.protection.value if battle_damage.protection
+          %td= battle_damage.reflection.value if battle_damage.reflection
         %td.sep= battle_link(@latest_result, battle_damage.battle_info.battle_type, battle_damage.battle_info.battle_page, battle_damage.battle_info.result_no, battle_damage.battle_info.generate_no)
         %td= battle_old_link(@latest_result, battle_damage.battle_info.battle_type, battle_damage.battle_info.battle_page, battle_damage.battle_info.result_no, battle_damage.battle_info.generate_no)
 = paginate(@battle_damages)

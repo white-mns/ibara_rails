@@ -85,6 +85,11 @@ class BattleDamagesController < ApplicationController
 
     params_to_form(params, @form_params, column_name: "critical_value", params_name: "critical_form", type: "number")
 
+    params_to_form(params, @form_params, column_name: "protection_value", params_name: "protection_form", type: "number")
+    checkbox_params_set_query_single(params, @form_params, checkbox: {params_name: "no_protection", query_name:"protection_value_blank", value: true})
+    params_to_form(params, @form_params, column_name: "reflection_value", params_name: "reflection_form", type: "number")
+    checkbox_params_set_query_single(params, @form_params, checkbox: {params_name: "no_reflection", query_name:"reflection_value_blank", value: true})
+
     checkbox_params_set_query_any(params, @form_params, query_name: "battle_action_acter_world_world_eq_any",
                              checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: false},
                                           {params_name: "is_ansinity" , value: 1, first_checked: false}])
@@ -93,13 +98,13 @@ class BattleDamagesController < ApplicationController
                              checkboxes: [{params_name: "target_ibaracity", value: 0, first_checked: false},
                                           {params_name: "target_ansinity" , value: 1, first_checked: false}])
 
-
     checkbox_params_set_query_any(params, @form_params, query_name: "damage_type_eq_any",
                              checkboxes: [{params_name: "damage_type_dodge",     value: 0, first_checked: false},
                                           {params_name: "damage_type_damage",    value: 1, first_checked: false},
                                           {params_name: "damage_type_sp_damage", value: 2, first_checked: false},
                                           {params_name: "damage_type_heal",      value: 3, first_checked: false},
-                                          {params_name: "damage_type_sp_heal",   value: 4, first_checked: false}])
+                                          {params_name: "damage_type_sp_heal",   value: 4, first_checked: false},
+                                          {params_name: "damage_type_dodge_protection",   value: 5, first_checked: false}])
 
     checkbox_params_set_query_any(params, @form_params, query_name: "battle_action_act_type_eq_any",
                              checkboxes: [{params_name: "act_type_normal", value: 0},
@@ -142,6 +147,8 @@ class BattleDamagesController < ApplicationController
     toggle_params_to_variable(params, @form_params, params_name: "show_damage")
     toggle_params_to_variable(params, @form_params, params_name: "show_critical")
     toggle_params_to_variable(params, @form_params, params_name: "show_dodge")
+    toggle_params_to_variable(params, @form_params, params_name: "show_prot_refl")
+    
   end
 
   def link_sort
