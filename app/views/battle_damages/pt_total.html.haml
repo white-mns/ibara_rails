@@ -31,11 +31,8 @@
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "種類", params_name: "damage_type_form", colspan: 3, 
-                    checkboxes: [{label: "回避",       params_name: "damage_type_dodge",     br: true},
-                                 {label: "ダメージ",   params_name: "damage_type_damage",    class_name: "after_space"},
-                                 {label: "SPダメージ", params_name: "damage_type_sp_damage", br: true},
-                                 {label: "HP回復",     params_name: "damage_type_heal",      class_name: "after_space"},
-                                 {label: "SP回復",     params_name: "damage_type_sp_heal",   br: true}])
+                    checkboxes: [{label: "回避",       params_name: "damage_type_dodge",    class_name: "after_space"},
+                                 {label: "守護回避",   params_name: "damage_type_dodge_protection", br: true}])
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "発動者", params_name: "acter_form", 
@@ -177,7 +174,11 @@
             %td{colspan: 2}
               = battle_action.fuka.name if battle_action.fuka
               = "LV" + sprintf("%d", battle_action.lv) if battle_action.lv && battle_action.lv >= 0
-        %td= damage_type_text(battle_damage)
+        %td
+          - if params["show_dodge"]
+            回避
+          -else
+            = damage_type_text(battle_damage)
         - if params["show_critical"]
           %td= battle_damage.critical.value if battle_damage.critical
         - if params["show_damage"]

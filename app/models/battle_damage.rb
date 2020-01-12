@@ -1,11 +1,15 @@
 class BattleDamage < ApplicationRecord
     proper_name = ProperName.pluck(:name, :proper_id).inject(Hash.new(0)){|hash, a| hash[a[0]] = a[1] ; hash}
-    critical = proper_name["Critical Hit"]
+    critical   = proper_name["Critical Hit"]
+    protection = proper_name["守護"]
+    reflection = proper_name["反射"]
 
 	belongs_to :battle_info,   :foreign_key => [:result_no, :battle_id,                       :generate_no], :primary_key => [:result_no, :battle_id,                       :generate_no], :class_name => "BattleInfo"
 	belongs_to :battle_action, :foreign_key => [:result_no, :battle_id, :act_id,              :generate_no], :primary_key => [:result_no, :battle_id, :act_id,              :generate_no], :class_name => "BattleAction"
 	belongs_to :target,        :foreign_key => [:result_no, :battle_id, :act_id, :act_sub_id, :generate_no], :primary_key => [:result_no, :battle_id, :act_id, :act_sub_id, :generate_no], :class_name => "BattleTarget"
-	belongs_to :critical,  -> { where(buffer_type: critical)},     :foreign_key => [:result_no, :battle_id, :act_id, :act_sub_id, :generate_no], :primary_key => [:result_no, :battle_id, :act_id, :act_sub_id, :generate_no], :class_name => 'BattleBuffer'
+	belongs_to :critical,    -> { where(buffer_type: critical)},   :foreign_key => [:result_no, :battle_id, :act_id, :act_sub_id, :generate_no], :primary_key => [:result_no, :battle_id, :act_id, :act_sub_id, :generate_no], :class_name => 'BattleBuffer'
+	belongs_to :protection,  -> { where(buffer_type: protection)}, :foreign_key => [:result_no, :battle_id, :act_id, :act_sub_id, :generate_no], :primary_key => [:result_no, :battle_id, :act_id, :act_sub_id, :generate_no], :class_name => 'BattleBuffer'
+	belongs_to :reflection,  -> { where(buffer_type: reflection)}, :foreign_key => [:result_no, :battle_id, :act_id, :act_sub_id, :generate_no], :primary_key => [:result_no, :battle_id, :act_id, :act_sub_id, :generate_no], :class_name => 'BattleBuffer'
 
     scope :total, ->(params) {
         select("*").
@@ -22,7 +26,7 @@ class BattleDamage < ApplicationRecord
 
     scope :total_dodge, ->(params) {
         if params["show_dodge"] == "1" then
-            select("COUNT(battle_damages.damage_type = 0 or null) AS dodge_count")
+            select("COUNT(battle_damages.damage_type = 0 or battle_damages.damage_type = 5 or null) AS dodge_count")
         end
     }
 
@@ -35,15 +39,19 @@ class BattleDamage < ApplicationRecord
     scope :groups, ->(params) {
         group("battle_damages.result_no").
         battle_type_group(params).
-        group("battle_damages.damage_type").
+        damage_type_group(params).
         group("battle_targets.e_no").
         group("battle_targets.enemy_id")
     }
 
     scope :pt_groups, ->(params) {
         group("battle_damages.result_no").
-        group("battle_damages.damage_type").
+        damage_type_group(params).
         group("parties.party_no")
+    }
+
+    scope :damage_type_group, ->(params) {
+        if params["show_dodge"] != "1" then group("battle_infos.damage_type") end
     }
 
     scope :battle_type_group, ->(params) {
@@ -56,7 +64,9 @@ class BattleDamage < ApplicationRecord
         acter_includes(params).
         target_includes(params).
         target_pt_includes(params).
-        critical_includes(params)
+        critical_includes(params).
+        protection_includes(params).
+        reflection_includes(params)
     }
 
     scope :acter_includes, ->(params) {
@@ -75,6 +85,14 @@ class BattleDamage < ApplicationRecord
 
     scope :critical_includes, ->(params) {
         if params["show_critical"] == "1" then includes(:critical) end
+    }
+
+    scope :protection_includes, ->(params) {
+        if  params["show_prot_refl"] == "1" then includes(:protection) end
+    }
+
+    scope :reflection_includes, ->(params) {
+        if params["show_prot_refl"] == "1" then includes(:reflection) end
     }
 
     scope :having_order, ->(params) {

@@ -62,10 +62,10 @@
               %li= link_to "最大クリティカルランキング", battle_ranking_singles_path + "?damage_type_damage=on&show_acter=1&show_damage=1&show_critical=1&sort_critical=on"
             %li 戦闘ランキング（合計）
             %ul
-              %li= link_to "ふふぁさーランキング", battle_ranking_totals_path + "?damage_type_dodge=on&show_target=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on"
+              %li= link_to "ふふぁさーランキング", battle_ranking_totals_path + "?damage_type_dodge=on&damage_type_dodge_protection=on&show_target=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on"
             %li 戦闘ランキング（PT合計）
             %ul
-              %li= link_to "ふふぁさーPTランキング", battle_ranking_pt_totals_path + "?damage_type_dodge=on&show_target_pt=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on"
+              %li= link_to "ふふぁさーPTランキング", battle_ranking_pt_totals_path + "?damage_type_dodge=on&damage_type_dodge_protection=on&show_target_pt=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on"
           %br
           %li グラフデータ
           %ul  
@@ -89,6 +89,18 @@
         %ul
           %li
             = link_to "新出素材一覧", new_items_path
+            を公開。
+          %li
+            「戦闘ランキング（単発）」（
+            = link_to "最大与ダメージランキング", battle_ranking_singles_path + "?damage_type_damage=on&show_acter=1&show_damage=1&sort_damage=on"
+            、
+            = link_to "最大クリティカルランキング", battle_ranking_singles_path + "?damage_type_damage=on&show_acter=1&show_damage=1&show_critical=1&sort_critical=on"
+            ）に、守護減枚数、反射減枚数での検索機能を追加
+          %li
+            = link_to "ふふぁさーランキング", battle_ranking_totals_path + "?damage_type_dodge=on&damage_type_dodge_protection=on&show_target=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on"
+            、
+            = link_to "ふふぁさーPTランキング", battle_ranking_pt_totals_path + "?damage_type_dodge=on&damage_type_dodge_protection=on&show_target_pt=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on"
+            に、通常の回避と守護による回避での検索機能を追加。初期状態では両方合わせた回避回数をカウントするように変更
             を公開。
         %li 2020/1/3
         %ul
