@@ -167,16 +167,16 @@
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_prot_refl",
-                    label: {open: "守護・反射減数を表示する", close: "守護・反射減数を表示しない"}, base_first: false)
+                    label: {open: "守護・反射減少深度を表示する", close: "守護・反射減少深度を表示しない"}, base_first: false)
     %tbody.closed
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "守護減数", params_name: "protection_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "守護減少深度", params_name: "protection_form", placeholder: "Number")
         - td_form(f, @form_params, @placeholder, params_name: "dummy_form",
                     checkboxes: [{label: "守護なし", params_name: "no_protection"}])
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "反射減数", params_name: "reflection_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "反射減少深度", params_name: "reflection_form", placeholder: "Number")
         - td_form(f, @form_params, @placeholder, params_name: "dummy_form",
                     checkboxes: [{label: "反射なし", params_name: "no_reflection"}])
 
@@ -217,8 +217,8 @@
       - if params["show_critical"]
         %th= sort_link(@search, :critical_value, "クリティカル数", default_order: :desc)
       - if params["show_prot_refl"]
-        %th= sort_link(@search, :protection_value, "守護減数", default_order: :desc)
-        %th= sort_link(@search, :reflection_value, "反射減数", default_order: :desc)
+        %th= sort_link(@search, :protection_value, "守護減", default_order: :desc)
+        %th= sort_link(@search, :reflection_value, "反射減", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
     - @battle_damages.each do |battle_damage|
