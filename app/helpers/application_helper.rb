@@ -30,7 +30,7 @@ module ApplicationHelper
         if e_no <= 0 then return end
         if result_no == latest_result_no then return end
 
-        result_no_text = sprintf("%02d", result_no)
+        result_no_text = sprintf("%d", result_no)
         file_name = sprintf("%d", e_no)
         link_to " "+result_no_text+":00", "http://lisge.com/ib/k/"+result_no_text+"/r"+file_name+".html", :target => "_blank"
     end
@@ -46,7 +46,7 @@ module ApplicationHelper
         if battle_page == "" then return end
         if result_no == latest_result_no then return end
 
-        result_no_text = sprintf("%02d", result_no)
+        result_no_text = sprintf("%d", result_no)
         link_to " "+result_no_text+":00", "http://lisge.com/ib/k/"+result_no_text+"/"+battle_page+".html", :target => "_blank"
     end
 
