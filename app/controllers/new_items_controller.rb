@@ -27,6 +27,7 @@ class NewItemsController < ApplicationController
     params_to_form(params, @form_params, column_name: "generate_no", params_name: "generate_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "name", params_name: "name_form", type: "number")
 
+    params_to_form(params, @form_params, column_name: "item_strength", params_name: "strength_form", type: "number")
     params_to_form(params, @form_params, column_name: "item_effect_1_value", params_name: "effect_1_value_form", type: "number")
     params_to_form(params, @form_params, column_name: "item_effect_1_need_lv", params_name: "effect_1_need_lv_form", type: "number")
     params_to_form(params, @form_params, column_name: "item_effect_2_value", params_name: "effect_2_value_form", type: "number")
