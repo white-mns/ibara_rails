@@ -33,6 +33,7 @@
                 = link_to "影響力一覧", effects_path, class: "dropdown-item"
                 = link_to "その他ステータス一覧", statuses_path, class: "dropdown-item"
                 .dropdown-divider
+                = link_to "エイド一覧", aides_path, class: "dropdown-item"
                 = link_to "所持アイテム一覧", items_path, class: "dropdown-item"
                 = link_to "所持異能・生産一覧", superpowers_path, class: "dropdown-item"
                 = link_to "所持スキル一覧", skills_path, class: "dropdown-item"
@@ -51,6 +52,7 @@
                 = link_to ">　合成結果一覧", compounds_path + "?result_no_form=""&compound_deficient_lv=off&group_result=on", class: "dropdown-item"
                 = link_to ">　合成組み合わせ一覧", compounds_path + "?result_no_form=""&group_source=on", class: "dropdown-item"
                 = link_to "移動一覧", moves_path, class: "dropdown-item"
+                = link_to "エイド化候補一覧", aide_candidates_path, class: "dropdown-item"
                 = link_to "次回予告NPC戦一覧", next_battle_infos_path, class: "dropdown-item"
                 = link_to "次回予告対人戦一覧", next_duel_infos_path, class: "dropdown-item"
             %li.nav-item.dropdown
