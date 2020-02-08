@@ -10,7 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_11_191404) do
+ActiveRecord::Schema.define(version: 2020_02_08_000252) do
+
+  create_table "aide_candidates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "last_result_no"
+    t.integer "last_generate_no"
+    t.integer "enemy_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["enemy_id"], name: "index_aide_candidates_on_enemy_id"
+    t.index ["last_result_no", "e_no", "last_generate_no"], name: "lastresultno_eno"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+  end
 
   create_table "battle_acters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"

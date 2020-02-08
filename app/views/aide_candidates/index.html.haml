@@ -1,0 +1,96 @@
+- @page_title = "エイド化候補一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "使役LV", params_name: "employ_lv_form", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "敵名", params_name: "enemy_form", placeholder: "Enemy", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_last_employ",
+                    label: {open: "前回の使役LVを表示する", close: "前回の使役LVを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "前回使役LV", params_name: "last_employ_lv_form", colspan: 3)
+
+    - #==========================================================================================================================
+    %tbody
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+
+= paginate(@aide_candidates)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
+      %th= sort_link(@search, :employ_lv,"使役LV", default_order: :desc)
+      - if @form_params["show_last_employ"] == "1"
+        %th= sort_link(@search, :last_employ_lv,"前回使役LV", default_order: :desc)
+      %th= sort_link(@search, :enemy_id, "敵名", default_order: :desc)
+      %th.sep{colspan: "2"} 結果リンク
+  %tbody
+    - @aide_candidates.each do |aide_candidate|
+      %tr
+        %td= aide_candidate.result_no
+        %td{style: "#{ world_border(aide_candidate.world) }" }= pc_name_text(aide_candidate.e_no, aide_candidate.pc_name)
+        %td= aide_candidate.employ.lv if aide_candidate.employ
+        - if @form_params["show_last_employ"] == "1"
+          %td= aide_candidate.last_employ.lv if aide_candidate.last_employ
+        %td= aide_candidate.enemy.name if aide_candidate.enemy
+        %td.sep= character_link(aide_candidate.e_no)
+        %td= character_old_link(@latest_result, aide_candidate.e_no, aide_candidate.result_no, aide_candidate.generate_no)
+= paginate(@aide_candidates)

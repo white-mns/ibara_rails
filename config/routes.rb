@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :aide_candidates
   resources :new_items
   resources :makes
   resources :duel_infos
