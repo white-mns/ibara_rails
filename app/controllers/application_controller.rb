@@ -16,5 +16,7 @@ class ApplicationController < ActionController::Base
         @placeholder["AreaColumn"]  = "例）A/b/c/d"
         @placeholder["Compound"]    = "例）どうでも/柔らか"
         @placeholder["Enemy"]       = "例）ナレハテ/\"ヤンキー\""
+        @placeholder["AideFuka"]    = "例）攻撃10 気合10"
+        @placeholder["AideSkill"]   = "例）ブレイク 猛攻"
     end
 end

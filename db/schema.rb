@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_08_000252) do
+ActiveRecord::Schema.define(version: 2020_02_08_014625) do
 
   create_table "aide_candidates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -23,6 +23,33 @@ ActiveRecord::Schema.define(version: 2020_02_08_000252) do
     t.datetime "updated_at", null: false
     t.index ["enemy_id"], name: "index_aide_candidates_on_enemy_id"
     t.index ["last_result_no", "e_no", "last_generate_no"], name: "lastresultno_eno"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+  end
+
+  create_table "aides", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "aide_no"
+    t.string "name"
+    t.integer "enemy_id"
+    t.integer "cost_sp"
+    t.integer "bonds"
+    t.integer "mhp"
+    t.integer "msp"
+    t.integer "mep"
+    t.integer "range"
+    t.string "fuka_texts"
+    t.string "skill_texts"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bonds"], name: "index_aides_on_bonds"
+    t.index ["cost_sp"], name: "index_aides_on_cost_sp"
+    t.index ["enemy_id"], name: "index_aides_on_enemy_id"
+    t.index ["mep"], name: "index_aides_on_mep"
+    t.index ["mhp"], name: "index_aides_on_mhp"
+    t.index ["msp"], name: "index_aides_on_msp"
+    t.index ["range"], name: "index_aides_on_range"
     t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
   end
 

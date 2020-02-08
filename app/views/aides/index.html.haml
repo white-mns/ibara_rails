@@ -1,0 +1,163 @@
+- @page_title = "エイド一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      (※)付加一覧とスキル一覧の検索フォームでは「"」をつけての完全一致検索はできません
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "種族名", params_name: "enemy_form", placeholder: "Enemy", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_employ",
+                    label: {open: "使役LVを表示する", close: "使役LVを表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "使役LV", params_name: "last_employ_lv_form", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_name",
+                    label: {open: "エイド名を表示する", close: "エイド名を表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "エイド名", params_name: "name_form", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_status",
+                    label: {open: "ステータスを表示する", close: "ステータスを表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "要求SP", params_name: "cost_sp_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "絆", params_name: "bonds_form")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "MHP", params_name: "mhp_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "MSP", params_name: "msp_form")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "射程", params_name: "range_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "最大EP", params_name: "mep_form")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_fuka",
+                    label: {open: "付加一覧を表示する", close: "付加一覧を表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "付加一覧(※)", params_name: "fuka_texts_form", placeholder: "AideFuka", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_skill",
+                    label: {open: "スキル一覧を表示する", close: "スキル一覧を表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "スキル一覧(※)", params_name: "skill_texts_form", placeholder: "AideSkill", colspan: 3)
+
+    - #==========================================================================================================================
+    %tbody
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+
+= paginate(@aides)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      - head_row = 1
+      - if @form_params["show_fuka"] == "1" then head_row += 1 end
+      - if @form_params["show_skill"] == "1" then head_row += 1 end
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
+      - if @form_params["show_employ"] == "1"
+        %th= sort_link(@search, :employ_lv,"使役LV", default_order: :desc)
+      %th= sort_link(@search, :aide_no, "No", default_order: :desc)
+      - if @form_params["show_name"] == "1"
+        %th= sort_link(@search, :name, "エイド名", default_order: :desc)
+      %th= sort_link(@search, :enemy_id, "種族", default_order: :desc)
+      - if @form_params["show_status"] == "1"
+        %th= sort_link(@search, :cost_sp, "要求SP", default_order: :desc)
+        %th= sort_link(@search, :bonds, "絆", default_order: :desc)
+        %th= sort_link(@search, :mhp, "MHP", default_order: :desc)
+        %th= sort_link(@search, :msp, "MSP", default_order: :desc)
+        %th= sort_link(@search, :range, "射程", default_order: :desc)
+        %th= sort_link(@search, :mep, "最大EP", default_order: :desc)
+      %th.sep{colspan: "2"} 結果リンク
+  %tbody
+    - @aides.each do |aide|
+      %tr
+        %td{rowspan:head_row}= aide.result_no
+        %td{rowspan:head_row, style: "#{ world_border(aide.world) }" }= pc_name_text(aide.e_no, aide.pc_name)
+        - if @form_params["show_employ"] == "1"
+          %td= aide.employ.lv if aide.employ
+        %td= aide.aide_no
+        - if @form_params["show_name"] == "1"
+          %td= aide.name
+        %td= aide.enemy.name if aide.enemy
+        - if @form_params["show_status"] == "1"
+          %td= aide.cost_sp
+          %td= aide.bonds
+          %td= aide.mhp
+          %td= aide.msp
+          %td= aide.range
+          %td= aide.mep
+        %td.sep= character_link(aide.e_no)
+        %td= character_old_link(@latest_result, aide.e_no, aide.result_no, aide.generate_no)
+      - if @form_params["show_fuka"] == "1"
+        %tr
+          %td{colspan:20}= aide.fuka_texts
+      - if @form_params["show_skill"] == "1"
+        %tr
+          %td{colspan:20}= aide.skill_texts
+= paginate(@aides)
