@@ -34,7 +34,7 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "使役LV", params_name: "employ_lv_form", colspan: 3)
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "前回使役LV", params_name: "last_employ_lv_form", colspan: 3)
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "敵名", params_name: "enemy_form", placeholder: "Enemy", colspan: 3)
@@ -50,12 +50,12 @@
                                  {label: "アンジニティ", params_name: "is_ansinity"}])
 
     - #==========================================================================================================================
-    - tbody_toggle(@form_params, params_name: "show_last_employ",
-                    label: {open: "前回の使役LVを表示する", close: "前回の使役LVを表示しない"}, base_first: false)
+    - tbody_toggle(@form_params, params_name: "show_employ",
+                    label: {open: "今回の使役LVを表示する", close: "今回の使役LVを表示しない"}, base_first: false)
     %tbody.closed
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "前回使役LV", params_name: "last_employ_lv_form", colspan: 3)
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "今回使役LV", params_name: "employ_lv_form", colspan: 3)
 
     - #==========================================================================================================================
     %tbody
@@ -77,9 +77,9 @@
     %tr
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
       %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
-      %th= sort_link(@search, :employ_lv,"使役LV", default_order: :desc)
-      - if @form_params["show_last_employ"] == "1"
-        %th= sort_link(@search, :last_employ_lv,"前回使役LV", default_order: :desc)
+      - if @form_params["show_employ"] == "1"
+        %th= sort_link(@search, :employ_lv,"使役LV", default_order: :desc)
+      %th= sort_link(@search, :last_employ_lv,"前回使役LV", default_order: :desc)
       %th= sort_link(@search, :enemy_id, "敵名", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
@@ -87,9 +87,9 @@
       %tr
         %td= aide_candidate.result_no
         %td{style: "#{ world_border(aide_candidate.world) }" }= pc_name_text(aide_candidate.e_no, aide_candidate.pc_name)
-        %td= aide_candidate.employ.lv if aide_candidate.employ
-        - if @form_params["show_last_employ"] == "1"
-          %td= aide_candidate.last_employ.lv if aide_candidate.last_employ
+        - if @form_params["show_employ"] == "1"
+          %td= aide_candidate.employ.lv if aide_candidate.employ
+        %td= aide_candidate.last_employ.lv if aide_candidate.last_employ
         %td= aide_candidate.enemy.name if aide_candidate.enemy
         %td.sep= character_link(aide_candidate.e_no)
         %td= character_old_link(@latest_result, aide_candidate.e_no, aide_candidate.result_no, aide_candidate.generate_no)

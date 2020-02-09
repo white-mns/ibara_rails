@@ -37,6 +37,7 @@ class AideCandidatesController < ApplicationController
                                           {params_name: "is_ansinity" , value: 1, first_checked: true}])
 
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
+    toggle_params_to_variable(params, @form_params, params_name: "show_employ")
     toggle_params_to_variable(params, @form_params, params_name: "show_last_employ")
   end
   # GET /aide_candidates/1
