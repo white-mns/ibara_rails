@@ -38,14 +38,14 @@
           %br
           %li 行動データ
           %ul  
-            %li= link_to "作製一覧", makes_path
             %li= link_to "食事一覧", meals_path
+            %li= link_to "作製一覧", makes_path
             %li= link_to "合成一覧", compounds_path
             %ul
               %li= link_to "合成結果一覧", compounds_path + "?result_no_form=""&compound_deficient_lv=off&group_result=on"
               %li= link_to "合成組み合わせ一覧", compounds_path + "?result_no_form=""&group_source=on"
-            %li= link_to "移動一覧", moves_path
             %li= link_to "エイド化候補一覧", aide_candidates_path
+            %li= link_to "移動一覧", moves_path
             %li= link_to "次回予告NPC戦一覧", next_battle_infos_path
             %li= link_to "次回予告対人戦一覧", next_duel_infos_path
       .col-md-6
@@ -87,6 +87,16 @@
     %h2 更新履歴
     %div
       %ul
+        %li 2020/2/9
+        %ul
+          %li
+            = link_to "エイド化候補一覧", aide_candidates_path
+            の使役LVの初期表示を前回の使役LVに変更
+          %li
+            = link_to "次回予告NPC戦一覧", next_battle_infos_path
+            、
+            = link_to "NPC戦勝敗一覧", battle_results_path
+            で敵名検索した際、ヒットしなかった時に全件表示されてしまう不具合を修正
         %li 2020/2/8
         %ul
           %li

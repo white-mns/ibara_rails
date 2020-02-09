@@ -169,15 +169,17 @@ module MyUtility
             if detection_arrays[:and].length > 1 then 
                 detection_arrays[:and] = detection_arrays[:and] & nos
 
-                # 絞り込んだ結果ヒット件数が0になった場合、ダミー値で絞り込ませる
-                # 　0件で配列を返すと、絞り込みが行われず全件ヒットするため
-                if detection_arrays[:and].length == 0 then 
-                    detection_arrays[:and] = [-99999]
-                    return
-                end
             else
                 detection_arrays[:and] += nos
             end
+
+            # 絞り込んだ結果ヒット件数が0になった場合、ダミー値で絞り込ませる
+            # 　0件で配列を返すと、絞り込みが行われず全件ヒットするため
+            if detection_arrays[:and].length == 0 then 
+                detection_arrays[:and] = [-99999]
+                return
+            end
+
             params_tmp[:q].delete(param)
         end
     end
@@ -189,6 +191,14 @@ module MyUtility
         params_tmp[:q][param] = params[:q][dummy_param]
         nos = record.search(params_tmp[:q]).result.pluck(column)
         detection_arrays[:or] += nos
+
+        # 絞り込んだ結果ヒット件数が0になった場合、ダミー値で絞り込ませる
+        # 　0件で配列を返すと、絞り込みが行われず全件ヒットするため
+        if detection_arrays[:or].length == 0 then 
+            detection_arrays[:or] = [-99999]
+            return
+        end
+
         params_tmp[:q].delete(param)
     end
   end
