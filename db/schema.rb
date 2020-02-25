@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_08_014625) do
+ActiveRecord::Schema.define(version: 2020_02_25_065807) do
 
   create_table "aide_candidates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -294,9 +294,11 @@ ActiveRecord::Schema.define(version: 2020_02_08_014625) do
     t.integer "strength"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "requester_e_no"
     t.index ["i_no"], name: "index_makes_on_i_no"
     t.index ["kind_id"], name: "index_makes_on_kind_id"
     t.index ["last_result_no", "e_no", "i_no", "last_generate_no"], name: "last_item"
+    t.index ["requester_e_no"], name: "index_makes_on_requester_e_no"
     t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
     t.index ["strength"], name: "index_makes_on_strength"
   end

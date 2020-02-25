@@ -8,7 +8,7 @@
     - act_desc(true)
   .card-body
     = render "layouts/base_desc"
-    %p ※アイテム手渡しで受け取った素材から作製した場合、正しい「素材名」と「強さ」を取得できません。
+    %p ※素材名・強さは前回所持していたアイテムを参照しているため、アイテムを今回手に入れた素材から作製した場合や、アイテム手渡しで受け取った素材から作製した場合、正しい「素材名」と「強さ」を取得できません。
     %p
       %span.example_select.example_toggle.pointer
         - help_icon
@@ -92,7 +92,7 @@
         %th.sep= sort_link(@search, :name, "装備名", default_order: :desc)
       %th.sep= sort_link(@search, :kind_id, "種類", default_order: :desc)
       %th= sort_link(@search, :strength, "強さ", default_order: :desc)
-      %th.sep{colspan: "2"} 結果リンク
+      %th.sep{colspan: "4"} 結果リンク
   %tbody
     - @makes.each do |make|
       %tr
@@ -105,6 +105,8 @@
           %td.sep= make.name
         %td.sep= make.kind.name if make.kind
         %td= make.strength
-        %td.sep= character_link(make.e_no)
+        %td.sep= character_link_text(make.e_no, "作製者")
         %td= character_old_link(@latest_result, make.e_no, make.result_no, make.generate_no)
+        %td.sep= character_link_text(make.requester_e_no, "依頼者")
+        %td= character_old_link(@latest_result, make.requester_e_no, make.result_no, make.generate_no)
 = paginate(@makes)
