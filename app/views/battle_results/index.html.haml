@@ -163,7 +163,7 @@
           - if @form_params["show_party_name"] == "1"
             %td= battle_result.party_info.name if battle_result.party_info
           %td.text-nowrap{style: "#{ world_border(battle_result.last_battle_info.world) }" }
-            - party_members_pc_name_text(battle_result.party_info.party_members)
+            - party_members_pc_name_text(battle_result.party_info.party_members) if battle_result.party_info
           %td.sep
             = "勝利" if battle_result.battle_result == 1
             = "　引分" if battle_result.battle_result == 0

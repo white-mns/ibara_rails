@@ -49,7 +49,7 @@ class BattleResultsController < ApplicationController
     params_to_form(params, @form_params, column_name: "last_battle_info_forest_move_count",   params_name: "forest_form",   type: "number")
     params_to_form(params, @form_params, column_name: "last_battle_info_mountain_move_count", params_name: "mountain_form", type: "number")
 
-    checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",
+    checkbox_params_set_query_any(params, @form_params, query_name: "party_info_world_world_eq_any",
                              checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},
                                           {params_name: "is_ansinity" , value: 1, first_checked: true}])
 
