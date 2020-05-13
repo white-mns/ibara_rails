@@ -17,4 +17,8 @@ class Place < ApplicationRecord
         end
         areas.uniq
     }
+    
+    scope :pc_to_field_id, ->(params)   {
+        field_ids = Place.notnil().includes(:pc_name).search(params[:q]).result.pluck(:field_id).uniq
+    }
 end
