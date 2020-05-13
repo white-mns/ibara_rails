@@ -71,7 +71,7 @@
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "要求SP", params_name: "cost_sp_form")
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "絆", params_name: "bonds_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "キズナ", params_name: "bonds_form")
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "MHP", params_name: "mhp_form")
@@ -128,7 +128,7 @@
       %th= sort_link(@search, :enemy_id, "種族", default_order: :desc)
       - if @form_params["show_status"] == "1"
         %th= sort_link(@search, :cost_sp, "要求SP", default_order: :desc)
-        %th= sort_link(@search, :bonds, "絆", default_order: :desc)
+        %th= sort_link(@search, :bonds, "キズナ", default_order: :desc)
         %th= sort_link(@search, :mhp, "MHP", default_order: :desc)
         %th= sort_link(@search, :msp, "MSP", default_order: :desc)
         %th= sort_link(@search, :range, "射程", default_order: :desc)
