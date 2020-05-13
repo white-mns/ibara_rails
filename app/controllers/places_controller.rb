@@ -56,6 +56,7 @@ class PlacesController < ApplicationController
     if params["place_e_no_form"] || params["place_pc_name_form"]
         place_array = Place.pc_to_place_array(params2)
         params[:q]["area_cont_any"] = place_array
+        params[:q]["field_id_eq_any"] = Place.pc_to_field_id(params2)
     end
     
     @form_params["place_result_no_form"] = params["place_result_no_form"]
