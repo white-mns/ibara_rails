@@ -231,7 +231,7 @@ module MyUtility
 
       if params["place_e_no_form"] || params["place_pc_name_form"]
           place_array = Place.pc_to_place_array(params_tmp)
-          params[:q]["place_area_cont_any"] = place_array
+          params[:q]["place_area_eq_any"] = place_array
           params[:q]["place_field_id_eq_any"] = Place.pc_to_field_id(params_tmp)
       end
       
