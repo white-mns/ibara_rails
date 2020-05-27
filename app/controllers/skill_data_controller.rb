@@ -20,7 +20,7 @@ class SkillDataController < ApplicationController
     params_clean(params)
 
     params_to_form(params, @form_params, column_name: "skill_id", params_name: "skill_id_form", type: "number")
-    params_to_form(params, @form_params, column_name: "name", params_name: "name_form", type: "number")
+    params_to_form(params, @form_params, column_name: "name", params_name: "name_form", type: "text")
     params_to_form(params, @form_params, column_name: "type_id", params_name: "type_id_form", type: "number")
     params_to_form(params, @form_params, column_name: "element_id", params_name: "element_id_form", type: "number")
     params_to_form(params, @form_params, column_name: "ep", params_name: "ep_form", type: "number")
