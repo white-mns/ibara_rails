@@ -118,7 +118,7 @@
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
       - if @form_params["show_acter"] == "1"
         %th= sort_link(@search, :battle_action_acter_e_no,"発動者(Eno)", default_order: :desc)
-        %th= sort_link(@search, :battle_action_acter_enemy_id, "敵", default_order: :desc)
+        %th= sort_link(@search, :battle_action_acter_enemy_id, "NPC", default_order: :desc)
       - if @form_params["show_target_pt"] == "1"
         %th= sort_link(@search, :battle_action_acter_e_no,"対象(Eno)", default_order: :desc)
       - if params["group_battle_type"] == "1"
