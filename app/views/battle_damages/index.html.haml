@@ -89,7 +89,7 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
       %tr
         %td.indent
-          - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "敵名", params_name: "enemy_form", placeholder: "Enemy", colspan: 3)
+          - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "NPC名", params_name: "enemy_form", placeholder: "Enemy", colspan: 3)
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_target",
@@ -106,7 +106,7 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "target_pc_name_form", placeholder: "Name")
       %tr
         %td.indent
-          - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "敵名", params_name: "target_enemy_form", placeholder: "Enemy", colspan: 3)
+          - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "NPC名", params_name: "target_enemy_form", placeholder: "Enemy", colspan: 3)
 
     - #==========================================================================================================================
     %tbody
@@ -132,10 +132,10 @@
       %th= sort_link(@search, :act_sub_id, "ダメージID", default_order: :desc)
       - if @form_params["show_acter"] == "1"
         %th= sort_link(@search, :battle_action_acter_e_no,"発動者(Eno)", default_order: :desc)
-        %th= sort_link(@search, :battle_action_acter_enemy_id, "敵", default_order: :desc)
+        %th= sort_link(@search, :battle_action_acter_enemy_id, "NPC", default_order: :desc)
       - if @form_params["show_target"] == "1"
         %th= sort_link(@search, :battle_action_acter_e_no,"対象(Eno)", default_order: :desc)
-        %th= sort_link(@search, :battle_action_acter_enemy_id, "敵", default_order: :desc)
+        %th= sort_link(@search, :battle_action_acter_enemy_id, "NPC", default_order: :desc)
       %th= sort_link(@search, :battle_action_battle_type, "戦闘の種類", default_order: :desc)
       %th= sort_link(@search, :battle_action_turn, "ターン", default_order: :desc)
       %th= sort_link(@search, :battle_action_skill_id, "スキル", default_order: :desc)
