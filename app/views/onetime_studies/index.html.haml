@@ -1,4 +1,4 @@
-- @page_title = "研究済スキル一覧"
+- @page_title = "スキル研究一覧"
 %h1= @page_title
 
 .card.desc
@@ -108,7 +108,7 @@
           - search_submit_button
 
 
-= paginate(@studies)
+= paginate(@onetime_studies)
 %br
 ヒット数：#{ @count }件
 %br
@@ -135,7 +135,7 @@
       - if @form_params["group_skill"] != "on"
         %th.sep{colspan: "2"} 結果リンク
   %tbody
-    - @studies.each do |study|
+    - @onetime_studies.each do |study|
       %tr
         %td= study.result_no
         - if @form_params["group_skill"] != "on"
@@ -156,4 +156,4 @@
         - if @form_params["group_skill"] != "on"
           %td.sep= character_link(study.e_no)
           %td= character_old_link(@latest_result, study.e_no, study.result_no, study.generate_no)
-= paginate(@studies)
+= paginate(@onetime_studies)

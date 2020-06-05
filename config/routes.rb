@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :onetime_studies
   resources :aides
   resources :aide_candidates
   resources :new_items

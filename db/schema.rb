@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_25_065807) do
+ActiveRecord::Schema.define(version: 2020_06_05_043831) do
 
   create_table "aide_candidates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -469,6 +469,19 @@ ActiveRecord::Schema.define(version: 2020_02_25_065807) do
     t.index ["left_party_no"], name: "index_next_duel_infos_on_left_party_no"
     t.index ["result_no", "generate_no"], name: "resultno_generateno"
     t.index ["right_party_no"], name: "index_next_duel_infos_on_right_party_no"
+  end
+
+  create_table "onetime_studies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "skill_id"
+    t.integer "depth"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["depth"], name: "index_onetime_studies_on_depth"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+    t.index ["skill_id"], name: "index_onetime_studies_on_skill_id"
   end
 
   create_table "parties", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
