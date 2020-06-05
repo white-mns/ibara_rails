@@ -32,9 +32,9 @@
             %ul
               %li= link_to "スキル習得者数ランキング", skills_path + "?show_total=1&exclude_initial_active=on&exclude_initial_passive=on&ex_sort=on"
             %li= link_to "所持カード一覧", cards_path
-            %li= link_to "スキル研究一覧", studies_path
+            %li= link_to "研究済スキル一覧", studies_path
             %ul
-              %li= link_to "スキル研究ランキング", studies_path + "?group_skill=on&ex_sort=on"
+              %li= link_to "研究済スキルランキング", studies_path + "?group_skill=on&ex_sort=on"
           %br
           %li 行動データ
           %ul  
@@ -44,6 +44,9 @@
             %ul
               %li= link_to "合成結果一覧", compounds_path + "?result_no_form=""&compound_deficient_lv=off&group_result=on"
               %li= link_to "合成組み合わせ一覧", compounds_path + "?result_no_form=""&group_source=on"
+            %li= link_to "スキル研究一覧", onetime_studies_path
+            %ul
+              %li= link_to "スキル研究ランキング", onetime_studies_path + "?group_skill=on&ex_sort=on"
             %li= link_to "エイド化候補一覧", aide_candidates_path
             %li= link_to "移動一覧", moves_path
             %li= link_to "次回予告NPC戦一覧", next_battle_infos_path
@@ -89,6 +92,18 @@
       %ul
         %li 2020/6/5
         %ul
+          %li
+            これまでの「スキル研究一覧」「スキル研究ランキング」を
+            = link_to "研究済スキル一覧", studies_path
+            、
+            = link_to "研究済スキルランキング", studies_path + "?group_skill=on&ex_sort=on"
+            に名称変更
+          %li
+            その更新で研究されたスキルのみ表示した
+            = link_to "スキル研究一覧", onetime_studies_path
+            、
+            = link_to "スキル研究ランキング", onetime_studies_path + "?group_skill=on&ex_sort=on"
+            を行動データとして公開
           %li
             ベースキャンプで採取を行わずに練習試合・開放戦・特殊戦を行ったキャラクターがPTとして認識されない、もしくは相手PTに組み込まれる不具合を修正
         %li 2020/5/28
