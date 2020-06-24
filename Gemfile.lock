@@ -140,7 +140,7 @@ GEM
       activerecord (>= 5.2.1)
     popper_js (1.16.0)
     puma (3.12.6)
-    rack (2.2.2)
+    rack (2.2.3)
     rack-mini-profiler (2.0.2)
       rack (>= 1.2.0)
     rack-test (1.1.0)
