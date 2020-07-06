@@ -157,33 +157,33 @@
       %th.sep{colspan: "2"} 結果リンク
   %tbody
     - @battle_results.each do |battle_result|
-      - if battle_result.last_battle_info
-        %tr
-          %td= battle_result.result_no
-          - if @form_params["show_party_name"] == "1"
-            %td= battle_result.party_info.name if battle_result.party_info
-          %td.text-nowrap{style: "#{ world_border(battle_result.last_battle_info.world) }" }
-            - party_members_pc_name_text(battle_result.party_info.party_members) if battle_result.party_info
-          %td.sep
-            = "勝利" if battle_result.battle_result == 1
-            = "　引分" if battle_result.battle_result == 0
-            = "　　敗北" if battle_result.battle_result == -1
-          - if @form_params["show_member_num"] == "1"
-            %td.sep= battle_result.last_battle_info.party_info.member_num if battle_result.last_battle_info.party_info
-          - if @form_params["show_move"] == "1"
-            %td.text-nowrap
-              - party_members_move(battle_result.last_battle_info.party_info.party_members)
-          - if @form_params["show_move_statistics"] == "1"
-            %td= battle_result.last_battle_info.road.move_count if battle_result.last_battle_info.road
-            %td= battle_result.last_battle_info.grass.move_count if battle_result.last_battle_info.grass
-            %td= battle_result.last_battle_info.swamp.move_count if battle_result.last_battle_info.swamp
-            %td= battle_result.last_battle_info.forest.move_count if battle_result.last_battle_info.forest
-            %td= battle_result.last_battle_info.mountain.move_count if battle_result.last_battle_info.mountain
-          %td.sep= battle_type_text(battle_result.last_battle_info)
-          - if @form_params["show_party_name"] == "1"
-            %td= battle_result.last_battle_info.enemy_party_name.name if battle_result.last_battle_info.enemy_party_name
+      %tr
+        %td= battle_result.result_no
+        - if @form_params["show_party_name"] == "1"
+          %td= battle_result.party_info.name if battle_result.party_info
+        - border = battle_result.party_info ? battle_result.party_info.world : nil
+        %td.text-nowrap{style: "#{ world_border(border) }" }
+          - party_members_pc_name_text(battle_result.party_info.party_members) if battle_result.party_info
+        %td.sep
+          = "勝利" if battle_result.battle_result == 1
+          = "　引分" if battle_result.battle_result == 0
+          = "　　敗北" if battle_result.battle_result == -1
+        - if @form_params["show_member_num"] == "1"
+          %td.sep= battle_result.party_info.member_num if battle_result.party_info
+        - if @form_params["show_move"] == "1"
           %td.text-nowrap
-            - enemy_members_text(battle_result.enemy_members)
-          %td.sep= battle_link(@latest_result, battle_result.battle_type, battle_result.battle_info.battle_page, battle_result.result_no, battle_result.generate_no)
-          %td= battle_old_link(@latest_result, battle_result.battle_type, battle_result.battle_info.battle_page, battle_result.result_no, battle_result.generate_no)
+            - party_members_move(battle_result.last_battle_info.party_info.party_members) if battle_result.last_battle_info && battle_result.last_battle_info.party_info
+        - if @form_params["show_move_statistics"] == "1"
+          %td= battle_result.last_battle_info.road.move_count if battle_result.last_battle_info && battle_result.last_battle_info.road
+          %td= battle_result.last_battle_info.grass.move_count if battle_result.last_battle_info && battle_result.last_battle_info.grass
+          %td= battle_result.last_battle_info.swamp.move_count if battle_result.last_battle_info && battle_result.last_battle_info.swamp
+          %td= battle_result.last_battle_info.forest.move_count if battle_result.last_battle_info && battle_result.last_battle_info.forest
+          %td= battle_result.last_battle_info.mountain.move_count if battle_result.last_battle_info && battle_result.last_battle_info.mountain
+        %td.sep= battle_type_text(battle_result.last_battle_info)
+        - if @form_params["show_party_name"] == "1"
+          %td= battle_result.last_battle_info.enemy_party_name.name if battle_result.last_battle_info && battle_result.last_battle_info.enemy_party_name
+        %td.text-nowrap
+          - enemy_members_text(battle_result.enemy_members)
+        %td.sep= battle_link(@latest_result, battle_result.battle_type, battle_result.battle_info.battle_page, battle_result.result_no, battle_result.generate_no)
+        %td= battle_old_link(@latest_result, battle_result.battle_type, battle_result.battle_info.battle_page, battle_result.result_no, battle_result.generate_no)
 = paginate(@battle_results)
