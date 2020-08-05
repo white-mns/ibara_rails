@@ -57,7 +57,7 @@
           %ul  
             %li= link_to "NPC戦勝敗一覧", battle_results_path
             %li= link_to "対人戦勝敗一覧", duel_infos_path
-            %li= link_to "スキル・付加発動結果一覧", battle_actions_path + "?no_result=on"
+            %li= link_to "スキル・付加発動結果一覧", battle_actions_path + "?no_count=on"
             %ul
               %li= link_to "スキル発動回数ランキング", battle_actions_path + "?act_type_fuka=off&show_group=1&group_page=off&total_act=on&ex_sort=on"
               %li= link_to "付加発動回数ランキング", battle_actions_path +   "?act_type_skill=off&show_group=1&group_page=off&total_act=on&ex_sort=on"
@@ -94,7 +94,7 @@
         %ul
           %li
             = link_to "スキル・付加発動結果一覧", battle_actions_path
-            の負荷対策として、データ構造の最適化を行い、最初にページに移動した時はデータを表示しないようにしました。
+            の負荷対策として、データ構造の最適化を行い、最初にページに移動した時はデータ件数を表示しないようにしました。
         %li 2020/7/6
         %ul
           %li
