@@ -7,7 +7,9 @@ class BattleActionsController < ApplicationController
     placeholder_set
     param_set
     if params["no_result"] != "on" then
-        @count	= BattleAction.notnil().includes_or_joins(params).groups(params).search(params[:q]).result.hit_count()
+        if params["no_count"] != "on" then
+            @count	= BattleAction.notnil().includes_or_joins(params).groups(params).search(params[:q]).result.hit_count()
+        end
         @search	= BattleAction.notnil().includes_or_joins(params).groups(params).total(params).having_order(params).page(params[:page]).search(params[:q])
         @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
         @battle_actions	= @search.result.per(50)
@@ -83,6 +85,7 @@ class BattleActionsController < ApplicationController
     @form_params["total_page"] = params["total_page"]
     @form_params["ex_sort"] = params["ex_sort"]
     @form_params["no_result"] = params["no_result"]
+    @form_params["no_count"] = params["no_count"]
     
     if !params["is_form"] && params["ex_sort"] == "on" then
         params["is_form"] = 1
