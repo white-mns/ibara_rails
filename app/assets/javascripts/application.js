@@ -87,7 +87,7 @@ var turboReady = function(){
 	var url     = location.href;
     var params  = url.split("?");
 
-	if(params[1] || window.innerWidth < 767){
+	if((params[1] && params[1] != "no_result=on") || window.innerWidth < 767){
         search_close();
         desc_close();
 	}
