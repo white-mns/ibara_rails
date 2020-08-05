@@ -139,79 +139,80 @@
         %td{colspan: "3"}
           - search_submit_button
 
-= paginate(@battle_actions)
-%br
-ヒット数：#{ @count }件
-%br
-%br
-
-%table.table.table-striped.table-bordered.table-hover
-  %thead
-    %tr
-      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
-      - if @form_params["show_acter"] == "1"
-        %th= sort_link(@search, :acter_e_no,"キャラクター(Eno)", default_order: :desc)
-        %th= sort_link(@search, :acter_enemy_id, "NPC", default_order: :desc)
-      - if @form_params["group_page"] == "on"
-        %th= sort_link(@search, :battle_action_battle_type, "戦闘の種類", default_order: :desc)
-      - if @form_params["group_turn"] == "on"
-        %th= sort_link(@search, :turn, "ターン", default_order: :desc)
-      %th= sort_link(@search, :skill_id, "スキル", default_order: :desc)
-      %th= sort_link(@search, :fuka_id, "付加", default_order: :desc)
-      -if @form_params["total_act"] == "on"
-        %th= sort_link(@search, :act_count, ex_sort_text(params, "act_count", "発動回数"), default_order: :desc)
-      -if @form_params["total_acter"] == "on"
-        %th= sort_link(@search, :acter_count, ex_sort_text(params, "acter_count", "発動者数"), default_order: :desc)
-      -if @form_params["total_page"] == "on"
-        %th= sort_link(@search, :page_count, ex_sort_text(params, "page_count", "発動結果数"), default_order: :desc)
-      - if @form_params["group_page"] == "on"
-        %th= sort_link(@search, :battle_info_battle_page, "結果名", default_order: :desc)
-      %th.sep{colspan: "2"} 結果リンク
-  %tbody
-    - @battle_actions.each do |battle_action|
+- if @form_params["no_result"] != "on"
+  = paginate(@battle_actions)
+  %br
+  ヒット数：#{ @count }件
+  %br
+  %br
+  
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
       %tr
-        %td= battle_action.result_no
+        %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
         - if @form_params["show_acter"] == "1"
-          - if battle_action.acter 
-            - if battle_action.acter.acter_type == 0
-              %td{colspan: 2, style: "#{ world_border(battle_action.acter.world) }" }= pc_name_text(battle_action.acter.e_no, battle_action.acter.pc_name)
-            - elsif battle_action.acter.acter_type == 1
-              %td{colspan: "2"}
-                = battle_action.acter.enemy.name if battle_action.acter.enemy
-                = battle_action.acter.suffix.name if battle_action.acter.suffix
-          - else
-            %td{colspan: 2}
+          %th= sort_link(@search, :acter_e_no,"キャラクター(Eno)", default_order: :desc)
+          %th= sort_link(@search, :acter_enemy_id, "NPC", default_order: :desc)
         - if @form_params["group_page"] == "on"
-          %td= battle_type_text(battle_action.battle_info)
+          %th= sort_link(@search, :battle_action_battle_type, "戦闘の種類", default_order: :desc)
         - if @form_params["group_turn"] == "on"
-          %td= battle_action.turn
-        - if battle_action.act_type == 0 || battle_action.act_type == 1
-          %td{colspan: 2}= battle_action.skill.name if battle_action.skill
-        - elsif battle_action.act_type == 2
-          %td{colspan: 2}
-            = battle_action.fuka.name if battle_action.fuka
-            = "LV" + sprintf("%d", battle_action.lv) if battle_action.lv >= 0
+          %th= sort_link(@search, :turn, "ターン", default_order: :desc)
+        %th= sort_link(@search, :skill_id, "スキル", default_order: :desc)
+        %th= sort_link(@search, :fuka_id, "付加", default_order: :desc)
         -if @form_params["total_act"] == "on"
-          %td= battle_action.act_count
+          %th= sort_link(@search, :act_count, ex_sort_text(params, "act_count", "発動回数"), default_order: :desc)
         -if @form_params["total_acter"] == "on"
-          %td= battle_action.acter_count
+          %th= sort_link(@search, :acter_count, ex_sort_text(params, "acter_count", "発動者数"), default_order: :desc)
         -if @form_params["total_page"] == "on"
-          %td= battle_action.page_count
+          %th= sort_link(@search, :page_count, ex_sort_text(params, "page_count", "発動結果数"), default_order: :desc)
         - if @form_params["group_page"] == "on"
-          %td= battle_action.battle_info.battle_page if battle_action.battle_info
-        - if @form_params["group_page"] == "on" && battle_action.battle_info
-          %td.sep= battle_link(@latest_result, battle_action.battle_info.battle_type, battle_action.battle_info.battle_page, battle_action.battle_info.result_no, battle_action.battle_info.generate_no)
-          %td= battle_old_link(@latest_result, battle_action.battle_info.battle_type, battle_action.battle_info.battle_page, battle_action.battle_info.result_no, battle_action.battle_info.generate_no)
-        - else
-          - turn_tex = ""
-          - act_text = ""
+          %th= sort_link(@search, :battle_info_battle_page, "結果名", default_order: :desc)
+        %th.sep{colspan: "2"} 結果リンク
+    %tbody
+      - @battle_actions.each do |battle_action|
+        %tr
+          %td= battle_action.result_no
+          - if @form_params["show_acter"] == "1"
+            - if battle_action.acter 
+              - if battle_action.acter.acter_type == 0
+                %td{colspan: 2, style: "#{ world_border(battle_action.acter.world) }" }= pc_name_text(battle_action.acter.e_no, battle_action.acter.pc_name)
+              - elsif battle_action.acter.acter_type == 1
+                %td{colspan: "2"}
+                  = battle_action.acter.enemy.name if battle_action.acter.enemy
+                  = battle_action.acter.suffix.name if battle_action.acter.suffix
+            - else
+              %td{colspan: 2}
+          - if @form_params["group_page"] == "on"
+            %td= battle_type_text(battle_action.battle_info)
           - if @form_params["group_turn"] == "on"
-            - turn_text = "&group_turn=on&turn_form=" + sprintf("%d", battle_action.turn)
+            %td= battle_action.turn
+          - if battle_action.act_type == 0 || battle_action.act_type == 1
+            %td{colspan: 2}= battle_action.skill.name if battle_action.skill
+          - elsif battle_action.act_type == 2
+            %td{colspan: 2}
+              = battle_action.fuka.name if battle_action.fuka
+              = "LV" + sprintf("%d", battle_action.lv) if battle_action.lv >= 0
+          -if @form_params["total_act"] == "on"
+            %td= battle_action.act_count
+          -if @form_params["total_acter"] == "on"
+            %td= battle_action.acter_count
+          -if @form_params["total_page"] == "on"
+            %td= battle_action.page_count
+          - if @form_params["group_page"] == "on"
+            %td= battle_action.battle_info.battle_page if battle_action.battle_info
+          - if @form_params["group_page"] == "on" && battle_action.battle_info
+            %td.sep= battle_link(@latest_result, battle_action.battle_info.battle_type, battle_action.battle_info.battle_page, battle_action.battle_info.result_no, battle_action.battle_info.generate_no)
+            %td= battle_old_link(@latest_result, battle_action.battle_info.battle_type, battle_action.battle_info.battle_page, battle_action.battle_info.result_no, battle_action.battle_info.generate_no)
           - else
-            - turn_text = ""
-          - if (battle_action.act_type == 0 || battle_action.act_type == 1) && battle_action.skill
-            - act_text = "act_form=\"" + battle_action.skill.name + "\""
-          - elsif battle_action.act_type == 2 && battle_action.fuka
-            - act_text = "act_form=\"" + battle_action.fuka.name + "\""
-          %td.sep= link_to "発動結果一覧", battle_actions_path + "?" + act_text + turn_text
-= paginate(@battle_actions)
+            - turn_tex = ""
+            - act_text = ""
+            - if @form_params["group_turn"] == "on"
+              - turn_text = "&group_turn=on&turn_form=" + sprintf("%d", battle_action.turn)
+            - else
+              - turn_text = ""
+            - if (battle_action.act_type == 0 || battle_action.act_type == 1) && battle_action.skill
+              - act_text = "act_form=\"" + battle_action.skill.name + "\""
+            - elsif battle_action.act_type == 2 && battle_action.fuka
+              - act_text = "act_form=\"" + battle_action.fuka.name + "\""
+            %td.sep= link_to "発動結果一覧", battle_actions_path + "?" + act_text + turn_text
+  = paginate(@battle_actions)
