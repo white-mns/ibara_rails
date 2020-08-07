@@ -120,8 +120,12 @@ class BattleDamage < ApplicationRecord
     scope :having_order, ->(params) {
         ex_sorts = {"dodge_count desc" => 1, "damage_sum desc" => 1}
         if !params[:q][:s] then
-            params["ex_sort_text"] = "act_count desc"
-            return order("act_count desc")
+            if params["ex_sort_text"] then
+                return order(params["ex_sort_text"])
+            else
+                params["ex_sort_text"] = "damage_sum desc"
+                return order("damage_sum desc")
+            end
 
         elsif ex_sorts.has_key?(params[:q][:s]) then
             sort = params[:q][:s]
