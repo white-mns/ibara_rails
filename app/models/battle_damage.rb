@@ -27,6 +27,8 @@ class BattleDamage < ApplicationRecord
     scope :total_dodge, ->(params) {
         if params["show_dodge"] == "1" then
             select("COUNT(battle_damages.damage_type = 0 or battle_damages.damage_type = 5 or null) AS dodge_count")
+        else
+            select("0 AS dodge_count")
         end
     }
 
@@ -51,7 +53,7 @@ class BattleDamage < ApplicationRecord
     }
 
     scope :damage_type_group, ->(params) {
-        if params["show_dodge"] != "1" then group("battle_infos.damage_type") end
+        if params["show_dodge"] != "1" then group("damage_type") end
     }
 
     scope :battle_type_group, ->(params) {
