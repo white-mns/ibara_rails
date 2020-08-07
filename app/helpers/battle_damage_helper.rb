@@ -9,6 +9,7 @@ module BattleDamageHelper
         elsif object.damage_type == 2 then "SPダメージ"
         elsif object.damage_type == 3 then "回復"
         elsif object.damage_type == 4 then "SP回復"
+        elsif object.damage_type == 5 then "守護回避"
         else object.damage_type
         end
     end
