@@ -18,11 +18,31 @@ class BattleDamagesController < ApplicationController
   end
 
   # GET /b_rank/totals
+  def sk_total
+    placeholder_set
+    param_set
+    @count	= BattleDamage.notnil().includes_or_joins(params).sk_groups(params).search(params[:q]).result.hit_count()
+    @search	= BattleDamage.notnil().includes_or_joins(params).sk_groups(params).total(params).having_order(params).page(params[:page]).search(params[:q])
+    @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
+    @battle_damages	= @search.result.per(50)
+  end
+
+  # GET /b_rank/totals
   def total
     placeholder_set
     param_set
     @count	= BattleDamage.notnil().includes_or_joins(params).groups(params).search(params[:q]).result.hit_count()
     @search	= BattleDamage.notnil().includes_or_joins(params).groups(params).total(params).having_order(params).page(params[:page]).search(params[:q])
+    @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
+    @battle_damages	= @search.result.per(50)
+  end
+
+  # GET /b_rank/totals
+  def tg_total
+    placeholder_set
+    param_set
+    @count	= BattleDamage.notnil().includes_or_joins(params).tg_groups(params).search(params[:q]).result.hit_count()
+    @search	= BattleDamage.notnil().includes_or_joins(params).tg_groups(params).total(params).having_order(params).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
     @battle_damages	= @search.result.per(50)
   end
@@ -33,6 +53,16 @@ class BattleDamagesController < ApplicationController
     param_set
     @count	= BattleDamage.notnil().includes_or_joins(params).pt_groups(params).search(params[:q]).result.hit_count()
     @search	= BattleDamage.notnil().includes_or_joins(params).pt_groups(params).total(params).having_order(params).page(params[:page]).search(params[:q])
+    @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
+    @battle_damages	= @search.result.per(50)
+  end
+
+  # GET /b_rank/pt_tg_totals
+  def pt_tg_total
+    placeholder_set
+    param_set
+    @count	= BattleDamage.notnil().includes_or_joins(params).pt_tg_groups(params).search(params[:q]).result.hit_count()
+    @search	= BattleDamage.notnil().includes_or_joins(params).pt_tg_groups(params).total(params).having_order(params).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
     @battle_damages	= @search.result.per(50)
   end
@@ -49,11 +79,26 @@ class BattleDamagesController < ApplicationController
 
     link_sort
 
+    if action_name == "sk_total" then
+        params[:q]["battle_info_battle_type_not_eq"] = -1
+    end
     if action_name == "total" then
+        params[:q]["battle_info_battle_type_not_eq"] = -1
+        params[:q]["battle_action_acter_e_no_not_eq"] = -1
+    end
+
+    if action_name == "tg_total" then
         params[:q]["target_e_no_not_eq"] = -1
     end
 
     if action_name == "pt_total" then
+        params[:q]["battle_info_battle_type_not_eq"] = -1
+        params[:q]["battle_action_acter_party_party_type_eq"] = 1
+        params[:q]["battle_action_acter_party_party_no_not_eq"] = 0
+    end
+
+
+    if action_name == "pt_tg_total" then
         params[:q]["battle_info_battle_type_not_eq"] = -1
         params[:q]["target_party_party_type_eq"] = 1
         params[:q]["target_party_party_no_not_eq"] = 0
@@ -158,6 +203,10 @@ class BattleDamagesController < ApplicationController
 
     if params["sort_critical"] == "on" then
         params[:q][:s] ||= "critical_value desc"
+    end
+
+    if params["sort_total_damage"] == "on" then
+        params[:q][:s] ||= "damage_sum desc"
     end
 
     if params["sort_total_dodge"] == "on" then

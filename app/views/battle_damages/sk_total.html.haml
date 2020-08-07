@@ -1,4 +1,4 @@
-- @page_title = "戦闘結果ランキング一覧（合計）"
+- @page_title = "戦闘結果ランキング一覧（スキル一回）"
 %h1= @page_title
 
 .card.desc
@@ -15,7 +15,7 @@
         - act_desc(false)
     #example.closed
       = render "layouts/input_desc"
-= search_form_for @search, url: battle_ranking_totals_path do |f|
+= search_form_for @search, url: battle_ranking_sk_totals_path do |f|
   %table.search_toggle.table.table-striped.table-bordered.table-hover
     %tbody.pointer
       %tr
@@ -134,11 +134,11 @@
       - if @form_params["show_target"] == "1"
         %th= sort_link(@search, :battle_action_acter_e_no,"対象(Eno)", default_order: :desc)
         %th= sort_link(@search, :battle_action_acter_enemy_id, "NPC", default_order: :desc)
-      - if @form_params["group_battle_type"] == "1"
-        %th= sort_link(@search, :battle_action_battle_type, "戦闘の種類", default_order: :desc)
-      - if @form_params["group_act"] == "1"
-        %th= sort_link(@search, :battle_action_skill_id, "スキル", default_order: :desc)
-        %th= sort_link(@search, :battle_action_fuka_id, "付加", default_order: :desc)
+      %th= sort_link(@search, :battle_action_battle_type, "戦闘の種類", default_order: :desc)
+      - if params["show_turn"]
+        %th= sort_link(@search, :battle_action_turn, "ターン", default_order: :desc)
+      %th= sort_link(@search, :battle_action_skill_id, "スキル", default_order: :desc)
+      %th= sort_link(@search, :battle_action_fuka_id, "付加", default_order: :desc)
       %th= sort_link(@search, :damage_type, "種類", default_order: :desc)
       - if @form_params["show_critical"] == "1"
         %th= sort_link(@search, :critical_value, "クリティカル数", default_order: :desc)
@@ -177,15 +177,18 @@
               %td{colspan: 2}
           - else
             %td{colspan: 2}
-        - if @form_params["group_battle_type"] == "1"
-          %td= battle_type_text(battle_damage.battle_info)
-        - if @form_params["group_act"] == "1"
+        %td= battle_type_text(battle_damage.battle_info)
+        - if params["show_turn"]
+          %td= battle_action.turn
+        - if battle_action && battle_action.act_type
           - if battle_action.act_type == 0 || battle_action.act_type == 1
             %td{colspan: 2}= battle_action.skill.name if battle_action.skill
           - elsif battle_action.act_type == 2
             %td{colspan: 2}
               = battle_action.fuka.name if battle_action.fuka
               = "LV" + sprintf("%d", battle_action.lv) if battle_action.lv && battle_action.lv >= 0
+        - else
+          %td{colspan: 2}
         %td
           - if @form_params["show_dodge"] == "1"
             回避
@@ -199,10 +202,6 @@
           %td= battle_damage.dodge_count
         - if false
           %td= battle_damage.target.party.party_no if battle_damage.target.party
-        - if @form_params["group_battle_type"] == "1"
-          %td.sep= battle_link(@latest_result, battle_damage.battle_info.battle_type, battle_damage.battle_info.battle_page, battle_damage.battle_info.result_no, battle_damage.battle_info.generate_no)
-          %td= battle_old_link(@latest_result, battle_damage.battle_info.battle_type, battle_damage.battle_info.battle_page, battle_damage.battle_info.result_no, battle_damage.battle_info.generate_no)
-        - else
-          %td.sep= character_link(battle_damage.battle_action.acter.e_no) if battle_damage.battle_action.acter
-          %td= character_old_link(@latest_result, battle_damage.battle_action.acter.e_no, battle_damage.battle_action.acter.result_no, battle_damage.battle_action.acter.generate_no) if battle_damage.battle_action.acter
+        %td.sep= battle_link(@latest_result, battle_damage.battle_info.battle_type, battle_damage.battle_info.battle_page, battle_damage.battle_info.result_no, battle_damage.battle_info.generate_no)
+        %td= battle_old_link(@latest_result, battle_damage.battle_info.battle_type, battle_damage.battle_info.battle_page, battle_damage.battle_info.result_no, battle_damage.battle_info.generate_no)
 = paginate(@battle_damages)

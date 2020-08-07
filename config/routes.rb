@@ -11,8 +11,11 @@ Rails.application.routes.draw do
   resources :battle_enemies
   resources :battle_results
   resources :meals
+  get "b_rank/pt_tg_totals",  :to => "battle_damages#pt_tg_total",  :as => "battle_ranking_pt_tg_totals"
   get "b_rank/pt_totals",  :to => "battle_damages#pt_total",  :as => "battle_ranking_pt_totals"
+  get "b_rank/tg_totals",  :to => "battle_damages#tg_total",  :as => "battle_ranking_tg_totals"
   get "b_rank/totals",  :to => "battle_damages#total",  :as => "battle_ranking_totals"
+  get "b_rank/sk_totals", :to => "battle_damages#sk_total", :as => "battle_ranking_sk_totals"
   get "b_rank/singles", :to => "battle_damages#single", :as => "battle_ranking_singles"
   resources :battle_buffers
   resources :battle_targets
