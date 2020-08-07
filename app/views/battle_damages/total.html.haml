@@ -47,8 +47,7 @@
                     checkboxes: [{label: "ENCOUNTER - 『遭遇戦』『採集』", params_name: "is_encounter",  br: true},
                                  {label: "MISSION - 『開放戦』『特殊戦』", params_name: "is_mission",    br: true},
                                  {label: "DUEL　- 『決闘』",               params_name: "is_duel",       br: true},
-                                 {label: "GAME　- 『練習戦』",             params_name: "is_game",       br: true},
-                                 {label: "闘技大会",                       params_name: "is_tournament", br: true}])
+                                 {label: "GAME　- 『練習戦』",             params_name: "is_game",       br: true}])
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "スキルor付加", params_name: "act_type_form", colspan: 3, 
@@ -140,17 +139,17 @@
       - if @form_params["show_target"] == "1"
         %th= sort_link(@search, :battle_action_acter_e_no,"対象(Eno)", default_order: :desc)
         %th= sort_link(@search, :battle_action_acter_enemy_id, "NPC", default_order: :desc)
-      - if params["group_battle_type"] == "1"
+      - if @form_params["group_battle_type"] == "1"
         %th= sort_link(@search, :battle_action_battle_type, "戦闘の種類", default_order: :desc)
-      - if params["group_act"] == "1"
+      - if @form_params["group_act"] == "1"
         %th= sort_link(@search, :battle_action_skill_id, "スキル", default_order: :desc)
         %th= sort_link(@search, :battle_action_fuka_id, "付加", default_order: :desc)
       %th= sort_link(@search, :damage_type, "種類", default_order: :desc)
-      - if params["show_critical"]
+      - if @form_params["show_critical"] == "1"
         %th= sort_link(@search, :critical_value, "クリティカル数", default_order: :desc)
-      - if params["show_damage"]
+      - if @form_params["show_damage"] == "1"
         %th= sort_link(@search, :damage_sum, ex_sort_text(params, "damage_sum", "ダメージ合計"), default_order: :desc)
-      - if params["show_dodge"]
+      - if @form_params["show_dodge"] == "1"
         %th= sort_link(@search, :dodge_count, ex_sort_text(params, "dodge_count", "回避数"), default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
@@ -183,9 +182,9 @@
               %td{colspan: 2}
           - else
             %td{colspan: 2}
-        - if params["group_battle_type"] == "1"
+        - if @form_params["group_battle_type"] == "1"
           %td= battle_type_text(battle_damage.battle_info)
-        - if params["group_act"] == "1"
+        - if @form_params["group_act"] == "1"
           - if battle_action.act_type == 0 || battle_action.act_type == 1
             %td{colspan: 2}= battle_action.skill.name if battle_action.skill
           - elsif battle_action.act_type == 2
@@ -193,19 +192,19 @@
               = battle_action.fuka.name if battle_action.fuka
               = "LV" + sprintf("%d", battle_action.lv) if battle_action.lv && battle_action.lv >= 0
         %td
-          - if params["show_dodge"]
+          - if @form_params["show_dodge"] == "1"
             回避
           -else
             = damage_type_text(battle_damage)
-        - if params["show_critical"]
+        - if @form_params["show_critical"] == "1"
           %td= battle_damage.critical.value if battle_damage.critical
-        - if params["show_damage"]
+        - if @form_params["show_damage"] == "1"
           %td= battle_damage.damage_sum
-        - if params["show_dodge"]
+        - if @form_params["show_dodge"] == "1"
           %td= battle_damage.dodge_count
         - if false
           %td= battle_damage.target.party.party_no if battle_damage.target.party
-        - if params["group_battle_type"] == "1"
+        - if @form_params["group_battle_type"] == "1"
           %td.sep= battle_link(@latest_result, battle_damage.battle_info.battle_type, battle_damage.battle_info.battle_page, battle_damage.battle_info.result_no, battle_damage.battle_info.generate_no)
           %td= battle_old_link(@latest_result, battle_damage.battle_info.battle_type, battle_damage.battle_info.battle_page, battle_damage.battle_info.result_no, battle_damage.battle_info.generate_no)
         - else
