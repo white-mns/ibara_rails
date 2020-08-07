@@ -21,7 +21,9 @@ class BattleDamagesController < ApplicationController
   def sk_total
     placeholder_set
     param_set
-    @count	= BattleDamage.notnil().includes_or_joins(params).sk_groups(params).search(params[:q]).result.hit_count()
+    if params["no_count"] != "on" then
+        @count	= BattleDamage.notnil().includes_or_joins(params).sk_groups(params).search(params[:q]).result.hit_count()
+    end
     @search	= BattleDamage.notnil().includes_or_joins(params).sk_groups(params).total(params).having_order(params).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
     @battle_damages	= @search.result.per(50)
@@ -172,6 +174,7 @@ class BattleDamagesController < ApplicationController
                                           {params_name: "target_npc" , value: 1, first_checked: false}])
 
     @form_params["ex_sort"] = params["ex_sort"]
+    @form_params["no_count"] = params["no_count"]
     
     acter_pm_matching(params, @form_params)
     target_pm_matching(params, @form_params)

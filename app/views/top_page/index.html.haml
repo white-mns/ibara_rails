@@ -72,7 +72,7 @@
               %li= link_to "ダメージ", battle_ranking_sk_totals_path + "?damage_type_damage=on&show_acter=1&show_damage=1&acter_pc=on&sort_total_damage=on&ex_sort=on"
               %li= link_to "SPダメージ", battle_ranking_sk_totals_path + "?damage_type_sp_damage=on&show_acter=1&show_damage=1&acter_pc=on&sort_total_damage=on&ex_sort=on"
               %li= link_to "回復", battle_ranking_sk_totals_path + "?damage_type_heal=on&show_acter=1&show_damage=1&acter_pc=on&sort_total_damage=on&ex_sort=on"
-            %li 戦闘ランキング（合計）
+            %li 戦闘ランキング（キャラ合計）
             %ul
               %li= link_to "ダメージ", battle_ranking_totals_path + "?damage_type_damage=on&show_acter=1&show_damage=1&acter_pc=on&sort_total_damage=on&ex_sort=on"
               %li= link_to "SPダメージ", battle_ranking_totals_path + "?damage_type_sp_damage=on&show_acter=1&show_damage=1&acter_pc=on&sort_total_damage=on&ex_sort=on"
@@ -134,7 +134,7 @@
         %ul
           %li
             = link_to "スキル・付加発動結果一覧", battle_actions_path
-            の負荷対策として、データ構造の最適化を行い、最初にページに移動した時はデータ件数を表示しないようにしました。
+            の負荷対策として、データ構造の最適化を行い、最初にページに移動した時はデータ件数を表示しないように変更
         %li 2020/7/6
         %ul
           %li
