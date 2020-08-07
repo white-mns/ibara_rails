@@ -120,7 +120,8 @@
 
 = paginate(@battle_damages)
 %br
-ヒット数：#{ @count }件
+- if @form_params["no_count"] != "on"
+  ヒット数：#{ @count }件
 %br
 %br
 
