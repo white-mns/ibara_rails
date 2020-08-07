@@ -1,4 +1,4 @@
-- @page_title = "戦闘結果ランキング一覧（PT合計）"
+- @page_title = "戦闘結果ランキング一覧（PT合計・被弾側）"
 %h1= @page_title
 
 .card.desc
@@ -15,7 +15,7 @@
         - act_desc(false)
     #example.closed
       = render "layouts/input_desc"
-= search_form_for @search, url: battle_ranking_pt_totals_path do |f|
+= search_form_for @search, url: battle_ranking_pt_tg_totals_path do |f|
   %table.search_toggle.table.table-striped.table-bordered.table-hover
     %tbody.pointer
       %tr

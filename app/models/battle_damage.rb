@@ -27,6 +27,8 @@ class BattleDamage < ApplicationRecord
     scope :total_dodge, ->(params) {
         if params["show_dodge"] == "1" then
             select("COUNT(battle_damages.damage_type = 0 or battle_damages.damage_type = 5 or null) AS dodge_count")
+        else
+            select("0 AS dodge_count")
         end
     }
 
@@ -38,7 +40,21 @@ class BattleDamage < ApplicationRecord
 
     scope :groups, ->(params) {
         group("battle_damages.result_no").
+        damage_type_group(params).
+        group("battle_acters.e_no").
+        group("battle_acters.enemy_id")
+    }
+
+    scope :sk_groups, ->(params) {
+        group("battle_damages.result_no").
         battle_type_group(params).
+        damage_type_group(params).
+        group("battle_damages.battle_id").
+        group("battle_damages.act_id")
+    }
+
+    scope :tg_groups, ->(params) {
+        group("battle_damages.result_no").
         damage_type_group(params).
         group("battle_targets.e_no").
         group("battle_targets.enemy_id")
@@ -50,12 +66,18 @@ class BattleDamage < ApplicationRecord
         group("parties.party_no")
     }
 
+    scope :pt_tg_groups, ->(params) {
+        group("battle_damages.result_no").
+        damage_type_group(params).
+        group("parties.party_no")
+    }
+
     scope :damage_type_group, ->(params) {
-        if params["show_dodge"] != "1" then group("battle_infos.damage_type") end
+        if params["show_dodge"] != "1" then group("damage_type") end
     }
 
     scope :battle_type_group, ->(params) {
-        if params["group_battle_type"] == "1" then group("battle_infos.battle_type") end
+        group("battle_infos.battle_type")
     }
 
     scope :includes_or_joins, ->(params) {
