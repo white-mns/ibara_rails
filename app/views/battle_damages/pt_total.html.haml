@@ -31,8 +31,10 @@
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "種類", params_name: "damage_type_form", colspan: 3, 
-                    checkboxes: [{label: "回避",       params_name: "damage_type_dodge",    class_name: "after_space"},
-                                 {label: "守護回避",   params_name: "damage_type_dodge_protection", br: true}])
+                    checkboxes: [{label: "ダメージ",   params_name: "damage_type_damage",    class_name: "after_space"},
+                                 {label: "SPダメージ", params_name: "damage_type_sp_damage", br: true},
+                                 {label: "HP回復",     params_name: "damage_type_heal",      class_name: "after_space"},
+                                 {label: "SP回復",     params_name: "damage_type_sp_heal",   br: true}])
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "発動者", params_name: "acter_form", 
@@ -66,41 +68,33 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "結果名", params_name: "battle_page_form", placeholder: "", colspan: 3)
 
     - #==========================================================================================================================
-    - tbody_toggle(@form_params, params_name: "show_target_pt",
-                    label: {open: "対象PTを表示する", close: "対象を表示しない"}, base_first: false)
+    - tbody_toggle(@form_params, params_name: "show_acter_pt",
+                    label: {open: "発動者所属PTで絞り込む", close: "発動者所属PTで絞り込みを表示しない"}, base_first: false)
     %tbody.closed
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "target_world_form", colspan: 3, 
-                    checkboxes: [{label: "イバラシティ", params_name: "target_ibaracity", class_name: "after_space mobile_br"},
-                                 {label: "アンジニティ", params_name: "target_ansinity"}])
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "acter_world_form", colspan: 3,
+                    checkboxes: [{label: "イバラシティ", params_name: "acter_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "acter_ansinity"}])
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "target_pm_result_no_form", placeholder: nil, colspan: 3)
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "acter_pm_result_no_form", placeholder: nil, colspan: 3)
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "target_pm_e_no_form", placeholder: "Number")
-        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "target_pm_pc_name_form", placeholder: "Name")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "acter_pm_e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "acter_pm_pc_name_form", placeholder: "Name")
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, params_name: "target_pm_party_type_form", colspan: 3, 
-                    checkboxes: [{label: "戦闘PTM",     params_name: "target_pm_battle", class_name: "after_space mobile_br"},
-                                 {label: "次回予告PTM", params_name: "target_pm_next"}])
-
-
-    - #==========================================================================================================================
-    - tbody_toggle(@form_params, params_name: "show_dodge",
-                    label: {open: "対象の回避数を表示する", close: "対象の回避数を表示しない"}, base_first: false)
-    %tbody.closed
-      %tr
-        %td.indent
-        %td{colspan: 5}
+        - td_form(f, @form_params, @placeholder, params_name: "acter_pm_party_type_form", colspan: 3,
+                    checkboxes: [{label: "戦闘PTM",     params_name: "acter_pm_battle", class_name: "after_space mobile_br"},
+                                 {label: "次回予告PTM", params_name: "acter_pm_next"}])
 
     - #==========================================================================================================================
     %tbody
       %tr.sep
         %td.indent
         %td.indent= hidden_field_tag :is_form, 1
+        %td.indent= hidden_field_tag :show_damage, 1
         %td{colspan: "3"}
           - search_submit_button
 
@@ -115,9 +109,8 @@
   %thead
     %tr
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
-      - if @form_params["show_acter"] == "1"
+      - if @form_params["show_acter_pt"] == "1"
         %th= sort_link(@search, :battle_action_acter_e_no,"発動者(Eno)", default_order: :desc)
-        %th= sort_link(@search, :battle_action_acter_enemy_id, "NPC", default_order: :desc)
       - if @form_params["show_target_pt"] == "1"
         %th= sort_link(@search, :battle_action_acter_e_no,"対象(Eno)", default_order: :desc)
       - if @form_params["group_battle_type"] == "1"
@@ -129,7 +122,7 @@
       - if @form_params["show_critical"] == "1"
         %th= sort_link(@search, :critical_value, "クリティカル数", default_order: :desc)
       - if @form_params["show_damage"] == "1"
-        %th= sort_link(@search, :damage_sum, ex_sort_text(params, "damage_sum", "ダメージ合計"), default_order: :desc)
+        %th= sort_link(@search, :damage_sum, ex_sort_text(params, "damage_sum", "効果量合計"), default_order: :desc)
       - if @form_params["show_dodge"] == "1"
         %th= sort_link(@search, :dodge_count, ex_sort_text(params, "dodge_count", "回避数"), default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
@@ -142,7 +135,8 @@
         - if @form_params["show_acter_pt"] == "1"
           - if battle_action && battle_action.acter 
             - if battle_action.acter.acter_type == 0
-              %td{colspan: 1, style: "#{ world_border(battle_action.acter.world) }" }= pc_name_text(battle_action.acter.e_no, battle_action.acter.pc_name)
+              %td{colspan: 1, style: "#{ world_border(battle_action.acter.world) }" }
+                - party_members_pc_name_text(battle_action.acter.party.party_info.party_members)
             - elsif battle_action.acter.acter_type == 1
               %td{colspan: 1}
                 = battle_action.acter.enemy.name if battle_action.acter.enemy
@@ -190,6 +184,6 @@
           %td.sep= battle_link(@latest_result, battle_damage.battle_info.battle_type, battle_damage.battle_info.battle_page, battle_damage.battle_info.result_no, battle_damage.battle_info.generate_no)
           %td= battle_old_link(@latest_result, battle_damage.battle_info.battle_type, battle_damage.battle_info.battle_page, battle_damage.battle_info.result_no, battle_damage.battle_info.generate_no)
         - else
-          %td.sep= character_link(battle_damage.target.e_no)
-          %td= character_old_link(@latest_result, battle_damage.target.e_no, battle_damage.target.result_no, battle_damage.target.generate_no)
+          %td.sep= character_link(battle_damage.battle_action.acter.party.party_info.party_no) if battle_damage.battle_action.acter
+          %td= character_old_link(@latest_result, battle_damage.battle_action.acter.party.party_info.party_no, battle_damage.battle_action.acter.result_no, battle_damage.battle_action.acter.generate_no) if battle_damage.battle_action.acter
 = paginate(@battle_damages)

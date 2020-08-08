@@ -77,10 +77,15 @@
               %li= link_to "ダメージ", battle_ranking_totals_path + "?damage_type_damage=on&show_acter=1&show_damage=1&acter_pc=on&sort_total_damage=on&ex_sort=on"
               %li= link_to "SPダメージ", battle_ranking_totals_path + "?damage_type_sp_damage=on&show_acter=1&show_damage=1&acter_pc=on&sort_total_damage=on&ex_sort=on"
               %li= link_to "回復", battle_ranking_totals_path + "?damage_type_heal=on&show_acter=1&show_damage=1&acter_pc=on&sort_total_damage=on&ex_sort=on"
+              %li= link_to "被ダメージ", battle_ranking_tg_totals_path + "?damage_type_damage=on&show_target=1&target_pc=on&show_damage=1&sort_total_damage=on&ex_sort=on"
+              %li= link_to "被回復", battle_ranking_tg_totals_path + "?damage_type_heal=on&show_target=1&target_pc=on&show_damage=1&sort_total_damage=on&ex_sort=on"
               %li= link_to "ふふぁさー", battle_ranking_tg_totals_path + "?damage_type_dodge=on&damage_type_dodge_protection=on&show_target=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on"
             %li 戦闘ランキング（PT合計）
             %ul
-              %li= link_to "ふふぁさーPT", battle_ranking_pt_tg_totals_path + "?damage_type_dodge=on&damage_type_dodge_protection=on&show_target_pt=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on"
+              %li= link_to "ダメージ", battle_ranking_pt_totals_path + "?damage_type_damage=on&show_acter_pt=1&show_damage=1&acter_pc=on&sort_total_damage=on&ex_sort=on"
+              %li= link_to "回復", battle_ranking_pt_totals_path + "?damage_type_heal=on&show_acter_pt=1&show_damage=1&acter_pc=on&sort_total_damage=on&ex_sort=on"
+              %li= link_to "被ダメージ", battle_ranking_pt_tg_totals_path + "?damage_type_damage=on&show_target=1&show_target_pt=1&target_pc=on&show_damage=1&sort_total_damage=on&ex_sort=on"
+              %li= link_to "ふふぁさー", battle_ranking_pt_tg_totals_path + "?damage_type_dodge=on&damage_type_dodge_protection=on&show_target_pt=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on"
           %br
           %li グラフデータ
           %ul  
@@ -100,6 +105,22 @@
     %h2 更新履歴
     %div
       %ul
+        %li 2020/8/8
+        %ul
+          %li
+            戦闘ランキング（キャラ合計）に
+            = link_to "被ダメージ", battle_ranking_tg_totals_path + "?damage_type_damage=on&show_target=1&target_pc=on&show_damage=1&sort_total_damage=on&ex_sort=on"
+            、
+            = link_to "被回復", battle_ranking_tg_totals_path + "?damage_type_heal=on&show_target=1&target_pc=on&show_damage=1&sort_total_damage=on&ex_sort=on"
+            のランキングを追加
+          %li
+            戦闘ランキング（PT合計）に
+            = link_to "ダメージ", battle_ranking_pt_totals_path + "?damage_type_damage=on&show_acter_pt=1&show_damage=1&acter_pc=on&sort_total_damage=on&ex_sort=on"
+            、
+            = link_to "回復", battle_ranking_pt_totals_path + "?damage_type_heal=on&show_acter_pt=1&show_damage=1&acter_pc=on&sort_total_damage=on&ex_sort=on"
+            、
+            = link_to "被ダメージ", battle_ranking_pt_tg_totals_path + "?damage_type_damage=on&show_target=1&show_target_pt=1&target_pc=on&show_damage=1&sort_total_damage=on&ex_sort=on"
+            のランキングを追加
         %li 2020/8/7
         %ul
           %li
@@ -111,7 +132,7 @@
             = link_to "回復", battle_ranking_sk_totals_path + "?damage_type_heal=on&show_acter=1&show_damage=1&acter_pc=on&sort_total_damage=on&ex_sort=on"
             のランキングを公開
           %li
-            戦闘ランキング（合計）として
+            戦闘ランキング（キャラ合計）として
             = link_to "ダメージ", battle_ranking_totals_path + "?damage_type_damage=on&show_acter=1&show_damage=1&acter_pc=on&sort_total_damage=on&ex_sort=on"
             、
             = link_to "SPダメージ", battle_ranking_totals_path + "?damage_type_sp_damage=on&show_acter=1&show_damage=1&acter_pc=on&sort_total_damage=on&ex_sort=on"
