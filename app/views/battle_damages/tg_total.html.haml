@@ -32,7 +32,11 @@
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "種類", params_name: "damage_type_form", colspan: 3, 
                     checkboxes: [{label: "回避",       params_name: "damage_type_dodge",    class_name: "after_space"},
-                                 {label: "守護回避",   params_name: "damage_type_dodge_protection", br: true}])
+                                 {label: "守護回避",   params_name: "damage_type_dodge_protection", br: true},
+                                 {label: "ダメージ",   params_name: "damage_type_damage",    class_name: "after_space"},
+                                 {label: "SPダメージ", params_name: "damage_type_sp_damage", br: true},
+                                 {label: "HP回復",     params_name: "damage_type_heal",      class_name: "after_space"},
+                                 {label: "SP回復",     params_name: "damage_type_sp_heal",   br: true}])
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "発動者", params_name: "acter_form", 
@@ -107,6 +111,14 @@
                                  {label: "次回予告PTM", params_name: "target_pm_next"}])
 
     - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_damage",
+                    label: {open: "対象の被ダメージ・被回復合計を表示する", close: "対象の被ダメージ・被回復合計を表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        %td{colspan: 5}
+
+    - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_dodge",
                     label: {open: "対象の回避数を表示する", close: "対象の回避数を表示しない"}, base_first: false)
     %tbody.closed
@@ -148,7 +160,7 @@
       - if @form_params["show_critical"] == "1"
         %th= sort_link(@search, :critical_value, "クリティカル数", default_order: :desc)
       - if @form_params["show_damage"] == "1"
-        %th= sort_link(@search, :damage_sum, ex_sort_text(params, "damage_sum", "ダメージ合計"), default_order: :desc)
+        %th= sort_link(@search, :damage_sum, ex_sort_text(params, "damage_sum", "被効果量合計"), default_order: :desc)
       - if @form_params["show_dodge"] == "1"
         %th= sort_link(@search, :dodge_count, ex_sort_text(params, "dodge_count", "回避数"), default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
