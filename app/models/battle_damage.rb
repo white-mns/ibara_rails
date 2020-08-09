@@ -10,6 +10,7 @@ class BattleDamage < ApplicationRecord
 	belongs_to :critical,    -> { where(buffer_type: critical)},   :foreign_key => [:result_no, :battle_id, :act_id, :act_sub_id, :generate_no], :primary_key => [:result_no, :battle_id, :act_id, :act_sub_id, :generate_no], :class_name => 'BattleBuffer'
 	belongs_to :protection,  -> { where(buffer_type: protection)}, :foreign_key => [:result_no, :battle_id, :act_id, :act_sub_id, :generate_no], :primary_key => [:result_no, :battle_id, :act_id, :act_sub_id, :generate_no], :class_name => 'BattleBuffer'
 	belongs_to :reflection,  -> { where(buffer_type: reflection)}, :foreign_key => [:result_no, :battle_id, :act_id, :act_sub_id, :generate_no], :primary_key => [:result_no, :battle_id, :act_id, :act_sub_id, :generate_no], :class_name => 'BattleBuffer'
+	belongs_to :abnormal, :foreign_key => :abnormal_id, :primary_key => :proper_id, :class_name => "ProperName"
 
     scope :total, ->(params) {
         select("*").
@@ -89,7 +90,8 @@ class BattleDamage < ApplicationRecord
         target_pt_includes(params).
         critical_includes(params).
         protection_includes(params).
-        reflection_includes(params)
+        reflection_includes(params).
+        abnormal_includes(params)
     }
 
     scope :acter_includes, ->(params) {
@@ -100,8 +102,6 @@ class BattleDamage < ApplicationRecord
     scope :acter_pt_includes, ->(params) {
         if params["show_acter_pt"] == "1" then includes([battle_action: [acter: [party: [party_info: [party_members: :pc_name]]]]]) end
     }
-
-
 
     scope :target_includes, ->(params) {
         #if params["show_target"] == "1" then includes([target: [:pc_name, :world, :party, :enemy]]) end
@@ -122,6 +122,10 @@ class BattleDamage < ApplicationRecord
 
     scope :reflection_includes, ->(params) {
         if params["show_prot_refl"] == "1" then includes(:reflection) end
+    }
+
+    scope :abnormal_includes, ->(params) {
+        if params["show_abnormal"] == "1" then includes(:abnormal) end
     }
 
     scope :having_order, ->(params) {

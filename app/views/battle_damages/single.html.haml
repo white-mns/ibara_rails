@@ -35,7 +35,9 @@
                                  {label: "ダメージ",   params_name: "damage_type_damage",    class_name: "after_space"},
                                  {label: "SPダメージ", params_name: "damage_type_sp_damage", br: true},
                                  {label: "HP回復",     params_name: "damage_type_heal",      class_name: "after_space"},
-                                 {label: "SP回復",     params_name: "damage_type_sp_heal",   br: true}])
+                                 {label: "SP回復",     params_name: "damage_type_sp_heal",   br: true},
+                                 {label: "異常追加",   params_name: "damage_type_abnormal",  class_name: "after_space"},
+                                 {label: "異常抵抗",   params_name: "damage_type_regist",    br: true}])
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "発動者", params_name: "acter_form", 
@@ -150,11 +152,35 @@
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_damage",
-                    label: {open: "ダメージ・回復量を表示する", close: "ダメージ・回復量を表示しない"}, base_first: false)
+                    label: {open: "ダメージ・回復量・追加深度を表示する", close: "ダメージ・回復量を表示しない"}, base_first: false)
     %tbody.closed
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "ダメージ・回復", params_name: "value_form", placeholder: "Number", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_abnormal",
+                    label: {open: "追加した変調・強化の種類を表示する", close: "追加した変調・強化の種類を表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, params_name: "abnormal_form", colspan: 3,
+                    checkboxes: [{label: "炎上", params_name: "abnormal_flame", class_name: "after_space"},
+                                 {label: "凍結", params_name: "abnormal_freeze", class_name: "after_space mobile_br"},
+                                 {label: "束縛", params_name: "abnormal_restriction", br: true},
+                                 {label: "猛毒", params_name: "abnormal_poison", class_name: "after_space mobile_br"},
+                                 {label: "麻痺", params_name: "abnormal_paralysis", class_name: "after_space mobile_br"},
+                                 {label: "衰弱", params_name: "abnormal_weakness", br: true},
+                                 {label: "盲目", params_name: "abnormal_blindness", class_name: "after_space mobile_br"},
+                                 {label: "腐食", params_name: "abnormal_corrosion", br: true},
+                                 {label: "朦朧", params_name: "abnormal_dim", class_name: "after_space mobile_br"},
+                                 {label: "混乱", params_name: "abnormal_confusion", class_name: "after_space mobile_br"},
+                                 {label: "魅了", params_name: "abnormal_fascination", br: true},
+                                 {label: "石化", params_name: "abnormal_consolidation", class_name: "after_space mobile_br"},
+                                 {label: "暴走", params_name: "abnormal_berserk", br: true},
+                                 {label: "祝福", params_name: "abnormal_blessing", class_name: "after_space mobile_br"},
+                                 {label: "守護", params_name: "abnormal_protection", class_name: "after_space mobile_br"},
+                                 {label: "反射", params_name: "abnormal_reflexion"}])
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_critical",
@@ -206,16 +232,19 @@
         %th= sort_link(@search, :battle_action_target_e_no,"対象(Eno)", default_order: :desc)
         %th= sort_link(@search, :battle_action_target_enemy_id, "NPC", default_order: :desc)
       %th= sort_link(@search, :battle_action_battle_type, "戦闘の種類", default_order: :desc)
-      - if params["show_turn"]
+      - if @form_params["show_turn"] == "1"
         %th= sort_link(@search, :battle_action_turn, "ターン", default_order: :desc)
       %th= sort_link(@search, :battle_action_skill_id, "スキル", default_order: :desc)
       %th= sort_link(@search, :battle_action_fuka_id, "付加", default_order: :desc)
-      - if params["show_damage"]
+      - if @form_params["show_damage"] == "1"
         %th= sort_link(@search, :damage_type, "種類", default_order: :desc)
+      - if @form_params["show_abnormal"] == "1"
+        %th= sort_link(@search, :abnormal_id, "変調", default_order: :desc)
+      - if @form_params["show_damage"] == "1"
         %th= sort_link(@search, :value, "効果量", default_order: :desc)
-      - if params["show_critical"]
+      - if @form_params["show_critical"] == "1"
         %th= sort_link(@search, :critical_value, "クリティカル数", default_order: :desc)
-      - if params["show_prot_refl"]
+      - if @form_params["show_prot_refl"] == "1"
         %th= sort_link(@search, :protection_value, "守護減", default_order: :desc)
         %th= sort_link(@search, :reflection_value, "反射減", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
@@ -251,7 +280,7 @@
             %td{colspan: 2}
 
         %td= battle_type_text(battle_damage.battle_info)
-        - if params["show_turn"]
+        - if @form_params["show_turn"] == "1"
           %td= battle_action.turn
         - if battle_action && battle_action.act_type
           - if battle_action.act_type == 0 || battle_action.act_type == 1
@@ -262,12 +291,15 @@
               = "LV" + sprintf("%d", battle_action.lv) if battle_action.lv && battle_action.lv >= 0
         - else
           %td{colspan: 2}
-        - if params["show_damage"]
+        - if @form_params["show_damage"] == "1"
           %td= damage_type_text(battle_damage)
-          %td= battle_damage.value
-        - if params["show_critical"]
+        - if @form_params["show_abnormal"] == "1"
+          %td= battle_damage.abnormal.name if battle_damage.abnormal
+        - if @form_params["show_damage"] == "1"
+          %td= battle_damage.value if battle_damage.value >= 0
+        - if @form_params["show_critical"] == "1"
           %td= battle_damage.critical.value if battle_damage.critical
-        - if params["show_prot_refl"]
+        - if @form_params["show_prot_refl"] == "1"
           %td= battle_damage.protection.value if battle_damage.protection
           %td= battle_damage.reflection.value if battle_damage.reflection
         %td.sep= battle_link(@latest_result, battle_damage.battle_info.battle_type, battle_damage.battle_info.battle_page, battle_damage.battle_info.result_no, battle_damage.battle_info.generate_no)
