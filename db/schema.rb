@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_08_054030) do
+ActiveRecord::Schema.define(version: 2020_08_09_032509) do
 
   create_table "aide_candidates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -126,7 +126,9 @@ ActiveRecord::Schema.define(version: 2020_08_08_054030) do
     t.index ["abnormal_id"], name: "index_battle_damages_on_abnormal_id"
     t.index ["element_id"], name: "index_battle_damages_on_element_id"
     t.index ["result_no", "battle_id", "act_id", "act_sub_id", "generate_no"], name: "resultno_battleid"
+    t.index ["result_no", "damage_type", "abnormal_id", "value"], name: "sort_abnormalid_value"
     t.index ["result_no", "damage_type", "battle_id", "act_id", "act_sub_id", "generate_no"], name: "resultno_damagetype"
+    t.index ["result_no", "damage_type", "value"], name: "sort_value"
     t.index ["value"], name: "index_battle_damages_on_value"
   end
 
