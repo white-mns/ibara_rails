@@ -34,7 +34,9 @@
                     checkboxes: [{label: "ダメージ",   params_name: "damage_type_damage",    class_name: "after_space"},
                                  {label: "SPダメージ", params_name: "damage_type_sp_damage", br: true},
                                  {label: "HP回復",     params_name: "damage_type_heal",      class_name: "after_space"},
-                                 {label: "SP回復",     params_name: "damage_type_sp_heal",   br: true}])
+                                 {label: "SP回復",     params_name: "damage_type_sp_heal",   br: true},
+                                 {label: "異常追加",   params_name: "damage_type_abnormal",  class_name: "after_space"},
+                                 {label: "異常抵抗",   params_name: "damage_type_regist",    br: true}])
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "発動者", params_name: "acter_form", 
@@ -107,6 +109,31 @@
         - td_form(f, @form_params, @placeholder, params_name: "acter_pm_party_type_form", colspan: 3,
                     checkboxes: [{label: "戦闘PTM",     params_name: "acter_pm_battle", class_name: "after_space mobile_br"},
                                  {label: "次回予告PTM", params_name: "acter_pm_next"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_abnormal",
+                    label: {open: "追加した変調・強化の種類で絞り込む", close: "追加した変調・強化の種類での絞り込みを表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, params_name: "abnormal_form", colspan: 3,
+                    checkboxes: [{label: "炎上", params_name: "abnormal_flame", class_name: "after_space"},
+                                 {label: "凍結", params_name: "abnormal_freeze", class_name: "after_space mobile_br"},
+                                 {label: "束縛", params_name: "abnormal_restriction", br: true},
+                                 {label: "猛毒", params_name: "abnormal_poison", class_name: "after_space mobile_br"},
+                                 {label: "麻痺", params_name: "abnormal_paralysis", class_name: "after_space mobile_br"},
+                                 {label: "衰弱", params_name: "abnormal_weakness", br: true},
+                                 {label: "盲目", params_name: "abnormal_blindness", class_name: "after_space mobile_br"},
+                                 {label: "腐食", params_name: "abnormal_corrosion", br: true},
+                                 {label: "朦朧", params_name: "abnormal_dim", class_name: "after_space mobile_br"},
+                                 {label: "混乱", params_name: "abnormal_confusion", class_name: "after_space mobile_br"},
+                                 {label: "魅了", params_name: "abnormal_fascination", br: true},
+                                 {label: "石化", params_name: "abnormal_consolidation", class_name: "after_space mobile_br"},
+                                 {label: "暴走", params_name: "abnormal_berserk", br: true},
+                                 {label: "祝福", params_name: "abnormal_blessing", class_name: "after_space mobile_br"},
+                                 {label: "守護", params_name: "abnormal_protection", class_name: "after_space mobile_br"},
+                                 {label: "反射", params_name: "abnormal_reflexion"}])
+
 
     - #==========================================================================================================================
     %tbody

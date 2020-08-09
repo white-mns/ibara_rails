@@ -146,12 +146,33 @@ class BattleDamagesController < ApplicationController
                                           {params_name: "target_ansinity" , value: 1, first_checked: false}])
 
     checkbox_params_set_query_any(params, @form_params, query_name: "damage_type_eq_any",
-                             checkboxes: [{params_name: "damage_type_dodge",     value: 0, first_checked: false},
-                                          {params_name: "damage_type_damage",    value: 1, first_checked: false},
-                                          {params_name: "damage_type_sp_damage", value: 2, first_checked: false},
-                                          {params_name: "damage_type_heal",      value: 3, first_checked: false},
-                                          {params_name: "damage_type_sp_heal",   value: 4, first_checked: false},
-                                          {params_name: "damage_type_dodge_protection",   value: 5, first_checked: false}])
+                             checkboxes: [{params_name: "damage_type_dodge",            value: 0, first_checked: false},
+                                          {params_name: "damage_type_damage",           value: 1, first_checked: false},
+                                          {params_name: "damage_type_sp_damage",        value: 2, first_checked: false},
+                                          {params_name: "damage_type_heal",             value: 3, first_checked: false},
+                                          {params_name: "damage_type_sp_heal",          value: 4, first_checked: false},
+                                          {params_name: "damage_type_dodge_protection", value: 5, first_checked: false},
+                                          {params_name: "damage_type_abnormal",         value: 6, first_checked: false},
+                                          {params_name: "damage_type_regist",           value: 7, first_checked: false}])
+    
+    proper_name = ProperName.pluck(:name, :proper_id).inject(Hash.new(0)){|hash, a| hash[a[0]] = a[1] ; hash}
+    checkbox_params_set_query_any(params, @form_params, query_name: "abnormal_id_eq_any",
+                             checkboxes: [{params_name: "abnormal_flame", value: proper_name["炎上"], first_checked: false},
+                                          {params_name: "abnormal_freeze", value: proper_name["凍結"], first_checked: false},
+                                          {params_name: "abnormal_restriction", value: proper_name["束縛"], first_checked: false},
+                                          {params_name: "abnormal_poison", value: proper_name["猛毒"], first_checked: false},
+                                          {params_name: "abnormal_paralysis", value: proper_name["麻痺"], first_checked: false},
+                                          {params_name: "abnormal_weakness", value: proper_name["衰弱"], first_checked: false},
+                                          {params_name: "abnormal_blindness", value: proper_name["盲目"], first_checked: false},
+                                          {params_name: "abnormal_corrosion", value: proper_name["腐食"], first_checked: false},
+                                          {params_name: "abnormal_dim", value: proper_name["朦朧"], first_checked: false},
+                                          {params_name: "abnormal_confusion", value: proper_name["混乱"], first_checked: false},
+                                          {params_name: "abnormal_fascination", value: proper_name["魅了"], first_checked: false},
+                                          {params_name: "abnormal_consolidation", value: proper_name["石化"], first_checked: false},
+                                          {params_name: "abnormal_berserk", value: proper_name["暴走"], first_checked: false},
+                                          {params_name: "abnormal_blessing", value: proper_name["祝福"], first_checked: false},
+                                          {params_name: "abnormal_protection", value: proper_name["守護"], first_checked: false},
+                                          {params_name: "abnormal_reflexion", value: proper_name["反射"], first_checked: false}])
 
     checkbox_params_set_query_any(params, @form_params, query_name: "battle_action_act_type_eq_any",
                              checkboxes: [{params_name: "act_type_normal", value: 0},
@@ -196,6 +217,7 @@ class BattleDamagesController < ApplicationController
     toggle_params_to_variable(params, @form_params, params_name: "show_critical")
     toggle_params_to_variable(params, @form_params, params_name: "show_dodge")
     toggle_params_to_variable(params, @form_params, params_name: "show_prot_refl")
+    toggle_params_to_variable(params, @form_params, params_name: "show_abnormal")
     
   end
 

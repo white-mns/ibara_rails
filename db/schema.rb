@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_05_043831) do
+ActiveRecord::Schema.define(version: 2020_08_09_032509) do
 
   create_table "aide_candidates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 2020_06_05_043831) do
     t.index ["lv"], name: "index_battle_actions_on_lv"
     t.index ["result_no", "act_type", "battle_id", "generate_no"], name: "resultno_acttype_battleid"
     t.index ["result_no", "act_type", "turn", "generate_no"], name: "resultno_acttype_turn"
-    t.index ["result_no", "battle_id", "act_id", "generate_no"], name: "resultno_battleid"
+    t.index ["result_no", "battle_id", "act_id", "generate_no", "act_type", "skill_id", "fuka_id"], name: "resultno_battleid"
     t.index ["result_no", "battle_id", "turn", "act_id", "generate_no"], name: "resultno_turn"
     t.index ["skill_id"], name: "index_battle_actions_on_skill_id"
     t.index ["turn"], name: "index_battle_actions_on_turn"
@@ -122,9 +122,13 @@ ActiveRecord::Schema.define(version: 2020_06_05_043831) do
     t.integer "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "abnormal_id"
+    t.index ["abnormal_id"], name: "index_battle_damages_on_abnormal_id"
     t.index ["element_id"], name: "index_battle_damages_on_element_id"
     t.index ["result_no", "battle_id", "act_id", "act_sub_id", "generate_no"], name: "resultno_battleid"
+    t.index ["result_no", "damage_type", "abnormal_id", "value"], name: "sort_abnormalid_value"
     t.index ["result_no", "damage_type", "battle_id", "act_id", "act_sub_id", "generate_no"], name: "resultno_damagetype"
+    t.index ["result_no", "damage_type", "value"], name: "sort_value"
     t.index ["value"], name: "index_battle_damages_on_value"
   end
 
