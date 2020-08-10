@@ -153,7 +153,7 @@ class BattleDamagesController < ApplicationController
                                           {params_name: "damage_type_sp_heal",          value: 4, first_checked: false},
                                           {params_name: "damage_type_dodge_protection", value: 5, first_checked: false},
                                           {params_name: "damage_type_abnormal",         value: 6, first_checked: false},
-                                          {params_name: "damage_type_regist",           value: 7, first_checked: false}])
+                                          {params_name: "damage_type_resist",           value: 7, first_checked: false}])
     
     proper_name = ProperName.pluck(:name, :proper_id).inject(Hash.new(0)){|hash, a| hash[a[0]] = a[1] ; hash}
     checkbox_params_set_query_any(params, @form_params, query_name: "abnormal_id_eq_any",
