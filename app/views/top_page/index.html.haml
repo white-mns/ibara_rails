@@ -28,6 +28,8 @@
             %li= link_to "エイド一覧", aides_path
             %li= link_to "所持アイテム一覧", items_path
             %li= link_to "所持異能・生産一覧", superpowers_path
+            %ul
+              %li= link_to "所持異能・生産・スキル組み合わせ一覧", superpower_combinations_path
             %li= link_to "所持スキル一覧", skills_path
             %ul
               %li= link_to "スキル習得者数ランキング", skills_path + "?show_total=1&exclude_initial_active=on&exclude_initial_passive=on&ex_sort=on"
@@ -110,6 +112,11 @@
     %h2 更新履歴
     %div
       %ul
+        %li 2020/8/10
+        %ul
+          %li
+            = link_to "所持異能・生産・スキル組み合わせ一覧", superpower_combinations_path
+            を公開
         %li 2020/8/9
         %ul
           %li
@@ -181,6 +188,13 @@
           %li
             = link_to "スキル・付加発動結果一覧", battle_actions_path
             の負荷対策として、データ構造の最適化を行い、最初にページに移動した時はデータ件数を表示しないように変更
+    %p
+      %span.example_select.example_toggle.pointer
+        = fa_icon "history"
+        古い履歴
+        - act_desc(false)
+    .closed
+      %ul
         %li 2020/7/6
         %ul
           %li
@@ -313,13 +327,6 @@
             、
             = link_to "対人戦勝敗一覧", duel_infos_path
             を公開。
-    %p
-      %span.example_select.example_toggle.pointer
-        = fa_icon "history"
-        古い履歴
-        - act_desc(false)
-    .closed
-      %ul
         %li 2019/6/24
         %ul
           %li
