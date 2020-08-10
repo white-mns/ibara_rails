@@ -42,6 +42,7 @@ Rails.application.routes.draw do
   resources :skill_masteries
   resources :skills
   resources :skill_data
+  get "superpower/combinations", :to => "superpowers#combination", :as => "superpower_combinations"
   resources :superpowers
   resources :superpower_data
   resources :items

@@ -1,0 +1,156 @@
+- @page_title = "所持異能・生産・スキル組み合わせ一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      スキル名での検索はAND、ORのみ機能します。「Aのスキルを持っていないキャラクター」の検索はできません。
+      %br
+      AND、ORは「AとBの文字を含むスキル」の検索となり、「AとBのスキルを持っているキャラクター」のような絞り込みはできません。
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search, url: superpower_combinations_path do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_superpower",
+                    label: {open: "異能で絞り込む", close: "異能で絞り込みを隠す"}, base_first: true)
+    %tbody
+      - for i in (0..(@superpower_datas.length - 1)).step(2) do
+        - if !@superpower_datas[i+1]
+          -break
+        %tr
+          %td.indent
+          - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: @superpower_datas[i][:jp], params_name: @superpower_datas[i][:en] + "_form", placeholder: "Number")
+          - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: @superpower_datas[i+1][:jp], params_name: @superpower_datas[i+1][:en] + "_form", placeholder: "Number")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_skill",
+                    label: {open: "所持スキルで絞り込む", close: "所持スキルを表示しない"}, base_first: false)
+    %tbody.closed
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "",  label: "スキル名", params_name: "skill_form", placeholder: "Skill", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_place",
+                    label: {open: "現在地を表示する", close: "現在地を表示しない"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "区", params_name: "field_form", placeholder: "Field", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "列", params_name: "area_column_form", placeholder: "AreaColumn")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "行", params_name: "area_row_form", placeholder: "Number")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_girth",
+                    label: {open: "指定キャラの現在地＋周囲8エリアで絞り込む", close: "指定キャラの現在地＋周囲8エリアで絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "place_result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "place_e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "place_pc_name_form", placeholder: "Name")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_pm",
+                    label: {open: "指定キャラのパーティメンバーで絞り込む", close: "指定キャラのパーティメンバーで絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "pm_result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "pm_e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pm_pc_name_form", placeholder: "Name")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, params_name: "pm_party_type_form", colspan: 3, 
+                    checkboxes: [{label: "戦闘PTM",     params_name: "pm_battle", class_name: "after_space mobile_br"},
+                                 {label: "次回予告PTM", params_name: "pm_next"}])
+
+    - #==========================================================================================================================
+    %tbody
+
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+
+= paginate(@superpowers)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
+      - @superpower_datas.each do |superpower_data|
+        %th= sort_link(@search, (superpower_data[:en] + "_lv").to_sym, superpower_data[:jp] , default_order: :desc)
+      - if @form_params["show_skill"] == "1"
+        %th.sep= sort_link(@search, :skill_id, "スキル", default_order: :desc)
+      - if @form_params["show_place"] == "1" || @form_params["show_girth"] == "1" 
+        %th.sep= sort_link(@search, :placemartial__field_id, "区", default_order: :desc)
+        %th= sort_link(@search, :martial_place_area_column, "列", default_order: :desc)
+        %th= sort_link(@search, :martial_place_area_row, "行", default_order: :desc)
+      %th.sep{colspan: "2"} 結果リンク
+  %tbody
+    - @superpowers.each do |superpower|
+      %tr
+        %td= superpower.result_no
+        %td{style: "#{ world_border(superpower.world) }" }= pc_name_text(superpower.e_no, superpower.pc_name)
+        - @superpower_datas.each do |superpower_data|
+          %td= superpower.send(superpower_data[:en]).lv if superpower.send(superpower_data[:en])
+        - if @form_params["show_skill"] == "1"
+          %td.sep= superpower.skill.name
+        - if @form_params["show_place"] == "1" || @form_params["show_girth"] == "1" 
+          %td.sep= superpower.place.field.name if superpower.place && superpower.place.field
+          %td{colspan: 2, align: "center"}
+            = superpower.place.area_column + "-" + sprintf("%d", superpower.place.area_row) if superpower.place
+        %td.sep= character_link(superpower.e_no)
+        %td= character_old_link(@latest_result, superpower.e_no, superpower.result_no, superpower.generate_no)
+= paginate(@superpowers)
