@@ -4,8 +4,10 @@ class NextDuelInfosController < ApplicationController
 
   # GET /next_duel_infos
   def index
+    resultno_set
     placeholder_set
     param_set
+
     @count	= NextDuelInfo.distinct.notnil().includes(:left_world, :right_world, [left_party_info: [party_members: :pc_name]], [right_party_info: [party_members: :pc_name]]).search(params[:q]).result.hit_count()
     @search	= NextDuelInfo.distinct.notnil().includes(:left_world, :right_world, [left_party_info: [party_members: :pc_name]], [right_party_info: [party_members: :pc_name]]).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?

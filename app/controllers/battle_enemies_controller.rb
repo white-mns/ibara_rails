@@ -4,8 +4,10 @@ class BattleEnemiesController < ApplicationController
 
   # GET /battle_enemies
   def index
+    resultno_set
     placeholder_set
     param_set
+
     @count	= BattleEnemy.notnil().includes(:world, :enemy).search(params[:q]).result.hit_count()
     @search	= BattleEnemy.notnil().includes(:world, :enemy).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?

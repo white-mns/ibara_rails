@@ -4,8 +4,10 @@ class SkillMasteriesController < ApplicationController
 
   # GET /skill_masteries
   def index
+    resultno_set
     placeholder_set
     param_set
+
     @count	= SkillMastery.includes(:requirement_1, :requirement_2, :skill).search(params[:q]).result.count()
     @search	= SkillMastery.includes(:requirement_1, :requirement_2, :skill).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?

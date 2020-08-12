@@ -4,8 +4,10 @@ class MakesController < ApplicationController
 
   # GET /makes
   def index
+    resultno_set
     placeholder_set
     param_set
+
     @count	= Make.notnil().includes(:pc_name, :world, :last_item, :item, :kind).search(params[:q]).result.hit_count()
     @search	= Make.notnil().includes(:pc_name, :world, :last_item, :item, :kind).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?

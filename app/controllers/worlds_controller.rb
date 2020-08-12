@@ -4,8 +4,10 @@ class WorldsController < ApplicationController
 
   # GET /worlds
   def index
+    resultno_set
     placeholder_set
     param_set
+
     @count	= World.notnil().includes(:pc_name).search(params[:q]).result.count()
     @search	= World.notnil().includes(:pc_name).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?

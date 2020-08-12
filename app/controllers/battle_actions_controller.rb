@@ -4,8 +4,10 @@ class BattleActionsController < ApplicationController
 
   # GET /battle_actions
   def index
+    resultno_set
     placeholder_set
     param_set
+
     if params["no_result"] != "on" then
         if params["no_count"] != "on" then
             @count	= BattleAction.notnil().includes_or_joins(params).groups(params).search(params[:q]).result.hit_count()

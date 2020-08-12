@@ -4,8 +4,10 @@ class NewActionsController < ApplicationController
 
   # GET /new_actions
   def index
+    resultno_set
     placeholder_set
     param_set
+
     @count	= NewAction.notnil().includes(:skill, :fuka).search(params[:q]).result.hit_count()
     @search	= NewAction.notnil().includes(:skill, :fuka).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?

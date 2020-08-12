@@ -4,8 +4,10 @@ class MovesController < ApplicationController
 
   # GET /moves
   def index
+    resultno_set
     placeholder_set
     param_set
+
     @count	= Move.notnil().includes(:pc_name, :world, :field, :party).search(params[:q]).result.count()
     @search	= Move.notnil().includes(:pc_name, :world, :field, :party).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?

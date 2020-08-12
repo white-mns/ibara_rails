@@ -4,8 +4,10 @@ class BattleResultsController < ApplicationController
 
   # GET /battle_results
   def index
+    resultno_set
     placeholder_set
     param_set
+
     @count	= BattleResult.distinct.notnil().includes(:battle_info, [last_battle_info: [:world, :place, :road, :grass, :swamp, :forest, :mountain ]], [party_info: [party_members: [:pc_name, :move]]], [enemy_members: :enemy]).search(params[:q]).result.hit_count()
     @search	= BattleResult.distinct.notnil().includes(:battle_info, [last_battle_info: [:world, :place, :road, :grass, :swamp, :forest, :mountain ]], [party_info: [party_members: [:pc_name, :move]]], [enemy_members: :enemy]).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
