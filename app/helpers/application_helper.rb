@@ -5,6 +5,19 @@ module ApplicationHelper
         title
     end
 
+    def uploading_alert(latest_result, uploaded_result)
+        if latest_result == uploaded_result then
+            return
+        end
+
+        haml_tag :div, class: "alert alert-dismissible alert-danger" do
+            haml_concat "現在データの更新中です。"
+            haml_tag :button, type: "button", class: "close", data: {dismiss: "alert"} do
+                haml_concat fa_icon "times"
+            end
+        end
+    end
+
     def pc_name_text(e_no, pc_name)
         capture_haml do
             e_no_text = "(" + sprintf("%d",e_no) + ")"

@@ -4,8 +4,10 @@ class PlacesController < ApplicationController
 
   # GET /places
   def index
+    resultno_set
     placeholder_set
     param_set
+
     @count	= Place.notnil().includes(:pc_name, :world, :field).search(params[:q]).result.count()
     @search	= Place.notnil().includes(:pc_name, :world, :field).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?

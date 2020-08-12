@@ -4,8 +4,10 @@ class AidesController < ApplicationController
 
   # GET /aides
   def index
+    resultno_set
     placeholder_set
     param_set
+
     @count	= Aide.notnil().includes(:pc_name, :world, :enemy, :employ).search(params[:q]).result.hit_count()
     @search	= Aide.notnil().includes(:pc_name, :world, :enemy, :employ).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?

@@ -4,8 +4,10 @@ class UploadedChecksController < ApplicationController
 
   # GET /uploaded_checks
   def index
+    resultno_set
     placeholder_set
     param_set
+
     @count	= UploadedCheck.notnil().search(params[:q]).result.hit_count()
     @search	= UploadedCheck.notnil().page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?

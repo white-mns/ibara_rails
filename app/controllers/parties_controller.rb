@@ -4,8 +4,10 @@ class PartiesController < ApplicationController
 
   # GET /parties
   def index
+    resultno_set
     placeholder_set
     param_set
+
     @count	= Party.notnil().includes(:pc_name, :world).search(params[:q]).result.count()
     @search	= Party.notnil().includes(:pc_name, :world).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?

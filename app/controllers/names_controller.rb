@@ -4,8 +4,10 @@ class NamesController < ApplicationController
 
   # GET /names
   def index
+    resultno_set
     placeholder_set
     param_set
+
     @count	= Name.notnil().includes(:world).search(params[:q]).result.count()
     @search	= Name.notnil().includes(:world).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?

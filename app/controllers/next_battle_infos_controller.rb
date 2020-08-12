@@ -4,8 +4,10 @@ class NextBattleInfosController < ApplicationController
 
   # GET /next_battle_infos
   def index
+    resultno_set
     placeholder_set
     param_set
+
     @count	= NextBattleInfo.distinct.notnil().includes(:world, :place, [party_info: [party_members: [:pc_name, :move]]], [enemy_members: :enemy], :road, :grass, :swamp, :forest, :mountain).search(params[:q]).result.count()
     @search	= NextBattleInfo.distinct.notnil().includes(:world, :place, [party_info: [party_members: [:pc_name, :move]]], [enemy_members: :enemy], :road, :grass, :swamp, :forest, :mountain).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?

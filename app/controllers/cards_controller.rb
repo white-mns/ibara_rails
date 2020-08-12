@@ -4,8 +4,10 @@ class CardsController < ApplicationController
 
   # GET /cards
   def index
+    resultno_set
     placeholder_set
     param_set
+
     @count	= Card.distinct.notnil().includes(:pc_name, :world, [skill: :timing], :party).search(params[:q]).result.count()
     @search	= Card.distinct.notnil().includes(:pc_name, :world, [skill: :timing], :party).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?

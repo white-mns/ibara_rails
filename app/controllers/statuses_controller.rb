@@ -4,8 +4,10 @@ class StatusesController < ApplicationController
 
   # GET /statuses
   def index
+    resultno_set
     placeholder_set
     param_set
+
     @count	= Status.notnil().includes(:pc_name, :world, :place, :party).search(params[:q]).result.count()
     @search	= Status.notnil().includes(:pc_name, :world, :place, :party).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?

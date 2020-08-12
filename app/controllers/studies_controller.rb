@@ -4,8 +4,10 @@ class StudiesController < ApplicationController
 
   # GET /studies
   def index
+    resultno_set
     placeholder_set
     param_set
+
     @count	= Study.distinct.notnil().includes(:pc_name, :world, [skill: :timing], :party).groups(action_name, params).search(params[:q]).result.hit_count()
     @search	= Study.distinct.notnil().includes(:pc_name, :world, [skill: :timing], :party).groups(action_name, params).for_group_select(action_name, params).having_order(params).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"

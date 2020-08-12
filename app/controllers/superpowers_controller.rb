@@ -4,8 +4,10 @@ class SuperpowersController < ApplicationController
 
   # GET /superpowers
   def index
+    resultno_set
     placeholder_set
     param_set
+
     @count	= Superpower.distinct.notnil().includes(:pc_name, :world, :superpower, :place, :party).search(params[:q]).result.count()
     @search	= Superpower.distinct.notnil().includes(:pc_name, :world, :superpower, :place, :party).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
@@ -15,8 +17,10 @@ class SuperpowersController < ApplicationController
   # GET /superpower/combinations
   def combination
     @superpower_datas = Skill.superpower_datas
+    resultno_set
     placeholder_set
     param_set_combination
+
     @count	= Skill.distinct.notnil().combination_includes(params, @superpower_datas).combination_groups(params).search(params[:q]).result.hit_count()
     @search	= Skill.distinct.notnil().combination_includes(params, @superpower_datas).combination_groups(params).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?

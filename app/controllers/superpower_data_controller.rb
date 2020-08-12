@@ -4,8 +4,10 @@ class SuperpowerDataController < ApplicationController
 
   # GET /superpower_data
   def index
+    resultno_set
     placeholder_set
     param_set
+
     @count	= SuperpowerDatum.search(params[:q]).result.count()
     @search	= SuperpowerDatum.page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?

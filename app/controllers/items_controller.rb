@@ -4,8 +4,10 @@ class ItemsController < ApplicationController
 
   # GET /items
   def index
+    resultno_set
     placeholder_set
     param_set
+
     @count	= Item.distinct.notnil().includes(:pc_name, :world, :kind, :effect_1, :effect_2, :effect_3, :place, :party).search(params[:q]).result.hit_count()
     @search	= Item.distinct.notnil().includes(:pc_name, :world, :kind, :effect_1, :effect_2, :effect_3, :place, :party).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?

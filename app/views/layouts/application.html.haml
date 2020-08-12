@@ -117,6 +117,7 @@
     .container
       .row
         .col-md-12
+          - uploading_alert(@latest_result, @uploaded_result)
           = yield
       
       %footer

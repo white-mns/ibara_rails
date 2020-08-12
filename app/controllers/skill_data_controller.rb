@@ -4,8 +4,10 @@ class SkillDataController < ApplicationController
 
   # GET /skill_data
   def index
+    resultno_set
     placeholder_set
     param_set
+
     @count	= SkillDatum.includes(:timing, [skill_mastery: [:requirement_1, :requirement_2]]).search(params[:q]).result.count()
     @search	= SkillDatum.includes(:timing, [skill_mastery: [:requirement_1, :requirement_2]]).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?

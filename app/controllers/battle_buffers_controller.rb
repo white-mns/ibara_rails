@@ -4,8 +4,10 @@ class BattleBuffersController < ApplicationController
 
   # GET /battle_buffers
   def index
+    resultno_set
     placeholder_set
     param_set
+
     @count	= BattleBuffer.notnil().includes(:battle_info, :buffer).search(params[:q]).result.hit_count()
     @search	= BattleBuffer.notnil().includes(:battle_info, :buffer).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
