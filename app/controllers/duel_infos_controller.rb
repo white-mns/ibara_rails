@@ -38,9 +38,12 @@ class DuelInfosController < ApplicationController
     params_to_form(params, @form_params, column_name: "left_party_info_party_members_pc_name_name", params_name: "left_pc_name_form", type: "text")
     params_to_form(params, @form_params, column_name: "right_party_info_party_members_e_no", params_name: "right_e_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "right_party_info_party_members_pc_name_name", params_name: "right_pc_name_form", type: "text")
+    params_to_form(params, @form_params, column_name: "left_party_info_party_members_e_no_or_right_party_info_party_members_e_no", params_name: "e_no_form", type: "number")
+    params_to_form(params, @form_params, column_name: "left_party_info_party_members_pc_name_name_or_right_party_info_party_members_pc_name_name", params_name: "pc_name_form", type: "text")
 
     params_to_form(params, @form_params, column_name: "left_party_info_name", params_name: "left_party_name_form", type: "text")
     params_to_form(params, @form_params, column_name: "right_party_info_name", params_name: "right_party_name_form", type: "text")
+    params_to_form(params, @form_params, column_name: "left_party_info_name_or_right_party_info_name", params_name: "party_name_form", type: "text")
 
     checkbox_params_set_query_any(params, @form_params, query_name: "battle_info_battle_type_eq_any",
                              checkboxes: [{params_name: "is_duel", value: 10, first_checked: true},

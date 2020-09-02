@@ -51,12 +51,12 @@
               %li= link_to "スキル研究ランキング", onetime_studies_path + "?group_skill=on&ex_sort=on"
             %li= link_to "エイド化候補一覧", aide_candidates_path
             %li= link_to "移動一覧", moves_path
-            %li= link_to "次回予告NPC戦一覧", next_battle_infos_path
-            %li= link_to "次回予告対人戦一覧", next_duel_infos_path
       .col-md-6
         %ul
           %li 戦闘データ
           %ul  
+            %li= link_to "次回予告NPC戦一覧", next_battle_infos_path
+            %li= link_to "次回予告対人戦一覧", next_duel_infos_path
             %li= link_to "NPC戦勝敗一覧", battle_results_path
             %li= link_to "対人戦勝敗一覧", duel_infos_path
             %li= link_to "スキル・付加発動結果一覧", battle_actions_path + "?no_count=on"
@@ -112,6 +112,21 @@
     %h2 更新履歴
     %div
       %ul
+        %li 2020/9/2
+        %ul
+          %li
+            = link_to "所持異能・生産・スキル組み合わせ一覧", superpower_combinations_path
+            において料理LVでの検索フォームがない不具合を修正
+          %li
+            = link_to "次回予告NPC戦一覧", next_battle_infos_path
+            、
+            = link_to "次回予告対人戦一覧", next_duel_infos_path
+            を「戦闘データ」の項目に移行
+          %li
+            = link_to "次回予告対人戦一覧", next_duel_infos_path
+            、
+            = link_to "対人戦勝敗一覧", duel_infos_path
+            のEnoとキャラクター名とPT名について、左右PTで検索フォームが別れていたのを統合し、左右同時に検索できるように変更
         %li 2020/8/10
         %ul
           %li
