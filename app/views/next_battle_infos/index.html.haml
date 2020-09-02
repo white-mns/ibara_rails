@@ -57,7 +57,8 @@
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_member_num",
-                    label: {open: "人数を表示する", close: "人数を表示しない"}, base_first: false)
+                    label: {open: "人数を表示する", close: "人数を表示しない"},
+                    act_desc: "PT人数、敵人数", base_first: false)
     %tbody.closed
       %tr
         %td.indent
@@ -66,7 +67,8 @@
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_party_name",
-                    label: {open: "パーティ名を表示する", close: "パーティ名を表示しない"}, base_first: false)
+                    label: {open: "パーティ名を表示する", close: "パーティ名を表示しない"},
+                    act_desc: "PT名、敵PT名", base_first: false)
     %tbody.closed
       %tr
         %td.indent
