@@ -30,12 +30,8 @@
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno(左PT)", params_name: "left_e_no_form", placeholder: "Number")
-        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名(左PT)", params_name: "left_pc_name_form", placeholder: "Name")
-      %tr
-        %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno(右PT)", params_name: "right_e_no_form", placeholder: "Number")
-        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名(右PT)", params_name: "right_pc_name_form", placeholder: "Name")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "戦闘の種類", params_name: "battle_type_form", colspan: 3, 
@@ -67,8 +63,7 @@
     %tbody.closed
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "左PT名", params_name: "left_party_name_form")
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "右PT名", params_name: "right_party_name_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "PT名", params_name: "party_name_form", colspan: 3)
 
     - #==========================================================================================================================
     %tbody

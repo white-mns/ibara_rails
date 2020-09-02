@@ -57,13 +57,13 @@
                 = link_to ">　スキル研究ランキング", onetime_studies_path + "?group_skill=on&ex_sort=on", class: "dropdown-item"
                 = link_to "エイド化候補一覧", aide_candidates_path, class: "dropdown-item"
                 = link_to "移動一覧", moves_path, class: "dropdown-item"
-                = link_to "次回予告NPC戦一覧", next_battle_infos_path, class: "dropdown-item"
-                = link_to "次回予告対人戦一覧", next_duel_infos_path, class: "dropdown-item"
             %li.nav-item.dropdown
               %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
                 戦闘
                 %span.caret
               .dropdown-menu{aria: {labelledby: "two-col"}}
+                = link_to "次回予告NPC戦一覧", next_battle_infos_path, class: "dropdown-item"
+                = link_to "次回予告対人戦一覧", next_duel_infos_path, class: "dropdown-item"
                 = link_to "NPC戦勝敗一覧", battle_results_path, class: "dropdown-item"
                 = link_to "対人戦勝敗一覧", duel_infos_path, class: "dropdown-item"
                 .dropdown-divider
