@@ -9,9 +9,7 @@
   .card-body
     = render "layouts/base_desc"
     %p
-      ※1　敵名でのAND検索では、「敵A 敵B」と検索すると「敵Aと敵B」が同時に出現した結果のみ表示します。
-      %br
-      「歩行 雑草」で検索した場合は『「歩行」を含む敵』と『雑草を含む敵』が同時に出現した結果のみ表示するため、他の文字列AND検索のように歩行雑草では絞り込まれません。
+      ※1　敵名では完全一致検索をすることができません。
     %p
       %span.example_select.example_toggle.pointer
         - help_icon
@@ -43,7 +41,7 @@
                                  {label: "MISSION - 『開放戦』『特殊戦』", params_name: "is_mission"}])
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "敵名(※1)", params_name: "enemy_form", placeholder: "Enemy", colspan: 3)
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "敵名(※1)", params_name: "enemy_names_form", placeholder: "EnemyNames", colspan: 3)
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "勝敗", params_name: "battle_result_form", colspan: 3, 

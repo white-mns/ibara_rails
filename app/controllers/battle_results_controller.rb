@@ -31,6 +31,7 @@ class BattleResultsController < ApplicationController
     params_to_form(params, @form_params, column_name: "last_generate_no", params_name: "last_generate_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "battle_id", params_name: "battle_id_form", type: "number")
     params_to_form(params, @form_params, column_name: "battle_result", params_name: "battle_result_form", type: "number")
+    params_to_form(params, @form_params, column_name: "enemy_names", params_name: "enemy_names_form", type: "text")
 
     params_to_form(params, @form_params, column_name: "party_info_member_num", params_name: "member_num_form", type: "number")
     params_to_form(params, @form_params, column_name: "member_num", params_name: "enemy_member_num_form", type: "number")
@@ -43,7 +44,7 @@ class BattleResultsController < ApplicationController
     
     params_to_form(params, @form_params, column_name: "enemy_members_enemy_dummy", params_name: "enemy_form", type: "text")
     
-    detection_party_no_from_enemy_name(params, @form_params)
+    #detection_party_no_from_enemy_name(params, @form_params)
 
     params_to_form(params, @form_params, column_name: "last_battle_info_road_move_count",     params_name: "road_form",     type: "number")
     params_to_form(params, @form_params, column_name: "last_battle_info_grass_move_count",    params_name: "grass_form",    type: "number")

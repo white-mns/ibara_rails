@@ -112,6 +112,14 @@
     %h2 更新履歴
     %div
       %ul
+        %li 2020/9/13
+        %ul
+          %li
+            = link_to "次回予告NPC戦一覧", next_battle_infos_path
+            、
+            = link_to "NPC戦勝敗一覧", battle_results_path
+            の敵名検索で更新回数を指定せず検索しても正しく絞り込めるように仕様を変更。
+            この仕様変更に伴い、敵名検索では完全一致が使えなくなります。
         %li 2020/9/2
         %ul
           %li

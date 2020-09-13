@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_09_032509) do
+ActiveRecord::Schema.define(version: 2020_09_13_023505) do
 
   create_table "aide_candidates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -168,7 +168,9 @@ ActiveRecord::Schema.define(version: 2020_08_09_032509) do
     t.integer "battle_result"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "enemy_names"
     t.index ["battle_result"], name: "index_battle_results_on_battle_result"
+    t.index ["enemy_names"], name: "index_battle_results_on_enemy_names"
     t.index ["last_generate_no"], name: "index_battle_results_on_last_generate_no"
     t.index ["last_result_no", "party_no", "last_generate_no"], name: "lastresultno_partyno"
     t.index ["last_result_no"], name: "index_battle_results_on_last_result_no"
@@ -455,7 +457,9 @@ ActiveRecord::Schema.define(version: 2020_08_09_032509) do
     t.integer "member_num"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "enemy_names"
     t.index ["battle_type"], name: "index_next_battle_infos_on_battle_type"
+    t.index ["enemy_names"], name: "index_next_battle_infos_on_enemy_names"
     t.index ["enemy_party_name_id"], name: "index_next_battle_infos_on_enemy_party_name_id"
     t.index ["member_num"], name: "index_next_battle_infos_on_member_num"
     t.index ["result_no", "party_no", "generate_no"], name: "resultno_partyno"
