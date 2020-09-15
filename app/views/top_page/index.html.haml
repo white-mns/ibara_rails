@@ -117,6 +117,9 @@
           %li
             = link_to "新出素材一覧", new_items_path
             のアイテム名検索で部分一致ができない不具合を修正
+          %li
+            = link_to "合成結果一覧", compounds_path + "?result_no_form=""&compound_deficient_lv=off&group_result=on"
+            で「活力漲る」「滑々な」「魔力溢れる」を除外する設定をあらかじめ検索フォームに入力しておくように変更
         %li 2020/9/13
         %ul
           %li

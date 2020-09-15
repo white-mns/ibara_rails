@@ -22,6 +22,9 @@ class CompoundsController < ApplicationController
     params_clean(params)
     if !params["is_form"] then
         params["result_no_form"] ||= sprintf("%d",@latest_result)
+        if params["group_result"] == "on" then
+            params["compound_result_form"] = "-活力漲る -滑々な -魔力溢れる"
+        end
     end
 
     params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")
