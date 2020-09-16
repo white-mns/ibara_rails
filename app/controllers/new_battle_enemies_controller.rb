@@ -31,6 +31,10 @@ class NewBattleEnemiesController < ApplicationController
 
     params_to_form(params, @form_params, column_name: "enemy_name", params_name: "enemy_form", type: "text")
 
+    checkbox_params_set_query_any(params, @form_params, query_name: "battle_type_eq_any",
+                             checkboxes: [{params_name: "is_encounter", value: 0, first_checked: true},
+                                          {params_name: "is_mission" ,  value: 1, first_checked: true}])
+
     checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",
                              checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},
                                           {params_name: "is_ansinity" , value: 1, first_checked: true}])
