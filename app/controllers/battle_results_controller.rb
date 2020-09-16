@@ -34,7 +34,7 @@ class BattleResultsController < ApplicationController
     params_to_form(params, @form_params, column_name: "enemy_names", params_name: "enemy_names_form", type: "text")
 
     params_to_form(params, @form_params, column_name: "party_info_member_num", params_name: "member_num_form", type: "number")
-    params_to_form(params, @form_params, column_name: "member_num", params_name: "enemy_member_num_form", type: "number")
+    params_to_form(params, @form_params, column_name: "last_battle_info_member_num", params_name: "enemy_member_num_form", type: "number")
 
     params_to_form(params, @form_params, column_name: "party_info_party_members_e_no", params_name: "e_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "party_info_party_members_pc_name_name", params_name: "pc_name_form", type: "text")
@@ -45,6 +45,12 @@ class BattleResultsController < ApplicationController
     params_to_form(params, @form_params, column_name: "enemy_members_enemy_dummy", params_name: "enemy_form", type: "text")
     
     #detection_party_no_from_enemy_name(params, @form_params)
+
+    checkbox_params_set_query_any(params, @form_params, query_name: "party_info_member_num_eq_any",
+                             checkboxes: [{params_name: "member_num_1", value: 1, first_checked: false},
+                                          {params_name: "member_num_2", value: 2, first_checked: false},
+                                          {params_name: "member_num_3", value: 3, first_checked: false},
+                                          {params_name: "member_num_4", value: 4, first_checked: false}])
 
     params_to_form(params, @form_params, column_name: "last_battle_info_road_move_count",     params_name: "road_form",     type: "number")
     params_to_form(params, @form_params, column_name: "last_battle_info_grass_move_count",    params_name: "grass_form",    type: "number")

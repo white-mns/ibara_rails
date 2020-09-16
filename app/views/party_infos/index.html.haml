@@ -33,7 +33,11 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "パーティ名", params_name: "name_form", colspan: 3)
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "パーティ人数", params_name: "member_num_form", placeholder: "Number", colspan: 3)
+        - td_form(f, @form_params, @placeholder,  label: "パーティ人数", params_name: "member_num_form", colspan: 3,
+                    checkboxes: [{label: "1", params_name: "member_num_1", class_name: "after_space"},
+                                 {label: "2", params_name: "member_num_2", class_name: "after_space"},
+                                 {label: "3", params_name: "member_num_3", class_name: "after_space"},
+                                 {label: "4", params_name: "member_num_4", class_name: "after_space"}])
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "戦闘", params_name: "party_type_form", colspan: 3, 
