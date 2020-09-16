@@ -62,6 +62,6 @@
     - @new_next_enemies.each do |new_next_enemy|
       %tr
         %td= new_next_enemy.result_no
-        %td.sep= battle_type_text(new_next_enemy)
+        %td= battle_type_text(new_next_enemy)
         %td= detail_new_next_enemy_link(new_next_enemy)
 = paginate(@new_next_enemies)
