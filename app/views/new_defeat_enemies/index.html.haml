@@ -81,7 +81,7 @@
       %th= sort_link(@search, :battle_type, "戦闘", default_order: :desc)
       %th= sort_link(@search, :enemy_id, "敵名", default_order: :desc)
       %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
-      %th= sort_link(@search, :member_num, "Member num", default_order: :desc)
+      %th= sort_link(@search, :member_num, "PT人数", default_order: :desc)
       %th.sep{colspan: "2"} 結果リンク
   %tbody
     - @new_defeat_enemies.each do |new_defeat_enemy|
