@@ -134,6 +134,9 @@
             = link_to "初戦闘MISSION一覧", new_battle_enemies_path + "?result_no_form=" + sprintf("%d", @latest_result) + "&is_form=1&is_mission=on"
             へのリンクを追加
           %li
+            = link_to "作製一覧", makes_path
+            のデータ形式を変更し、見切りなどで作製した場合にも素材名を表示できるようにしました。（見切り時の素材の強さはこれまで通り表示・検索ができません）
+          %li
             各ページのパーティ人数の検索をチェックボックス式に変更
         %li 2020/9/16
         %ul

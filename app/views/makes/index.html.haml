@@ -86,7 +86,7 @@
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
       %th= sort_link(@search, :e_no,"作製者(Eno)", default_order: :desc)
       - if @form_params["show_source"] == "1" 
-        %th.sep= sort_link(@search, :last_item_name, "素材名", default_order: :desc)
+        %th.sep= sort_link(@search, :source_name, "素材名", default_order: :desc)
         %th.sep= sort_link(@search, :last_item_strength, "素材強さ", default_order: :desc)
       - if @form_params["show_name"] == "1" 
         %th.sep= sort_link(@search, :name, "装備名", default_order: :desc)
@@ -99,7 +99,7 @@
         %td= make.result_no
         %td{style: "#{ world_border(make.world) }" }= pc_name_text(make.e_no, make.pc_name)
         - if @form_params["show_source"] == "1" 
-          %td.sep= make.last_item.name if make.last_item
+          %td.sep= make.source_name
           %td= make.last_item.strength if make.last_item
         - if @form_params["show_name"] == "1" 
           %td.sep= make.name

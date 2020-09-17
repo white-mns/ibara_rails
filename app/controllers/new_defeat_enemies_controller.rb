@@ -44,7 +44,7 @@ class NewDefeatEnemiesController < ApplicationController
                                           {params_name: "member_num_4", value: 4, first_checked: false}])
 
     checkbox_params_set_query_any(params, @form_params, query_name: "battle_type_eq_any",
-                             checkboxes: [{params_name: "is_encounter", value: 0, first_checked: true},
+                             checkboxes: [{params_name: "is_encounter", value: 0, first_checked: false},
                                           {params_name: "is_mission" ,  value: 1, first_checked: true}])
 
     checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",
