@@ -31,7 +31,7 @@ class BattleResultsController < ApplicationController
     params_to_form(params, @form_params, column_name: "last_generate_no", params_name: "last_generate_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "battle_id", params_name: "battle_id_form", type: "number")
     params_to_form(params, @form_params, column_name: "battle_result", params_name: "battle_result_form", type: "number")
-    params_to_form(params, @form_params, column_name: "enemy_names", params_name: "enemy_names_form", type: "text")
+    params_to_form(params, @form_params, column_name: "enemy_names", params_name: "enemy_names_form", type: "concat")
 
     params_to_form(params, @form_params, column_name: "party_info_member_num", params_name: "member_num_form", type: "number")
     params_to_form(params, @form_params, column_name: "last_battle_info_member_num", params_name: "enemy_member_num_form", type: "number")
