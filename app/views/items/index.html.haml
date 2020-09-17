@@ -55,6 +55,14 @@
                                  {label: "アンジニティ", params_name: "is_ansinity"}])
 
     - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_plus",
+                    label: {open: "アイテムのプラス値を表示する", close: "アイテムのプラス値を隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "プラス値", params_name: "plus_form", colspan: 3)
+
+    - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_fuka",
                     label: {open: "付加枠ごとに付加を検索する", close: "付加枠ごとの検索フォームを表示しない"}, base_first: false)
     %tbody.closed
@@ -147,6 +155,8 @@
       %th= sort_link(@search, :kind_id, "種類", default_order: :desc)
       %th= sort_link(@search, :strength, "強さ", default_order: :desc)
       %th= sort_link(@search, :range, "射程", default_order: :desc)
+      - if @form_params["show_plus"] == "1"
+        %th.sep= sort_link(@search, :plus, "プラス", default_order: :desc)
       %th.sep= sort_link(@search, :effect_1_id, "効果1or武器", default_order: :desc)
       %th= sort_link(@search, :effect_1_value, "効果値", default_order: :desc)
       %th= sort_link(@search, :effect_1_need_lv, "必要Lv", default_order: :desc)
@@ -171,6 +181,8 @@
         %td= item.kind.name if item.kind
         %td= item.strength
         %td= item.range if item.range > 0
+        - if @form_params["show_plus"] == "1"
+          %td.sep= item.plus
         %td.sep{colspan: 3}
           = item.effect_1.name if item.effect_1
           = item.effect_1_value if item.effect_1_value > 0
