@@ -36,6 +36,9 @@ class NewDefeatEnemiesController < ApplicationController
     
     params_to_form(params, @form_params, column_name: "enemy_name", params_name: "enemy_form", type: "text")
 
+    params_to_form(params, @form_params, column_name: "party_info_party_members_e_no", params_name: "e_no_form", type: "number")
+    params_to_form(params, @form_params, column_name: "party_info_party_members_pc_name_name", params_name: "pc_name_form", type: "text")
+
     checkbox_params_set_query_any(params, @form_params, query_name: "member_num_eq_any",
                              checkboxes: [{params_name: "member_num_0", value: 0, first_checked: true},
                                           {params_name: "member_num_1", value: 1, first_checked: false},
