@@ -45,6 +45,18 @@ class DuelInfosController < ApplicationController
     params_to_form(params, @form_params, column_name: "right_party_info_name", params_name: "right_party_name_form", type: "text")
     params_to_form(params, @form_params, column_name: "left_party_info_name_or_right_party_info_name", params_name: "party_name_form", type: "text")
 
+    checkbox_params_set_query_any(params, @form_params, query_name: "left_party_info_member_num_eq_any",
+                             checkboxes: [{params_name: "left_member_num_1", value: 1, first_checked: false},
+                                          {params_name: "left_member_num_2", value: 2, first_checked: false},
+                                          {params_name: "left_member_num_3", value: 3, first_checked: false},
+                                          {params_name: "left_member_num_4", value: 4, first_checked: false}])
+
+    checkbox_params_set_query_any(params, @form_params, query_name: "right_party_info_member_num_eq_any",
+                             checkboxes: [{params_name: "right_member_num_1", value: 1, first_checked: false},
+                                          {params_name: "right_member_num_2", value: 2, first_checked: false},
+                                          {params_name: "right_member_num_3", value: 3, first_checked: false},
+                                          {params_name: "right_member_num_4", value: 4, first_checked: false}])
+
     checkbox_params_set_query_any(params, @form_params, query_name: "battle_info_battle_type_eq_any",
                              checkboxes: [{params_name: "is_duel", value: 10, first_checked: true},
                                           {params_name: "is_game" ,  value: 11, first_checked: true}])
@@ -53,7 +65,6 @@ class DuelInfosController < ApplicationController
                              checkboxes: [{params_name: "result_win",   value: 1, first_checked: true},
                                           {params_name: "result_draw",  value: 0, first_checked: true},
                                           {params_name: "result_lose" , value: -1, first_checked: true}])
-
 
     checkbox_params_set_query_any(params, @form_params, query_name: "left_world_world_eq_any",
                              checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},

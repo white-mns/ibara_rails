@@ -50,14 +50,19 @@ class NextBattleInfosController < ApplicationController
     params_to_form(params, @form_params, column_name: "forest_move_count",   params_name: "forest_form",   type: "number")
     params_to_form(params, @form_params, column_name: "mountain_move_count", params_name: "mountain_form", type: "number")
 
-    checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",
-                             checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},
-                                          {params_name: "is_ansinity" , value: 1, first_checked: true}])
+    checkbox_params_set_query_any(params, @form_params, query_name: "party_info_member_num_eq_any",
+                             checkboxes: [{params_name: "member_num_1", value: 1, first_checked: false},
+                                          {params_name: "member_num_2", value: 2, first_checked: false},
+                                          {params_name: "member_num_3", value: 3, first_checked: false},
+                                          {params_name: "member_num_4", value: 4, first_checked: false}])
 
     checkbox_params_set_query_any(params, @form_params, query_name: "battle_type_eq_any",
                              checkboxes: [{params_name: "is_encounter", value: 0, first_checked: true},
                                           {params_name: "is_mission" ,  value: 1, first_checked: true}])
 
+    checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",
+                             checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},
+                                          {params_name: "is_ansinity" , value: 1, first_checked: true}])
 
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
     toggle_params_to_variable(params, @form_params, params_name: "show_member_num")

@@ -104,7 +104,12 @@
             %li= link_to "新出アイテム付加一覧", new_item_fukas_path
             %li= link_to "新出発動スキル・付加一覧", new_actions_path
             %li= link_to "新出予告NPC一覧", new_next_enemies_path
+            %ul  
+              %li= link_to "新出予告MISSION一覧", new_next_enemies_path + "?result_no_form=" + sprintf("%d", @latest_result) + "&is_form=1&is_mission=on"
             %li= link_to "初戦闘NPC一覧", new_battle_enemies_path
+            %ul  
+              %li= link_to "初戦闘MISSION一覧", new_battle_enemies_path + "?result_no_form=" + sprintf("%d", @latest_result) + "&is_form=1&is_mission=on"
+            %li= link_to "MISSION初突破一覧", new_defeat_enemies_path
           %ul  
 
 .card.top
@@ -112,6 +117,27 @@
     %h2 更新履歴
     %div
       %ul
+        %li 2020/9/17
+        %ul
+          %li
+            = link_to "MISSION初突破一覧", new_defeat_enemies_path
+            を公開
+          %li
+            = link_to "新出予告NPC一覧", new_next_enemies_path
+            、
+            = link_to "初戦闘NPC一覧", new_battle_enemies_path
+            に戦闘の種類での検索を追加。
+            %br
+            また、これらのページであらかじめMISSIONを表示するように入力した
+            = link_to "新出予告MISSION一覧", new_next_enemies_path + "?result_no_form=" + sprintf("%d", @latest_result) + "&is_form=1&is_mission=on"
+            、
+            = link_to "初戦闘MISSION一覧", new_battle_enemies_path + "?result_no_form=" + sprintf("%d", @latest_result) + "&is_form=1&is_mission=on"
+            へのリンクを追加
+          %li
+            = link_to "作製一覧", makes_path
+            のデータ形式を変更し、見切りなどで作製した場合にも素材名を表示できるようにしました。（見切り時の素材の強さはこれまで通り表示・検索ができません）
+          %li
+            各ページのパーティ人数の検索をチェックボックス式に変更
         %li 2020/9/16
         %ul
           %li

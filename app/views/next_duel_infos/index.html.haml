@@ -55,8 +55,16 @@
     %tbody.closed
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "左PT人数", params_name: "left_member_num_form",       placeholder: "Number")
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "右PT人数", params_name: "right_member_num_form",       placeholder: "Number")
+        - td_form(f, @form_params, @placeholder,  label: "左PT人数", params_name: "left_member_num_form",
+                    checkboxes: [{label: "1", params_name: "left_member_num_1", class_name: "after_space"},
+                                 {label: "2", params_name: "left_member_num_2", class_name: "after_space"},
+                                 {label: "3", params_name: "left_member_num_3", class_name: "after_space"},
+                                 {label: "4", params_name: "left_member_num_4", class_name: "after_space"}])
+        - td_form(f, @form_params, @placeholder,  label: "右PT人数", params_name: "right_member_num_form",
+                    checkboxes: [{label: "1", params_name: "right_member_num_1", class_name: "after_space"},
+                                 {label: "2", params_name: "right_member_num_2", class_name: "after_space"},
+                                 {label: "3", params_name: "right_member_num_3", class_name: "after_space"},
+                                 {label: "4", params_name: "right_member_num_4", class_name: "after_space"}])
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_party_name",

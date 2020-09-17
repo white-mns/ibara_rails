@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_13_023505) do
+ActiveRecord::Schema.define(version: 2020_09_16_223917) do
 
   create_table "aide_candidates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -301,11 +301,13 @@ ActiveRecord::Schema.define(version: 2020_09_13_023505) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "requester_e_no"
+    t.string "source_name"
     t.index ["i_no"], name: "index_makes_on_i_no"
     t.index ["kind_id"], name: "index_makes_on_kind_id"
     t.index ["last_result_no", "e_no", "i_no", "last_generate_no"], name: "last_item"
     t.index ["requester_e_no"], name: "index_makes_on_requester_e_no"
     t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+    t.index ["source_name"], name: "index_makes_on_source_name"
     t.index ["strength"], name: "index_makes_on_strength"
   end
 
@@ -401,8 +403,28 @@ ActiveRecord::Schema.define(version: 2020_09_13_023505) do
     t.integer "enemy_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "battle_type"
+    t.index ["battle_type"], name: "index_new_battle_enemies_on_battle_type"
     t.index ["enemy_id"], name: "index_new_battle_enemies_on_enemy_id"
     t.index ["result_no", "generate_no"], name: "resultno_generateno"
+  end
+
+  create_table "new_defeat_enemies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "before_result_no"
+    t.integer "before_generate_no"
+    t.integer "party_no"
+    t.integer "enemy_id"
+    t.integer "member_num"
+    t.integer "battle_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["battle_type"], name: "index_new_defeat_enemies_on_battle_type"
+    t.index ["before_result_no", "party_no", "before_generate_no"], name: "beforeresultno_partyno"
+    t.index ["enemy_id"], name: "index_new_defeat_enemies_on_enemy_id"
+    t.index ["member_num"], name: "index_new_defeat_enemies_on_member_num"
+    t.index ["result_no", "party_no", "generate_no"], name: "resultno_partyno"
   end
 
   create_table "new_item_fukas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -421,6 +443,8 @@ ActiveRecord::Schema.define(version: 2020_09_13_023505) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "association_name"
+    t.index ["association_name"], name: "index_new_items_on_association_name"
     t.index ["name"], name: "index_new_items_on_name"
     t.index ["result_no", "generate_no"], name: "resultno_generateno"
   end
@@ -431,6 +455,8 @@ ActiveRecord::Schema.define(version: 2020_09_13_023505) do
     t.integer "enemy_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "battle_type"
+    t.index ["battle_type"], name: "index_new_next_enemies_on_battle_type"
     t.index ["enemy_id"], name: "index_new_next_enemies_on_enemy_id"
     t.index ["result_no", "generate_no"], name: "resultno_generateno"
   end

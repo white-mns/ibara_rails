@@ -34,9 +34,9 @@ class MakesController < ApplicationController
     params_to_form(params, @form_params, column_name: "name", params_name: "name_form", type: "text")
     params_to_form(params, @form_params, column_name: "kind_id", params_name: "kind_id_form", type: "number")
     params_to_form(params, @form_params, column_name: "strength", params_name: "strength_form", type: "number")
+    params_to_form(params, @form_params, column_name: "source_name", params_name: "source_name_form", type: "text")
 
     params_to_form(params, @form_params, column_name: "kind_name", params_name: "kind_form", type: "text")
-    params_to_form(params, @form_params, column_name: "last_item_name", params_name: "source_name_form", type: "text")
     params_to_form(params, @form_params, column_name: "last_item_strength", params_name: "source_strength_form", type: "number")
 
     checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",

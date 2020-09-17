@@ -31,6 +31,11 @@
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "敵名", params_name: "enemy_form", placeholder: "Enemy")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "戦闘の種類", params_name: "battle_type_form", colspan: 3, 
+                    checkboxes: [{label: "ENCOUNTER - 『遭遇戦』『採集』", params_name: "is_encounter", class_name: "after_space", br: true},
+                                 {label: "MISSION - 『開放戦』『特殊戦』", params_name: "is_mission"}])
 
     - #==========================================================================================================================
     %tbody
@@ -51,10 +56,12 @@
   %thead
     %tr
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :battle_type, "戦闘", default_order: :desc)
       %th= sort_link(@search, :enemy_id, "敵名", default_order: :desc)
   %tbody
     - @new_next_enemies.each do |new_next_enemy|
       %tr
         %td= new_next_enemy.result_no
+        %td= battle_type_text(new_next_enemy)
         %td= detail_new_next_enemy_link(new_next_enemy)
 = paginate(@new_next_enemies)
