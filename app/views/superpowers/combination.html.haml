@@ -9,7 +9,7 @@
   .card-body
     = render "layouts/base_desc"
     %p
-      「スキル名組み合わせ」の検索ではAND、OR検索で「AとBのスキルを含むキャラクター」、「AかBのスキルを含むキャラクター」の検索ができます。
+      「スキル名組み合わせ」の検索ではAND、OR、NOT、完全一致を用いて「AとBのスキルを所持する『キャラクター』」、「AかBのスキルを所持する『キャラクター』」などの検索ができます。
     %p
       %span.example_select.example_toggle.pointer
         - help_icon
@@ -17,6 +17,12 @@
         - act_desc(false)
     #example.closed
       = render "layouts/input_desc"
+      %p.formText
+        「"フラッシュ"」　→　「フラッシュ」を所持するキャラクターがヒット。フラッシュを所持せずフラッシュバックだけを所持するキャラクターは除外されます。
+        %br
+        「千辛万苦 トリッピングトラップ」　→　「千辛万苦」と「トリッピングトラップ」を両方所持するキャラクターがヒット。
+        %br
+        「特質強化 -博打付加」　→　「特質強化」を所持していて「博打付加」は所持していないキャラクターがヒット。
 = search_form_for @search, url: superpower_combinations_path do |f|
   %table.search_toggle.table.table-striped.table-bordered.table-hover
     %tbody.pointer
