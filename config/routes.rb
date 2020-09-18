@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :skill_concatenates
   resources :new_defeat_enemies
   resources :onetime_studies
   resources :aides

@@ -6,6 +6,9 @@ module MyUtility
 
       elsif type == "text" then
         function = method(:reference_text_assign)
+
+      elsif type == "concat" then
+        function = method(:reference_concat_assign)
       end
 
       if function then
@@ -100,7 +103,49 @@ module MyUtility
       param_push(params, data_name + "_" + not_suffix + match_suffix + "_" + operator_suffix, text)
 
   end
-  
+
+  # 検索文字列を分割し、Ransackが参照する配列に割り当てる
+  def reference_concat_assign(params, data_name, param_key)
+    match_suffix = "cont"
+
+    if(!params[param_key]) then
+        return
+    end
+
+    texts = (params[param_key].match(/ /)) ? params[param_key].gsub(/[“”]/, "\"").split(" ") : [params[param_key].dup.gsub(/[“”]/,"\"")]
+
+    if texts.is_a?(Array) then
+        for text in texts do
+            if (text && text.match("/")) then
+                texts_or = text.split("/")
+                for text_or in texts_or do
+                    reference_concat_set(params, data_name, text_or, match_suffix, "any") 
+                end
+            else
+                reference_concat_set(params, data_name, text, match_suffix, "all") 
+            end
+        end
+    end
+  end
+
+  # 文字列の除外と完全一致を判定し、Ransackが参照する配列に割り当てる
+  def reference_concat_set(params, data_name, text, match_suffix, operator_suffix)
+      # 完全一致の記号を文字列連結データのカンマに置き換え
+      text = text.gsub(/"/,",")
+
+      not_suffix = ""
+      if(text[0] == "-") then
+          # 除外検索用に添字を変更 「_not_cont_all」か「not_eq_all」になる
+          text.slice!(0,1)
+          not_suffix = "not_"
+          operator_suffix = "all"
+          data_name = data_name.gsub(/_or_/, "_and_")
+      end
+      
+      param_push(params, data_name + "_" + not_suffix + match_suffix + "_" + operator_suffix, text)
+
+  end
+
   # 数値の文字列を分割し、Ransackが参照する配列に割り当てる
   def reference_number_assign(params, data_name, param_key)
     if(!params[param_key]) then

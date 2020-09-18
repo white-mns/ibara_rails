@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_16_223917) do
+ActiveRecord::Schema.define(version: 2020_09_17_224815) do
 
   create_table "aide_candidates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -272,6 +272,7 @@ ActiveRecord::Schema.define(version: 2020_09_16_223917) do
     t.integer "effect_3_need_lv"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "plus"
     t.index ["effect_1_id"], name: "index_items_on_effect_1_id"
     t.index ["effect_1_need_lv"], name: "index_items_on_effect_1_need_lv"
     t.index ["effect_1_value"], name: "index_items_on_effect_1_value"
@@ -283,6 +284,7 @@ ActiveRecord::Schema.define(version: 2020_09_16_223917) do
     t.index ["effect_3_value"], name: "index_items_on_effect_3_value"
     t.index ["kind_id"], name: "index_items_on_kind_id"
     t.index ["name"], name: "index_items_on_name"
+    t.index ["plus"], name: "index_items_on_plus"
     t.index ["range"], name: "index_items_on_range"
     t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
     t.index ["strength"], name: "index_items_on_strength"
@@ -572,6 +574,16 @@ ActiveRecord::Schema.define(version: 2020_09_16_223917) do
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_proper_names_on_name"
     t.index ["proper_id"], name: "index_proper_names_on_proper_id"
+  end
+
+  create_table "skill_concatenates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.text "skill_concatenate"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
   end
 
   create_table "skill_data", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|

@@ -16,13 +16,13 @@ class SuperpowersController < ApplicationController
 
   # GET /superpower/combinations
   def combination
-    @superpower_datas = Skill.superpower_datas
+    @superpower_datas = Name.superpower_datas
     resultno_set
     placeholder_set
     param_set_combination
 
-    @count	= Skill.distinct.notnil().combination_includes(params, @superpower_datas).combination_groups(params).search(params[:q]).result.hit_count()
-    @search	= Skill.distinct.notnil().combination_includes(params, @superpower_datas).combination_groups(params).page(params[:page]).search(params[:q])
+    @count	= Name.notnil().combination_includes(params, @superpower_datas).combination_groups(params).search(params[:q]).result.hit_count()
+    @search	= Name.notnil().combination_includes(params, @superpower_datas).combination_groups(params).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @superpowers	= @search.result.per(50)
   end
@@ -104,8 +104,7 @@ class SuperpowersController < ApplicationController
         @form_params[blank + "_form"] = "0"
     end
 
-
-    params_to_form(params, @form_params, column_name: "skill_name", params_name: "skill_form", type: "text")
+    params_to_form(params, @form_params, column_name: "skill_concatenate_skill_concatenate", params_name: "skill_form", type: "concat")
 
     params_to_form(params, @form_params, column_name: "place_area_column", params_name: "area_column_form", type: "text")
     params_to_form(params, @form_params, column_name: "place_area_row", params_name: "area_row_form", type: "number")

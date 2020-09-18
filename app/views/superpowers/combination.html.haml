@@ -9,9 +9,7 @@
   .card-body
     = render "layouts/base_desc"
     %p
-      スキル名での検索はAND、ORのみ機能します。「Aのスキルを持っていないキャラクター」の検索はできません。
-      %br
-      AND、ORは「AとBの文字を含むスキル」の検索となり、「AとBのスキルを持っているキャラクター」のような絞り込みはできません。
+      「スキル名組み合わせ」の検索ではAND、OR、NOT、完全一致を用いて「AとBのスキルを所持する『キャラクター』」、「AかBのスキルを所持する『キャラクター』」などの検索ができます。
     %p
       %span.example_select.example_toggle.pointer
         - help_icon
@@ -19,6 +17,12 @@
         - act_desc(false)
     #example.closed
       = render "layouts/input_desc"
+      %p.formText
+        「"フラッシュ"」　→　「フラッシュ」を所持するキャラクターがヒット。フラッシュを所持せずフラッシュバックだけを所持するキャラクターは除外されます。
+        %br
+        「千辛万苦 トリッピングトラップ」　→　「千辛万苦」と「トリッピングトラップ」を両方所持するキャラクターがヒット。
+        %br
+        「特質強化 -博打付加」　→　「特質強化」を所持していて「博打付加」は所持していないキャラクターがヒット。
 = search_form_for @search, url: superpower_combinations_path do |f|
   %table.search_toggle.table.table-striped.table-bordered.table-hover
     %tbody.pointer
@@ -53,11 +57,12 @@
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_skill",
-                    label: {open: "所持スキルで絞り込む", close: "所持スキルを表示しない"}, base_first: false)
+                    label: {open: "所持スキルで絞り込む", close: "所持のスキルでの検索を表示しない"},
+                    act_desc: "スキル名組み合わせ", base_first: false)
     %tbody.closed
       %tr.sep
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "",  label: "スキル名", params_name: "skill_form", placeholder: "Skill", colspan: 3)
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "スキル名組み合わせ", params_name: "skill_form", placeholder: "Skill", colspan: 3)
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_world",
@@ -134,8 +139,6 @@
       %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
       - @superpower_datas.each do |superpower_data|
         %th= sort_link(@search, (superpower_data[:en] + "_lv").to_sym, superpower_data[:jp] , default_order: :desc)
-      - if @form_params["show_skill"] == "1"
-        %th.sep= sort_link(@search, :skill_id, "スキル", default_order: :desc)
       - if @form_params["show_place"] == "1" || @form_params["show_girth"] == "1" 
         %th.sep= sort_link(@search, :placemartial__field_id, "区", default_order: :desc)
         %th= sort_link(@search, :martial_place_area_column, "列", default_order: :desc)
@@ -145,11 +148,9 @@
     - @superpowers.each do |superpower|
       %tr
         %td= superpower.result_no
-        %td{style: "#{ world_border(superpower.world) }" }= pc_name_text(superpower.e_no, superpower.pc_name)
+        %td{style: "#{ world_border(superpower.world) }" }= pc_name_text(superpower.e_no, superpower)
         - @superpower_datas.each do |superpower_data|
           %td= superpower.send(superpower_data[:en]).lv if superpower.send(superpower_data[:en])
-        - if @form_params["show_skill"] == "1"
-          %td.sep= superpower.skill.name
         - if @form_params["show_place"] == "1" || @form_params["show_girth"] == "1" 
           %td.sep= superpower.place.field.name if superpower.place && superpower.place.field
           %td{colspan: 2, align: "center"}

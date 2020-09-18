@@ -9,8 +9,6 @@
   .card-body
     = render "layouts/base_desc"
     %p
-      ※1　敵名では完全一致検索をすることができません。
-    %p
       %span.example_select.example_toggle.pointer
         - help_icon
         入力例
@@ -41,7 +39,7 @@
                                  {label: "MISSION - 『開放戦』『特殊戦』", params_name: "is_mission"}])
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "敵名(※1)", params_name: "enemy_names_form", placeholder: "EnemyNames", colspan: 3)
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "敵名", params_name: "enemy_names_form", placeholder: "Enemy", colspan: 3)
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "勝敗", params_name: "battle_result_form", colspan: 3, 
