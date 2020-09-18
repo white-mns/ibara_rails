@@ -120,6 +120,21 @@
         %li 2020/9/17
         %ul
           %li
+            = link_to "所持アイテム一覧", items_path
+            にアイテムのプラス値での検索・ソート機能を追加
+          %li
+            = link_to "次回予告NPC戦一覧", next_battle_infos_path
+            、
+            = link_to "NPC戦勝敗一覧", battle_results_path
+            の敵名検索において完全一致ができるように修正
+          %li
+            = link_to "所持異能・生産・スキル組み合わせ一覧", superpower_combinations_path
+            %ul
+              %li スキル名検索フォームで複数のスキルの組み合わせを検索できるように変更
+              %li スキル名検索時に代表スキルを表示していたのを削除（組み合わせ検索用にデータ形式を変更したため）
+        %li 2020/9/17
+        %ul
+          %li
             = link_to "MISSION初突破一覧", new_defeat_enemies_path
             を公開
           %li
