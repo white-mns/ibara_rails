@@ -49,6 +49,7 @@
             %li= link_to "スキル研究一覧", onetime_studies_path
             %ul
               %li= link_to "スキル研究ランキング", onetime_studies_path + "?group_skill=on&ex_sort=on"
+            %li= link_to "ドロップアイテム一覧", drop_items_path
             %li= link_to "エイド化候補一覧", aide_candidates_path
             %li= link_to "移動一覧", moves_path
       .col-md-6
@@ -117,6 +118,13 @@
     %h2 更新履歴
     %div
       %ul
+        %li 2020/9/19
+        %ul
+          %li
+            = link_to "ドロップアイテム一覧", drop_items_path
+            を公開
+          %li
+            赤色の色合いを若干変更、リンクホバー時の色を変更
         %li 2020/9/18
         %ul
           %li
