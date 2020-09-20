@@ -31,8 +31,12 @@
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
-        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "作製Eno", params_name: "e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "作製キャラクター名", params_name: "pc_name_form", placeholder: "Name")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "依頼Eno", params_name: "requester_e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "依頼キャラクター名", params_name: "requester_pc_name_form", placeholder: "Name")
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "種類", params_name: "kind_form", placeholder: "ItemKind")

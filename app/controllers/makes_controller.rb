@@ -25,9 +25,11 @@ class MakesController < ApplicationController
     end
 
     params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")
+    params_to_form(params, @form_params, column_name: "requester_name", params_name: "requester_pc_name_form", type: "text")
     params_to_form(params, @form_params, column_name: "result_no", params_name: "result_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "generate_no", params_name: "generate_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "e_no", params_name: "e_no_form", type: "number")
+    params_to_form(params, @form_params, column_name: "requester_e_no", params_name: "requester_e_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "last_result_no", params_name: "last_result_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "last_generate_no", params_name: "last_generate_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "i_no", params_name: "i_no_form", type: "number")

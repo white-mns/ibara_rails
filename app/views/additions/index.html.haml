@@ -30,8 +30,8 @@
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "実行Eno", params_name: "e_no_form", placeholder: "Number")
-        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "実行キャラクター名", params_name: "pc_name_form", placeholder: "Name")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "付加Eno", params_name: "e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "付加キャラクター名", params_name: "pc_name_form", placeholder: "Name")
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "依頼Eno", params_name: "requester_e_no_form", placeholder: "Number")
@@ -109,7 +109,7 @@
         %td.sep{colspan: 2}
           = addition.item.effect_3.name if addition.item && addition.item.effect_3
           = addition.item.effect_3_value if addition.item && addition.item.effect_3_value > 0
-        %td.sep= character_link_text(addition.e_no, "作製者")
+        %td.sep= character_link_text(addition.e_no, "付加者")
         %td= character_old_link(@latest_result, addition.e_no, addition.result_no, addition.generate_no)
         %td.sep= character_link_text(addition.requester_e_no, "依頼者")
         %td= character_old_link(@latest_result, addition.requester_e_no, addition.result_no, addition.generate_no)
