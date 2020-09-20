@@ -10,7 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_18_090252) do
+ActiveRecord::Schema.define(version: 2020_09_20_022243) do
+
+  create_table "additions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "requester_e_no"
+    t.integer "addition_id"
+    t.integer "last_result_no"
+    t.integer "last_generate_no"
+    t.integer "target_i_no"
+    t.string "target_name"
+    t.integer "addition_i_no"
+    t.string "addition_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["addition_i_no"], name: "index_additions_on_addition_i_no"
+    t.index ["addition_id"], name: "index_additions_on_addition_id"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+    t.index ["result_no", "e_no", "target_i_no", "generate_no"], name: "resultno_item"
+    t.index ["target_i_no"], name: "index_additions_on_target_i_no"
+  end
 
   create_table "aide_candidates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"

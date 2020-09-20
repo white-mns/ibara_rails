@@ -1,0 +1,116 @@
+- @page_title = "付加一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "実行Eno", params_name: "e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "実行キャラクター名", params_name: "pc_name_form", placeholder: "Name")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "依頼Eno", params_name: "requester_e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "依頼キャラクター名", params_name: "requester_pc_name_form", placeholder: "Name")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "素材名", params_name: "addition_name_form", placeholder: "Material", colspan: 3)
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "効果2or防具", params_name: "effect_2_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "効果値", params_name: "effect_2_value_form")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_target_name",
+                    label: {open: "装備名を表示する", close: "装備名を隠す"}, base_first: true)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "装備名", params_name: "target_name_form", colspan: 3)
+
+    - #==========================================================================================================================
+    %tbody
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+
+= paginate(@additions)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
+      %th.sep= sort_link(@search, :addition_name, "素材名", default_order: :desc)
+      - if @form_params["show_target_name"] == "1"
+        %th.sep= sort_link(@search, :target_name, "装備名", default_order: :desc)
+      %th.sep= sort_link(@search, :effect_1_id, "効果1", default_order: :desc)
+      %th= sort_link(@search, :effect_1_value, "効果値", default_order: :desc)
+      %th.sep= sort_link(@search, :effect_2_id, "効果2", default_order: :desc)
+      %th= sort_link(@search, :effect_2_value, "効果値", default_order: :desc)
+      %th.sep= sort_link(@search, :effect_3_id, "効果3", default_order: :desc)
+      %th= sort_link(@search, :effect_3_value, "効果値", default_order: :desc)
+      %th.sep{colspan: "4"} 結果リンク
+  %tbody
+    - @additions.each do |addition|
+      %tr
+        %td= addition.result_no
+        %td{style: "#{ world_border(addition.world) }" }= pc_name_text(addition.e_no, addition.pc_name)
+        %td.sep= addition.addition_name
+        - if @form_params["show_target_name"] == "1"
+          %td.sep= addition.target_name
+        %td.sep{colspan: 2}
+          = addition.item.effect_1.name if addition.item && addition.item.effect_1
+          = addition.item.effect_1_value if addition.item && addition.item.effect_1_value > 0
+        %td.sep{colspan: 2}
+          = addition.item.effect_2.name if addition.item && addition.item.effect_2
+          = addition.item.effect_2_value if addition.item && addition.item.effect_2_value > 0
+        %td.sep{colspan: 2}
+          = addition.item.effect_3.name if addition.item && addition.item.effect_3
+          = addition.item.effect_3_value if addition.item && addition.item.effect_3_value > 0
+        %td.sep= character_link_text(addition.e_no, "作製者")
+        %td= character_old_link(@latest_result, addition.e_no, addition.result_no, addition.generate_no)
+        %td.sep= character_link_text(addition.requester_e_no, "依頼者")
+        %td= character_old_link(@latest_result, addition.requester_e_no, addition.result_no, addition.generate_no)
+= paginate(@additions)

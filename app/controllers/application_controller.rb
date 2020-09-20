@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
         @placeholder["SkillText"]   = "例）火撃 光撃"
         @placeholder["Item"]        = "例）不思議な食材"
         @placeholder["ItemKind"]    = "例）武器/素材/食材"
+        @placeholder["Material"]    = "例）木材/石材"
         @placeholder["Fuka"]        = "例）活力/\"鎮痛\""
         @placeholder["Superpower"]  = "例）武術/合成"
         @placeholder["Timing"]      = "例）戦闘開始時"
