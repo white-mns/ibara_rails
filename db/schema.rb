@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_20_022243) do
+ActiveRecord::Schema.define(version: 2020_09_20_060734) do
 
   create_table "additions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -257,6 +257,24 @@ ActiveRecord::Schema.define(version: 2020_09_20_022243) do
     t.index ["source_2_i_no"], name: "index_compounds_on_source_2_i_no"
     t.index ["source_2_name"], name: "index_compounds_on_source_2_name"
     t.index ["sources_name"], name: "index_compounds_on_sources_name"
+  end
+
+  create_table "cooks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "requester_e_no"
+    t.integer "cook_id"
+    t.integer "last_result_no"
+    t.integer "last_generate_no"
+    t.integer "i_no"
+    t.string "source_name"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cook_id"], name: "index_cooks_on_cook_id"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+    t.index ["result_no", "e_no", "i_no", "generate_no"], name: "resultno_item"
   end
 
   create_table "drop_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|

@@ -46,6 +46,7 @@
               %li= link_to "合成結果一覧", compounds_path + "?result_no_form=""&compound_deficient_lv=off&group_result=on"
               %li= link_to "合成組み合わせ一覧", compounds_path + "?result_no_form=""&group_source=on"
             %li= link_to "作製一覧", makes_path
+            %li= link_to "料理一覧", cooks_path
             %li= link_to "付加一覧", additions_path
             %li= link_to "スキル研究一覧", onetime_studies_path
             %ul
@@ -123,6 +124,9 @@
         %ul
           %li
             = link_to "付加一覧", additions_path
+            を公開
+          %li
+            = link_to "料理一覧", cooks_path
             を公開
         %ul
           %li

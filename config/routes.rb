@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :cooks
   resources :additions
   resources :drop_items
   resources :skill_concatenates
