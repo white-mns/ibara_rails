@@ -8,8 +8,8 @@ class AdditionPassivesController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= AdditionPassive.notnil().includes(:pc_name, :world, :skill).search(params[:q]).result.hit_count()
-    @search	= AdditionPassive.notnil().includes(:pc_name, :world, :skill).page(params[:page]).search(params[:q])
+    @count	= AdditionPassive.notnil().includes(:pc_name, :world, :skill, [addition: [:pc_name, :world, :party, item: [:kind, :effect_1, :effect_2, :effect_3]]]).search(params[:q]).result.hit_count()
+    @search	= AdditionPassive.notnil().includes(:pc_name, :world, :skill, [addition: [:pc_name, :world, :party, item: [:kind, :effect_1, :effect_2, :effect_3]]]).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @addition_passives	= @search.result.per(50)
   end
@@ -40,13 +40,38 @@ class AdditionPassivesController < ApplicationController
     params_to_form(params, @form_params, column_name: "dice_5", params_name: "dice_5_form", type: "number")
     params_to_form(params, @form_params, column_name: "dice_6", params_name: "dice_6_form", type: "number")
 
+    params_to_form(params, @form_params, column_name: "addition_pc_name_name", params_name: "addition_pc_name_form", type: "text")
+    params_to_form(params, @form_params, column_name: "addition_e_no", params_name: "e_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "skill_name", params_name: "skill_form", type: "text")
+
+    params_to_form(params, @form_params, column_name: "addition_addition_name", params_name: "addition_name_form", type: "text")
+    params_to_form(params, @form_params, column_name: "addition_target_name", params_name: "target_name_form", type: "text")
+    params_to_form(params, @form_params, column_name: "addition_item_strength", params_name: "strength_form", type: "number")
+    params_to_form(params, @form_params, column_name: "addition_item_kind_name", params_name: "kind_form", type: "text")
+    params_to_form(params, @form_params, column_name: "addition_item_effect_1_name_or_addition_item_effect_2_name_or_addition_item_effect_3_name", params_name: "effect_form", type: "text")
+    params_to_form(params, @form_params, column_name: "addition_item_effect_1_value", params_name: "effect_1_value_form", type: "number")
+    params_to_form(params, @form_params, column_name: "addition_item_effect_1_name", params_name: "effect_1_form", type: "text")
+    params_to_form(params, @form_params, column_name: "addition_item_effect_2_value", params_name: "effect_2_value_form", type: "number")
+    params_to_form(params, @form_params, column_name: "addition_item_effect_2_name", params_name: "effect_2_form", type: "text")
+    params_to_form(params, @form_params, column_name: "addition_item_effect_3_value", params_name: "effect_3_value_form", type: "number")
+    params_to_form(params, @form_params, column_name: "addition_item_effect_3_name", params_name: "effect_3_form", type: "text")
 
     checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",
                              checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},
                                           {params_name: "is_ansinity" , value: 1, first_checked: true}])
 
+    checkbox_params_set_query_any(params, @form_params, query_name: "result_eq_any",
+                             checkboxes: [{params_name: "dice_big_success", value: 2,  first_checked: false},
+                                          {params_name: "dice_success"    , value: 1,  first_checked: false},
+                                          {params_name: "dice_normal"     , value: 0,  first_checked: false},
+                                          {params_name: "dice_failed"     , value: -1, first_checked: false},
+                                          {params_name: "dice_big_failed" , value: -2, first_checked: false}])
+
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
+    toggle_params_to_variable(params, @form_params, params_name: "show_dice")
+    toggle_params_to_variable(params, @form_params, params_name: "show_item")
+    toggle_params_to_variable(params, @form_params, params_name: "show_addition_name")
+    toggle_params_to_variable(params, @form_params, params_name: "show_target_name")
   end
   # GET /addition_passives/1
   #def show

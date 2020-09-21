@@ -8,8 +8,8 @@ class CooksController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= Cook.notnil().includes(:pc_name, :world, :requester, :party, [item: [:effect_1, :effect_2, :effect_3]]).search(params[:q]).result.hit_count()
-    @search	= Cook.notnil().includes(:pc_name, :world, :requester, :party, [item: [:effect_1, :effect_2, :effect_3]]).page(params[:page]).search(params[:q])
+    @count	= Cook.notnil().includes(:pc_name, :world, :requester, :party, [item: [:kind, :effect_1, :effect_2, :effect_3]]).search(params[:q]).result.hit_count()
+    @search	= Cook.notnil().includes(:pc_name, :world, :requester, :party, [item: [:kind, :effect_1, :effect_2, :effect_3]]).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @cooks	= @search.result.per(50)
   end
@@ -36,6 +36,8 @@ class CooksController < ApplicationController
     params_to_form(params, @form_params, column_name: "source_name", params_name: "source_name_form", type: "text")
     params_to_form(params, @form_params, column_name: "name", params_name: "name_form", type: "text")
 
+    params_to_form(params, @form_params, column_name: "item_strength", params_name: "strength_form", type: "number")
+    params_to_form(params, @form_params, column_name: "item_kind_name", params_name: "kind_form", type: "text")
     params_to_form(params, @form_params, column_name: "item_effect_1_name_or_item_effect_2_name_or_item_effect_3_name", params_name: "effect_form", type: "text")
     params_to_form(params, @form_params, column_name: "item_effect_1_value", params_name: "effect_1_value_form", type: "number")
     params_to_form(params, @form_params, column_name: "item_effect_1_name", params_name: "effect_1_form", type: "text")

@@ -8,8 +8,8 @@ class AdditionsController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= Addition.notnil().includes(:pc_name, :world, :requester, :party, [item: [:effect_1, :effect_2, :effect_3]]).search(params[:q]).result.hit_count()
-    @search	= Addition.notnil().includes(:pc_name, :world, :requester, :party, [item: [:effect_1, :effect_2, :effect_3]]).page(params[:page]).search(params[:q])
+    @count	= Addition.notnil().includes(:pc_name, :world, :requester, :party, [item: [:kind, :effect_1, :effect_2, :effect_3]]).search(params[:q]).result.hit_count()
+    @search	= Addition.notnil().includes(:pc_name, :world, :requester, :party, [item: [:kind, :effect_1, :effect_2, :effect_3]]).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @additions	= @search.result.per(50)
   end
@@ -38,8 +38,14 @@ class AdditionsController < ApplicationController
     params_to_form(params, @form_params, column_name: "addition_i_no", params_name: "addition_i_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "addition_name", params_name: "addition_name_form", type: "text")
 
+    params_to_form(params, @form_params, column_name: "item_kind_name", params_name: "kind_form", type: "text")
+    params_to_form(params, @form_params, column_name: "item_effect_1_name_or_item_effect_2_name_or_item_effect_3_name", params_name: "effect_form", type: "text")
+    params_to_form(params, @form_params, column_name: "item_effect_1_value", params_name: "effect_1_value_form", type: "number")
+    params_to_form(params, @form_params, column_name: "item_effect_1_name", params_name: "effect_1_form", type: "text")
     params_to_form(params, @form_params, column_name: "item_effect_2_value", params_name: "effect_2_value_form", type: "number")
     params_to_form(params, @form_params, column_name: "item_effect_2_name", params_name: "effect_2_form", type: "text")
+    params_to_form(params, @form_params, column_name: "item_effect_3_value", params_name: "effect_3_value_form", type: "number")
+    params_to_form(params, @form_params, column_name: "item_effect_3_name", params_name: "effect_3_form", type: "text")
 
     checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",
                              checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},
@@ -47,6 +53,7 @@ class AdditionsController < ApplicationController
 
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
     toggle_params_to_variable(params, @form_params, params_name: "show_target_name")
+    toggle_params_to_variable(params, @form_params, params_name: "show_fuka")
   end
   # GET /additions/1
   #def show

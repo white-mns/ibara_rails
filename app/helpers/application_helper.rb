@@ -371,7 +371,6 @@ module ApplicationHelper
         end
     end
 
-
     def battle_type_text(object)
         if !object then 
             return
@@ -382,6 +381,21 @@ module ApplicationHelper
         elsif object.battle_type == 10 then "DUEL"
         elsif object.battle_type == 11 then "GAME"
         elsif object.battle_type == 20 then "闘技大会"
+        else "？"
+        end
+    end
+
+    def passive_result_text(object)
+        if !object then 
+            return
+        end
+
+        if object.result == 0 then "通常"
+        elsif object.result == 1 then "成功"
+        elsif object.result == 2 then "大成功"
+        elsif object.result == -1 then "失敗"
+        elsif object.result == -2 then "大失敗"
+        elsif object.result == -99 then ""
         else "？"
         end
     end

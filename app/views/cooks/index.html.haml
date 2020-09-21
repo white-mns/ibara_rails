@@ -38,7 +38,7 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText", label: "依頼キャラクター名", params_name: "requester_pc_name_form", placeholder: "Name")
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "素材名", params_name: "source_name_form", placeholder: "Material", colspan: 3)
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "素材名", params_name: "source_name_form", placeholder: "Item", colspan: 3)
       %tr.sep
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "付加名", params_name: "effect_form", placeholder: "Fuka", colspan: 3)
@@ -78,7 +78,6 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "効果3or装飾", params_name: "effect_3_form")
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "効果値", params_name: "effect_3_value_form")
 
-
     - #==========================================================================================================================
     %tbody
       %tr.sep
@@ -102,6 +101,7 @@
       %th.sep= sort_link(@search, :source_name, "素材", default_order: :desc)
       - if @form_params["show_name"] == "1"
         %th= sort_link(@search, :name, "料理名", default_order: :desc)
+      %th= sort_link(@search, :item_strength, "強さ", default_order: :desc)
       %th.sep= sort_link(@search, :item_effect_1_id, "効果1", default_order: :desc)
       %th= sort_link(@search, :item_effect_1_value, "効果値", default_order: :desc)
       %th.sep= sort_link(@search, :item_effect_2_id, "効果2", default_order: :desc)
@@ -117,6 +117,7 @@
         %td.sep= cook.source_name
         - if @form_params["show_name"] == "1"
           %td= cook.name
+        %td= cook.item.strength
         %td.sep{colspan: 2}
           = cook.item.effect_1.name if cook.item && cook.item.effect_1
           = cook.item.effect_1_value if cook.item && cook.item.effect_1_value > 0

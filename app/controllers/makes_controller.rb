@@ -41,6 +41,15 @@ class MakesController < ApplicationController
     params_to_form(params, @form_params, column_name: "kind_name", params_name: "kind_form", type: "text")
     params_to_form(params, @form_params, column_name: "last_item_strength", params_name: "source_strength_form", type: "number")
 
+    params_to_form(params, @form_params, column_name: "item_effect_1_name_or_item_effect_2_name_or_item_effect_3_name", params_name: "effect_form", type: "text")
+    params_to_form(params, @form_params, column_name: "item_effect_1_value", params_name: "effect_1_value_form", type: "number")
+    params_to_form(params, @form_params, column_name: "item_effect_1_name", params_name: "effect_1_form", type: "text")
+    params_to_form(params, @form_params, column_name: "item_effect_2_value", params_name: "effect_2_value_form", type: "number")
+    params_to_form(params, @form_params, column_name: "item_effect_2_name", params_name: "effect_2_form", type: "text")
+    params_to_form(params, @form_params, column_name: "item_effect_3_value", params_name: "effect_3_value_form", type: "number")
+    params_to_form(params, @form_params, column_name: "item_effect_3_name", params_name: "effect_3_form", type: "text")
+
+
     checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",
                              checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},
                                           {params_name: "is_ansinity" , value: 1, first_checked: true}])
@@ -48,6 +57,7 @@ class MakesController < ApplicationController
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
     toggle_params_to_variable(params, @form_params, params_name: "show_name", first_opened: true)
     toggle_params_to_variable(params, @form_params, params_name: "show_source", first_opened: true)
+    toggle_params_to_variable(params, @form_params, params_name: "show_fuka")
     @form_params["base_first"]    = (!params["is_form"]) ? "1" : "0"
   end
   # GET /makes/1
