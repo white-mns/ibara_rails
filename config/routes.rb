@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :cook_passives
+  resources :addition_passives
+  resources :cooks
+  resources :additions
   resources :drop_items
   resources :skill_concatenates
   resources :new_defeat_enemies

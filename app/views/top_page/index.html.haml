@@ -41,11 +41,17 @@
           %li 行動データ
           %ul  
             %li= link_to "食事一覧", meals_path
-            %li= link_to "作製一覧", makes_path
             %li= link_to "合成一覧", compounds_path
             %ul
               %li= link_to "合成結果一覧", compounds_path + "?result_no_form=""&compound_deficient_lv=off&group_result=on"
               %li= link_to "合成組み合わせ一覧", compounds_path + "?result_no_form=""&group_source=on"
+            %li= link_to "作製一覧", makes_path
+            %li= link_to "料理一覧", cooks_path
+            %ul
+              %li= link_to "料理時パッシブ発動一覧", cook_passives_path
+            %li= link_to "付加一覧", additions_path
+            %ul
+              %li= link_to "付加時パッシブ発動一覧", addition_passives_path
             %li= link_to "スキル研究一覧", onetime_studies_path
             %ul
               %li= link_to "スキル研究ランキング", onetime_studies_path + "?group_skill=on&ex_sort=on"
@@ -118,6 +124,24 @@
     %h2 更新履歴
     %div
       %ul
+        %li 2020/9/21
+        %ul
+          %li
+            = link_to "料理一覧", cooks_path
+            を公開
+          %li
+            = link_to "付加一覧", additions_path
+            を公開
+          %li
+            = link_to "料理時パッシブ発動一覧", cook_passives_path
+            を公開
+          %li
+            = link_to "付加時パッシブ発動一覧", addition_passives_path
+            を公開
+        %ul
+          %li
+            = link_to "作製一覧", makes_path
+            に依頼Eno、依頼キャラクター名での検索、装備の付加情報を追加
         %li 2020/9/19
         %ul
           %li

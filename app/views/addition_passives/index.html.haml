@@ -1,0 +1,194 @@
+- @page_title = "付加時パッシブ発動一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "付加Eno", params_name: "e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "付加キャラクター名", params_name: "addition_pc_name_form", placeholder: "Name")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "依頼Eno", params_name: "requester_e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "依頼キャラクター名", params_name: "pc_name_form", placeholder: "Name")
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "発動スキル", params_name: "skill_form", placeholder: "AdditionPassive", colspan: 3)
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "ダイス目合計", params_name: "dice_total_form", placeholder: "Number", colspan: 3)
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "ダイス結果", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "大成功", params_name: "dice_big_success", class_name: "after_space mobile_br"},
+                                 {label: "成功",   params_name: "dice_success", class_name: "after_space"},
+                                 {label: "通常",   params_name: "dice_normal", class_name: "after_space mobile_br"},
+                                 {label: "失敗",   params_name: "dice_failed", class_name: "after_space"},
+                                 {label: "大失敗", params_name: "dice_big_failed"}])
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "増加LV", params_name: "increase_form", placeholder: "Number", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_dice",
+                    label: {open: "ダイス目を表示する", close: "ダイス目を表示しない"},
+                    act_desc: "ダイス目1、ダイス目2、ダイス目3", base_first: false)
+    %tbody.closed
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "ダイス目1", params_name: "dice_1_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "ダイス目2", params_name: "dice_2_form", placeholder: "Number")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "ダイス目3", params_name: "dice_3_form", placeholder: "Number", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_addition_name",
+                    label: {open: "素材名を表示する", close: "素材名を表示しない"}, base_first: false)
+    %tbody.closed
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "素材名", params_name: "addition_name_form", placeholder: "Item", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_target_name",
+                    label: {open: "装備名を表示する", close: "装備名を表示しない"}, base_first: false)
+    %tbody.closed
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "装備名", params_name: "target_name_form", placeholder: "Item", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_item",
+                    label: {open: "装備情報を表示する", close: "装備情報を表示しない"},
+                    act_desc: "種類、付加名、効果1～3個別の効果名、効果値", base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "種類", params_name: "kind_form", placeholder: "ItemKind", colspan: 3)
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "付加名", params_name: "effect_form", placeholder: "Fuka", colspan: 3)
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "効果1", params_name: "effect_1_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "効果値", params_name: "effect_1_value_form", placeholder: "Number")
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "効果2", params_name: "effect_2_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "効果値", params_name: "effect_2_value_form")
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "効果3", params_name: "effect_3_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "効果値", params_name: "effect_3_value_form")
+
+    - #==========================================================================================================================
+    %tbody
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+
+= paginate(@addition_passives)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :requester_e_no,"付加者(Eno)", default_order: :desc)
+      %th.sep= sort_link(@search, :skill_id, "スキル", default_order: :desc)
+      %th.sep= sort_link(@search, :result, "結果", default_order: :desc)
+      %th= sort_link(@search, :increase, "増加LV", default_order: :desc)
+      %th.sep= sort_link(@search, :dice_total, "合計", default_order: :desc)
+      - if @form_params["show_dice"] == "1"
+        %th.sep= sort_link(@search, :dice_1, "ダイス1", default_order: :desc)
+        %th= sort_link(@search, :dice_2, "ダイス2", default_order: :desc)
+        %th= sort_link(@search, :dice_3, "ダイス3", default_order: :desc)
+      - if @form_params["show_addition_name"] == "1"
+        %th.sep= sort_link(@search, :addition_addition_name, "素材名", default_order: :desc)
+      - if @form_params["show_target_name"] == "1"
+        %th.sep= sort_link(@search, :addition_target_name, "装備名", default_order: :desc)
+      - if @form_params["show_item"] == "1"
+        %th.sep= sort_link(@search, :addition_item_kind_id, "種類", default_order: :desc)
+        %th.sep= sort_link(@search, :addition_item_effect_1_id, "効果1", default_order: :desc)
+        %th= sort_link(@search, :addition_item_effect_1_value, "効果値", default_order: :desc)
+        %th.sep= sort_link(@search, :addition_item_effect_2_id, "効果2", default_order: :desc)
+        %th= sort_link(@search, :addition_item_effect_2_value, "効果値", default_order: :desc)
+        %th.sep= sort_link(@search, :addition_item_effect_3_id, "効果3", default_order: :desc)
+        %th= sort_link(@search, :addition_item_effect_3_value, "効果値", default_order: :desc)
+      %th.sep{colspan: "4"} 結果リンク
+  %tbody
+    - @addition_passives.each do |addition_passive|
+      %tr
+        %td= addition_passive.result_no
+        %td{style: "#{ world_border(addition_passive.addition.world) }" }= pc_name_text(addition_passive.addition.e_no, addition_passive.addition.pc_name) if addition_passive.addition 
+        %td.sep= addition_passive.skill.name if addition_passive.skill
+        %td.sep= passive_result_text(addition_passive)
+        %td= addition_passive.increase if addition_passive.increase > 0
+        %td.sep= addition_passive.dice_total
+        - if @form_params["show_dice"] == "1"
+          %td.sep= addition_passive.dice_1
+          %td= addition_passive.dice_2
+          %td= addition_passive.dice_3
+        - if @form_params["show_addition_name"] == "1"
+          %td.sep= addition_passive.addition.addition_name if addition_passive.addition
+        - if @form_params["show_target_name"] == "1"
+          %td.sep= addition_passive.addition.target_name if addition_passive.addition
+        - if @form_params["show_item"] == "1"
+          %td.sep= addition_passive.addition.item.kind.name if addition_passive.addition && addition_passive.addition.item && addition_passive.addition.item.kind
+          %td.sep{colspan: 2}
+            = addition_passive.addition.item.effect_1.name if addition_passive.addition &&  addition_passive.addition.item && addition_passive.addition.item.effect_1
+            = addition_passive.addition.item.effect_1_value if addition_passive.addition &&  addition_passive.addition.item && addition_passive.addition.item.effect_1_value > 0
+          %td.sep{colspan: 2}
+            = addition_passive.addition.item.effect_2.name if addition_passive.addition &&  addition_passive.addition.item && addition_passive.addition.item.effect_2
+            = addition_passive.addition.item.effect_2_value if addition_passive.addition &&  addition_passive.addition.item && addition_passive.addition.item.effect_2_value > 0
+          %td.sep{colspan: 2}
+            = addition_passive.addition.item.effect_3.name if addition_passive.addition &&  addition_passive.addition.item && addition_passive.addition.item.effect_3
+            = addition_passive.addition.item.effect_3_value if addition_passive.addition &&  addition_passive.addition.item && addition_passive.addition.item.effect_3_value > 0
+
+        %td.sep= character_link_text(addition_passive.addition.e_no, "付加者") if addition_passive.addition 
+        %td= character_old_link(@latest_result, addition_passive.addition.e_no, addition_passive.result_no, addition_passive.generate_no) if addition_passive.addition 
+        %td.sep= character_link_text(addition_passive.requester_e_no, "依頼者")
+        %td= character_old_link(@latest_result, addition_passive.requester_e_no, addition_passive.result_no, addition_passive.generate_no)
+= paginate(@addition_passives)

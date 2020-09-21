@@ -10,7 +10,52 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_18_090252) do
+ActiveRecord::Schema.define(version: 2020_09_20_102046) do
+
+  create_table "addition_passives", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "requester_e_no"
+    t.integer "addition_id"
+    t.integer "skill_id"
+    t.integer "result"
+    t.integer "increase"
+    t.integer "dice_total"
+    t.integer "dice_1"
+    t.integer "dice_2"
+    t.integer "dice_3"
+    t.integer "dice_4"
+    t.integer "dice_5"
+    t.integer "dice_6"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dice_total"], name: "index_addition_passives_on_dice_total"
+    t.index ["increase"], name: "index_addition_passives_on_increase"
+    t.index ["result"], name: "index_addition_passives_on_result"
+    t.index ["result_no", "requester_e_no", "generate_no"], name: "resultno_eno"
+    t.index ["skill_id"], name: "index_addition_passives_on_skill_id"
+  end
+
+  create_table "additions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "requester_e_no"
+    t.integer "addition_id"
+    t.integer "last_result_no"
+    t.integer "last_generate_no"
+    t.integer "target_i_no"
+    t.string "target_name"
+    t.integer "addition_i_no"
+    t.string "addition_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["addition_i_no"], name: "index_additions_on_addition_i_no"
+    t.index ["addition_id"], name: "index_additions_on_addition_id"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+    t.index ["result_no", "e_no", "target_i_no", "generate_no"], name: "resultno_item"
+    t.index ["target_i_no"], name: "index_additions_on_target_i_no"
+  end
 
   create_table "aide_candidates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -236,6 +281,48 @@ ActiveRecord::Schema.define(version: 2020_09_18_090252) do
     t.index ["source_2_i_no"], name: "index_compounds_on_source_2_i_no"
     t.index ["source_2_name"], name: "index_compounds_on_source_2_name"
     t.index ["sources_name"], name: "index_compounds_on_sources_name"
+  end
+
+  create_table "cook_passives", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "requester_e_no"
+    t.integer "cook_id"
+    t.integer "skill_id"
+    t.integer "result"
+    t.integer "increase"
+    t.integer "dice_total"
+    t.integer "dice_1"
+    t.integer "dice_2"
+    t.integer "dice_3"
+    t.integer "dice_4"
+    t.integer "dice_5"
+    t.integer "dice_6"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dice_total"], name: "index_cook_passives_on_dice_total"
+    t.index ["increase"], name: "index_cook_passives_on_increase"
+    t.index ["result"], name: "index_cook_passives_on_result"
+    t.index ["result_no", "requester_e_no", "generate_no"], name: "resultno_eno"
+    t.index ["skill_id"], name: "index_cook_passives_on_skill_id"
+  end
+
+  create_table "cooks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "requester_e_no"
+    t.integer "cook_id"
+    t.integer "last_result_no"
+    t.integer "last_generate_no"
+    t.integer "i_no"
+    t.string "source_name"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cook_id"], name: "index_cooks_on_cook_id"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+    t.index ["result_no", "e_no", "i_no", "generate_no"], name: "resultno_item"
   end
 
   create_table "drop_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
