@@ -41,7 +41,7 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "素材名", params_name: "source_name_form", placeholder: "Item", colspan: 3)
       %tr.sep
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "付加名", params_name: "effect_form", placeholder: "Fuka", colspan: 3)
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "効果名", params_name: "effect_form", placeholder: "Fuka", colspan: 3)
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_world",
@@ -63,7 +63,7 @@
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_fuka",
-                    label: {open: "付加枠ごとに付加を検索する", close: "付加枠ごとの検索フォームを表示しない"}, base_first: false)
+                    label: {open: "効果枠ごとに効果を検索する", close: "効果枠ごとの検索フォームを表示しない"}, base_first: false)
     %tbody.closed
       %tr.sep
         %td.indent

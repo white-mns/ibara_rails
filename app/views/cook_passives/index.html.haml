@@ -94,7 +94,7 @@
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_item",
                     label: {open: "料理アイテム情報を表示する", close: "料理アイテム情報を表示しない"},
-                    act_desc: "強さ、付加名、効果1～3個別の効果名、効果値", base_first: false)
+                    act_desc: "強さ、効果名、効果1～3個別の効果名、効果値", base_first: false)
     %tbody.closed
       %tr.sep
         %td.indent
@@ -104,7 +104,7 @@
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "強さ", params_name: "strength_form", colspan: 3)
       %tr.sep
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "付加名", params_name: "effect_form", placeholder: "Fuka", colspan: 3)
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "効果名", params_name: "effect_form", placeholder: "Fuka", colspan: 3)
       %tr.sep
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "効果1", params_name: "effect_1_form")
@@ -140,7 +140,7 @@
       %th= sort_link(@search, :requester_e_no,"料理者(Eno)", default_order: :desc)
       %th.sep= sort_link(@search, :skill_id, "スキル", default_order: :desc)
       %th.sep= sort_link(@search, :result, "結果", default_order: :desc)
-      %th.sep= sort_link(@search, :dice_total, "合計", default_order: :desc)
+      %th.sep= sort_link(@search, :dice_total, "ダイス合計", default_order: :desc)
       - if @form_params["show_dice"] == "1"
         %th.sep= sort_link(@search, :dice_1, "ダイス1", default_order: :desc)
         %th= sort_link(@search, :dice_2, "ダイス2", default_order: :desc)
