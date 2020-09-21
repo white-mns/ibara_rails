@@ -71,8 +71,11 @@
 
     - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_fuka",
-                    label: {open: "付加を表示する", close: "付加を表示しない"}, base_first: false)
+                    label: {open: "効果を表示する", close: "効果を表示しない"}, base_first: false)
     %tbody.closed
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "効果名", params_name: "effect_form", placeholder: "Fuka", colspan: 3)
       %tr.sep
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "効果1or武器", params_name: "effect_1_form")

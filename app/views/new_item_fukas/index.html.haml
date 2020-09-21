@@ -1,4 +1,4 @@
-- @page_title = "新出アイテム付加一覧"
+- @page_title = "新出アイテム付加効果一覧"
 %h1= @page_title
 
 .card.desc
@@ -30,7 +30,7 @@
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "付加名", params_name: "fuka_form", placeholder: "Fuka")
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "効果名", params_name: "fuka_form", placeholder: "Fuka")
 
     - #==========================================================================================================================
     %tbody
@@ -51,7 +51,7 @@
   %thead
     %tr
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
-      %th= sort_link(@search, :fuka_id, "付加名", default_order: :desc)
+      %th= sort_link(@search, :fuka_id, "効果名", default_order: :desc)
   %tbody
     - @new_item_fukas.each do |new_item_fuka|
       %tr
