@@ -26,10 +26,7 @@ gcc:7.3.1
 ・動かします。  
 
     cd ibara_rails
-    bundle install --path vendor/bundler
-（Gemのインストール先をアプリのディレクトリ内のvendor/bundleに指定します。  
-　この指定はなくても構いません。既に`.bundle`内に該当設定が指定されています。
-　`.bundle`ディレクトリを削除した場合その設定はなくなり、システム全体で共有されるgemを利用します）
+    bundle install
  
 ・DBを作成し、必要なテーブルの設定を行います。
  
