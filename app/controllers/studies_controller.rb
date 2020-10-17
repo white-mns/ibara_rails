@@ -8,8 +8,8 @@ class StudiesController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= Study.distinct.notnil().includes(:pc_name, :world, [skill: :timing], :party).groups(action_name, params).search(params[:q]).result.hit_count()
-    @search	= Study.distinct.notnil().includes(:pc_name, :world, [skill: :timing], :party).groups(action_name, params).for_group_select(action_name, params).having_order(params).page(params[:page]).search(params[:q])
+    @count	= Study.distinct.notnil().includes(:pc_name, :world, :party).groups(action_name, params).search(params[:q]).result.hit_count()
+    @search	= Study.distinct.notnil().includes(:pc_name, :world, :party).groups(action_name, params).for_group_select(action_name, params).having_order(params).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
     @studies	= @search.result.per(50)
   end
