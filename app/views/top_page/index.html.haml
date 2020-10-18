@@ -124,6 +124,37 @@
     %h2 更新履歴
     %div
       %ul
+        %li 2020/10/18
+        %ul
+          %li
+            10/16に確認した不具合を修正して再度サーバー移転
+          %li
+            = link_to "付加時パッシブ発動一覧", addition_passives_path
+            において、ダイスを振らない場合はダイス目0ではなく空欄で表示
+          %li
+            = link_to "新出予告NPC一覧", new_next_enemies_path
+            、
+            = link_to "初戦闘NPC一覧", new_battle_enemies_path
+            において、9/13の変更から敵名をクリックしたページで結果が絞り込まれていなかった不具合を修正
+
+        %li 2020/10/16
+        %ul
+          %li
+            サーバー移転に伴い
+            = link_to "スキル習得者数ランキング", skills_path + "?show_total=1&exclude_initial_active=on&exclude_initial_passive=on&ex_sort=on"
+            、
+            = link_to "研究済スキルランキング", studies_path + "?group_skill=on&ex_sort=on"
+            、
+            = link_to "スキル研究ランキング", onetime_studies_path + "?group_skill=on&ex_sort=on"
+            、
+            = link_to "合成組み合わせ一覧", compounds_path + "?result_no_form=""&group_source=on"
+            のデータ表示に不具合が生じたため、旧サーバーに差し戻しました。
+            %br
+            10/16 15:00頃までの間に上記ページを閲覧した方は、間違った情報を元に宣言していないかご注意ください。
+        %li 2020/10/13
+        %ul
+          %li
+            サーバー移転
         %li 2020/9/21
         %ul
           %li
@@ -221,6 +252,13 @@
             、
             = link_to "対人戦勝敗一覧", duel_infos_path
             のEnoとキャラクター名とPT名について、左右PTで検索フォームが別れていたのを統合し、左右同時に検索できるように変更
+    %p
+      %span.example_select.example_toggle.pointer
+        = fa_icon "history"
+        古い履歴
+        - act_desc(false)
+    .closed
+      %ul
         %li 2020/8/10
         %ul
           %li
@@ -297,13 +335,6 @@
           %li
             = link_to "スキル・付加発動結果一覧", battle_actions_path
             の負荷対策として、データ構造の最適化を行い、最初にページに移動した時はデータ件数を表示しないように変更
-    %p
-      %span.example_select.example_toggle.pointer
-        = fa_icon "history"
-        古い履歴
-        - act_desc(false)
-    .closed
-      %ul
         %li 2020/7/6
         %ul
           %li
