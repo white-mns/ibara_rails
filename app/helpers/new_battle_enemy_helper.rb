@@ -4,6 +4,6 @@ module NewBattleEnemyHelper
             return
         end
 
-        link_to object.enemy.name, battle_results_path + "?result_no_form=" + sprintf("%d", object.result_no) + "&enemy_form= \"" + object.enemy.name + "\""
+        link_to object.enemy.name, battle_results_path + "?result_no_form=" + sprintf("%d", object.result_no) + "&enemy_names_form= \"" + object.enemy.name + "\""
     end
 end

@@ -165,11 +165,11 @@
         %td{style: "#{ world_border(cook_passive.cook.world) }" }= pc_name_text(cook_passive.cook.e_no, cook_passive.cook.pc_name) if  cook_passive.cook
         %td.sep= cook_passive.skill.name if cook_passive.skill
         %td.sep= passive_result_text(cook_passive)
-        %td.sep= cook_passive.dice_total
+        %td.sep= cook_passive.dice_total if cook_passive.dice_total > 0
         - if @form_params["show_dice"] == "1"
-          %td.sep= cook_passive.dice_1
-          %td= cook_passive.dice_2
-          %td= cook_passive.dice_3
+          %td.sep= cook_passive.dice_1 if cook_passive.dice_1 > 0
+          %td= cook_passive.dice_2 if cook_passive.dice_2 > 0
+          %td= cook_passive.dice_3 if cook_passive.dice_3 > 0
         - if @form_params["show_source_name"] == "1"
           %td.sep= cook_passive.cook.source_name if cook_passive.cook
         - if @form_params["show_item_name"] == "1"
