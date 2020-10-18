@@ -166,11 +166,11 @@
         %td.sep= addition_passive.skill.name if addition_passive.skill
         %td.sep= passive_result_text(addition_passive)
         %td= addition_passive.increase if addition_passive.increase > 0
-        %td.sep= addition_passive.dice_total
+        %td.sep= addition_passive.dice_total if addition_passive.dice_total > 0
         - if @form_params["show_dice"] == "1"
-          %td.sep= addition_passive.dice_1
-          %td= addition_passive.dice_2
-          %td= addition_passive.dice_3
+          %td.sep= addition_passive.dice_1 if addition_passive.dice_1 > 0
+          %td= addition_passive.dice_2 if addition_passive.dice_2 > 0
+          %td= addition_passive.dice_3 if addition_passive.dice_3 > 0
         - if @form_params["show_addition_name"] == "1"
           %td.sep= addition_passive.addition.addition_name if addition_passive.addition
         - if @form_params["show_target_name"] == "1"
