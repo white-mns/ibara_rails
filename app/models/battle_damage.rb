@@ -82,16 +82,18 @@ class BattleDamage < ApplicationRecord
     }
 
     scope :includes_or_joins, ->(params) {
-        includes(:battle_info).
-        includes(battle_action: [:skill, :fuka]).
-        acter_includes(params).
-        acter_pt_includes(params).
-        target_includes(params).
-        target_pt_includes(params).
-        critical_includes(params).
-        protection_includes(params).
-        reflection_includes(params).
-        abnormal_includes(params)
+        unless params["is_form"]
+            includes(:battle_info).
+            includes(battle_action: [:skill, :fuka]).
+            acter_includes(params).
+            acter_pt_includes(params).
+            target_includes(params).
+            target_pt_includes(params).
+            critical_includes(params).
+            protection_includes(params).
+            reflection_includes(params).
+            abnormal_includes(params)
+        end
     }
 
     scope :acter_includes, ->(params) {

@@ -89,10 +89,6 @@ class BattleActionsController < ApplicationController
     @form_params["no_result"] = params["no_result"]
     @form_params["no_count"] = params["no_count"]
     
-    if !params["is_form"] && params["ex_sort"] == "on" then
-        params["is_form"] = 1
-    end
-
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
     toggle_params_to_variable(params, @form_params, params_name: "show_fuka")
     toggle_params_to_variable(params, @form_params, params_name: "show_place")

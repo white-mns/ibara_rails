@@ -20,8 +20,10 @@ class BattleAction < ApplicationRecord
     }
 
     scope :includes_or_joins, ->(params) {
-        includes(:battle_info, :skill, :fuka).
-        acter_includes(params)
+        unless params["is_form"]
+            includes(:skill, :fuka).
+            acter_includes(params)
+        end
     }
 
     scope :acter_includes, ->(params) {
