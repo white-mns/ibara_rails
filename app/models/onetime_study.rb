@@ -5,7 +5,7 @@ class OnetimeStudy < ApplicationRecord
 	belongs_to :skill,   :foreign_key => :skill_id, :primary_key => :skill_id, :class_name => "SkillDatum"
 
     scope :aggregations, ->(action_name, params) {
-        if params["group_skill"] == "on"then
+        if params["group_skill"] == "on" then
             select("*").
             select("SUM(depth) AS depth_sum")
         end
@@ -18,7 +18,7 @@ class OnetimeStudy < ApplicationRecord
     }
     
     scope :group_e_no, ->(params) {
-        if params["group_skill"] != "on"then
+        if params["group_skill"] != "on" then
             group("onetime_studies.e_no")
         end
     }

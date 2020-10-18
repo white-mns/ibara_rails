@@ -8,7 +8,7 @@ class Compound < ApplicationRecord
 	belongs_to :compound_result, :foreign_key => :compound_result_id, :primary_key => :proper_id, :class_name => "ProperName"
 
     scope :compound_includes, ->(params) {
-        if params["group_result"] == "on" || params["group_source"] then
+        if params["group_result"] == "on" || params["group_source"] == "on" then
             joins(:compound)
         else
             includes(:compound)
@@ -16,7 +16,7 @@ class Compound < ApplicationRecord
     }
 
     scope :aggregations, ->(params) {
-        if params["group_result"] == "on" || params["group_source"] then
+        if params["group_result"] == "on" || params["group_source"] == "on" then
             select("*").
             select("MAX(CASE WHEN compounds.is_success < 0 THEN superpowers.lv ELSE null END) AS failed_max,
                     MIN(CASE WHEN compounds.is_success > 0 THEN superpowers.lv ELSE null END) AS success_min")

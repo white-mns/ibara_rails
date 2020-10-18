@@ -9,14 +9,14 @@ class Skill < ApplicationRecord
 	belongs_to :skill_mastery, :foreign_key => :skill_id, :primary_key => :skill_id, :class_name => "SkillMastery"
 
     scope :groups, ->(params) {
-        if params["show_total"] then
+        if params["show_total"] == "1" then
             group("skills.result_no").
             group("skills.skill_id")
         end
     }
  
     scope :aggregations, ->(params) {
-        if params["show_total"] then
+        if params["show_total"] == "1" then
             select("*").
             select("COUNT(skills.id) AS user_count")
         end
