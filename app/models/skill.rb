@@ -15,7 +15,7 @@ class Skill < ApplicationRecord
         end
     }
  
-    scope :total, ->(params) {
+    scope :aggregations, ->(params) {
         if params["show_total"] then
             select("*").
             select("COUNT(skills.id) AS user_count")

@@ -9,7 +9,7 @@ class OnetimeStudiesController < ApplicationController
     param_set
 
     @count	= OnetimeStudy.distinct.notnil().includes(:pc_name, :world, :party).groups(action_name, params).search(params[:q]).result.hit_count()
-    @search	= OnetimeStudy.distinct.notnil().includes(:pc_name, :world, :party).groups(action_name, params).for_group_select(action_name, params).having_order(params).page(params[:page]).search(params[:q])
+    @search	= OnetimeStudy.distinct.notnil().includes(:pc_name, :world, :party).groups(action_name, params).aggregations(action_name, params).having_order(params).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
     @onetime_studies	= @search.result.per(50)
   end

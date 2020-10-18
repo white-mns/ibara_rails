@@ -9,7 +9,7 @@ class SkillsController < ApplicationController
     param_set
 
     @count	= Skill.distinct.notnil().includes(:pc_name, :world, :place, :party, :status).groups(params).search(params[:q]).result.hit_count()
-    @search	= Skill.distinct.notnil().includes(:pc_name, :world, :place, :party, :status).groups(params).total(params).having_order(params).page(params[:page]).search(params[:q])
+    @search	= Skill.distinct.notnil().includes(:pc_name, :world, :place, :party, :status).groups(params).aggregations(params).having_order(params).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
     @skills	= @search.result.per(50)
   end

@@ -4,7 +4,7 @@ class OnetimeStudy < ApplicationRecord
 	belongs_to :party,   :foreign_key => [:e_no, :result_no, :generate_no], :primary_key => [:e_no, :result_no, :generate_no], :class_name => "Party"
 	belongs_to :skill,   :foreign_key => :skill_id, :primary_key => :skill_id, :class_name => "SkillDatum"
 
-    scope :for_group_select, ->(action_name, params) {
+    scope :aggregations, ->(action_name, params) {
         if params["group_skill"] == "on"then
             select("*").
             select("SUM(depth) AS depth_sum")

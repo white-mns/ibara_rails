@@ -15,7 +15,7 @@ class Compound < ApplicationRecord
         end
     }
 
-    scope :for_group_select, ->(params) {
+    scope :aggregations, ->(params) {
         if params["group_result"] == "on" || params["group_source"] then
             select("*").
             select("MAX(CASE WHEN compounds.is_success < 0 THEN superpowers.lv ELSE null END) AS failed_max,
