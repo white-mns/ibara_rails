@@ -20,8 +20,14 @@ class BattleAction < ApplicationRecord
     }
 
     scope :includes_or_joins, ->(params) {
-        includes(:battle_info, :skill, :fuka).
-        includes(acter: [:pc_name, :world, :party, :enemy])
+        unless params["is_form"]
+            includes(:skill, :fuka).
+            acter_includes(params)
+        end
+    }
+
+    scope :acter_includes, ->(params) {
+        if params["group_acter"] == "on" then includes(acter: [:pc_name, :world, :party, :enemy]) end
     }
 
     scope :groups, ->(params) {

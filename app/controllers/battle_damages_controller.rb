@@ -126,10 +126,6 @@ class BattleDamagesController < ApplicationController
     acter_pm_matching(params, @form_params)
     target_pm_matching(params, @form_params)
 
-    if !params["is_form"] && params["ex_sort"] == "on" then
-        params["is_form"] = 1
-    end
-
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
     toggle_params_to_variable(params, @form_params, params_name: "show_fuka")
     toggle_params_to_variable(params, @form_params, params_name: "show_place")
