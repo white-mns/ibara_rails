@@ -11,11 +11,11 @@
 # 動作環境
 以下の環境での動作を確認しています  
   
-OS:CentOS release 6.5 (Final)  
-DB:MySQL 8.0.13  
-Ruby:2.5.0  
-Rails:5.2.1  
-gcc:7.3.1
+OS:CentOS Linux release 8.2.2004  
+DB:MySQL 8.0.21  
+Ruby:2.7.1  
+Rails:6.x  
+gcc:8.3.1
 
 ## 使い方
 ・Railsの使い方を調べてなんやかんやして自分のRailsアプリが動くようにします。  
@@ -26,10 +26,7 @@ gcc:7.3.1
 ・動かします。  
 
     cd ibara_rails
-    bundle install --path vendor/bundler
-（Gemのインストール先をアプリのディレクトリ内のvendor/bundleに指定します。  
-　この指定はなくても構いません。既に`.bundle`内に該当設定が指定されています。
-　`.bundle`ディレクトリを削除した場合その設定はなくなり、システム全体で共有されるgemを利用します）
+    bundle install
  
 ・DBを作成し、必要なテーブルの設定を行います。
  
@@ -38,7 +35,7 @@ gcc:7.3.1
     ./unicorn start
     
 他の方法でRailsが動かせるならUnicornである必要はありません。  
-ちなみにデータ小屋は開発環境をUnicorn(アプリ一つずつ再起動できる)、本番環境をPassenger（しばらく利用されてないアプリは眠らせられる）としています。
+なお、データ小屋は多数のRailsアプリを1つのサーバーで運用しているため、開発環境をUnicorn、本番環境をPassenger（しばらく利用されてないアプリは眠らせられる）としています。
 デフォルトの設定だと`http://サーバーのアドレス:61000`で画面が見れます。
 
 ## 動かない場合
@@ -65,7 +62,7 @@ gcc:7.3.1
 例えば、gcc 4.4.7では一部のgemのインストールがうまくいきませんでした。  
 5.2.1に上げれば動作することを確認しています。
 
-データ小屋はCentOSを使っているので、[Developer Toolset 7 &mdash; Software Collections](https://www.softwarecollections.org/en/scls/rhscl/devtoolset-7/)でgccのバージョンを上げました。
+CentOS6を使っていた旧サーバーでは、[Developer Toolset 7 &mdash; Software Collections](https://www.softwarecollections.org/en/scls/rhscl/devtoolset-7/)でgccのバージョンを上げていました。
 
 ## 機能の増やし方
 scaffoldで必要なものは大体用意されます。  
