@@ -197,7 +197,7 @@ module ApplicationHelper
 
         border_style = ""
         if world.world == 0 then border_style = "0.2rem #080 solid"
-        elsif world.world == 1 then border_style = "0.4rem #800 double"
+        elsif world.world == 1 then border_style = "0.4rem #c44 double"
         end
 
         "border-right: " + border_style;
