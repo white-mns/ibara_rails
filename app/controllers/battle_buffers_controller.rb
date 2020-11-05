@@ -8,10 +8,10 @@ class BattleBuffersController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= BattleBuffer.notnil().includes(:battle_info, :buffer).search(params[:q]).result.hit_count()
-    @search	= BattleBuffer.notnil().includes(:battle_info, :buffer).page(params[:page]).search(params[:q])
+    @count  = BattleBuffer.notnil().includes(:battle_info, :buffer).search(params[:q]).result.hit_count()
+    @search = BattleBuffer.notnil().includes(:battle_info, :buffer).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
-    @battle_buffers	= @search.result.per(50)
+    @battle_buffers = @search.result.per(50)
   end
 
   def param_set
@@ -21,7 +21,7 @@ class BattleBuffersController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"] ||= sprintf("%d",@latest_result)
+      params["result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
     params_to_form(params, @form_params, column_name: "result_no", params_name: "result_no_form", type: "number")

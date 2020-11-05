@@ -8,10 +8,10 @@ class PlacesController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= Place.notnil().includes(:pc_name, :world, :field).search(params[:q]).result.count()
-    @search	= Place.notnil().includes(:pc_name, :world, :field).page(params[:page]).search(params[:q])
+    @count  = Place.notnil().includes(:pc_name, :world, :field).search(params[:q]).result.count()
+    @search = Place.notnil().includes(:pc_name, :world, :field).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
-    @places	= @search.result.per(50)
+    @places = @search.result.per(50)
   end
 
   def param_set
@@ -21,12 +21,12 @@ class PlacesController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"]       ||= sprintf("%d",@latest_result)
-        params["place_result_no_form"] ||= sprintf("%d",@latest_result)
+      params["result_no_form"]       ||= sprintf("%d",@latest_result)
+      params["place_result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
     if params["area_column_form"] then
-        params["area_column_form"].upcase!
+      params["area_column_form"].upcase!
     end
 
     params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")
@@ -56,9 +56,9 @@ class PlacesController < ApplicationController
     params_to_form(params2, @form_params, column_name: "pc_name_name", params_name: "place_pc_name_form", type: "text")
 
     if params["place_e_no_form"] || params["place_pc_name_form"]
-        place_array = Place.pc_to_place_array(params2)
-        params[:q]["area_eq_any"] = place_array
-        params[:q]["field_id_eq_any"] = Place.pc_to_field_id(params2)
+      place_array = Place.pc_to_place_array(params2)
+      params[:q]["area_eq_any"] = place_array
+      params[:q]["field_id_eq_any"] = Place.pc_to_field_id(params2)
     end
     
     @form_params["place_result_no_form"] = params["place_result_no_form"]

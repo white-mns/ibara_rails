@@ -8,10 +8,10 @@ class CompoundsController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= Compound.notnil().includes(:pc_name, :world).compound_includes(params).groups(params).search(params[:q]).result.count().keys().size
-    @search	= Compound.notnil().includes(:pc_name, :world).compound_includes(params).groups(params).aggregations(params).page(params[:page]).search(params[:q])
+    @count  = Compound.notnil().includes(:pc_name, :world).compound_includes(params).groups(params).search(params[:q]).result.count().keys().size
+    @search = Compound.notnil().includes(:pc_name, :world).compound_includes(params).groups(params).aggregations(params).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
-    @compounds	= @search.result.per(50)
+    @compounds = @search.result.per(50)
   end
 
   def param_set
@@ -21,10 +21,10 @@ class CompoundsController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"] ||= sprintf("%d",@latest_result)
-        if params["group_result"] == "on" then
-            params["compound_result_form"] = "-活力漲る -滑々な -魔力溢れる"
-        end
+      params["result_no_form"] ||= sprintf("%d",@latest_result)
+      if params["group_result"] == "on" then
+        params["compound_result_form"] = "-活力漲る -滑々な -魔力溢れる"
+      end
     end
 
     params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")

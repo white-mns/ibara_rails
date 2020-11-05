@@ -8,10 +8,10 @@ class PartiesController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= Party.notnil().includes(:pc_name, :world).search(params[:q]).result.count()
-    @search	= Party.notnil().includes(:pc_name, :world).page(params[:page]).search(params[:q])
+    @count  = Party.notnil().includes(:pc_name, :world).search(params[:q]).result.count()
+    @search = Party.notnil().includes(:pc_name, :world).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
-    @parties	= @search.result.per(50)
+    @parties = @search.result.per(50)
   end
 
   def param_set
@@ -21,8 +21,8 @@ class PartiesController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"] ||= sprintf("%d",@latest_result)
-        params["pm_result_no_form"] ||= sprintf("%d",@latest_result)
+      params["result_no_form"] ||= sprintf("%d",@latest_result)
+      params["pm_result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
     params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")
@@ -58,8 +58,8 @@ class PartiesController < ApplicationController
                                           {params_name: "pm_next" ,  value: 1, first_checked: true}])
 
     if params["pm_e_no_form"] || params["pm_pc_name_form"]
-        party_member_array = Party.pc_to_party_member_array(params2)
-        params[:q]["e_no_eq_any"] = party_member_array.uniq
+      party_member_array = Party.pc_to_party_member_array(params2)
+      params[:q]["e_no_eq_any"] = party_member_array.uniq
     end
     
     # フォームに値を受け渡す用の空実行

@@ -8,10 +8,10 @@ class NextBattleInfosController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= NextBattleInfo.distinct.notnil().includes(:world, :place, [party_info: [party_members: [:pc_name, :move]]], [enemy_members: :enemy], :road, :grass, :swamp, :forest, :mountain).search(params[:q]).result.count()
-    @search	= NextBattleInfo.distinct.notnil().includes(:world, :place, [party_info: [party_members: [:pc_name, :move]]], [enemy_members: :enemy], :road, :grass, :swamp, :forest, :mountain).page(params[:page]).search(params[:q])
+    @count  = NextBattleInfo.distinct.notnil().includes(:world, :place, [party_info: [party_members: [:pc_name, :move]]], [enemy_members: :enemy], :road, :grass, :swamp, :forest, :mountain).search(params[:q]).result.count()
+    @search = NextBattleInfo.distinct.notnil().includes(:world, :place, [party_info: [party_members: [:pc_name, :move]]], [enemy_members: :enemy], :road, :grass, :swamp, :forest, :mountain).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
-    @next_battle_infos	= @search.result.per(50)
+    @next_battle_infos = @search.result.per(50)
   end
 
   def param_set
@@ -21,7 +21,7 @@ class NextBattleInfosController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"] ||= sprintf("%d",@latest_result)
+      params["result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
     params_to_form(params, @form_params, column_name: "result_no", params_name: "result_no_form", type: "number")

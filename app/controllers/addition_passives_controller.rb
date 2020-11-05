@@ -8,10 +8,10 @@ class AdditionPassivesController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= AdditionPassive.notnil().includes(:pc_name, :world, :skill, [addition: [:pc_name, :world, :party, item: [:kind, :effect_1, :effect_2, :effect_3]]]).search(params[:q]).result.hit_count()
-    @search	= AdditionPassive.notnil().includes(:pc_name, :world, :skill, [addition: [:pc_name, :world, :party, item: [:kind, :effect_1, :effect_2, :effect_3]]]).page(params[:page]).search(params[:q])
+    @count  = AdditionPassive.notnil().includes(:pc_name, :world, :skill, [addition: [:pc_name, :world, :party, item: [:kind, :effect_1, :effect_2, :effect_3]]]).search(params[:q]).result.hit_count()
+    @search = AdditionPassive.notnil().includes(:pc_name, :world, :skill, [addition: [:pc_name, :world, :party, item: [:kind, :effect_1, :effect_2, :effect_3]]]).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
-    @addition_passives	= @search.result.per(50)
+    @addition_passives = @search.result.per(50)
   end
 
   def param_set
@@ -21,7 +21,7 @@ class AdditionPassivesController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"] ||= sprintf("%d",@latest_result)
+      params["result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
     params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")

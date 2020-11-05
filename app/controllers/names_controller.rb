@@ -8,10 +8,10 @@ class NamesController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= Name.notnil().includes(:world).search(params[:q]).result.count()
-    @search	= Name.notnil().includes(:world).page(params[:page]).search(params[:q])
+    @count  = Name.notnil().includes(:world).search(params[:q]).result.count()
+    @search = Name.notnil().includes(:world).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
-    @names	= @search.result.per(50)
+    @names  = @search.result.per(50)
   end
 
   def param_set
@@ -21,7 +21,7 @@ class NamesController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"] ||= sprintf("%d",@latest_result)
+      params["result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
     params_to_form(params, @form_params, column_name: "name", params_name: "pc_name_form", type: "text")

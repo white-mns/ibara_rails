@@ -8,10 +8,10 @@ class ItemsController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= Item.distinct.notnil().includes(:pc_name, :world, :kind, :effect_1, :effect_2, :effect_3, :place, :party).search(params[:q]).result.hit_count()
-    @search	= Item.distinct.notnil().includes(:pc_name, :world, :kind, :effect_1, :effect_2, :effect_3, :place, :party).page(params[:page]).search(params[:q])
+    @count  = Item.distinct.notnil().includes(:pc_name, :world, :kind, :effect_1, :effect_2, :effect_3, :place, :party).search(params[:q]).result.hit_count()
+    @search = Item.distinct.notnil().includes(:pc_name, :world, :kind, :effect_1, :effect_2, :effect_3, :place, :party).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
-    @items	= @search.result.per(50)
+    @items  = @search.result.per(50)
   end
 
   def param_set
@@ -21,11 +21,11 @@ class ItemsController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"] ||= sprintf("%d",@latest_result)
+      params["result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
     if params["area_column_form"] then
-        params["area_column_form"].upcase!
+      params["area_column_form"].upcase!
     end
 
     params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")

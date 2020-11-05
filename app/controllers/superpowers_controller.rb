@@ -8,10 +8,10 @@ class SuperpowersController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= Superpower.distinct.notnil().includes(:pc_name, :world, :superpower, :place, :party).search(params[:q]).result.count()
-    @search	= Superpower.distinct.notnil().includes(:pc_name, :world, :superpower, :place, :party).page(params[:page]).search(params[:q])
+    @count  = Superpower.distinct.notnil().includes(:pc_name, :world, :superpower, :place, :party).search(params[:q]).result.count()
+    @search = Superpower.distinct.notnil().includes(:pc_name, :world, :superpower, :place, :party).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
-    @superpowers	= @search.result.per(50)
+    @superpowers  = @search.result.per(50)
   end
 
   # GET /superpower/combinations
@@ -21,10 +21,10 @@ class SuperpowersController < ApplicationController
     placeholder_set
     param_set_combination
 
-    @count	= Name.notnil().combination_includes(params, @superpower_datas).combination_groups(params).search(params[:q]).result.hit_count()
-    @search	= Name.notnil().combination_includes(params, @superpower_datas).combination_groups(params).page(params[:page]).search(params[:q])
+    @count  = Name.notnil().combination_includes(params, @superpower_datas).combination_groups(params).search(params[:q]).result.hit_count()
+    @search = Name.notnil().combination_includes(params, @superpower_datas).combination_groups(params).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
-    @superpowers	= @search.result.per(50)
+    @superpowers  = @search.result.per(50)
   end
 
   def param_set
@@ -34,11 +34,11 @@ class SuperpowersController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"] ||= sprintf("%d",@latest_result)
+      params["result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
     if params["area_column_form"] then
-        params["area_column_form"].upcase!
+      params["area_column_form"].upcase!
     end
 
     params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")
@@ -57,10 +57,10 @@ class SuperpowersController < ApplicationController
     checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",
                              checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},
                                           {params_name: "is_ansinity" , value: 1, first_checked: true}])
-    
+
     girth_matching(params, @form_params)
     pm_matching(params, @form_params)
-    
+
     # toggle操作用
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
     toggle_params_to_variable(params, @form_params, params_name: "show_place")
@@ -73,11 +73,11 @@ class SuperpowersController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"] ||= sprintf("%d",@latest_result)
+      params["result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
     if params["area_column_form"] then
-        params["area_column_form"].upcase!
+      params["area_column_form"].upcase!
     end
 
 
@@ -91,17 +91,17 @@ class SuperpowersController < ApplicationController
     blank_superpowers = []
 
     @superpower_datas.each do |superpower_data|
-        if params[superpower_data[:en] + "_form"] == "0" then
-            params.delete((superpower_data[:en] + "_form").to_sym)
-            params[:q][superpower_data[:en] + "_lv_blank"] = true
-            blank_superpowers.push(superpower_data[:en])
-        end
+      if params[superpower_data[:en] + "_form"] == "0" then
+        params.delete((superpower_data[:en] + "_form").to_sym)
+        params[:q][superpower_data[:en] + "_lv_blank"] = true
+        blank_superpowers.push(superpower_data[:en])
+      end
 
-        params_to_form(params, @form_params, column_name: superpower_data[:en] + "_lv", params_name: superpower_data[:en] + "_form", type: "number")
+      params_to_form(params, @form_params, column_name: superpower_data[:en] + "_lv", params_name: superpower_data[:en] + "_form", type: "number")
     end
 
     blank_superpowers.each do |blank|
-        @form_params[blank + "_form"] = "0"
+      @form_params[blank + "_form"] = "0"
     end
 
     params_to_form(params, @form_params, column_name: "skill_concatenate_skill_concatenate", params_name: "skill_form", type: "concat")
@@ -113,10 +113,10 @@ class SuperpowersController < ApplicationController
     checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",
                              checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},
                                           {params_name: "is_ansinity" , value: 1, first_checked: true}])
-    
+
     girth_matching(params, @form_params)
     pm_matching(params, @form_params)
-    
+
     # toggle操作用
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
     toggle_params_to_variable(params, @form_params, params_name: "show_place")

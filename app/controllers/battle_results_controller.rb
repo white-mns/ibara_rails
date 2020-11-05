@@ -8,10 +8,10 @@ class BattleResultsController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= BattleResult.distinct.notnil().includes(:battle_info, [last_battle_info: [:world, :place, :road, :grass, :swamp, :forest, :mountain ]], [party_info: [party_members: [:pc_name, :move]]], [enemy_members: :enemy]).search(params[:q]).result.hit_count()
-    @search	= BattleResult.distinct.notnil().includes(:battle_info, [last_battle_info: [:world, :place, :road, :grass, :swamp, :forest, :mountain ]], [party_info: [party_members: [:pc_name, :move]]], [enemy_members: :enemy]).page(params[:page]).search(params[:q])
+    @count  = BattleResult.distinct.notnil().includes(:battle_info, [last_battle_info: [:world, :place, :road, :grass, :swamp, :forest, :mountain ]], [party_info: [party_members: [:pc_name, :move]]], [enemy_members: :enemy]).search(params[:q]).result.hit_count()
+    @search = BattleResult.distinct.notnil().includes(:battle_info, [last_battle_info: [:world, :place, :road, :grass, :swamp, :forest, :mountain ]], [party_info: [party_members: [:pc_name, :move]]], [enemy_members: :enemy]).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
-    @battle_results	= @search.result.per(50)
+    @battle_results = @search.result.per(50)
   end
 
   def param_set
@@ -21,7 +21,7 @@ class BattleResultsController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"] ||= sprintf("%d",@latest_result)
+      params["result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
     params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")
@@ -98,10 +98,10 @@ class BattleResultsController < ApplicationController
     params[:q]["party_no_eq_any"] = detection_arrays[:or].flatten.uniq
 
     if params[:q]["party_no_eq_any"].length > 1 then 
-        params[:q]["party_no_eq_any"] += detection_arrays[:or].flatten.uniq
-        params[:q]["party_no_eq_any"] = params[:q]["party_no_eq_any"].flatten.group_by{ |e| e }.select { |k, v| v.size > 1 }.map(&:first)
+      params[:q]["party_no_eq_any"] += detection_arrays[:or].flatten.uniq
+      params[:q]["party_no_eq_any"] = params[:q]["party_no_eq_any"].flatten.group_by{ |e| e }.select { |k, v| v.size > 1 }.map(&:first)
     else
-        params[:q]["party_no_eq_any"] = detection_arrays[:and].flatten.uniq
+      params[:q]["party_no_eq_any"] = detection_arrays[:and].flatten.uniq
     end
 
     params[:q]["party_no_not_eq_all"] = detection_arrays[:not].flatten.uniq
