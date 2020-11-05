@@ -259,7 +259,7 @@ module MyUtility
     toggle_params_to_variable(params, form_params, params_name: "show_girth")
   end
 
-  # キャラ周囲絞り込み用
+  # PTM絞り込み用
   def pm_matching(params, form_params)
     unless params["is_form"]
       params["pm_result_no_form"] ||= sprintf("%d",@latest_result)
