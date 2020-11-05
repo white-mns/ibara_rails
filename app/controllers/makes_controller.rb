@@ -8,10 +8,10 @@ class MakesController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= Make.notnil().includes(:pc_name, :world, :last_item, :item, :kind).search(params[:q]).result.hit_count()
-    @search	= Make.notnil().includes(:pc_name, :world, :last_item, :item, :kind).page(params[:page]).search(params[:q])
+    @count  = Make.notnil().includes(:pc_name, :world, :last_item, :item, :kind).search(params[:q]).result.hit_count()
+    @search = Make.notnil().includes(:pc_name, :world, :last_item, :item, :kind).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
-    @makes	= @search.result.per(50)
+    @makes  = @search.result.per(50)
   end
 
   def param_set
@@ -21,7 +21,7 @@ class MakesController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"] ||= sprintf("%d",@latest_result)
+      params["result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
     params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")

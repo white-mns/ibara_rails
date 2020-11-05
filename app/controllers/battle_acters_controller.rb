@@ -8,10 +8,10 @@ class BattleActersController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= BattleActer.notnil().includes(:battle_info, :pc_name, :world, :party, :enemy).search(params[:q]).result.hit_count()
-    @search	= BattleActer.notnil().includes(:battle_info, :pc_name, :world, :party, :enemy).page(params[:page]).search(params[:q])
+    @count  = BattleActer.notnil().includes(:battle_info, :pc_name, :world, :party, :enemy).search(params[:q]).result.hit_count()
+    @search = BattleActer.notnil().includes(:battle_info, :pc_name, :world, :party, :enemy).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
-    @battle_acters	= @search.result.per(50)
+    @battle_acters = @search.result.per(50)
   end
 
   def param_set
@@ -21,7 +21,7 @@ class BattleActersController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"] ||= sprintf("%d",@latest_result)
+      params["result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
     params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")

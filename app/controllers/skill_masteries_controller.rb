@@ -8,10 +8,10 @@ class SkillMasteriesController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= SkillMastery.includes(:requirement_1, :requirement_2, :skill).search(params[:q]).result.count()
-    @search	= SkillMastery.includes(:requirement_1, :requirement_2, :skill).page(params[:page]).search(params[:q])
+    @count  = SkillMastery.includes(:requirement_1, :requirement_2, :skill).search(params[:q]).result.count()
+    @search = SkillMastery.includes(:requirement_1, :requirement_2, :skill).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
-    @skill_masteries	= @search.result.per(50)
+    @skill_masteries = @search.result.per(50)
   end
 
   def param_set
@@ -21,7 +21,7 @@ class SkillMasteriesController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"] ||= sprintf("%d",@latest_result)
+      params["result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
     params_to_form(params, @form_params, column_name: "skill_id", params_name: "skill_id_form", type: "number")

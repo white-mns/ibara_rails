@@ -55,10 +55,10 @@ module MyUtility
         if text && text.match("/")
           texts_or = text.split("/")
           for text_or in texts_or do
-            reference_word_set(params, data_name, text_or, match_suffix, "any") 
+            reference_word_set(params, data_name, text_or, match_suffix, "any")
           end
         else
-          reference_word_set(params, data_name, text, match_suffix, "all") 
+          reference_word_set(params, data_name, text, match_suffix, "all")
         end
       end
     end
@@ -78,21 +78,21 @@ module MyUtility
       operator_suffix = "all"
       data_name = data_name.gsub(/_or_/, "_and_")
     end
-      
+
     if text[0] == "\"" && text[-1] == "\""
       # 完全一致に添字を変更
       text.slice!(0,1)
       text.slice!(-1,1)
       match_suffix = "eq"
     end
-      
+
     param_push(params, data_name + "_" + not_suffix + match_suffix + "_" + operator_suffix, text)
   end
 
   # 検索文字列を分割し、Ransackが参照する配列に割り当てる
   def reference_concat_assign(params, data_name, param_key)
     return unless params[param_key]
-    
+
     match_suffix = "cont"
 
     texts = (params[param_key].include?(' ')) ? params[param_key].gsub(/[“”]/, "\"").split(" ") : [params[param_key].dup.gsub(/[“”]/, "\"")]
@@ -102,10 +102,10 @@ module MyUtility
         if text && text.match("/")
           texts_or = text.split("/")
           for text_or in texts_or do
-            reference_concat_set(params, data_name, text_or, match_suffix, "any") 
+            reference_concat_set(params, data_name, text_or, match_suffix, "any")
           end
         else
-          reference_concat_set(params, data_name, text, match_suffix, "all") 
+          reference_concat_set(params, data_name, text, match_suffix, "all")
         end
       end
     end
@@ -124,7 +124,7 @@ module MyUtility
       operator_suffix = "all"
       data_name = data_name.gsub(/_or_/, "_and_")
     end
-      
+
     param_push(params, data_name + "_" + not_suffix + match_suffix + "_" + operator_suffix, text)
   end
 
@@ -138,10 +138,10 @@ module MyUtility
       for text in texts do
         if text && text.match(/([\-\.\d]+)~([\-\.\d]+)/)
           text_match = text.match(/([\-\.\d]+)~([\-\.\d]+)/)
-          reference_number_set(params, data_name, text_match[0] + "~") 
-          reference_number_set(params, data_name, "~" + text_match[2]) 
+          reference_number_set(params, data_name, text_match[0] + "~")
+          reference_number_set(params, data_name, "~" + text_match[2])
         else
-          reference_number_set(params, data_name, text) 
+          reference_number_set(params, data_name, text)
         end
       end
     end
@@ -154,16 +154,16 @@ module MyUtility
       text.slice!(0,1)
       match_suffix = "lteq"
     end
-      
+
     if text[-1] == "~"
       text.slice!(-1,1)
       match_suffix = "gteq"
     end
-      
+
     param_push(params, data_name + "_" + match_suffix + "_any", text)
   end
- 
-  # Ransackの検索用パラメータに追加。配列がない場合は作成する 
+
+  # Ransackの検索用パラメータに追加。配列がない場合は作成する
   def param_push(params, ransack_param, text)
     unless params[:q][ransack_param].is_a?(Array)
       params[:q][ransack_param] = Array.new
@@ -184,16 +184,16 @@ module MyUtility
     if params[:q][dummy_param]
       params[:q][dummy_param].each do |tmp_param|
         params_tmp[:q][param] = tmp_param
-        nos = record.search(params_tmp[:q]).result.pluck(column).uniq
+        search_result = record.search(params_tmp[:q]).result.pluck(column).uniq
         if detection_arrays[:and].length > 1
-          detection_arrays[:and] = detection_arrays[:and] & nos
+          detection_arrays[:and] = detection_arrays[:and] & search_result
         else
-          detection_arrays[:and] += nos
+          detection_arrays[:and] += search_result
         end
 
         # 絞り込んだ結果ヒット件数が0になった場合、ダミー値で絞り込ませる
         # 　0件で配列を返すと、絞り込みが行われず全件ヒットするため
-        if detection_arrays[:and].length == 0 then 
+        if detection_arrays[:and].length == 0
           detection_arrays[:and] = [-99999]
           return
         end
@@ -207,8 +207,8 @@ module MyUtility
   def add_or_param_for_has_many(params, params_tmp, detection_arrays, dummy_param, param, record, column)
     if params[:q][dummy_param]
       params_tmp[:q][param] = params[:q][dummy_param]
-      nos = record.search(params_tmp[:q]).result.pluck(column)
-      detection_arrays[:or] += nos
+      search_result = record.search(params_tmp[:q]).result.pluck(column)
+      detection_arrays[:or] += search_result
 
       # 絞り込んだ結果ヒット件数が0になった場合、ダミー値で絞り込ませる
       # 　0件で配列を返すと、絞り込みが行われず全件ヒットするため
@@ -225,8 +225,8 @@ module MyUtility
   def add_not_param_for_has_many(params, params_tmp, detection_arrays, dummy_param, param, record, column)
     if params[:q][dummy_param]
       params_tmp[:q][param] = params[:q][dummy_param]
-      nos = record.search(params_tmp[:q]).result.pluck(column)
-      detection_arrays[:not] += nos
+      search_result = record.search(params_tmp[:q]).result.pluck(column)
+      detection_arrays[:not] += search_result
       params_tmp[:q].delete(param)
     end
   end
@@ -251,7 +251,7 @@ module MyUtility
       params[:q]["place_area_eq_any"] = place_array
       params[:q]["place_field_id_eq_any"] = Place.pc_to_field_id(params_tmp)
     end
-      
+
     form_params["place_result_no_form"] = params["place_result_no_form"]
     form_params["place_e_no_form"] = params["place_e_no_form"]
     form_params["place_pc_name_form"] = params["place_pc_name_form"]
@@ -259,7 +259,7 @@ module MyUtility
     toggle_params_to_variable(params, form_params, params_name: "show_girth")
   end
 
-  # キャラ周囲絞り込み用
+  # PTM絞り込み用
   def pm_matching(params, form_params)
     unless params["is_form"]
       params["pm_result_no_form"] ||= sprintf("%d",@latest_result)
@@ -283,7 +283,7 @@ module MyUtility
 
     if params["pm_e_no_form"] || params["pm_pc_name_form"]
       party_member_array = Party.pc_to_party_member_array(params_tmp)
-      if params[:q]["e_no_eq_any"] then
+      if params[:q]["e_no_eq_any"]
         params[:q]["e_no_eq_any"] = params[:q]["e_no_eq_any"].push(party_member_array).flatten
       else
         params[:q]["e_no_eq_any"] = party_member_array

@@ -8,10 +8,10 @@ class CookPassivesController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= CookPassive.notnil().includes(:pc_name, :world, :skill, [cook: [:pc_name, :world, :party, item: [:kind, :effect_1, :effect_2, :effect_3]]]).search(params[:q]).result.hit_count()
-    @search	= CookPassive.notnil().includes(:pc_name, :world, :skill, [cook: [:pc_name, :world, :party, item: [:kind, :effect_1, :effect_2, :effect_3]]]).page(params[:page]).search(params[:q])
+    @count  = CookPassive.notnil().includes(:pc_name, :world, :skill, [cook: [:pc_name, :world, :party, item: [:kind, :effect_1, :effect_2, :effect_3]]]).search(params[:q]).result.hit_count()
+    @search = CookPassive.notnil().includes(:pc_name, :world, :skill, [cook: [:pc_name, :world, :party, item: [:kind, :effect_1, :effect_2, :effect_3]]]).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
-    @cook_passives	= @search.result.per(50)
+    @cook_passives = @search.result.per(50)
   end
 
   def param_set
@@ -21,7 +21,7 @@ class CookPassivesController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"] ||= sprintf("%d",@latest_result)
+      params["result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
     params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")

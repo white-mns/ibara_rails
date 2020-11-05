@@ -247,22 +247,17 @@ table thead th{
     }
 }
 
-$submit-color: $gray;
-
-button.submit {
-    background-color: $submit-color;
-    border: 0.2rem solid #fff;
+.btn-outline-search {
+    background-color: $gray;
+    border: 0.2rem solid $white;
     box-shadow: 0 0.1rem 0.5rem rgba(0,0,0,0.2);
-    color: #fff;
-    font-weight: bold;
-    padding: 0.5rem 0.8rem;
-    transition: 0.2s linear;
+    color: $white;
 }
 
-button.submit:hover {
-    background-color: #fff;
-    border: 0.2rem solid $submit-color;
-    color: $submit-color;
+.btn-outline-search:hover {
+    border: 0.2rem solid $white;
+    background-color: $white;
+    color: $gray-darker;
 }
 
 input[type=checkbox] {

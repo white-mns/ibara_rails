@@ -8,10 +8,10 @@ class ProperNamesController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= ProperName.search(params[:q]).result.count()
-    @search	= ProperName.page(params[:page]).search(params[:q])
+    @count  = ProperName.search(params[:q]).result.count()
+    @search = ProperName.page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
-    @proper_names	= @search.result.per(50)
+    @proper_names = @search.result.per(50)
   end
 
   def param_set

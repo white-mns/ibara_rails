@@ -13,10 +13,10 @@ class <%= controller_class_name %>Controller < ApplicationController
     placeholder_set
     param_set
 
-    @count	= <%= class_name %>.notnil().includes(:pc_name, :world).search(params[:q]).result.hit_count()
-    @search	= <%= class_name %>.notnil().includes(:pc_name, :world).page(params[:page]).search(params[:q])
+    @count  = <%= class_name %>.notnil().includes(:pc_name, :world).search(params[:q]).result.hit_count()
+    @search = <%= class_name %>.notnil().includes(:pc_name, :world).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
-    @<%= plural_table_name %>	= @search.result.per(50)
+    @<%= plural_table_name %> = @search.result.per(50)
   end
 
   def param_set

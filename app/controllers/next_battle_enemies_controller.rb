@@ -8,10 +8,10 @@ class NextBattleEnemiesController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= NextBattleEnemy.notnil().includes(:world, :enemy).search(params[:q]).result.count()
-    @search	= NextBattleEnemy.notnil().includes(:world, :enemy).page(params[:page]).search(params[:q])
+    @count  = NextBattleEnemy.notnil().includes(:world, :enemy).search(params[:q]).result.count()
+    @search = NextBattleEnemy.notnil().includes(:world, :enemy).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
-    @next_battle_enemies	= @search.result.per(50)
+    @next_battle_enemies = @search.result.per(50)
   end
 
   def param_set
@@ -21,7 +21,7 @@ class NextBattleEnemiesController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"] ||= sprintf("%d",@latest_result)
+      params["result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
     params_to_form(params, @form_params, column_name: "result_no", params_name: "result_no_form", type: "number")

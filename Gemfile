@@ -11,7 +11,6 @@ gem 'mysql2'
 gem 'puma'
 # Use SCSS for stylesheets
 gem 'sassc-rails'
-gem 'sassc'
 # Use Haml
 gem 'haml-rails'
 # Use Uglifier as compressor for JavaScript assets

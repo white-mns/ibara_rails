@@ -8,10 +8,10 @@ class SuperpowerDataController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= SuperpowerDatum.search(params[:q]).result.count()
-    @search	= SuperpowerDatum.page(params[:page]).search(params[:q])
+    @count  = SuperpowerDatum.search(params[:q]).result.count()
+    @search = SuperpowerDatum.page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
-    @superpower_data	= @search.result.per(50)
+    @superpower_data = @search.result.per(50)
   end
 
   def param_set
@@ -21,7 +21,7 @@ class SuperpowerDataController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"] ||= sprintf("%d",@latest_result)
+      params["result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
     params_to_form(params, @form_params, column_name: "superpower_id", params_name: "superpower_id_form", type: "number")

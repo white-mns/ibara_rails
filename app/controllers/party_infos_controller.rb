@@ -8,10 +8,10 @@ class PartyInfosController < ApplicationController
     placeholder_set
     param_set
 
-    @count	= PartyInfo.notnil().includes(:world, [party_members: :pc_name], :place).search(params[:q]).result.count()
-    @search	= PartyInfo.notnil().includes(:world, [party_members: :pc_name], :place).page(params[:page]).search(params[:q])
+    @count  = PartyInfo.notnil().includes(:world, [party_members: :pc_name], :place).search(params[:q]).result.count()
+    @search = PartyInfo.notnil().includes(:world, [party_members: :pc_name], :place).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
-    @party_infos	= @search.result.per(50)
+    @party_infos = @search.result.per(50)
   end
 
   def param_set
@@ -21,11 +21,11 @@ class PartyInfosController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"] ||= sprintf("%d",@latest_result)
+      params["result_no_form"] ||= sprintf("%d",@latest_result)
     end
 
     if params["area_column_form"] then
-        params["area_column_form"].upcase!
+      params["area_column_form"].upcase!
     end
 
     params_to_form(params, @form_params, column_name: "result_no", params_name: "result_no_form", type: "number")
