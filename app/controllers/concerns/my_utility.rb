@@ -193,7 +193,7 @@ module MyUtility
 
         # 絞り込んだ結果ヒット件数が0になった場合、ダミー値で絞り込ませる
         # 　0件で配列を返すと、絞り込みが行われず全件ヒットするため
-        if detection_arrays[:and].length == 0 then
+        if detection_arrays[:and].length == 0
           detection_arrays[:and] = [-99999]
           return
         end
@@ -283,7 +283,7 @@ module MyUtility
 
     if params["pm_e_no_form"] || params["pm_pc_name_form"]
       party_member_array = Party.pc_to_party_member_array(params_tmp)
-      if params[:q]["e_no_eq_any"] then
+      if params[:q]["e_no_eq_any"]
         params[:q]["e_no_eq_any"] = params[:q]["e_no_eq_any"].push(party_member_array).flatten
       else
         params[:q]["e_no_eq_any"] = party_member_array
