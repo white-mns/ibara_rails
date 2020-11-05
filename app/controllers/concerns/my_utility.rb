@@ -184,11 +184,11 @@ module MyUtility
     if params[:q][dummy_param]
       params[:q][dummy_param].each do |tmp_param|
         params_tmp[:q][param] = tmp_param
-        nos = record.search(params_tmp[:q]).result.pluck(column).uniq
+        search_result = record.search(params_tmp[:q]).result.pluck(column).uniq
         if detection_arrays[:and].length > 1
-          detection_arrays[:and] = detection_arrays[:and] & nos
+          detection_arrays[:and] = detection_arrays[:and] & search_result
         else
-          detection_arrays[:and] += nos
+          detection_arrays[:and] += search_result
         end
 
         # 絞り込んだ結果ヒット件数が0になった場合、ダミー値で絞り込ませる
@@ -207,8 +207,8 @@ module MyUtility
   def add_or_param_for_has_many(params, params_tmp, detection_arrays, dummy_param, param, record, column)
     if params[:q][dummy_param]
       params_tmp[:q][param] = params[:q][dummy_param]
-      nos = record.search(params_tmp[:q]).result.pluck(column)
-      detection_arrays[:or] += nos
+      search_result = record.search(params_tmp[:q]).result.pluck(column)
+      detection_arrays[:or] += search_result
 
       # 絞り込んだ結果ヒット件数が0になった場合、ダミー値で絞り込ませる
       # 　0件で配列を返すと、絞り込みが行われず全件ヒットするため
@@ -225,8 +225,8 @@ module MyUtility
   def add_not_param_for_has_many(params, params_tmp, detection_arrays, dummy_param, param, record, column)
     if params[:q][dummy_param]
       params_tmp[:q][param] = params[:q][dummy_param]
-      nos = record.search(params_tmp[:q]).result.pluck(column)
-      detection_arrays[:not] += nos
+      search_result = record.search(params_tmp[:q]).result.pluck(column)
+      detection_arrays[:not] += search_result
       params_tmp[:q].delete(param)
     end
   end
