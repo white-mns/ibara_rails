@@ -72,7 +72,7 @@ module ApplicationHelper
   end
 
   def search_submit_button()
-    haml_tag :button, class: "btn submit", type: "submit" do
+    haml_tag :button, class: "btn btn-outline-search", type: "submit" do
       haml_concat fa_icon "search", text: "検索する"
     end
   end
