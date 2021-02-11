@@ -63,6 +63,19 @@
         - td_form(f, @form_params, @placeholder, params_name: "group_form", colspan: 3, 
                     checkboxes: [{label: "合成結果でまとめて表示",         params_name: "group_result", class_name: "after_space", br: true},
                                  {label: "素材の組み合わせでまとめて表示", params_name: "group_source", class_name: "after_space"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_equipment",
+                    label: {open: "強化合成結果を表示する", close: "強化合成結果を表示しない"}, base_first: true)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, params_name: "group_form", colspan: 3, 
+                    checkboxes: [{label: "強化合成結果のみ表示",         params_name: "show_only_equipment"}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "装備名", params_name: "equipment_name_form", colspan: 3)
+
     - #==========================================================================================================================
     %tbody
       %tr.sep
@@ -70,7 +83,6 @@
         %td.indent= hidden_field_tag :is_form, 1
         %td{colspan: "3"}
           - search_submit_button
-
 
 = paginate(@compounds)
 %br
@@ -111,7 +123,9 @@
           %td.sep= compound_is_success_text(compound)
           %td.sep= compound.source_1_name
           %td= compound.source_2_name
-        %td.sep= compound.compound_result.name if compound.compound_result
+        %td.sep
+          = compound.compound_result.name if compound.compound_result
+          = compound.equipment_data.name if compound.is_equipment == 1 && compound.equipment_data
         - if params["group_result"] != "on" && params["group_source"] != "on"
           %td
             - if compound.compound
