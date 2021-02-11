@@ -8,8 +8,8 @@ class CompoundsController < ApplicationController
     placeholder_set
     param_set
 
-    @count  = Compound.notnil().includes(:pc_name, :world).compound_includes(params).groups(params).search(params[:q]).result.count().keys().size
-    @search = Compound.notnil().includes(:pc_name, :world).compound_includes(params).groups(params).aggregations(params).page(params[:page]).search(params[:q])
+    @count  = Compound.notnil().includes(:pc_name, :world).associations(params).groups(params).search(params[:q]).result.count().keys().size
+    @search = Compound.notnil().includes(:pc_name, :world).associations(params).groups(params).aggregations(params).page(params[:page]).search(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @compounds = @search.result.per(50)
   end
@@ -44,6 +44,7 @@ class CompoundsController < ApplicationController
     params_to_form(params, @form_params, column_name: "source_1_name_or_source_2_name", params_name: "source_name_form", type: "text")
     params_to_form(params, @form_params, column_name: "compound_result_name", params_name: "compound_result_form", type: "text")
     params_to_form(params, @form_params, column_name: "compound_lv", params_name: "compound_lv_form", type: "number")
+    params_to_form(params, @form_params, column_name: "equipment_data_name", params_name: "equipment_name_form", type: "text")
 
     checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",
                              checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},
@@ -55,10 +56,18 @@ class CompoundsController < ApplicationController
                                           {params_name: "compound_deficient_lv",  value: -1, first_checked: true},
                                           {params_name: "compound_nihility",      value: -2}])
 
+    unless (params["show_equipment"] == "1")
+      params[:q]["is_equipment_eq"] = 0
+    else
+      params[:q].delete("is_equipment_eq")
+    end
+    if (params["show_only_equipment"] == "on") then params[:q]["is_equipment_eq"] = 1 end
+
     @form_params["group_result"] = params["group_result"]
-    @form_params["group_source"] = params["group_source"]
+    @form_params["show_only_equipment"] = params["show_only_equipment"]
 
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
+    toggle_params_to_variable(params, @form_params, params_name: "show_equipment")
   end
   # GET /compounds/1
   #def show
