@@ -37,9 +37,9 @@
                                  {label: "SPダメージ", params_name: "damage_type_sp_damage", br: true},
                                  {label: "HP回復",     params_name: "damage_type_heal",      class_name: "after_space"},
                                  {label: "SP回復",     params_name: "damage_type_sp_heal",   br: true},
-                                 {label: "異常追加",   params_name: "damage_type_abnormal",  class_name: "after_space"},
-                                 {label: "異常抵抗",   params_name: "damage_type_resist",    br: true}])
-      %tr
+                                 {label: "変調追加",   params_name: "damage_type_abnormal",  class_name: "after_space"},
+                                 {label: "変調抵抗",   params_name: "damage_type_resist",  class_name: "after_space"},
+                                 {label: "変調軽減",   params_name: "damage_type_reduce",    br: true}])
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "発動者", params_name: "acter_form", 
                     checkboxes: [{label: "PC",  params_name: "acter_pc", class_name: "after_space"},
