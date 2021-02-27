@@ -136,7 +136,7 @@
   %thead
     %tr
       %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
-      %th= sort_link(@search, :requester_e_no,"付加者(Eno)", default_order: :desc)
+      %th= sort_link(@search, :addition_e_no,"付加者(Eno)", default_order: :desc)
       %th.sep= sort_link(@search, :skill_id, "スキル", default_order: :desc)
       %th.sep= sort_link(@search, :result, "結果", default_order: :desc)
       %th= sort_link(@search, :increase, "増加LV", default_order: :desc)
