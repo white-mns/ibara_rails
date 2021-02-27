@@ -12,6 +12,7 @@ module BattleDamageHelper
     elsif object.damage_type == 5 then "守護回避"
     elsif object.damage_type == 6 then "変調"
     elsif object.damage_type == 7 then "抵抗"
+    elsif object.damage_type == 8 then "軽減"
     else object.damage_type
     end
   end

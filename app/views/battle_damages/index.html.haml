@@ -31,11 +31,15 @@
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "種類", params_name: "damage_type_form", colspan: 3, 
-                    checkboxes: [{label: "回避",       params_name: "damage_type_dodge",     br: true},
+                    checkboxes: [{label: "回避",       params_name: "damage_type_dodge",    class_name: "after_space"},
+                                 {label: "守護回避",   params_name: "damage_type_dodge_protection", br: true},
                                  {label: "ダメージ",   params_name: "damage_type_damage",    class_name: "after_space"},
                                  {label: "SPダメージ", params_name: "damage_type_sp_damage", br: true},
                                  {label: "HP回復",     params_name: "damage_type_heal",      class_name: "after_space"},
-                                 {label: "SP回復",     params_name: "damage_type_sp_heal",   br: true}])
+                                 {label: "SP回復",     params_name: "damage_type_sp_heal",   br: true},
+                                 {label: "変調追加",   params_name: "damage_type_abnormal",  class_name: "after_space"},
+                                 {label: "変調抵抗",   params_name: "damage_type_resist",  class_name: "after_space"},
+                                 {label: "変調軽減",   params_name: "damage_type_reduce",    br: true}])
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "効果量", params_name: "value_form", placeholder: "Number", colspan: 3)
