@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :battle_equips
   resources :cook_passives
   resources :addition_passives
   resources :cooks

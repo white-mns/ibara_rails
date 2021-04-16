@@ -1,0 +1,176 @@
+- @page_title = "装備一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "戦闘の種類", params_name: "battle_type_form", colspan: 3, 
+                    checkboxes: [{label: "ENCOUNTER - 『遭遇戦』『採集』", params_name: "is_encounter",  br: true},
+                                 {label: "MISSION - 『開放戦』『特殊戦』", params_name: "is_mission",    br: true},
+                                 {label: "DUEL　- 『決闘』",               params_name: "is_duel",       br: true},
+                                 {label: "GAME　- 『練習戦』",             params_name: "is_game",       br: true},
+                                 {label: "闘技大会",                       params_name: "is_tournament", br: true}])
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "アイテム名", params_name: "name_form", placeholder: "Item")
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "種類", params_name: "kind_form", placeholder: "ItemKind")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "強さ", params_name: "strength_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "射程", params_name: "range_form")
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "効果名", params_name: "effect_form", placeholder: "Fuka", colspan: 3)
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_fuka",
+                    label: {open: "効果枠ごとに効果を検索する", close: "効果枠ごとの検索フォームを表示しない"}, base_first: false)
+    %tbody.closed
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "効果1or武器", params_name: "effect_1_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "効果値", params_name: "effect_1_value_form", placeholder: "Number")
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "効果2or防具", params_name: "effect_2_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "効果値", params_name: "effect_2_value_form")
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "効果3or装飾", params_name: "effect_3_form")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "効果値", params_name: "effect_3_value_form")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_place",
+                    label: {open: "現在地を表示する", close: "現在地を表示しない"},
+                    act_desc: "区、列、行", base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "区", params_name: "field_form", placeholder: "Field", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "列", params_name: "area_column_form", placeholder: "AreaColumn")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "行", params_name: "area_row_form", placeholder: "Number")
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_pm",
+                    label: {open: "指定キャラのパーティメンバーで絞り込む", close: "指定キャラのパーティメンバーで絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "pm_result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "pm_e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pm_pc_name_form", placeholder: "Name")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, params_name: "pm_party_type_form", colspan: 3, 
+                    checkboxes: [{label: "戦闘PTM",     params_name: "pm_battle", class_name: "after_space mobile_br"},
+                                 {label: "次回予告PTM", params_name: "pm_next"}])
+
+    - #==========================================================================================================================
+    %tbody
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+
+= paginate(@battle_equips)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
+      %th.sep= sort_link(@search, :battle_info_battle_type, "戦闘の種類", default_order: :desc)
+      %th.sep= sort_link(@search, :name, "アイテム名", default_order: :desc)
+      %th= sort_link(@search, :kind_id, "種類", default_order: :desc)
+      %th= sort_link(@search, :strength, "強さ", default_order: :desc)
+      %th= sort_link(@search, :range, "射程", default_order: :desc)
+      %th.sep= sort_link(@search, :effect_1_id, "効果1or武器", default_order: :desc)
+      %th= sort_link(@search, :effect_1_value, "効果値", default_order: :desc)
+      %th.sep= sort_link(@search, :effect_2_id, "効果2or防具", default_order: :desc)
+      %th= sort_link(@search, :effect_2_value, "効果値", default_order: :desc)
+      %th.sep= sort_link(@search, :effect_3_id, "効果3or装飾", default_order: :desc)
+      %th= sort_link(@search, :effect_3_value, "効果値", default_order: :desc)
+      - if @form_params["show_place"] == "1" || @form_params["show_girth"] == "1" 
+        %th.sep= sort_link(@search, :place_field_id, "区", default_order: :desc)
+        %th= sort_link(@search, :place_area_column, "列", default_order: :desc)
+        %th= sort_link(@search, :place_area_row, "行", default_order: :desc)
+      %th.sep{colspan: "2"} 個人リンク
+      %th.sep{colspan: "2"} 戦闘リンク
+  %tbody
+    - @battle_equips.each do |battle_equip|
+      %tr
+        %td= battle_equip.result_no
+        %td{style: "#{ world_border(battle_equip.world) }" }= pc_name_text(battle_equip.e_no, battle_equip.pc_name)
+        %td.sep= battle_type_text(battle_equip.battle_info)
+        %td.sep= battle_equip.name
+        %td= battle_equip.kind.name if battle_equip.kind
+        %td= battle_equip.strength
+        %td= battle_equip.range if battle_equip.range > 0
+        %td.sep{colspan: 2}
+          = battle_equip.effect_1.name if battle_equip.effect_1
+          = battle_equip.effect_1_value if battle_equip.effect_1_value > 0
+        %td.sep{colspan: 2}
+          = battle_equip.effect_2.name if battle_equip.effect_2
+          = battle_equip.effect_2_value if battle_equip.effect_2_value > 0
+        %td.sep{colspan: 2}
+          = battle_equip.effect_3.name if battle_equip.effect_3
+          = battle_equip.effect_3_value if battle_equip.effect_3_value > 0
+        - if @form_params["show_place"] == "1" || @form_params["show_girth"] == "1" 
+          %td.sep= battle_equip.place.field.name if battle_equip.place && battle_equip.place.field
+          %td{colspan: 2, align: "center"}
+            = battle_equip.place.area_column + "-" + sprintf("%d", battle_equip.place.area_row) if battle_equip.place
+        %td.sep= character_link(battle_equip.e_no)
+        %td= character_old_link(@latest_result, battle_equip.e_no, battle_equip.result_no, battle_equip.generate_no)
+        %td.sep= battle_link(@latest_result, battle_equip.battle_info.battle_type, battle_equip.battle_info.battle_page, battle_equip.battle_info.result_no, battle_equip.battle_info.generate_no)
+        %td= battle_old_link(@latest_result, battle_equip.battle_info.battle_type, battle_equip.battle_info.battle_page, battle_equip.battle_info.result_no, battle_equip.battle_info.generate_no)
+= paginate(@battle_equips)

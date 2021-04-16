@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_11_044524) do
+ActiveRecord::Schema.define(version: 2021_04_16_080842) do
 
   create_table "addition_passives", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -188,6 +188,37 @@ ActiveRecord::Schema.define(version: 2021_02_11_044524) do
     t.index ["battle_type"], name: "index_battle_enemies_on_battle_type"
     t.index ["enemy_id"], name: "index_battle_enemies_on_enemy_id"
     t.index ["result_no", "party_no", "generate_no"], name: "resultno_partyno"
+  end
+
+  create_table "battle_equips", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "battle_id"
+    t.integer "equip_no"
+    t.string "name"
+    t.integer "kind_id"
+    t.integer "strength"
+    t.integer "range"
+    t.integer "effect_1_id"
+    t.integer "effect_1_value"
+    t.integer "effect_2_id"
+    t.integer "effect_2_value"
+    t.integer "effect_3_id"
+    t.integer "effect_3_value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["effect_1_id"], name: "index_battle_equips_on_effect_1_id"
+    t.index ["effect_1_value"], name: "index_battle_equips_on_effect_1_value"
+    t.index ["effect_2_id"], name: "index_battle_equips_on_effect_2_id"
+    t.index ["effect_2_value"], name: "index_battle_equips_on_effect_2_value"
+    t.index ["effect_3_id"], name: "index_battle_equips_on_effect_3_id"
+    t.index ["effect_3_value"], name: "index_battle_equips_on_effect_3_value"
+    t.index ["kind_id"], name: "index_battle_equips_on_kind_id"
+    t.index ["name"], name: "index_battle_equips_on_name"
+    t.index ["range"], name: "index_battle_equips_on_range"
+    t.index ["result_no", "battle_id", "e_no", "equip_no", "generate_no"], name: "resultno_battleid_eno"
+    t.index ["strength"], name: "index_battle_equips_on_strength"
   end
 
   create_table "battle_infos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
