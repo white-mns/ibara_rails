@@ -146,6 +146,13 @@
             トップページ上部に大文字で表示していたテストプレイデータ小屋へのリンクを削除
             %br
             （テストプレイデータ小屋へのリンクは各ページ下部に残っています）
+    %p
+      %span.example_select.example_toggle.pointer
+        = fa_icon "history"
+        古い履歴
+        - act_desc(false)
+    .closed
+      %ul
         %li 2020/10/18
         %ul
           %li
@@ -276,13 +283,6 @@
             、
             = link_to "対人戦勝敗一覧", duel_infos_path
             のEnoとキャラクター名とPT名について、左右PTで検索フォームが別れていたのを統合し、左右同時に検索できるように変更
-    %p
-      %span.example_select.example_toggle.pointer
-        = fa_icon "history"
-        古い履歴
-        - act_desc(false)
-    .closed
-      %ul
         %li 2020/8/10
         %ul
           %li
