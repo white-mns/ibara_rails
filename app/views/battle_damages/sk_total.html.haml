@@ -90,6 +90,49 @@
           - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "NPC名", params_name: "enemy_form", placeholder: "Enemy", colspan: 3)
 
     - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_acter_detail",
+                    label: {open: "発動者の詳細を表示する", close: "発動者の詳細を表示する"},
+                    act_desc: "スタイル、装備名、装備の種類、強さ、射程、効果名", base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "スタイル", params_name: "style_id_form", colspan: 3, 
+                    checkboxes: [{label: "行動順１【瞬速】", params_name: "style_1", class_name: "after_space"},
+                                 {label: "２【疾駆】", params_name: "style_2", class_name: "after_space", br: true},
+                                 {label: "３【強襲】", params_name: "style_3", class_name: "after_space"},
+                                 {label: "４【特攻】", params_name: "style_4", class_name: "after_space", br: true},
+                                 {label: "５【順応】", params_name: "style_5", class_name: "after_space"},
+                                 {label: "６【堅固】", params_name: "style_6", class_name: "after_space", br: true},
+                                 {label: "７【援助】", params_name: "style_7", class_name: "after_space"},
+                                 {label: "８【虎視】", params_name: "style_8", class_name: "after_space", br: true},
+                                 {label: "９【日和】", params_name: "style_9"}])
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "装備名", params_name: "acter_equips_name_form", placeholder: "Item", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "効果名", params_name: "acter_equips_effect_form", placeholder: "Fuka", colspan: 3)
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "武器の種類", params_name: "acter_equip_0_kind_form", placeholder: "ItemKind")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "武器の強さ", params_name: "acter_equip_0_strength_form")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "武器の射程", params_name: "acter_equip_0_range_form", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "防具の種類", params_name: "acter_equip_1_kind_form", placeholder: "ItemKind")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "防具の強さ", params_name: "acter_equip_1_strength_form")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "装飾の種類", params_name: "acter_equip_2_kind_form", placeholder: "ItemKind")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "装飾の強さ", params_name: "acter_equip_2_strength_form")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "自由の種類", params_name: "acter_equip_3_kind_form", placeholder: "ItemKind")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "自由の強さ", params_name: "acter_equip_3_strength_form")
+
+    - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_acter_pt",
                     label: {open: "発動者所属PTで絞り込む", close: "発動者所属PTで絞り込みを表示しない"}, base_first: false)
     %tbody.closed
@@ -140,8 +183,9 @@
     %tbody
       %tr.sep
         %td.indent
-        %td.indent= hidden_field_tag :is_form, 1
-        %td.indent= hidden_field_tag :show_damage, 1
+        %td.indent
+          = hidden_field_tag :is_form, 1
+          = hidden_field_tag :show_damage, 1
         %td{colspan: "3"}
           - search_submit_button
 
@@ -156,19 +200,22 @@
 %table.table.table-striped.table-bordered.table-hover
   %thead
     %tr
-      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th.sep_r= sort_link(@search, :result_no,"更新回", default_order: :desc)
       - if @form_params["show_acter"] == "1"
         %th= sort_link(@search, :battle_action_acter_e_no,"発動者(Eno)", default_order: :desc)
         %th= sort_link(@search, :battle_action_acter_enemy_id, "NPC", default_order: :desc)
+      - if @form_params["show_acter_detail"] == "1"
+        %th= sort_link(@search, :battle_action_acter_status_style_id,"スタイル", default_order: :desc)
+        %th= sort_link(@search, :battle_action_acter_equips_strength, "装備", default_order: :desc)
       - if @form_params["show_target"] == "1"
-        %th= sort_link(@search, :battle_action_acter_e_no,"対象(Eno)", default_order: :desc)
+        %th.sep= sort_link(@search, :battle_action_acter_e_no,"対象(Eno)", default_order: :desc)
         %th= sort_link(@search, :battle_action_acter_enemy_id, "NPC", default_order: :desc)
-      %th= sort_link(@search, :battle_action_battle_type, "戦闘の種類", default_order: :desc)
+      %th.sep= sort_link(@search, :battle_action_battle_type, "戦闘の種類", default_order: :desc)
       - if params["show_turn"]
         %th= sort_link(@search, :battle_action_turn, "ターン", default_order: :desc)
-      %th= sort_link(@search, :battle_action_skill_id, "スキル", default_order: :desc)
+      %th.sep= sort_link(@search, :battle_action_skill_id, "スキル", default_order: :desc)
       %th= sort_link(@search, :battle_action_fuka_id, "付加", default_order: :desc)
-      %th= sort_link(@search, :damage_type, "種類", default_order: :desc)
+      %th.sep= sort_link(@search, :damage_type, "種類", default_order: :desc)
       - if @form_params["show_abnormal"] == "1"
         %th= sort_link(@search, :abnormal_id, "変調", default_order: :desc)
       - if @form_params["show_critical"] == "1"
@@ -183,7 +230,7 @@
       %tr
         - if battle_damage.battle_action
           - battle_action = battle_damage.battle_action
-        %td= battle_damage.result_no
+        %td.sep_r= battle_damage.result_no
         - if @form_params["show_acter"] == "1"
           - if battle_action && battle_action.acter 
             - if battle_action.acter.acter_type == 0
@@ -196,30 +243,38 @@
               %td{colspan: 2}
           - else
             %td{colspan: 2}
+        - if @form_params["show_acter_detail"] == "1"
+          - if battle_action && battle_action.acter 
+            %td
+              -if battle_action.acter
+                - style_img_text(battle_action.acter.status)
+            %td
+              -if battle_action.acter
+                - equips_text(battle_action.acter.equips)
         - if @form_params["show_target"] == "1"
           - if battle_damage.target
             - if battle_damage.target.target_type == 0
-              %td{colspan: 2, style: "#{ world_border(battle_damage.target.world) }" }= pc_name_text(battle_damage.target.e_no, battle_damage.target.pc_name)
+              %td.sep{colspan: 2, style: "#{ world_border(battle_damage.target.world) }" }= pc_name_text(battle_damage.target.e_no, battle_damage.target.pc_name)
             - elsif battle_damage.target.target_type == 1
-              %td{colspan: "2"}
+              %td.sep{colspan: "2"}
                 = battle_damage.target.enemy.name if battle_damage.target.enemy
                 = battle_damage.target.suffix.name if battle_damage.target.suffix
             - else
-              %td{colspan: 2}
+              %td.sep{colspan: 2}
           - else
-            %td{colspan: 2}
-        %td= battle_type_text(battle_damage.battle_info)
-        - if params["show_turn"]
+            %td.sep{colspan: 2}
+        %td.sep= battle_type_text(battle_damage.battle_info)
+        - if @form_params["show_turn"] == "1"
           %td= battle_action.turn
         - if battle_action && battle_action.act_type
           - if battle_action.act_type == 0 || battle_action.act_type == 1
-            %td{colspan: 2}= battle_action.skill.name if battle_action.skill
+            %td.sep.sep_r{colspan: 2}= battle_action.skill.name if battle_action.skill
           - elsif battle_action.act_type == 2
-            %td{colspan: 2}
+            %td.sep.sep_r{colspan: 2}
               = battle_action.fuka.name if battle_action.fuka
               = "LV" + sprintf("%d", battle_action.lv) if battle_action.lv && battle_action.lv >= 0
         - else
-          %td{colspan: 2}
+          %td.sep.sep_r{colspan: 2}
         %td
           - if @form_params["show_dodge"] == "1"
             回避

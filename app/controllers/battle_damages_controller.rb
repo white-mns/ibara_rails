@@ -151,6 +151,18 @@ class BattleDamagesController < ApplicationController
     params_to_form(params, @form_params, column_name: "reflection_value", params_name: "reflection_form", type: "number")
     checkbox_params_set_query_single(params, @form_params, checkbox: {params_name: "no_reflection", query_name:"reflection_value_blank", value: true})
 
+    params_to_form(params, @form_params, column_name: "battle_action_acter_equips_name", params_name: "acter_equips_name_form", type: "text")
+    params_to_form(params, @form_params, column_name: "battle_action_acter_equips_effect_1_name_or_battle_action_acter_equips_effect_2_name_or_battle_action_acter_equips_effect_3_name", params_name: "acter_equips_effect_form", type: "text")
+    params_to_form(params, @form_params, column_name: "battle_action_acter_equip_0_kind_name", params_name: "acter_equip_0_kind_form", type: "text")
+    params_to_form(params, @form_params, column_name: "battle_action_acter_equip_0_strength",  params_name: "acter_equip_0_strength_form", type: "number")
+    params_to_form(params, @form_params, column_name: "battle_action_acter_equip_0_range",     params_name: "acter_equip_0_range_form", type: "number")
+    params_to_form(params, @form_params, column_name: "battle_action_acter_equip_1_kind_name", params_name: "acter_equip_1_kind_form", type: "text")
+    params_to_form(params, @form_params, column_name: "battle_action_acter_equip_1_strength",  params_name: "acter_equip_1_strength_form", type: "number")
+    params_to_form(params, @form_params, column_name: "battle_action_acter_equip_2_kind_name", params_name: "acter_equip_2_kind_form", type: "text")
+    params_to_form(params, @form_params, column_name: "battle_action_acter_equip_2_strength",  params_name: "acter_equip_2_strength_form", type: "number")
+    params_to_form(params, @form_params, column_name: "battle_action_acter_equip_3_kind_name", params_name: "acter_equip_3_kind_form", type: "text")
+    params_to_form(params, @form_params, column_name: "battle_action_acter_equip_3_strength",  params_name: "acter_equip_3_strength_form", type: "number")
+
     checkbox_params_set_query_any(params, @form_params, query_name: "battle_action_acter_world_world_eq_any",
                              checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: false},
                                           {params_name: "is_ansinity" , value: 1, first_checked: false}])
@@ -209,6 +221,17 @@ class BattleDamagesController < ApplicationController
                              checkboxes: [{params_name: "target_pc",   value: 0, first_checked: false},
                                           {params_name: "target_npc" , value: 1, first_checked: false}])
 
+    checkbox_params_set_query_any(params, @form_params, query_name: "battle_action_acter_status_style_id_eq_any",
+                             checkboxes: [{params_name: "style_1", value: 1},
+                                          {params_name: "style_2", value: 2},
+                                          {params_name: "style_3", value: 3},
+                                          {params_name: "style_4", value: 4},
+                                          {params_name: "style_5", value: 5},
+                                          {params_name: "style_6", value: 6},
+                                          {params_name: "style_7", value: 7},
+                                          {params_name: "style_8", value: 8},
+                                          {params_name: "style_9", value: 9}])
+
     @form_params["ex_sort"] = params["ex_sort"]
     @form_params["no_count"] = params["no_count"]
     
@@ -220,6 +243,7 @@ class BattleDamagesController < ApplicationController
     toggle_params_to_variable(params, @form_params, params_name: "show_place")
     toggle_params_to_variable(params, @form_params, params_name: "show_battle_page")
     toggle_params_to_variable(params, @form_params, params_name: "show_acter")
+    toggle_params_to_variable(params, @form_params, params_name: "show_acter_detail")
     toggle_params_to_variable(params, @form_params, params_name: "show_target")
     toggle_params_to_variable(params, @form_params, params_name: "show_acter_pt")
     toggle_params_to_variable(params, @form_params, params_name: "show_target_pt")
