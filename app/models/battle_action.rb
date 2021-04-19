@@ -23,11 +23,21 @@ class BattleAction < ApplicationRecord
     unless params["is_form"]
       includes(:skill, :fuka).
       acter_includes(params)
+      acter_style_includes(params)
+      acter_equip_includes(params)
     end
   }
 
   scope :acter_includes, ->(params) {
     if params["group_acter"] == "on" then includes(acter: [:pc_name, :world, :party, :enemy]) end
+  }
+
+  scope :acter_style_includes, ->(params) {
+    if params["show_acter_detail"] == "1" then includes(acter: [:status]) end
+  }
+
+  scope :acter_equip_includes, ->(params) {
+    if params["show_acter_detail"] == "1" then includes(acter: [equips: :kind]) end
   }
 
   scope :groups, ->(params) {

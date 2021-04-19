@@ -399,4 +399,24 @@ module ApplicationHelper
     else "？"
     end
   end
+
+  def equips_text(equips)
+    if !equips then
+      return
+    end
+
+    equips.each do |equip|
+        haml_concat equip.name+"／"+equip.kind.name+"：強さ"+sprintf("%d",equip.strength)+"／"
+        haml_concat equip.effect_1.name
+        if equip.effect_1_value > 0 then haml_concat equip.effect_1_value end
+        haml_concat equip.effect_2.name
+        if equip.effect_2_value > 0 then haml_concat equip.effect_2_value end
+        haml_concat equip.effect_3.name
+        if equip.effect_3_value > 0 then haml_concat equip.effect_3_value end
+        if equip.range > 0 then haml_concat "【射程"+sprintf("%d",equip.range)+"】" end
+      haml_tag :br
+    end
+  end
+
+
 end

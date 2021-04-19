@@ -80,6 +80,49 @@
           - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "NPC名", params_name: "enemy_form", placeholder: "Enemy", colspan: 3)
 
     - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_acter_detail",
+                    label: {open: "発動者の詳細を表示する", close: "発動者の詳細を表示する"},
+                    act_desc: "スタイル、装備名、装備の種類、強さ、射程、効果名", base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "スタイル", params_name: "style_id_form", colspan: 3, 
+                    checkboxes: [{label: "行動順１【瞬速】", params_name: "style_1", class_name: "after_space"},
+                                 {label: "２【疾駆】", params_name: "style_2", class_name: "after_space", br: true},
+                                 {label: "３【強襲】", params_name: "style_3", class_name: "after_space"},
+                                 {label: "４【特攻】", params_name: "style_4", class_name: "after_space", br: true},
+                                 {label: "５【順応】", params_name: "style_5", class_name: "after_space"},
+                                 {label: "６【堅固】", params_name: "style_6", class_name: "after_space", br: true},
+                                 {label: "７【援助】", params_name: "style_7", class_name: "after_space"},
+                                 {label: "８【虎視】", params_name: "style_8", class_name: "after_space", br: true},
+                                 {label: "９【日和】", params_name: "style_9"}])
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "装備名", params_name: "acter_equips_name_form", placeholder: "Item", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "効果名", params_name: "acter_equips_effect_form", placeholder: "Fuka", colspan: 3)
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "武器の種類", params_name: "acter_equip_0_kind_form", placeholder: "ItemKind")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "武器の強さ", params_name: "acter_equip_0_strength_form")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "武器の射程", params_name: "acter_equip_0_range_form", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "防具の種類", params_name: "acter_equip_1_kind_form", placeholder: "ItemKind")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "防具の強さ", params_name: "acter_equip_1_strength_form")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "装飾の種類", params_name: "acter_equip_2_kind_form", placeholder: "ItemKind")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "装飾の強さ", params_name: "acter_equip_2_strength_form")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "自由の種類", params_name: "acter_equip_3_kind_form", placeholder: "ItemKind")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "自由の強さ", params_name: "acter_equip_3_strength_form")
+
+    - #==========================================================================================================================
     - tbody_toggle(@form_params, params_name: "show_acter_pt",
                     label: {open: "発動者所属PTで絞り込む", close: "発動者所属PTで絞り込みを表示しない"}, base_first: false)
     %tbody.closed
@@ -153,6 +196,9 @@
         - if @form_params["show_acter"] == "1"
           %th= sort_link(@search, :acter_e_no,"キャラクター(Eno)", default_order: :desc)
           %th= sort_link(@search, :acter_enemy_id, "NPC", default_order: :desc)
+        - if @form_params["show_acter_detail"] == "1"
+          %th= sort_link(@search, :acter_status_style_id,"スタイル", default_order: :desc)
+          %th= sort_link(@search, :acter_equips_strength, "装備", default_order: :desc)
         - if @form_params["group_page"] == "on"
           %th= sort_link(@search, :battle_action_battle_type, "戦闘の種類", default_order: :desc)
         - if @form_params["group_turn"] == "on"
@@ -182,6 +228,13 @@
                   = battle_action.acter.suffix.name if battle_action.acter.suffix
             - else
               %td{colspan: 2}
+          - if @form_params["show_acter_detail"] == "1"
+            %td
+              -if battle_action.acter
+                - style_img_text(battle_action.acter.status)
+            %td
+              -if battle_action.acter
+                - equips_text(battle_action.acter.equips)
           - if @form_params["group_page"] == "on"
             %td= battle_type_text(battle_action.battle_info)
           - if @form_params["group_turn"] == "on"

@@ -40,6 +40,7 @@
                                  {label: "変調追加",   params_name: "damage_type_abnormal",  class_name: "after_space"},
                                  {label: "変調抵抗",   params_name: "damage_type_resist",  class_name: "after_space"},
                                  {label: "変調軽減",   params_name: "damage_type_reduce",    br: true}])
+      %tr
         %td.indent
         - td_form(f, @form_params, @placeholder,                         label: "発動者", params_name: "acter_form", 
                     checkboxes: [{label: "PC",  params_name: "acter_pc", class_name: "after_space"},
@@ -171,19 +172,19 @@
 %table.table.table-striped.table-bordered.table-hover
   %thead
     %tr
-      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th.sep_r= sort_link(@search, :result_no,"更新回", default_order: :desc)
       - if @form_params["show_acter"] == "1"
         %th= sort_link(@search, :battle_action_acter_e_no,"発動者(Eno)", default_order: :desc)
         %th= sort_link(@search, :battle_action_acter_enemy_id, "NPC", default_order: :desc)
       - if @form_params["show_target"] == "1"
-        %th= sort_link(@search, :battle_action_acter_e_no,"対象(Eno)", default_order: :desc)
+        %th.sep= sort_link(@search, :battle_action_acter_e_no,"対象(Eno)", default_order: :desc)
         %th= sort_link(@search, :battle_action_acter_enemy_id, "NPC", default_order: :desc)
       - if @form_params["group_battle_type"] == "1"
-        %th= sort_link(@search, :battle_action_battle_type, "戦闘の種類", default_order: :desc)
+        %th.sep= sort_link(@search, :battle_action_battle_type, "戦闘の種類", default_order: :desc)
       - if @form_params["group_act"] == "1"
-        %th= sort_link(@search, :battle_action_skill_id, "スキル", default_order: :desc)
+        %th.sep= sort_link(@search, :battle_action_skill_id, "スキル", default_order: :desc)
         %th= sort_link(@search, :battle_action_fuka_id, "付加", default_order: :desc)
-      %th= sort_link(@search, :damage_type, "種類", default_order: :desc)
+      %th.sep= sort_link(@search, :damage_type, "種類", default_order: :desc)
       - if @form_params["show_critical"] == "1"
         %th= sort_link(@search, :critical_value, "クリティカル数", default_order: :desc)
       - if @form_params["show_damage"] == "1"
@@ -196,7 +197,7 @@
       %tr
         - if battle_damage.battle_action
           - battle_action = battle_damage.battle_action
-        %td= battle_damage.result_no
+        %td.sep_r= battle_damage.result_no
         - if @form_params["show_acter"] == "1"
           - if battle_action && battle_action.acter 
             - if battle_action.acter.acter_type == 0
@@ -212,25 +213,25 @@
         - if @form_params["show_target"] == "1"
           - if battle_damage.target
             - if battle_damage.target.target_type == 0
-              %td{colspan: 2, style: "#{ world_border(battle_damage.target.world) }" }= pc_name_text(battle_damage.target.e_no, battle_damage.target.pc_name)
+              %td.sep{colspan: 2, style: "#{ world_border(battle_damage.target.world) }" }= pc_name_text(battle_damage.target.e_no, battle_damage.target.pc_name)
             - elsif battle_damage.target.target_type == 1
-              %td{colspan: "2"}
+              %td.sep{colspan: "2"}
                 = battle_damage.target.enemy.name if battle_damage.target.enemy
                 = battle_damage.target.suffix.name if battle_damage.target.suffix
             - else
-              %td{colspan: 2}
+              %td.sep{colspan: 2}
           - else
-            %td{colspan: 2}
+            %td.sep{colspan: 2}
         - if @form_params["group_battle_type"] == "1"
-          %td= battle_type_text(battle_damage.battle_info)
+          %td.sep= battle_type_text(battle_damage.battle_info)
         - if @form_params["group_act"] == "1"
           - if battle_action.act_type == 0 || battle_action.act_type == 1
-            %td{colspan: 2}= battle_action.skill.name if battle_action.skill
+            %td.sep{colspan: 2}= battle_action.skill.name if battle_action.skill
           - elsif battle_action.act_type == 2
-            %td{colspan: 2}
+            %td.sep{colspan: 2}
               = battle_action.fuka.name if battle_action.fuka
               = "LV" + sprintf("%d", battle_action.lv) if battle_action.lv && battle_action.lv >= 0
-        %td
+        %td.sep
           - if @form_params["show_dodge"] == "1"
             回避
           -else
