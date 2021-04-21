@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_16_080842) do
+ActiveRecord::Schema.define(version: 2021_04_21_022710) do
 
   create_table "addition_passives", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -271,6 +271,19 @@ ActiveRecord::Schema.define(version: 2021_04_16_080842) do
     t.index ["result_no", "target_type", "battle_id", "generate_no"], name: "resultno_targettype"
     t.index ["suffix_id"], name: "index_battle_targets_on_suffix_id"
     t.index ["target_type"], name: "index_battle_targets_on_target_type"
+  end
+
+  create_table "battle_use_skill_concatenations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "battle_id"
+    t.integer "concatenation_type"
+    t.integer "timing_type"
+    t.integer "e_no"
+    t.text "skill_concatenation"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["result_no", "battle_id", "concatenation_type", "timing_type", "e_no", "generate_no"], name: "resultno_battleid_eno"
   end
 
   create_table "cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|

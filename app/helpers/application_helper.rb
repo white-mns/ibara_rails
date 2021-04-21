@@ -406,17 +406,80 @@ module ApplicationHelper
     end
 
     equips.each do |equip|
-        haml_concat equip.name+"／"+equip.kind.name+"：強さ"+sprintf("%d",equip.strength)+"／"
-        haml_concat equip.effect_1.name
-        if equip.effect_1_value > 0 then haml_concat equip.effect_1_value end
-        haml_concat equip.effect_2.name
-        if equip.effect_2_value > 0 then haml_concat equip.effect_2_value end
-        haml_concat equip.effect_3.name
-        if equip.effect_3_value > 0 then haml_concat equip.effect_3_value end
-        if equip.range > 0 then haml_concat "【射程"+sprintf("%d",equip.range)+"】" end
+      haml_concat equip.name+"／"+equip.kind.name+"：強さ"+sprintf("%d",equip.strength)+"／"
+      haml_concat equip.effect_1.name
+      if equip.effect_1_value > 0 then haml_concat equip.effect_1_value end
+      haml_concat equip.effect_2.name
+      if equip.effect_2_value > 0 then haml_concat equip.effect_2_value end
+      haml_concat equip.effect_3.name
+      if equip.effect_3_value > 0 then haml_concat equip.effect_3_value end
+      if equip.range > 0 then haml_concat "【射程"+sprintf("%d",equip.range)+"】" end
       haml_tag :br
     end
   end
 
+  def concatenation_type_text(object)
+    if !object
+      return
+    end
+
+    if object.concatenation_type == 0 then "全員"
+    elsif object.concatenation_type == 1 then "個人"
+    else "？"
+    end
+  end
+
+  def timing_type_text(object)
+    if !object
+      return
+    end
+
+    if object.timing_type == 0 then "全体"
+    elsif object.timing_type == 1 then "開始時"
+    else "？"
+    end
+  end
+
+  def skill_concatenation_text(text, form_text, bold_checkbox, hidden_checkbox)
+    if !text
+      return
+    end
+
+    text = text.gsub(/,:/, " ")
+    skills = text.split(",")
+    skills = skills.drop(1)
+
+    if form_text
+        form_text = form_text.gsub(/\//," ")
+        form_text = form_text.gsub(/"/,"")
+        form_skills = form_text.split(" ")
+    end
+
+    skills.each do |skill|
+      bold_flag = false
+      hidden_flag = (hidden_checkbox) ? true : false
+      if form_skills
+        form_skills.each do |form_skill|
+          if skill.match(/#{form_skill}/)
+            if bold_checkbox then bold_flag = true end
+            if hidden_checkbox then hidden_flag = false end
+          end
+        end
+      end
+
+      if hidden_flag then next end
+
+      if bold_flag then
+        haml_tag :span, class: "skill_emphasis" do
+          haml_concat skill+"回"
+        end
+
+      else
+        haml_concat skill+"回"
+      end
+
+        haml_tag :br
+    end
+  end
 
 end

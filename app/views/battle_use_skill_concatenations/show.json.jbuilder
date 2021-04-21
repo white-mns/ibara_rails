@@ -1,0 +1,1 @@
+json.partial! "battle_use_skill_concatenations/battle_use_skill_concatenation", battle_use_skill_concatenation: @battle_use_skill_concatenation

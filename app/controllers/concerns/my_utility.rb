@@ -115,6 +115,8 @@ module MyUtility
   def reference_concat_set(params, data_name, text, match_suffix, operator_suffix)
     # 完全一致の記号を文字列連結データのカンマに置き換え
     text = text.gsub(/"/, ",")
+    # 発動回数の分離記号を文字列連結データのものに置き換え
+    text = text.gsub(/:/, ",:")
 
     not_suffix = ""
     if text[0] == "-"
