@@ -163,6 +163,12 @@ class BattleDamagesController < ApplicationController
     params_to_form(params, @form_params, column_name: "battle_action_acter_equip_3_kind_name", params_name: "acter_equip_3_kind_form", type: "text")
     params_to_form(params, @form_params, column_name: "battle_action_acter_equip_3_strength",  params_name: "acter_equip_3_strength_form", type: "number")
 
+    params_to_form(params, @form_params, column_name: "battle_action_acter_use_skill_all_all_skill_concatenation",   params_name: "use_skill_all_all_form",   type: "concat")
+    params_to_form(params, @form_params, column_name: "battle_action_acter_use_skill_all_start_skill_concatenation", params_name: "use_skill_all_start_form", type: "concat")
+    params_to_form(params, @form_params, column_name: "battle_action_acter_use_skill_acter_all_skill_concatenation",   params_name: "use_skill_acter_all_form",   type: "concat")
+    params_to_form(params, @form_params, column_name: "battle_action_acter_use_skill_acter_start_skill_concatenation", params_name: "use_skill_acter_start_form", type: "concat")
+    params_to_form(params, @form_params, column_name: "battle_action_acter_use_skill_acter_lv_total_start_skill_concatenation", params_name: "use_skill_acter_lv_total_start_form", type: "concat")
+
     checkbox_params_set_query_any(params, @form_params, query_name: "battle_action_acter_world_world_eq_any",
                              checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: false},
                                           {params_name: "is_ansinity" , value: 1, first_checked: false}])
@@ -238,6 +244,20 @@ class BattleDamagesController < ApplicationController
     acter_pm_matching(params, @form_params)
     target_pm_matching(params, @form_params)
 
+    @form_params["show_use_skill_all_all"] = params["show_use_skill_all_all"]
+    @form_params["show_use_skill_all_start"] = params["show_use_skill_all_start"]
+    @form_params["show_use_skill_acter_all"]   = params["show_use_skill_acter_all"]
+    @form_params["show_use_skill_acter_start"] = params["show_use_skill_acter_start"]
+    @form_params["show_use_skill_acter_lv_total_start"] = params["show_use_skill_acter_lv_total_start"]
+    @form_params["skill_concatenation_bold"]   = params["skill_concatenation_bold"]
+    @form_params["skill_concatenation_hidden"] = params["skill_concatenation_hidden"]
+    @form_use_skill_texts  = ""
+    @form_use_skill_texts += (@form_params["use_skill_all_all_form"]) ? " "+@form_params["use_skill_all_all_form"] : "";
+    @form_use_skill_texts += (@form_params["use_skill_all_start_form"]) ? " "+@form_params["use_skill_all_start_form"] : "";
+    @form_use_skill_texts += (@form_params["use_skill_acter_all_form"]) ? " "+@form_params["use_skill_acter_all_form"] : "";
+    @form_use_skill_texts += (@form_params["use_skill_acter_start_form"]) ? " "+@form_params["use_skill_acter_start_form"] : "";
+    @form_use_skill_texts += (@form_params["use_skill_acter_lv_total_start_form"]) ? " "+@form_params["use_skill_acter_lv_total_start_form"] : "";
+
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
     toggle_params_to_variable(params, @form_params, params_name: "show_fuka")
     toggle_params_to_variable(params, @form_params, params_name: "show_place")
@@ -253,7 +273,7 @@ class BattleDamagesController < ApplicationController
     toggle_params_to_variable(params, @form_params, params_name: "show_dodge")
     toggle_params_to_variable(params, @form_params, params_name: "show_prot_refl")
     toggle_params_to_variable(params, @form_params, params_name: "show_abnormal")
-    
+    toggle_params_to_variable(params, @form_params, params_name: "show_use_skill")
   end
 
   def link_sort

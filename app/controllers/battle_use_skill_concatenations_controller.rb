@@ -51,7 +51,8 @@ class BattleUseSkillConcatenationsController < ApplicationController
 
     checkbox_params_set_query_any(params, @form_params, query_name: "concatenation_type_eq_any",
                              checkboxes: [{params_name: "concatenation_type_all", value: 0},
-                                          {params_name: "concatenation_type_acter" , value: 1}])
+                                          {params_name: "concatenation_type_acter" , value: 1},
+                                          {params_name: "concatenation_type_acter_lv_total" , value: 2}])
 
     checkbox_params_set_query_any(params, @form_params, query_name: "timing_type_eq_any",
                              checkboxes: [{params_name: "timing_type_all", value: 0},
@@ -70,7 +71,8 @@ class BattleUseSkillConcatenationsController < ApplicationController
 
     @form_params["skill_concatenation_bold"]   = params["skill_concatenation_bold"]
     @form_params["skill_concatenation_hidden"] = params["skill_concatenation_hidden"]
-    @form_use_skill_texts = @form_params["skill_concatenation_form"]
+    @form_use_skill_texts  = ""
+    @form_use_skill_texts += (@form_params["skill_concatenation_form"]) ? @form_params["skill_concatenation_form"] : "";
 
     toggle_params_to_variable(params, @form_params, params_name: "show_world")
     toggle_params_to_variable(params, @form_params, params_name: "show_acter_detail")

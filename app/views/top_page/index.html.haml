@@ -65,7 +65,7 @@
             %li= link_to "NPC戦勝敗一覧", battle_results_path
             %li= link_to "対人戦勝敗一覧", duel_infos_path
             %li= link_to "装備一覧", battle_equips_path
-            %li= link_to "発動スキル・付加組み合わせ一覧", battle_use_skill_concatenations_path
+            %li= link_to "スキル・付加発動組み合わせ一覧", battle_use_skill_concatenations_path
             %li= link_to "スキル・付加発動結果一覧", battle_actions_path + "?no_count=on"
             %ul
               %li= link_to "スキル発動回数ランキング", battle_actions_path + "?act_type_fuka=off&show_group=1&group_page=off&total_act=on&ex_sort=on"
@@ -124,11 +124,13 @@
     %h2 更新履歴
     %div
       %ul
-        %li 2021/4/-
+        %li 2021/4/23
         %ul
           %li
             = link_to "発動スキル・付加組み合わせ一覧", battle_use_skill_concatenations_path
             を公開
+          %li
+            スキル・付加発動結果一覧、各戦闘ランキングに「戦闘中の他の発動スキル・付加（全員の戦闘全体、全員の戦闘開始時発動、発動者の戦闘全体、発動者の戦闘開始時、発動者の戦闘開始時（付加LV合計））」のデータと検索機能を追加。
         %li 2021/4/19
         %ul
           %li

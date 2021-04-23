@@ -419,20 +419,17 @@ module ApplicationHelper
   end
 
   def concatenation_type_text(object)
-    if !object
-      return
-    end
+    unless object then return end
 
     if object.concatenation_type == 0 then "全員"
     elsif object.concatenation_type == 1 then "個人"
+    elsif object.concatenation_type == 2 then "付加LV合計"
     else "？"
     end
   end
 
   def timing_type_text(object)
-    if !object
-      return
-    end
+    unless object then return end
 
     if object.timing_type == 0 then "全体"
     elsif object.timing_type == 1 then "開始時"
@@ -440,12 +437,10 @@ module ApplicationHelper
     end
   end
 
-  def skill_concatenation_text(text, form_text, bold_checkbox, hidden_checkbox)
-    if !text
-      return
-    end
+  def skill_concatenation_text(text, form_text, bold_checkbox, hidden_checkbox, is_lv)
+    unless text then return end
 
-    text = text.gsub(/,:/, " ")
+    text = text.gsub(/,:/, ":")
     skills = text.split(",")
     skills = skills.drop(1)
 
@@ -458,7 +453,7 @@ module ApplicationHelper
     skills.each do |skill|
       bold_flag = false
       hidden_flag = (hidden_checkbox) ? true : false
-      if form_skills
+      if form_skills && form_text != ""
         form_skills.each do |form_skill|
           if skill.match(/#{form_skill}/)
             if bold_checkbox then bold_flag = true end
@@ -469,17 +464,35 @@ module ApplicationHelper
 
       if hidden_flag then next end
 
+      output_text = make_skill_concatenation_output_text(skill, is_lv)
+
       if bold_flag then
         haml_tag :span, class: "skill_emphasis" do
-          haml_concat skill+"回"
+          haml_concat output_text
         end
 
       else
-        haml_concat skill+"回"
+        haml_concat output_text
       end
 
         haml_tag :br
     end
+  end
+
+  def make_skill_concatenation_output_text(skill, is_lv)
+    unless skill then return end
+
+    skill_datas = skill.split(":")
+    output_text = skill_datas[0]
+    output_unit = (is_lv == 1) ? "LV" : "回"
+    if skill_datas[1].match(/-1/)
+        skill_datas[1] = skill_datas[1].gsub(/-1/, "")
+        output_unit = ""
+    end
+
+    output_num = (is_lv == 1) ? output_unit + " " + skill_datas[1] :  " " + skill_datas[1] + output_unit
+
+    output_text += output_num
   end
 
 end

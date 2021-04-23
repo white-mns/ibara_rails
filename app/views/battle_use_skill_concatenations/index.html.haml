@@ -1,4 +1,4 @@
-- @page_title = "発動スキル・付加組み合わせ一覧"
+- @page_title = "スキル・付加発動組み合わせ一覧"
 %h1= @page_title
 
 .card.desc
@@ -36,7 +36,8 @@
         %td.indent
         - td_form(f, @form_params, @placeholder, params_name: "concatenation_type_form", colspan: 3,
                     checkboxes: [{label: "戦闘参加者全員", params_name: "concatenation_type_all", class_name: "after_space mobile_br"},
-                                 {label: "個人", params_name: "concatenation_type_acter"}])
+                                 {label: "個人", params_name: "concatenation_type_acter", class_name: "after_space mobile_br"},
+                                 {label: "付加LV合計(個人)", params_name: "concatenation_type_acter_lv_total"}])
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder, params_name: "timing_type_form", colspan: 3,
@@ -148,7 +149,8 @@
           %td
             - equips_text(battle_use_skill_concatenation.equips)
         %td
-          - skill_concatenation_text(battle_use_skill_concatenation.skill_concatenation, @form_use_skill_texts, @form_params["skill_concatenation_bold"], @form_params["skill_concatenation_hidden"])
+          - is_lv = (battle_use_skill_concatenation.concatenation_type == 2) ? 1 : 0 
+          - skill_concatenation_text(battle_use_skill_concatenation.skill_concatenation, @form_use_skill_texts, @form_params["skill_concatenation_bold"], @form_params["skill_concatenation_hidden"], is_lv)
         %td.sep= battle_link(@latest_result, battle_use_skill_concatenation.battle_info.battle_type, battle_use_skill_concatenation.battle_info.battle_page, battle_use_skill_concatenation.battle_info.result_no, battle_use_skill_concatenation.battle_info.generate_no)
         %td= battle_old_link(@latest_result, battle_use_skill_concatenation.battle_info.battle_type, battle_use_skill_concatenation.battle_info.battle_page, battle_use_skill_concatenation.battle_info.result_no, battle_use_skill_concatenation.battle_info.generate_no)
 = paginate(@battle_use_skill_concatenations)
