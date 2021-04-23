@@ -1,0 +1,156 @@
+- @page_title = "スキル・付加発動組み合わせ一覧"
+%h1= @page_title
+
+.card.desc
+  .card-header
+    - act_icon(true)
+    検索仕様
+    - act_desc(true)
+  .card-body
+    = render "layouts/base_desc"
+    %p
+      %span.example_select.example_toggle.pointer
+        - help_icon
+        入力例
+        - act_desc(false)
+    #example.closed
+      = render "layouts/input_desc"
+= search_form_for @search do |f|
+  %table.search_toggle.table.table-striped.table-bordered.table-hover
+    %tbody.pointer
+      %tr
+        %td{colspan: "5"}
+          - act_icon(true)
+          絞り込み検索
+          - act_desc(true)
+    %tbody
+      %tr
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "Eno", params_name: "e_no_form", placeholder: "Number")
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, params_name: "concatenation_type_form", colspan: 3,
+                    checkboxes: [{label: "戦闘参加者全員", params_name: "concatenation_type_all", class_name: "after_space mobile_br"},
+                                 {label: "個人", params_name: "concatenation_type_acter", class_name: "after_space mobile_br"},
+                                 {label: "付加LV合計(個人)", params_name: "concatenation_type_acter_lv_total"}])
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, params_name: "timing_type_form", colspan: 3,
+                    checkboxes: [{label: "戦闘全体",       params_name: "timing_type_all", class_name: "after_space mobile_br"},
+                                 {label: "戦闘開始時", params_name: "timing_type_start"}])
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "発動スキル", params_name: "skill_concatenation_form", placeholder: "Skill", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "ヒットしたスキルを強調する", params_name: "skill_concatenation_bold", br: true},
+                                 {label: "ヒットしたスキル以外を非表示にする", params_name: "skill_concatenation_hidden"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_world",
+                    label: {open: "所属世界で絞り込む", close: "所属世界で絞り込みを隠す"}, base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+                    checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
+                                 {label: "アンジニティ", params_name: "is_ansinity"}])
+
+    - #==========================================================================================================================
+    - tbody_toggle(@form_params, params_name: "show_acter_detail",
+                    label: {open: "発動者の詳細を表示する", close: "発動者の詳細を表示する"},
+                    act_desc: "スタイル、装備名、装備の種類、強さ、射程、効果名", base_first: false)
+    %tbody.closed
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder,                         label: "スタイル", params_name: "style_id_form", colspan: 3, 
+                    checkboxes: [{label: "行動順１【瞬速】", params_name: "style_1", class_name: "after_space"},
+                                 {label: "２【疾駆】", params_name: "style_2", class_name: "after_space", br: true},
+                                 {label: "３【強襲】", params_name: "style_3", class_name: "after_space"},
+                                 {label: "４【特攻】", params_name: "style_4", class_name: "after_space", br: true},
+                                 {label: "５【順応】", params_name: "style_5", class_name: "after_space"},
+                                 {label: "６【堅固】", params_name: "style_6", class_name: "after_space", br: true},
+                                 {label: "７【援助】", params_name: "style_7", class_name: "after_space"},
+                                 {label: "８【虎視】", params_name: "style_8", class_name: "after_space", br: true},
+                                 {label: "９【日和】", params_name: "style_9"}])
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "装備名", params_name: "equips_name_form", placeholder: "Item", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "効果名", params_name: "equips_effect_form", placeholder: "Fuka", colspan: 3)
+      %tr.sep
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "武器の種類", params_name: "equip_0_kind_form", placeholder: "ItemKind")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "武器の強さ", params_name: "equip_0_strength_form")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "武器の射程", params_name: "equip_0_range_form", colspan: 3)
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "防具の種類", params_name: "equip_1_kind_form", placeholder: "ItemKind")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "防具の強さ", params_name: "equip_1_strength_form")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "装飾の種類", params_name: "equip_2_kind_form", placeholder: "ItemKind")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "装飾の強さ", params_name: "equip_2_strength_form")
+      %tr
+        %td.indent
+        - td_form(f, @form_params, @placeholder, class_name: "formText", label: "自由の種類", params_name: "equip_3_kind_form", placeholder: "ItemKind")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "自由の強さ", params_name: "equip_3_strength_form")
+
+
+    - #==========================================================================================================================
+    %tbody
+      %tr.sep
+        %td.indent
+        %td.indent= hidden_field_tag :is_form, 1
+        %td{colspan: "3"}
+          - search_submit_button
+
+= paginate(@battle_use_skill_concatenations)
+%br
+ヒット数：#{ @count }件
+%br
+%br
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th= sort_link(@search, :result_no,"更新回", default_order: :desc)
+      %th= sort_link(@search, :e_no,"キャラクター(Eno)", default_order: :desc)
+      %th.sep= sort_link(@search, :battle_action_battle_type, "戦闘の種類", default_order: :desc)
+      %th= sort_link(@search, :concatenation_type, "発動者", default_order: :desc)
+      %th= sort_link(@search, :timing_type, "ターン", default_order: :desc)
+      - if @form_params["show_acter_detail"] == "1"
+        %th= sort_link(@search, :battle_action_acter_status_style_id,"スタイル", default_order: :desc)
+        %th= sort_link(@search, :battle_action_acter_equips_strength, "装備", default_order: :desc)
+      %th= sort_link(@search, :skill_concatenation, "発動スキル", default_order: :desc)
+      %th.sep{colspan: "2"} 結果リンク
+  %tbody
+    - @battle_use_skill_concatenations.each do |battle_use_skill_concatenation|
+      %tr
+        %td= battle_use_skill_concatenation.result_no
+        %td{style: "#{ world_border(battle_use_skill_concatenation.world) }" }
+          - if battle_use_skill_concatenation.e_no > 0
+            = pc_name_text(battle_use_skill_concatenation.e_no, battle_use_skill_concatenation.pc_name)
+        %td.sep= battle_type_text(battle_use_skill_concatenation.battle_info)
+        %td= concatenation_type_text(battle_use_skill_concatenation)
+        %td= timing_type_text(battle_use_skill_concatenation)
+        - if @form_params["show_acter_detail"] == "1"
+          %td
+            - style_img_text(battle_use_skill_concatenation.status)
+          %td
+            - equips_text(battle_use_skill_concatenation.equips)
+        %td
+          - is_lv = (battle_use_skill_concatenation.concatenation_type == 2) ? 1 : 0 
+          - skill_concatenation_text(battle_use_skill_concatenation.skill_concatenation, @form_use_skill_texts, @form_params["skill_concatenation_bold"], @form_params["skill_concatenation_hidden"], is_lv)
+        %td.sep= battle_link(@latest_result, battle_use_skill_concatenation.battle_info.battle_type, battle_use_skill_concatenation.battle_info.battle_page, battle_use_skill_concatenation.battle_info.result_no, battle_use_skill_concatenation.battle_info.generate_no)
+        %td= battle_old_link(@latest_result, battle_use_skill_concatenation.battle_info.battle_type, battle_use_skill_concatenation.battle_info.battle_page, battle_use_skill_concatenation.battle_info.result_no, battle_use_skill_concatenation.battle_info.generate_no)
+= paginate(@battle_use_skill_concatenations)
