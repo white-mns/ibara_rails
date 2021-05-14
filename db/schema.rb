@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_21_022710) do
+ActiveRecord::Schema.define(version: 2021_05_14_072426) do
 
   create_table "addition_passives", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "result_no"
@@ -436,6 +436,23 @@ ActiveRecord::Schema.define(version: 2021_04_21_022710) do
     t.index ["range"], name: "index_items_on_range"
     t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
     t.index ["strength"], name: "index_items_on_strength"
+  end
+
+  create_table "make_cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.integer "result_no"
+    t.integer "generate_no"
+    t.integer "e_no"
+    t.integer "receiver_e_no"
+    t.string "name"
+    t.integer "skill_id"
+    t.integer "card_no"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["card_no"], name: "index_make_cards_on_card_no"
+    t.index ["name"], name: "index_make_cards_on_name"
+    t.index ["receiver_e_no"], name: "index_make_cards_on_receiver_e_no"
+    t.index ["result_no", "e_no", "generate_no"], name: "resultno_eno"
+    t.index ["skill_id"], name: "index_make_cards_on_skill_id"
   end
 
   create_table "makes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
