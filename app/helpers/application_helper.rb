@@ -55,6 +55,13 @@ module ApplicationHelper
     link_to " "+result_no_text+":00", "http://lisge.com/ib/k/"+result_no_text+"/r"+file_name+".html", :target => "_blank"
   end
 
+  def card_link(e_no, result_no)
+    if e_no <= 0 then return end
+
+    result_no_text = sprintf("%d", result_no)
+    file_name = sprintf("%d", e_no)
+    link_to " 詳細", "http://lisge.com/ib/card.php?eno="+file_name+"&no="+result_no_text, :target => "_blank"
+  end
 
   def battle_link(latest_result_no, battle_type, battle_page, result_no, generate_no)
     if battle_page == "" then return end

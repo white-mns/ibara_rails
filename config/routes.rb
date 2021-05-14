@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :make_cards
   resources :battle_use_skill_concatenations
   resources :battle_equips
   resources :cook_passives

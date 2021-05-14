@@ -50,6 +50,7 @@
             %li= link_to "付加一覧", additions_path
             %ul
               %li= link_to "付加時パッシブ発動一覧", addition_passives_path
+            %li= link_to "カード作成一覧", make_cards_path
             %li= link_to "スキル研究一覧", onetime_studies_path
             %ul
               %li= link_to "スキル研究ランキング", onetime_studies_path + "?group_skill=on&ex_sort=on"
@@ -124,6 +125,11 @@
     %h2 更新履歴
     %div
       %ul
+        %li 2021/5/14
+        %ul
+          %li
+            = link_to "カード作成一覧", make_cards_path
+            を公開
         %li 2021/4/23
         %ul
           %li
