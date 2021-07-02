@@ -38,7 +38,8 @@
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "体調回復", params_name: "recovery_form", colspan: 3)
       %tr.sep
         %td.indent
-        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "強さ", params_name: "strength_form", colspan: 3)
+        - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "種類", params_name: "kind_form", placeholder: "ItemKind")
+        - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "強さ", params_name: "strength_form")
       %tr.sep
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "効果名", params_name: "effect_form", colspan: 3, placeholder: "Fuka")
@@ -101,6 +102,7 @@
       - if @form_params["show_name"] == "1" 
         %th= sort_link(@search, :name, "名前", default_order: :desc)
       %th= sort_link(@search, :recovery, "体調回復", default_order: :desc)
+      %th= sort_link(@search, :last_item_kind_id, "種類", default_order: :desc)
       %th= sort_link(@search, :last_item_strength, "強さ", default_order: :desc)
       %th.sep= sort_link(@search, :effect_1_id, "効果1", default_order: :desc)
       %th= sort_link(@search, :effect_1_value, "効果値", default_order: :desc)
@@ -117,6 +119,7 @@
         - if @form_params["show_name"] == "1" 
           %td= meal.name
         %td= meal.recovery
+        %td= meal.last_item.kind.name if meal.last_item && meal.last_item.kind
         %td= meal.last_item.strength if meal.last_item
         %td.sep= meal.effect_1.name if meal.effect_1
         %td= meal.effect_1_value
