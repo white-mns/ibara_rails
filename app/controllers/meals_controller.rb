@@ -45,6 +45,7 @@ class MealsController < ApplicationController
     params_to_form(params, @form_params, column_name: "effect_2_name", params_name: "effect_2_form", type: "text")
     params_to_form(params, @form_params, column_name: "effect_3_name", params_name: "effect_3_form", type: "text")
     params_to_form(params, @form_params, column_name: "last_item_strength", params_name: "strength_form", type: "number")
+    params_to_form(params, @form_params, column_name: "last_item_kind_name", params_name: "kind_form", type: "text")
 
     checkbox_params_set_query_any(params, @form_params, query_name: "world_world_eq_any",
                              checkboxes: [{params_name: "is_ibaracity", value: 0, first_checked: true},
