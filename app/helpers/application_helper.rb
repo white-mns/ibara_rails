@@ -1,8 +1,11 @@
 module ApplicationHelper
-  def page_title
+  def site_title
     title = "荊街データ小屋"
+  end
+
+  def page_title
+    title = site_title
     title = @page_title + " | " + title if @page_title
-    title
   end
 
   def uploading_alert(latest_result, uploaded_result)
