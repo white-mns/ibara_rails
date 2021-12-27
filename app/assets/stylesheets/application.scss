@@ -70,7 +70,7 @@ body { padding-top: 5rem; }
     border-width: 0.3rem;
 }
 
-.navbar-custom .navbar-brand,{
+.navbar-custom .navbar-brand{
     padding: .8rem .5rem;
 }
 .navbar-custom .navbar-nav .nav-link{
@@ -297,7 +297,7 @@ img.style_img {
         position: relative;
         display: inline-block;
         transition: .3s;
-    
+
         &::before,
         &::after {
             position: absolute;
@@ -323,13 +323,13 @@ img.style_img {
             width: 100%;
         }
     }
-    
+
     // タイトルホバー時の装飾
     .navbar-brand {
         position: relative;
         display: inline-block;
         transition: .3s;
-    
+
         &::before,
         &::after {
             position: absolute;
@@ -365,7 +365,7 @@ span.after_space::after {
     h1 {
         font-size: 1.5rem;
     }
-    
+
     table.search_toggle {
         border-collapse: collapse;
         td, th {
