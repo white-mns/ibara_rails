@@ -6,6 +6,7 @@ class CardsController < ApplicationController
   def index
     resultno_set
     placeholder_set
+    skill_data_set
     param_set
 
     @count  = Card.distinct.notnil().includes(:pc_name, :world, [skill: :timing], :party).search(params[:q]).result.count()
@@ -55,7 +56,7 @@ class CardsController < ApplicationController
                                           {params_name: "element_ground", value: 4},
                                           {params_name: "element_light",  value: 5},
                                           {params_name: "element_dark",   value: 6}])
-    
+
     pm_matching(params, @form_params)
 
     toggle_params_to_variable(params, @form_params, params_name: "show_world")

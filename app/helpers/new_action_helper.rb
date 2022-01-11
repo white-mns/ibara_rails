@@ -1,5 +1,5 @@
 module NewActionHelper
-  def detail_new_action_link(object)
+  def detail_new_action_link(object, data)
     if !object then
       return
     end
@@ -12,6 +12,15 @@ module NewActionHelper
       action_name = object.fuka.name
     end
 
-    link_to action_name, battle_actions_path + "?result_no_form=" + sprintf("%d", object.result_no) + "&act_form= \"" + action_name + "\"&acter_npc=on"
+    title = data[action_name]
+    title = title == " " ? "" : title
+
+    span_attr = {data: {toggle: "tooltip"}, title: title}
+
+    haml_tag :span, span_attr do
+      haml_tag :a , href: battle_actions_path + "?result_no_form=" + sprintf("%d", object.result_no) + "&act_form= \"" + action_name + "\"&acter_npc=on" do
+        haml_concat action_name
+      end
+    end
   end
 end

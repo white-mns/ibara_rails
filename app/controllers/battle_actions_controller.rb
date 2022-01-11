@@ -6,6 +6,7 @@ class BattleActionsController < ApplicationController
   def index
     resultno_set
     placeholder_set
+    skill_data_set
     param_set
 
     if params["no_result"] != "on" then

@@ -15,6 +15,7 @@
 //= require turbolinks
 //= require_tree .
 //= require jquery
+//= require popper
 //= require bootstrap-sprockets
 //= require "jquery.cleanQuery"
 //= require chartkick
@@ -86,6 +87,11 @@ function base_first_toggle() {
     });
 }
 
+// ツールチップの表示処理
+function set_tooltip() {
+    $('[data-toggle="tooltip"]').tooltip({placement: "right"})
+}
+
 // 検索実行後の遷移で説明・検索フォームを閉じる処理
 function exec_searched() {
     var url     = location.href;
@@ -102,6 +108,7 @@ function exec_searched() {
 // ページ表示時に必ず実行する処理
 function exec_load() {
     set_triggers();
+    set_tooltip();
     base_first_toggle();
 }
 

@@ -211,6 +211,19 @@ module ApplicationHelper
     assembly_text.chop()
   end
 
+  def tooltip_text(name, data)
+    if name == "" then return end
+
+    title = data[name]
+    title = title == " " ? "" : title
+
+    span_attr = {data: {toggle: "tooltip"}, title: title}
+
+    haml_tag :span, span_attr do
+      haml_concat name
+    end
+  end
+
   def world_text(world)
     if !world then
       return
@@ -448,7 +461,7 @@ module ApplicationHelper
     end
   end
 
-  def skill_concatenation_text(text, form_text, bold_checkbox, hidden_checkbox, is_lv)
+  def skill_concatenation_text(text, form_text, bold_checkbox, hidden_checkbox, is_lv, skill_data)
     unless text then return end
 
     text = text.gsub(/,:/, ":")
@@ -475,26 +488,41 @@ module ApplicationHelper
 
       if hidden_flag then next end
 
+      output_name = make_skill_concatenation_output_name(skill, is_lv)
       output_text = make_skill_concatenation_output_text(skill, is_lv)
 
       if bold_flag then
         haml_tag :span, class: "skill_emphasis" do
-          haml_concat output_text
+          tooltip_text(output_name, skill_data)
+          haml_tag :span do
+            haml_concat output_text
+          end
         end
 
       else
-        haml_concat output_text
+        tooltip_text(output_name, skill_data)
+        haml_tag :span do
+          haml_concat output_text
+        end
       end
 
         haml_tag :br
     end
   end
 
+  def make_skill_concatenation_output_name(skill, is_lv)
+    unless skill then return end
+
+    skill_datas = skill.split(":")
+    output_name = skill_datas[0]
+    output_name
+  end
+
   def make_skill_concatenation_output_text(skill, is_lv)
     unless skill then return end
 
     skill_datas = skill.split(":")
-    output_text = skill_datas[0]
+    output_text = ""
     output_unit = (is_lv == 1) ? "LV" : "回"
     if skill_datas[1].match(/-1/)
         skill_datas[1] = skill_datas[1].gsub(/-1/, "")

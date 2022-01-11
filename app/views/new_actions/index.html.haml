@@ -57,5 +57,6 @@
     - @new_actions.each do |new_action|
       %tr
         %td= new_action.result_no
-        %td{colspan: 2}= detail_new_action_link(new_action)
+        %td{colspan: 2}
+          - detail_new_action_link(new_action, @skill_data)
 = paginate(@new_actions)

@@ -29,4 +29,9 @@ class ApplicationController < ActionController::Base
     @placeholder["AdditionPassive"] = "例）博打付加/付加強化"
     @placeholder["CookPassive"]     = "例）技巧料理/美酒佳肴"
   end
+
+  def skill_data_set
+    skill_data = SkillDatum.pluck(:name, :text)
+    @skill_data = Hash[*skill_data.flatten]
+  end
 end

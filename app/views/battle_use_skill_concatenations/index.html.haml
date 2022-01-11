@@ -48,7 +48,7 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "発動スキル", params_name: "skill_concatenation_form", placeholder: "Skill", colspan: 3)
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         params_name: "world_form", colspan: 3, 
+        - td_form(f, @form_params, @placeholder,                         params_name: "world_form", colspan: 3,
                     checkboxes: [{label: "ヒットしたスキルを強調する", params_name: "skill_concatenation_bold", br: true},
                                  {label: "ヒットしたスキル以外を非表示にする", params_name: "skill_concatenation_hidden"}])
 
@@ -58,7 +58,7 @@
     %tbody.closed
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3,
                     checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
                                  {label: "アンジニティ", params_name: "is_ansinity"}])
 
@@ -69,7 +69,7 @@
     %tbody.closed
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "スタイル", params_name: "style_id_form", colspan: 3, 
+        - td_form(f, @form_params, @placeholder,                         label: "スタイル", params_name: "style_id_form", colspan: 3,
                     checkboxes: [{label: "行動順１【瞬速】", params_name: "style_1", class_name: "after_space"},
                                  {label: "２【疾駆】", params_name: "style_2", class_name: "after_space", br: true},
                                  {label: "３【強襲】", params_name: "style_3", class_name: "after_space"},
@@ -149,8 +149,8 @@
           %td
             - equips_text(battle_use_skill_concatenation.equips)
         %td
-          - is_lv = (battle_use_skill_concatenation.concatenation_type == 2) ? 1 : 0 
-          - skill_concatenation_text(battle_use_skill_concatenation.skill_concatenation, @form_use_skill_texts, @form_params["skill_concatenation_bold"], @form_params["skill_concatenation_hidden"], is_lv)
+          - is_lv = (battle_use_skill_concatenation.concatenation_type == 2) ? 1 : 0
+          - skill_concatenation_text(battle_use_skill_concatenation.skill_concatenation, @form_use_skill_texts, @form_params["skill_concatenation_bold"], @form_params["skill_concatenation_hidden"], is_lv, @skill_data)
         %td.sep= battle_link(@latest_result, battle_use_skill_concatenation.battle_info.battle_type, battle_use_skill_concatenation.battle_info.battle_page, battle_use_skill_concatenation.battle_info.result_no, battle_use_skill_concatenation.battle_info.generate_no)
         %td= battle_old_link(@latest_result, battle_use_skill_concatenation.battle_info.battle_type, battle_use_skill_concatenation.battle_info.battle_page, battle_use_skill_concatenation.battle_info.result_no, battle_use_skill_concatenation.battle_info.generate_no)
 = paginate(@battle_use_skill_concatenations)

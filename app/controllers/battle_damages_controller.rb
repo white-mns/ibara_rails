@@ -6,6 +6,7 @@ class BattleDamagesController < ApplicationController
   def index
     resultno_set
     placeholder_set
+    skill_data_set
     param_set
 
     @count  = BattleDamage.notnil().includes_or_joins(params).search(params[:q]).result.hit_count()
@@ -23,6 +24,7 @@ class BattleDamagesController < ApplicationController
   def sk_total
     resultno_set
     placeholder_set
+    skill_data_set
     param_set
 
     if params["no_count"] != "on" then
@@ -38,6 +40,7 @@ class BattleDamagesController < ApplicationController
   def total
     resultno_set
     placeholder_set
+    skill_data_set
     param_set
 
     @count  = BattleDamage.notnil().includes_or_joins(params).groups(params).search(params[:q]).result.hit_count()
@@ -50,6 +53,7 @@ class BattleDamagesController < ApplicationController
   def tg_total
     resultno_set
     placeholder_set
+    skill_data_set
     param_set
 
     @count  = BattleDamage.notnil().includes_or_joins(params).tg_groups(params).search(params[:q]).result.hit_count()
@@ -62,6 +66,7 @@ class BattleDamagesController < ApplicationController
   def pt_total
     resultno_set
     placeholder_set
+    skill_data_set
     param_set
 
     @count  = BattleDamage.notnil().includes_or_joins(params).pt_groups(params).search(params[:q]).result.hit_count()
@@ -74,6 +79,7 @@ class BattleDamagesController < ApplicationController
   def pt_tg_total
     resultno_set
     placeholder_set
+    skill_data_set
     param_set
 
     @count  = BattleDamage.notnil().includes_or_joins(params).pt_tg_groups(params).search(params[:q]).result.hit_count()
@@ -187,7 +193,7 @@ class BattleDamagesController < ApplicationController
                                           {params_name: "damage_type_abnormal",         value: 6, first_checked: false},
                                           {params_name: "damage_type_resist",           value: 7, first_checked: false},
                                           {params_name: "damage_type_reduce",           value: 8, first_checked: false}])
-    
+
     proper_name = ProperName.pluck(:name, :proper_id).inject(Hash.new(0)){|hash, a| hash[a[0]] = a[1] ; hash}
     checkbox_params_set_query_any(params, @form_params, query_name: "abnormal_id_eq_any",
                              checkboxes: [{params_name: "abnormal_flame", value: proper_name["炎上"], first_checked: false},
@@ -240,7 +246,7 @@ class BattleDamagesController < ApplicationController
 
     @form_params["ex_sort"] = params["ex_sort"]
     @form_params["no_count"] = params["no_count"]
-    
+
     acter_pm_matching(params, @form_params)
     target_pm_matching(params, @form_params)
 

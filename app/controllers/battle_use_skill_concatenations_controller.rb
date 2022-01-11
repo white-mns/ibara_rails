@@ -6,6 +6,7 @@ class BattleUseSkillConcatenationsController < ApplicationController
   def index
     resultno_set
     placeholder_set
+    skill_data_set
     param_set
 
     @count  = BattleUseSkillConcatenation.notnil().includes(:pc_name, :world, :party, :equips, :equip_0, :equip_1, :equip_2, :equip_3).search(params[:q]).result.hit_count()

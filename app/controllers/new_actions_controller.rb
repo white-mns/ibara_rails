@@ -6,6 +6,7 @@ class NewActionsController < ApplicationController
   def index
     resultno_set
     placeholder_set
+    skill_data_set
     param_set
 
     @count  = NewAction.notnil().includes(:skill, :fuka).search(params[:q]).result.hit_count()
