@@ -72,7 +72,7 @@
     %tbody.closed
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3,
                     checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
                                  {label: "アンジニティ", params_name: "is_ansinity"}])
 
@@ -89,14 +89,14 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pm_pc_name_form", placeholder: "Name")
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, params_name: "pm_party_type_form", colspan: 3, 
+        - td_form(f, @form_params, @placeholder, params_name: "pm_party_type_form", colspan: 3,
                     checkboxes: [{label: "戦闘PTM",     params_name: "pm_battle", class_name: "after_space mobile_br"},
                                  {label: "次回予告PTM", params_name: "pm_next"}])
 
     %tbody
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, params_name: "group_form", colspan: 3, 
+        - td_form(f, @form_params, @placeholder, params_name: "group_form", colspan: 3,
                     checkboxes: [{label: "スキル名で深度を合算",     params_name: "group_skill", class_name: "after_space mobile_br"}])
 
     - #==========================================================================================================================
@@ -145,7 +145,11 @@
             = study.depth_sum
           - else
             = study.depth
-        %td.sep= study.skill.name if study.skill
+        %td.sep
+          - if @form_params["show_skill"] == "1"
+            = study.skill.name if study.skill
+          - else
+            - tooltip_text(study.skill.name, @skill_data) if study.skill
         - if @form_params["show_skill"] == "1"
           %td.sep= skill_type_text(study.skill)
           %td{style: "#{ elemental_border(study.skill) }" }= elemental_text(study.skill)

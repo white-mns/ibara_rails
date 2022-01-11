@@ -35,7 +35,7 @@
         - td_form(f, @form_params, @placeholder, class_name: "formNum",  label: "更新回", params_name: "result_no_form", placeholder: nil, colspan: 3)
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "種類", params_name: "damage_type_form", colspan: 3, 
+        - td_form(f, @form_params, @placeholder,                         label: "種類", params_name: "damage_type_form", colspan: 3,
                     checkboxes: [{label: "ダメージ",   params_name: "damage_type_damage",    class_name: "after_space"},
                                  {label: "SPダメージ", params_name: "damage_type_sp_damage", br: true},
                                  {label: "HP回復",     params_name: "damage_type_heal",      class_name: "after_space"},
@@ -45,7 +45,7 @@
                                  {label: "変調軽減",   params_name: "damage_type_reduce",    br: true}])
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "発動者", params_name: "acter_form", 
+        - td_form(f, @form_params, @placeholder,                         label: "発動者", params_name: "acter_form",
                     checkboxes: [{label: "PC",  params_name: "acter_pc", class_name: "after_space"},
                                  {label: "NPC", params_name: "acter_npc"}])
         - td_form(f, @form_params, @placeholder,                         label: "対象", params_name: "target_form",
@@ -53,14 +53,14 @@
                                  {label: "NPC", params_name: "target_npc"}])
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "戦闘の種類", params_name: "battle_type_form", colspan: 3, 
+        - td_form(f, @form_params, @placeholder,                         label: "戦闘の種類", params_name: "battle_type_form", colspan: 3,
                     checkboxes: [{label: "ENCOUNTER - 『遭遇戦』『採集』", params_name: "is_encounter",  br: true},
                                  {label: "MISSION - 『開放戦』『特殊戦』", params_name: "is_mission",    br: true},
                                  {label: "DUEL　- 『決闘』",               params_name: "is_duel",       br: true},
                                  {label: "GAME　- 『練習戦』",             params_name: "is_game",       br: true}])
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "スキルor付加", params_name: "act_type_form", colspan: 3, 
+        - td_form(f, @form_params, @placeholder,                         label: "スキルor付加", params_name: "act_type_form", colspan: 3,
                     checkboxes: [{label: "スキル",   params_name: "act_type_skill", class_name: "after_space"},
                                  {label: "付加",     params_name: "act_type_fuka",  class_name: "after_space mobile_br"},
                                  {label: "通常攻撃", params_name: "act_type_normal"}])
@@ -83,7 +83,7 @@
     %tbody.closed
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3,
                     checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
                                  {label: "アンジニティ", params_name: "is_ansinity"}])
       %tr
@@ -101,7 +101,7 @@
     %tbody.closed
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "スタイル", params_name: "style_id_form", colspan: 3, 
+        - td_form(f, @form_params, @placeholder,                         label: "スタイル", params_name: "style_id_form", colspan: 3,
                     checkboxes: [{label: "行動順１【瞬速】", params_name: "style_1", class_name: "after_space"},
                                  {label: "２【疾駆】", params_name: "style_2", class_name: "after_space", br: true},
                                  {label: "３【強襲】", params_name: "style_3", class_name: "after_space"},
@@ -191,31 +191,31 @@
       %tr
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "全員の全発動スキル・付加", params_name: "use_skill_all_all_form", placeholder: "Skill")
-        - td_form(f, @form_params, @placeholder,                         params_name: "world_form", label_td_class_name: "indent", 
+        - td_form(f, @form_params, @placeholder,                         params_name: "world_form", label_td_class_name: "indent",
                     checkboxes: [{label: "内容を表示する", params_name: "show_use_skill_all_all"}])
       %tr.sep
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "全員の戦闘開始時発動スキル・付加", params_name: "use_skill_all_start_form", placeholder: "Skill")
-        - td_form(f, @form_params, @placeholder,                         params_name: "world_form", label_td_class_name: "indent", 
+        - td_form(f, @form_params, @placeholder,                         params_name: "world_form", label_td_class_name: "indent",
                     checkboxes: [{label: "内容を表示する", params_name: "show_use_skill_all_start"}])
       %tr.sep
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "発動者の全発動スキル・付加", params_name: "use_skill_acter_all_form", placeholder: "Skill")
-        - td_form(f, @form_params, @placeholder,                         params_name: "world_form", label_td_class_name: "indent", 
+        - td_form(f, @form_params, @placeholder,                         params_name: "world_form", label_td_class_name: "indent",
                     checkboxes: [{label: "内容を表示する", params_name: "show_use_skill_acter_all"}])
       %tr.sep
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "発動者の戦闘開始時発動スキル・付加", params_name: "use_skill_acter_start_form", placeholder: "Skill")
-        - td_form(f, @form_params, @placeholder,                         params_name: "world_form", label_td_class_name: "indent", 
+        - td_form(f, @form_params, @placeholder,                         params_name: "world_form", label_td_class_name: "indent",
                     checkboxes: [{label: "内容を表示する", params_name: "show_use_skill_acter_start"}])
       %tr.sep
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "発動者の戦闘開始時発動スキル・付加(付加LV合計)", params_name: "use_skill_acter_lv_total_start_form", placeholder: "Skill")
-        - td_form(f, @form_params, @placeholder,                         params_name: "world_form", label_td_class_name: "indent", 
+        - td_form(f, @form_params, @placeholder,                         params_name: "world_form", label_td_class_name: "indent",
                     checkboxes: [{label: "内容を表示する", params_name: "show_use_skill_acter_lv_total_start"}])
       %tr.sep
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         params_name: "world_form", colspan: 3, 
+        - td_form(f, @form_params, @placeholder,                         params_name: "world_form", colspan: 3,
                     checkboxes: [{label: "ヒットしたスキル・付加を強調する", params_name: "skill_concatenation_bold", br: true},
                                  {label: "ヒットしたスキル・付加以外を非表示にする", params_name: "skill_concatenation_hidden"}])
 
@@ -282,7 +282,7 @@
           - battle_action = battle_damage.battle_action
         %td.sep_r= battle_damage.result_no
         - if @form_params["show_acter"] == "1"
-          - if battle_action && battle_action.acter 
+          - if battle_action && battle_action.acter
             - if battle_action.acter.acter_type == 0
               %td{colspan: 2, style: "#{ world_border(battle_action.acter.world) }" }= pc_name_text(battle_action.acter.e_no, battle_action.acter.pc_name)
             - elsif battle_action.acter.acter_type == 1
@@ -294,7 +294,7 @@
           - else
             %td{colspan: 2}
         - if @form_params["show_acter_detail"] == "1"
-          - if battle_action && battle_action.acter 
+          - if battle_action && battle_action.acter
             %td
               -if battle_action.acter
                 - style_img_text(battle_action.acter.status)
@@ -319,29 +319,30 @@
         - if @form_params["show_use_skill_all_all"] == "on"
           %td
             - if battle_action && battle_action.acter && battle_action.acter.use_skill_all_all
-              - skill_concatenation_text(battle_action.acter.use_skill_all_all.skill_concatenation,     @form_use_skill_texts, @form_params["skill_concatenation_bold"], @form_params["skill_concatenation_hidden"], 0)
+              - skill_concatenation_text(battle_action.acter.use_skill_all_all.skill_concatenation,     @form_use_skill_texts, @form_params["skill_concatenation_bold"], @form_params["skill_concatenation_hidden"], 0, @skill_data)
         - if @form_params["show_use_skill_all_start"] == "on"
           %td
             - if battle_action && battle_action.acter && battle_action.acter.use_skill_all_start
-              - skill_concatenation_text(battle_action.acter.use_skill_all_start.skill_concatenation,   @form_use_skill_texts, @form_params["skill_concatenation_bold"], @form_params["skill_concatenation_hidden"], 0)
+              - skill_concatenation_text(battle_action.acter.use_skill_all_start.skill_concatenation,   @form_use_skill_texts, @form_params["skill_concatenation_bold"], @form_params["skill_concatenation_hidden"], 0, @skill_data)
         - if @form_params["show_use_skill_acter_all"] == "on"
           %td
             - if battle_action && battle_action.acter && battle_action.acter.use_skill_acter_all
-              - skill_concatenation_text(battle_action.acter.use_skill_acter_all.skill_concatenation,   @form_use_skill_texts, @form_params["skill_concatenation_bold"], @form_params["skill_concatenation_hidden"], 0)
+              - skill_concatenation_text(battle_action.acter.use_skill_acter_all.skill_concatenation,   @form_use_skill_texts, @form_params["skill_concatenation_bold"], @form_params["skill_concatenation_hidden"], 0, @skill_data)
         - if @form_params["show_use_skill_acter_start"] == "on"
           %td
             - if battle_action && battle_action.acter && battle_action.acter.use_skill_acter_start
-              - skill_concatenation_text(battle_action.acter.use_skill_acter_start.skill_concatenation, @form_use_skill_texts, @form_params["skill_concatenation_bold"], @form_params["skill_concatenation_hidden"], 0)
+              - skill_concatenation_text(battle_action.acter.use_skill_acter_start.skill_concatenation, @form_use_skill_texts, @form_params["skill_concatenation_bold"], @form_params["skill_concatenation_hidden"], 0, @skill_data)
         - if @form_params["show_use_skill_acter_lv_total_start"] == "on"
           %td
             - if battle_action && battle_action.acter && battle_action.acter.use_skill_acter_lv_total_start
-              - skill_concatenation_text(battle_action.acter.use_skill_acter_lv_total_start.skill_concatenation, @form_use_skill_texts, @form_params["skill_concatenation_bold"], @form_params["skill_concatenation_hidden"], 1)
+              - skill_concatenation_text(battle_action.acter.use_skill_acter_lv_total_start.skill_concatenation, @form_use_skill_texts, @form_params["skill_concatenation_bold"], @form_params["skill_concatenation_hidden"], 1, @skill_data)
         - if battle_action && battle_action.act_type
           - if battle_action.act_type == 0 || battle_action.act_type == 1
-            %td.sep.sep_r{colspan: 2}= battle_action.skill.name if battle_action.skill
+            %td.sep.sep_r{colspan: 2}
+              - tooltip_text(battle_action.skill.name, @skill_data) if battle_action.skill
           - elsif battle_action.act_type == 2
             %td.sep.sep_r{colspan: 2}
-              = battle_action.fuka.name if battle_action.fuka
+              - tooltip_text(battle_action.fuka.name, @skill_data) if battle_action.fuka
               = "LV" + sprintf("%d", battle_action.lv) if battle_action.lv && battle_action.lv >= 0
         - else
           %td.sep.sep_r{colspan: 2}

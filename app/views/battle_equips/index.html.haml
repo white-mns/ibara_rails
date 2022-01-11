@@ -34,12 +34,11 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pc_name_form", placeholder: "Name")
       %tr.sep
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "戦闘の種類", params_name: "battle_type_form", colspan: 3, 
+        - td_form(f, @form_params, @placeholder,                         label: "戦闘の種類", params_name: "battle_type_form", colspan: 3,
                     checkboxes: [{label: "ENCOUNTER - 『遭遇戦』『採集』", params_name: "is_encounter",  br: true},
                                  {label: "MISSION - 『開放戦』『特殊戦』", params_name: "is_mission",    br: true},
                                  {label: "DUEL　- 『決闘』",               params_name: "is_duel",       br: true},
-                                 {label: "GAME　- 『練習戦』",             params_name: "is_game",       br: true},
-                                 {label: "闘技大会",                       params_name: "is_tournament", br: true}])
+                                 {label: "GAME　- 『練習戦』",             params_name: "is_game",       br: true}])
       %tr.sep
         %td.indent
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "装備名", params_name: "name_form", placeholder: "Item")
@@ -58,7 +57,7 @@
     %tbody.closed
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3,
                     checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
                                  {label: "アンジニティ", params_name: "is_ansinity"}])
 
@@ -105,7 +104,7 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pm_pc_name_form", placeholder: "Name")
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, params_name: "pm_party_type_form", colspan: 3, 
+        - td_form(f, @form_params, @placeholder, params_name: "pm_party_type_form", colspan: 3,
                     checkboxes: [{label: "戦闘PTM",     params_name: "pm_battle", class_name: "after_space mobile_br"},
                                  {label: "次回予告PTM", params_name: "pm_next"}])
 
@@ -140,7 +139,7 @@
       %th= sort_link(@search, :effect_2_value, "効果値", default_order: :desc)
       %th.sep= sort_link(@search, :effect_3_id, "効果3or装飾", default_order: :desc)
       %th= sort_link(@search, :effect_3_value, "効果値", default_order: :desc)
-      - if @form_params["show_place"] == "1" || @form_params["show_girth"] == "1" 
+      - if @form_params["show_place"] == "1" || @form_params["show_girth"] == "1"
         %th.sep= sort_link(@search, :place_field_id, "区", default_order: :desc)
         %th= sort_link(@search, :place_area_column, "列", default_order: :desc)
         %th= sort_link(@search, :place_area_row, "行", default_order: :desc)
@@ -165,7 +164,7 @@
         %td.sep{colspan: 2}
           = battle_equip.effect_3.name if battle_equip.effect_3
           = battle_equip.effect_3_value if battle_equip.effect_3_value > 0
-        - if @form_params["show_place"] == "1" || @form_params["show_girth"] == "1" 
+        - if @form_params["show_place"] == "1" || @form_params["show_girth"] == "1"
           %td.sep= battle_equip.place.field.name if battle_equip.place && battle_equip.place.field
           %td{colspan: 2, align: "center"}
             = battle_equip.place.area_column + "-" + sprintf("%d", battle_equip.place.area_row) if battle_equip.place

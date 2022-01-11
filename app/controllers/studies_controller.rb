@@ -6,6 +6,7 @@ class StudiesController < ApplicationController
   def index
     resultno_set
     placeholder_set
+    skill_data_set
     param_set
 
     @count  = Study.distinct.notnil().includes(:pc_name, :world, :party).groups(action_name, params).search(params[:q]).result.hit_count()
@@ -55,7 +56,7 @@ class StudiesController < ApplicationController
                                           {params_name: "element_light",  value: 5},
                                           {params_name: "element_dark",   value: 6}])
 
-    
+
     pm_matching(params, @form_params)
 
     @form_params["group_skill"] = params["group_skill"]

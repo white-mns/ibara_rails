@@ -6,6 +6,7 @@ class BattleUseSkillConcatenationsController < ApplicationController
   def index
     resultno_set
     placeholder_set
+    skill_data_set
     param_set
 
     @count  = BattleUseSkillConcatenation.notnil().includes(:pc_name, :world, :party, :equips, :equip_0, :equip_1, :equip_2, :equip_3).search(params[:q]).result.hit_count()
@@ -21,7 +22,7 @@ class BattleUseSkillConcatenationsController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-        params["result_no_form"] ||= sprintf("%d",@latest_result)
+        params["result_no_form"] ||= sprintf("%d", 36)
     end
 
     params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")

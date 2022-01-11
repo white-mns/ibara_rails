@@ -74,7 +74,7 @@
     %tbody.closed
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3, 
+        - td_form(f, @form_params, @placeholder,                         label: "所属世界", params_name: "world_form", colspan: 3,
                     checkboxes: [{label: "イバラシティ", params_name: "is_ibaracity", class_name: "after_space mobile_br"},
                                  {label: "アンジニティ", params_name: "is_ansinity"}])
 
@@ -91,7 +91,7 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText", label: "キャラクター名", params_name: "pm_pc_name_form", placeholder: "Name")
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder, params_name: "pm_party_type_form", colspan: 3, 
+        - td_form(f, @form_params, @placeholder, params_name: "pm_party_type_form", colspan: 3,
                     checkboxes: [{label: "戦闘PTM",     params_name: "pm_battle", class_name: "after_space mobile_br"},
                                  {label: "次回予告PTM", params_name: "pm_next"}])
 
@@ -131,7 +131,11 @@
         %td{style: "#{ world_border(card.world) }" }= pc_name_text(card.e_no, card.pc_name)
         - if @form_params["show_card_name"] == "1"
           %td.sep= card.name
-        %td.sep= card.skill.name if card.skill
+        %td.sep
+          - if @form_params["show_skill"] == "1"
+            = card.skill.name if card.skill
+          - else
+            - tooltip_text(card.skill.name, @skill_data) if card.skill
         - if @form_params["show_skill"] == "1"
           %td{style: "#{ elemental_border(card.skill) }" }= elemental_text(card.skill)
           %td.sep= card.skill.ep

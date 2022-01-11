@@ -56,6 +56,10 @@ $pagination-disabled-color:         $gray-light;
 $pagination-disabled-bg:            $gray-darker;
 $pagination-disabled-border-color:  #444;
 
+$tooltip-color:                     #222;
+$tooltip-bg:                        #ddd;
+$tooltip-arrow-color:               #ddd;
+
 @import "bootswatch/darkly/variables";
 @import "bootstrap";
 

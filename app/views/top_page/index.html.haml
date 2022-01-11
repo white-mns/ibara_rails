@@ -14,7 +14,7 @@
       .col-md-6
         %ul
           %li 個人データ
-          %ul  
+          %ul
             %li= link_to "キャラクター名・PL名一覧", names_path
             %br
             %li= link_to "現在地一覧", places_path
@@ -37,7 +37,7 @@
               %li= link_to "研究済スキルランキング", studies_path + "?group_skill=on&ex_sort=on"
           %br
           %li 行動データ
-          %ul  
+          %ul
             %li= link_to "食事一覧", meals_path
             %li= link_to "合成一覧", compounds_path
             %ul
@@ -60,7 +60,7 @@
       .col-md-6
         %ul
           %li 戦闘データ
-          %ul  
+          %ul
             %li= link_to "次回予告NPC戦一覧", next_battle_infos_path
             %li= link_to "次回予告対人戦一覧", next_duel_infos_path
             %li= link_to "NPC戦勝敗一覧", battle_results_path
@@ -103,28 +103,37 @@
               %li= link_to "ふふぁさー", battle_ranking_pt_tg_totals_path + "?damage_type_dodge=on&damage_type_dodge_protection=on&show_target_pt=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on"
           %br
           %li グラフデータ
-          %ul  
+          %ul
             %li= link_to "所属世界グラフ", world_graphs_path
           %br
           %li 新出データ
-          %ul  
+          %ul
             %li= link_to "新出素材一覧", new_items_path
             %li= link_to "新出アイテム付加効果一覧", new_item_fukas_path
             %li= link_to "新出発動スキル・付加一覧", new_actions_path
             %li= link_to "新出予告NPC一覧", new_next_enemies_path
-            %ul  
-              %li= link_to "新出予告MISSION一覧", new_next_enemies_path + "?result_no_form=" + sprintf("%d", @latest_result) + "&is_form=1&is_mission=on"
+            %ul
+              %li= link_to "新出予告MISSION一覧", new_next_enemies_path + "?is_form=1&is_mission=on"
             %li= link_to "初戦闘NPC一覧", new_battle_enemies_path
-            %ul  
-              %li= link_to "初戦闘MISSION一覧", new_battle_enemies_path + "?result_no_form=" + sprintf("%d", @latest_result) + "&is_form=1&is_mission=on"
+            %ul
+              %li= link_to "初戦闘MISSION一覧", new_battle_enemies_path + "?is_form=1&is_mission=on"
             %li= link_to "MISSION初突破一覧", new_defeat_enemies_path
-          %ul  
+          %ul
 
 .card.top
   .card-body
     %h2 更新履歴
     %div
       %ul
+        %li 2022/1/12
+        %ul
+          %li
+            スキル名をマウスホバーもしくはスマートフォンなどでタップしたときにスキル情報を表示する機能を追加
+          %li
+            戦闘データ、新出データの初期絞り込み更新回を最終更新の37回以外の適したものに変更
+          %li
+            = link_to "装備一覧", battle_equips_path
+            の検索フォームに最後まで存在していた幻の闘技大会を成仏させました。
         %li 2021/9/1
         %ul
           %li
@@ -606,10 +615,10 @@
 
         %li 2019/3/8
         %ul
-          %li 
+          %li
             = link_to "スキル・付加発動結果一覧", battle_actions_path
             を公開
-          %li 
+          %li
             スキル・付加発動結果一覧の検索条件を指定した
             = link_to "スキル発動回数ランキング", battle_actions_path + "?act_type_fuka=off&show_group=1&group_page=off&total_act=on&ex_sort=on"
             、
@@ -617,53 +626,53 @@
             を公開
         %li 2019/3/3
         %ul
-          %li 
+          %li
             = link_to "移動一覧", moves_path
             、
             = link_to "次回予告NPC戦一覧", next_battle_infos_path
             を公開
         %li 2019/2/27
         %ul
-          %li 
+          %li
             = link_to "パーティ情報一覧", party_infos_path
             を公開
         %li 2019/2/25
         %ul
-          %li 
+          %li
             = link_to "合成一覧", compounds_path
             を公開
-          %li 
+          %li
             合成一覧の検索条件を指定した
             = link_to "合成結果一覧", compounds_path + "?result_no_form=""&compound_deficient_lv=off&group_result=on"
             、
             = link_to "合成組み合わせ一覧", compounds_path + "?result_no_form=""&group_source=on"
             を公開
-          %li 
+          %li
             スキル研究一覧の検索条件を指定した
             = link_to "スキル研究ランキング", studies_path + "?group_skill=on&ex_sort=on"
             を公開
         %li 2019/2/24
         %ul
-          %li 
+          %li
             = link_to "スタイル一覧", styles_path
             、
             = link_to "影響力一覧", effects_path
             、
             = link_to "その他ステータス一覧", statuses_path
             を公開
-          %li 
+          %li
             = link_to "所持スキル一覧", skills_path
             にスタイルでの絞り込み機能を追加
         %li 2019/2/23
         %ul
-          %li 
+          %li
             = link_to "所持アイテム一覧", items_path
             、
             = link_to "所持異能・生産一覧", superpowers_path
             、
             = link_to "所持スキル一覧", skills_path
             に指定キャラのパーティメンバーでの絞り込み機能を追加
-          %li 
+          %li
             = link_to "所持カード一覧", cards_path
             、
             = link_to "スキル研究一覧", studies_path

@@ -6,6 +6,7 @@ class SkillsController < ApplicationController
   def index
     resultno_set
     placeholder_set
+    skill_data_set
     param_set
 
     @count  = Skill.distinct.notnil().includes(:pc_name, :world, :place, :party, :status).groups(params).search(params[:q]).result.hit_count()
@@ -62,7 +63,7 @@ class SkillsController < ApplicationController
                                           {params_name: "element_ground", value: 4},
                                           {params_name: "element_light",  value: 5},
                                           {params_name: "element_dark",   value: 6}])
-    
+
     checkbox_params_set_query_any(params, @form_params, query_name: "status_style_id_eq_any",
                              checkboxes: [{params_name: "style_1", value: 1},
                                           {params_name: "style_2", value: 2},
@@ -98,13 +99,13 @@ class SkillsController < ApplicationController
     elsif params["exclude_initial_passive"]
       params_tmp["ex_name_form"] = "猛攻/堅守/攻勢/守勢/献身/太陽/隠者"
     end
-  
+
     params_to_form(params_tmp, form_params, column_name: "name", params_name: "ex_name_form", type: "number")
 
     if params["exclude_initial_active"] || params["exclude_initial_passive"]
       exclude_array = SkillDatum.search(params_tmp[:q]).result.pluck(:skill_id)
       params[:q]["skill_id_not_eq_all"] = exclude_array
-        
+
     end
 
     form_params["exclude_initial_active"] = params["exclude_initial_active"]
