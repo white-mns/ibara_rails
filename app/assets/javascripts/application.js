@@ -24,6 +24,10 @@ function search_close() {
     tbody_0 = $(".search_toggle").children().eq(0);
     tbody_0.find(".act_desc").toggle();
     tbody_0.nextAll().hide();
+};
+
+// 検索遷移時の詳細トグルを開く処理
+function detail_toggle_open() {
     $(".tbody_toggle").find('input:hidden').not("#base_first").each( function(index, element) {
         if ($(this).val() == "1") {
             $(this).nextAll().toggle();
@@ -58,7 +62,7 @@ function set_triggers() {
             }
         } );
     });
-    
+
     $(".tbody_toggle").on("click", function() {
         $(this).next().toggle();
         $(this).find('input:hidden').each( function(index, element) {
@@ -73,8 +77,8 @@ function set_triggers() {
     });
 };
 
-// ページ表示時に必ず実行する処理
-function exec_load() {
+// ページ表示時の詳細トグル初期開閉処理
+function base_first_toggle() {
     $(".tbody_toggle").find('#base_first').each( function(index, element) {
         if ($(this).val() == "1") {
             $(this).nextAll().toggle();
@@ -82,19 +86,29 @@ function exec_load() {
     });
 }
 
-// ページ移動時の発火処理
-var turboReady = function(){
-	var url     = location.href;
+// 検索実行後の遷移で説明・検索フォームを閉じる処理
+function exec_searched() {
+    var url     = location.href;
     var params  = url.split("?");
 
-	if((params[1] && !(params[1] == "no_result=on" || params[1] == "no_count=on")) || window.innerWidth < 767){
+    if((params[1] && !(params[1] == "no_result=on" || params[1] == "no_count=on")) || window.innerWidth < 767){
         search_close();
+        detail_toggle_open();
         desc_close();
-	}
+        base_first_toggle(); // 初期遷移時にクエリが入るページではトグル開閉状態が逆になるため、もう一度トグル実行
+    }
+}
 
-    $('FORM').cleanQuery();
-
+// ページ表示時に必ず実行する処理
+function exec_load() {
     set_triggers();
+    base_first_toggle();
+}
+
+// ページ移動時の発火処理
+var turboReady = function(){
+    $('FORM').cleanQuery();
+    exec_searched();
     exec_load();
 };
 
