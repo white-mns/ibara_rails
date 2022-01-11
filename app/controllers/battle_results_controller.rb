@@ -21,7 +21,7 @@ class BattleResultsController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-      params["result_no_form"] ||= sprintf("%d",@latest_result)
+      params["result_no_form"] ||= sprintf("%d", 36)
     end
 
     params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")
@@ -41,9 +41,9 @@ class BattleResultsController < ApplicationController
 
     params_to_form(params, @form_params, column_name: "last_battle_info_enemy_party_name_name", params_name: "enemy_party_name_form", type: "text")
     params_to_form(params, @form_params, column_name: "party_info_name", params_name: "party_name_form", type: "text")
-    
+
     params_to_form(params, @form_params, column_name: "enemy_members_enemy_dummy", params_name: "enemy_form", type: "text")
-    
+
     #detection_party_no_from_enemy_name(params, @form_params)
 
     checkbox_params_set_query_any(params, @form_params, query_name: "party_info_member_num_eq_any",
@@ -97,7 +97,7 @@ class BattleResultsController < ApplicationController
 
     params[:q]["party_no_eq_any"] = detection_arrays[:or].flatten.uniq
 
-    if params[:q]["party_no_eq_any"].length > 1 then 
+    if params[:q]["party_no_eq_any"].length > 1 then
       params[:q]["party_no_eq_any"] += detection_arrays[:or].flatten.uniq
       params[:q]["party_no_eq_any"] = params[:q]["party_no_eq_any"].flatten.group_by{ |e| e }.select { |k, v| v.size > 1 }.map(&:first)
     else

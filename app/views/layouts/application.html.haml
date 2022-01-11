@@ -120,9 +120,9 @@
                 = link_to "新出アイテム付加効果一覧", new_item_fukas_path, class: "dropdown-item"
                 = link_to "新出発動スキル・付加一覧", new_actions_path, class: "dropdown-item"
                 = link_to "新出予告NPC一覧", new_next_enemies_path, class: "dropdown-item"
-                = link_to ">　新出予告MISSION一覧", new_next_enemies_path + "?result_no_form=" + sprintf("%d", @latest_result) + "&is_form=1&is_mission=on", class: "dropdown-item"
+                = link_to ">　新出予告MISSION一覧", new_next_enemies_path + "?is_form=1&is_mission=on", class: "dropdown-item"
                 = link_to "初戦闘NPC一覧", new_battle_enemies_path, class: "dropdown-item"
-                = link_to ">　初戦闘MISSION一覧", new_battle_enemies_path + "?result_no_form=" + sprintf("%d", @latest_result) + "&is_form=1&is_mission=on", class: "dropdown-item"
+                = link_to ">　初戦闘MISSION一覧", new_battle_enemies_path + "?is_form=1&is_mission=on", class: "dropdown-item"
                 = link_to "MISSION初突破一覧", new_defeat_enemies_path, class: "dropdown-item"
 
     .container
@@ -130,7 +130,7 @@
         .col-md-12
           - uploading_alert(@latest_result, @uploaded_result)
           = yield
-      
+
       %footer
         %p
           Twitter：#{link_to "@data_teiki", "http://twitter.com/data_teiki"}

@@ -20,15 +20,12 @@ class NewNextEnemiesController < ApplicationController
     @latest_result = Name.maximum("result_no")
 
     params_clean(params)
-    if !params["is_form"] then
-      params["result_no_form"] ||= sprintf("%d",@latest_result)
-    end
 
     params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")
     params_to_form(params, @form_params, column_name: "result_no", params_name: "result_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "generate_no", params_name: "generate_no_form", type: "number")
     params_to_form(params, @form_params, column_name: "enemy_id", params_name: "enemy_id_form", type: "number")
-    
+
     params_to_form(params, @form_params, column_name: "enemy_name", params_name: "enemy_form", type: "text")
 
     checkbox_params_set_query_any(params, @form_params, query_name: "battle_type_eq_any",

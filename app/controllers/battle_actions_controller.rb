@@ -28,7 +28,7 @@ class BattleActionsController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-      params["result_no_form"] ||= sprintf("%d",@latest_result)
+      params["result_no_form"] ||= sprintf("%d", 36)
       params["group_page"]     ||= "on"
     end
 

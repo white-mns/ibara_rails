@@ -20,9 +20,6 @@ class NewItemFukasController < ApplicationController
     @latest_result = Name.maximum("result_no")
 
     params_clean(params)
-    if !params["is_form"] then
-      params["result_no_form"] ||= sprintf("%d",@latest_result)
-    end
 
     params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")
     params_to_form(params, @form_params, column_name: "result_no", params_name: "result_no_form", type: "number")

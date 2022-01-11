@@ -20,9 +20,6 @@ class NewDefeatEnemiesController < ApplicationController
     @latest_result = Name.maximum("result_no")
 
     params_clean(params)
-    if !params["is_form"] then
-      params["result_no_form"] ||= sprintf("%d",@latest_result)
-    end
 
     params_to_form(params, @form_params, column_name: "pc_name_name", params_name: "pc_name_form", type: "text")
     params_to_form(params, @form_params, column_name: "result_no", params_name: "result_no_form", type: "number")
@@ -33,7 +30,7 @@ class NewDefeatEnemiesController < ApplicationController
     params_to_form(params, @form_params, column_name: "enemy_id", params_name: "enemy_id_form", type: "number")
     params_to_form(params, @form_params, column_name: "member_num", params_name: "member_num_form", type: "number")
     params_to_form(params, @form_params, column_name: "battle_type", params_name: "is_boss_form", type: "number")
-    
+
     params_to_form(params, @form_params, column_name: "enemy_name", params_name: "enemy_form", type: "text")
 
     params_to_form(params, @form_params, column_name: "party_info_party_members_e_no", params_name: "e_no_form", type: "number")

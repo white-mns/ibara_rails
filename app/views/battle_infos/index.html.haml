@@ -34,12 +34,11 @@
         - td_form(f, @form_params, @placeholder, class_name: "formText",  label: "戦闘ページ", params_name: "battle_page_form")
       %tr
         %td.indent
-        - td_form(f, @form_params, @placeholder,                         label: "戦闘の種類", params_name: "battle_type_form", colspan: 3, 
+        - td_form(f, @form_params, @placeholder,                         label: "戦闘の種類", params_name: "battle_type_form", colspan: 3,
                     checkboxes: [{label: "ENCOUNTER - 『遭遇戦』『採集』", params_name: "is_encounter",  br: true},
                                  {label: "MISSION - 『開放戦』『特殊戦』", params_name: "is_mission",    br: true},
                                  {label: "DUEL　- 『決闘』",               params_name: "is_duel",       br: true},
-                                 {label: "GAME　- 『練習戦』",             params_name: "is_game",       br: true},
-                                 {label: "闘技大会",                       params_name: "is_tournament", br: true}])
+                                 {label: "GAME　- 『練習戦』",             params_name: "is_game",       br: true}])
 
     - #==========================================================================================================================
     %tbody

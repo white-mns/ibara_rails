@@ -95,7 +95,11 @@ class BattleDamagesController < ApplicationController
 
     params_clean(params)
     if !params["is_form"] then
-      params["result_no_form"] ||= sprintf("%d",@latest_result)
+      if action_name == "pt_total" || action_name == "pt_tg_total" then
+        params["result_no_form"] ||= sprintf("%d", 35)
+      else
+        params["result_no_form"] ||= sprintf("%d", 36)
+      end
     end
 
     link_sort
