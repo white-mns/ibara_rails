@@ -60,7 +60,7 @@ before_fork do |server, worker|
   # # when doing a transparent upgrade.  The last worker spawned
   # # will then kill off the old master process with a SIGQUIT.
    old_pid = $this_path + "/tmp/unicorn.pid.oldbin"
-   if File.exists?(old_pid) && server.pid != old_pid
+   if File.exist?(old_pid) && server.pid != old_pid
      begin
      # 古いマスターがいた場合終了させる
      Process.kill("QUIT", File.read(old_pid).to_i)
