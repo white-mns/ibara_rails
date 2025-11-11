@@ -6,8 +6,8 @@ class PlacesController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= Place.notnil().includes(:pc_name, :world, :field).search(params[:q]).result.count()
-    @search	= Place.notnil().includes(:pc_name, :world, :field).page(params[:page]).search(params[:q])
+    @count	= Place.notnil().includes(:pc_name, :world, :field).ransack(params[:q]).result.count()
+    @search	= Place.notnil().includes(:pc_name, :world, :field).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @places	= @search.result.per(50)
   end

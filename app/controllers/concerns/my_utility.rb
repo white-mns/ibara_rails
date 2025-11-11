@@ -165,7 +165,7 @@ module MyUtility
     if params[:q][dummy_param] then
         params[:q][dummy_param].each do |tmp_param|
             params_tmp[:q][param] = tmp_param
-            nos = record.search(params_tmp[:q]).result.pluck(column).uniq
+            nos = record.ransack(params_tmp[:q]).result.pluck(column).uniq
             if detection_arrays[:and].length > 1 then 
                 detection_arrays[:and] = detection_arrays[:and] & nos
 
@@ -187,7 +187,7 @@ module MyUtility
   def add_or_param_for_has_many(params, params_tmp, detection_arrays, dummy_param, param, record, column)
     if params[:q][dummy_param] then
         params_tmp[:q][param] = params[:q][dummy_param]
-        nos = record.search(params_tmp[:q]).result.pluck(column)
+        nos = record.ransack(params_tmp[:q]).result.pluck(column)
         detection_arrays[:or] += nos
         params_tmp[:q].delete(param)
     end
@@ -197,7 +197,7 @@ module MyUtility
   def add_not_param_for_has_many(params, params_tmp, detection_arrays, dummy_param, param, record, column)
     if params[:q][dummy_param] then
         params_tmp[:q][param] = params[:q][dummy_param]
-        nos = record.search(params_tmp[:q]).result.pluck(column)
+        nos = record.ransack(params_tmp[:q]).result.pluck(column)
         detection_arrays[:not] += nos
         params_tmp[:q].delete(param)
     end

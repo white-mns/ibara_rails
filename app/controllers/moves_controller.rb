@@ -6,8 +6,8 @@ class MovesController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= Move.notnil().includes(:pc_name, :world, :field, :party).search(params[:q]).result.count()
-    @search	= Move.notnil().includes(:pc_name, :world, :field, :party).page(params[:page]).search(params[:q])
+    @count	= Move.notnil().includes(:pc_name, :world, :field, :party).ransack(params[:q]).result.count()
+    @search	= Move.notnil().includes(:pc_name, :world, :field, :party).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @moves	= @search.result.per(50)
   end

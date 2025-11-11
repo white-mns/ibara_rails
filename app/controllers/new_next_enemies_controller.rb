@@ -6,8 +6,8 @@ class NewNextEnemiesController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= NewNextEnemy.notnil().includes(:enemy).search(params[:q]).result.hit_count()
-    @search	= NewNextEnemy.notnil().includes(:enemy).page(params[:page]).search(params[:q])
+    @count	= NewNextEnemy.notnil().includes(:enemy).ransack(params[:q]).result.hit_count()
+    @search	= NewNextEnemy.notnil().includes(:enemy).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @new_next_enemies	= @search.result.per(50)
   end

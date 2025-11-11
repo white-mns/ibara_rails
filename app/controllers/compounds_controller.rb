@@ -6,8 +6,8 @@ class CompoundsController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= Compound.notnil().includes(:pc_name, :world).compound_includes(params).groups(params).search(params[:q]).result.count().keys().size
-    @search	= Compound.notnil().includes(:pc_name, :world).compound_includes(params).groups(params).for_group_select(params).page(params[:page]).search(params[:q])
+    @count	= Compound.notnil().includes(:pc_name, :world).compound_includes(params).groups(params).ransack(params[:q]).result.count().keys().size
+    @search	= Compound.notnil().includes(:pc_name, :world).compound_includes(params).groups(params).for_group_select(params).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @compounds	= @search.result.per(50)
   end

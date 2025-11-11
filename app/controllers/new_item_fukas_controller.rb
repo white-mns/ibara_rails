@@ -6,8 +6,8 @@ class NewItemFukasController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= NewItemFuka.notnil().includes(:fuka).search(params[:q]).result.hit_count()
-    @search	= NewItemFuka.notnil().includes(:fuka).page(params[:page]).search(params[:q])
+    @count	= NewItemFuka.notnil().includes(:fuka).ransack(params[:q]).result.hit_count()
+    @search	= NewItemFuka.notnil().includes(:fuka).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @new_item_fukas	= @search.result.per(50)
   end

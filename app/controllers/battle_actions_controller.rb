@@ -6,8 +6,8 @@ class BattleActionsController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= BattleAction.notnil().includes_or_joins(params).groups(params).search(params[:q]).result.hit_count()
-    @search	= BattleAction.notnil().includes_or_joins(params).groups(params).total(params).having_order(params).page(params[:page]).search(params[:q])
+    @count	= BattleAction.notnil().includes_or_joins(params).groups(params).ransack(params[:q]).result.hit_count()
+    @search	= BattleAction.notnil().includes_or_joins(params).groups(params).total(params).having_order(params).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
     @battle_actions	= @search.result.per(50)
   end

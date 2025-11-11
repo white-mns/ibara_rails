@@ -6,8 +6,8 @@ class MovePartyCountsController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= MovePartyCount.notnil().includes(:world).search(params[:q]).result.count()
-    @search	= MovePartyCount.notnil().includes(:world).page(params[:page]).search(params[:q])
+    @count	= MovePartyCount.notnil().includes(:world).ransack(params[:q]).result.count()
+    @search	= MovePartyCount.notnil().includes(:world).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @move_party_counts	= @search.result.per(50)
   end

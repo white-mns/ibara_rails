@@ -6,8 +6,8 @@ class SuperpowerDataController < ApplicationController
   def index
     placeholder_set
     param_set
-    @count	= SuperpowerDatum.search(params[:q]).result.count()
-    @search	= SuperpowerDatum.page(params[:page]).search(params[:q])
+    @count	= SuperpowerDatum.ransack(params[:q]).result.count()
+    @search	= SuperpowerDatum.page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @superpower_data	= @search.result.per(50)
   end
