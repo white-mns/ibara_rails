@@ -224,6 +224,12 @@ tr.sep{
     border-top: 4px solid $table-border-color;
 }
 
+.table{
+    --bs-table-color: #fff;
+    --bs-table-striped-color: #fff;
+    --bs-table-hover-color: #fff;
+}
+
 table tbody:nth-child(1) span.act_desc{
     font-size:80%;
 }
@@ -231,6 +237,11 @@ table tbody:nth-child(1) span.act_desc{
 table tbody:nth-child(1) td{
     background-color: #882;
     color: #000;
+}
+
+.table thead:nth-child(1){
+    --bs-table-color: #000;
+    --bs-table-bg-type: #882;
 }
 
 table tbody:nth-child(1) td:hover{
