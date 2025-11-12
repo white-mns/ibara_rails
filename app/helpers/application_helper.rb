@@ -40,14 +40,14 @@ module ApplicationHelper
     if e_no <= 0 then return end
 
     file_name = sprintf("%d",e_no)
-    link_to " 結果", "http://lisge.com/ib/k/now/r"+file_name+".html", :target => "_blank"
+    link_to " 37:00", "https://archives.teiki.org/risu/ibara/1/result37/k/now/r"+file_name+".html", :target => "_blank"
   end
 
   def character_link_text(e_no,text)
     if e_no <= 0 then return end
 
     file_name = sprintf("%d",e_no)
-    link_to text, "http://lisge.com/ib/k/now/r"+file_name+".html", :target => "_blank"
+    link_to text, "https://archives.teiki.org/risu/ibara/1/result37/k/now/r"+file_name+".html", :target => "_blank"
   end
 
   def character_old_link(latest_result_no, e_no, result_no, generate_no)
@@ -56,7 +56,7 @@ module ApplicationHelper
 
     result_no_text = sprintf("%d", result_no)
     file_name = sprintf("%d", e_no)
-    link_to " "+result_no_text+":00", "http://lisge.com/ib/k/"+result_no_text+"/r"+file_name+".html", :target => "_blank"
+    link_to " "+result_no_text+":00", "https://archives.teiki.org/risu/ibara/1/result"+result_no_text+"/k/now/r"+file_name+".html", :target => "_blank"
   end
 
   def card_link(e_no, result_no)
@@ -71,7 +71,7 @@ module ApplicationHelper
     if battle_page == "" then return end
     if result_no != latest_result_no then return end
 
-    link_to " 結果", "http://lisge.com/ib/k/now/"+battle_page+".html", :target => "_blank"
+    link_to " 結果", "https://archives.teiki.org/risu/ibara/1/result37/k/now/"+battle_page+".html", :target => "_blank"
   end
 
   def battle_old_link(latest_result_no, battle_type, battle_page, result_no, generate_no)
@@ -79,7 +79,7 @@ module ApplicationHelper
     if result_no == latest_result_no then return end
 
     result_no_text = sprintf("%d", result_no)
-    link_to " "+result_no_text+":00", "http://lisge.com/ib/k/"+result_no_text+"/"+battle_page+".html", :target => "_blank"
+    link_to " "+result_no_text+":00", "https://archives.teiki.org/risu/ibara/1/result"+result_no_text+"/k/now/"+battle_page+".html", :target => "_blank"
   end
 
   def search_submit_button()
