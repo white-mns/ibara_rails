@@ -10,7 +10,7 @@ cd `dirname $0`	#railsアプリのディレクトリで作業をする
 case "$1" in
   start)
 	echo "start!!"
-	bundle exec unicorn -c config/unicorn.rb -E $rails_env -D
+	bundle exec unicorn_rails -c config/unicorn.rb -E $rails_env -D
 	;;
   stop)
 	echo "stop!!"
@@ -23,7 +23,7 @@ case "$1" in
   restart)
 	echo "restart"
 	kill -QUIT `cat ./tmp/unicorn.pid`
-	bundle exec unicorn -c config/unicorn.rb -E $rails_env -D
+	bundle exec unicorn_rails -c config/unicorn.rb -E $rails_env -D
   	;;
   force-reload|reload)
         reload
