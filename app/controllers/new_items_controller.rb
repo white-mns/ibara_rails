@@ -8,8 +8,8 @@ class NewItemsController < ApplicationController
     placeholder_set
     param_set
 
-    @count  = NewItem.distinct.notnil().includes(item: [:kind, :effect_1, :effect_2, :effect_3]).search(params[:q]).result.hit_count()
-    @search = NewItem.distinct.notnil().includes(item: [:kind, :effect_1, :effect_2, :effect_3]).page(params[:page]).search(params[:q])
+    @count  = NewItem.distinct.notnil().includes(item: [:kind, :effect_1, :effect_2, :effect_3]).ransack(params[:q]).result.hit_count()
+    @search = NewItem.distinct.notnil().includes(item: [:kind, :effect_1, :effect_2, :effect_3]).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @new_items = @search.result.per(50)
   end

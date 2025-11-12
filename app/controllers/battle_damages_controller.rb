@@ -9,8 +9,8 @@ class BattleDamagesController < ApplicationController
     skill_data_set
     param_set
 
-    @count  = BattleDamage.notnil().includes_or_joins(params).search(params[:q]).result.hit_count()
-    @search = BattleDamage.notnil().includes_or_joins(params).page(params[:page]).search(params[:q])
+    @count  = BattleDamage.notnil().includes_or_joins(params).ransack(params[:q]).result.hit_count()
+    @search = BattleDamage.notnil().includes_or_joins(params).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @battle_damages = @search.result.per(50)
   end
@@ -28,10 +28,10 @@ class BattleDamagesController < ApplicationController
     param_set
 
     if params["no_count"] != "on" then
-      @count = BattleDamage.notnil().includes_or_joins(params).sk_groups(params).search(params[:q]).result.hit_count()
+      @count = BattleDamage.notnil().includes_or_joins(params).sk_groups(params).ransack(params[:q]).result.hit_count()
     end
 
-    @search = BattleDamage.notnil().includes_or_joins(params).sk_groups(params).total(params).having_order(params).page(params[:page]).search(params[:q])
+    @search = BattleDamage.notnil().includes_or_joins(params).sk_groups(params).total(params).having_order(params).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
     @battle_damages = @search.result.per(50)
   end
@@ -43,8 +43,8 @@ class BattleDamagesController < ApplicationController
     skill_data_set
     param_set
 
-    @count  = BattleDamage.notnil().includes_or_joins(params).groups(params).search(params[:q]).result.hit_count()
-    @search = BattleDamage.notnil().includes_or_joins(params).groups(params).total(params).having_order(params).page(params[:page]).search(params[:q])
+    @count  = BattleDamage.notnil().includes_or_joins(params).groups(params).ransack(params[:q]).result.hit_count()
+    @search = BattleDamage.notnil().includes_or_joins(params).groups(params).total(params).having_order(params).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
     @battle_damages = @search.result.per(50)
   end
@@ -56,8 +56,8 @@ class BattleDamagesController < ApplicationController
     skill_data_set
     param_set
 
-    @count  = BattleDamage.notnil().includes_or_joins(params).tg_groups(params).search(params[:q]).result.hit_count()
-    @search = BattleDamage.notnil().includes_or_joins(params).tg_groups(params).total(params).having_order(params).page(params[:page]).search(params[:q])
+    @count  = BattleDamage.notnil().includes_or_joins(params).tg_groups(params).ransack(params[:q]).result.hit_count()
+    @search = BattleDamage.notnil().includes_or_joins(params).tg_groups(params).total(params).having_order(params).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
     @battle_damages = @search.result.per(50)
   end
@@ -69,8 +69,8 @@ class BattleDamagesController < ApplicationController
     skill_data_set
     param_set
 
-    @count  = BattleDamage.notnil().includes_or_joins(params).pt_groups(params).search(params[:q]).result.hit_count()
-    @search = BattleDamage.notnil().includes_or_joins(params).pt_groups(params).total(params).having_order(params).page(params[:page]).search(params[:q])
+    @count  = BattleDamage.notnil().includes_or_joins(params).pt_groups(params).ransack(params[:q]).result.hit_count()
+    @search = BattleDamage.notnil().includes_or_joins(params).pt_groups(params).total(params).having_order(params).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
     @battle_damages = @search.result.per(50)
   end
@@ -82,8 +82,8 @@ class BattleDamagesController < ApplicationController
     skill_data_set
     param_set
 
-    @count  = BattleDamage.notnil().includes_or_joins(params).pt_tg_groups(params).search(params[:q]).result.hit_count()
-    @search = BattleDamage.notnil().includes_or_joins(params).pt_tg_groups(params).total(params).having_order(params).page(params[:page]).search(params[:q])
+    @count  = BattleDamage.notnil().includes_or_joins(params).pt_tg_groups(params).ransack(params[:q]).result.hit_count()
+    @search = BattleDamage.notnil().includes_or_joins(params).pt_tg_groups(params).total(params).having_order(params).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
     @battle_damages = @search.result.per(50)
   end

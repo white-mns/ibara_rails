@@ -9,8 +9,8 @@ class StudiesController < ApplicationController
     skill_data_set
     param_set
 
-    @count  = Study.distinct.notnil().includes(:pc_name, :world, :party).groups(action_name, params).search(params[:q]).result.hit_count()
-    @search = Study.distinct.notnil().includes(:pc_name, :world, :party).groups(action_name, params).aggregations(action_name, params).having_order(params).page(params[:page]).search(params[:q])
+    @count  = Study.distinct.notnil().includes(:pc_name, :world, :party).groups(action_name, params).ransack(params[:q]).result.hit_count()
+    @search = Study.distinct.notnil().includes(:pc_name, :world, :party).groups(action_name, params).aggregations(action_name, params).having_order(params).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
     @studies = @search.result.per(50)
   end

@@ -8,8 +8,8 @@ class MakesController < ApplicationController
     placeholder_set
     param_set
 
-    @count  = Make.notnil().includes(:pc_name, :world, :last_item, :item, :kind).search(params[:q]).result.hit_count()
-    @search = Make.notnil().includes(:pc_name, :world, :last_item, :item, :kind).page(params[:page]).search(params[:q])
+    @count  = Make.notnil().includes(:pc_name, :world, :last_item, :item, :kind).ransack(params[:q]).result.hit_count()
+    @search = Make.notnil().includes(:pc_name, :world, :last_item, :item, :kind).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @makes  = @search.result.per(50)
   end

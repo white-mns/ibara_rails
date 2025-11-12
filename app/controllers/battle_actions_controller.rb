@@ -11,13 +11,13 @@ class BattleActionsController < ApplicationController
 
     if params["no_result"] != "on" then
       if params["no_count"] != "on" then
-        @count = BattleAction.notnil().includes_or_joins(params).groups(params).search(params[:q]).result.hit_count()
+        @count = BattleAction.notnil().includes_or_joins(params).groups(params).ransack(params[:q]).result.hit_count()
       end
-      @search = BattleAction.notnil().includes_or_joins(params).groups(params).total(params).having_order(params).page(params[:page]).search(params[:q])
+      @search = BattleAction.notnil().includes_or_joins(params).groups(params).total(params).having_order(params).page(params[:page]).ransack(params[:q])
       @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
       @battle_actions = @search.result.per(50)
     else
-      @search = BattleAction.where(:result_no => -1).search(params[:q])
+      @search = BattleAction.where(:result_no => -1).ransack(params[:q])
     end
   end
 

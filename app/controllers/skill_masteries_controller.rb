@@ -8,8 +8,8 @@ class SkillMasteriesController < ApplicationController
     placeholder_set
     param_set
 
-    @count  = SkillMastery.includes(:requirement_1, :requirement_2, :skill).search(params[:q]).result.count()
-    @search = SkillMastery.includes(:requirement_1, :requirement_2, :skill).page(params[:page]).search(params[:q])
+    @count  = SkillMastery.includes(:requirement_1, :requirement_2, :skill).ransack(params[:q]).result.count()
+    @search = SkillMastery.includes(:requirement_1, :requirement_2, :skill).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @skill_masteries = @search.result.per(50)
   end

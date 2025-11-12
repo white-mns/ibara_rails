@@ -8,8 +8,8 @@ class MakeCardsController < ApplicationController
     placeholder_set
     param_set
 
-    @count  = MakeCard.notnil().includes(:pc_name, :world, :receiver).search(params[:q]).result.hit_count()
-    @search = MakeCard.notnil().includes(:pc_name, :world, :receiver).page(params[:page]).search(params[:q])
+    @count  = MakeCard.notnil().includes(:pc_name, :world, :receiver).ransack(params[:q]).result.hit_count()
+    @search = MakeCard.notnil().includes(:pc_name, :world, :receiver).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @make_cards = @search.result.per(50)
   end

@@ -8,8 +8,8 @@ class CooksController < ApplicationController
     placeholder_set
     param_set
 
-    @count  = Cook.notnil().includes(:pc_name, :world, :requester, :party, [item: [:kind, :effect_1, :effect_2, :effect_3]]).search(params[:q]).result.hit_count()
-    @search = Cook.notnil().includes(:pc_name, :world, :requester, :party, [item: [:kind, :effect_1, :effect_2, :effect_3]]).page(params[:page]).search(params[:q])
+    @count  = Cook.notnil().includes(:pc_name, :world, :requester, :party, [item: [:kind, :effect_1, :effect_2, :effect_3]]).ransack(params[:q]).result.hit_count()
+    @search = Cook.notnil().includes(:pc_name, :world, :requester, :party, [item: [:kind, :effect_1, :effect_2, :effect_3]]).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @cooks  = @search.result.per(50)
   end

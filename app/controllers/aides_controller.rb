@@ -8,8 +8,8 @@ class AidesController < ApplicationController
     placeholder_set
     param_set
 
-    @count  = Aide.notnil().includes(:pc_name, :world, :enemy, :employ).search(params[:q]).result.hit_count()
-    @search = Aide.notnil().includes(:pc_name, :world, :enemy, :employ).page(params[:page]).search(params[:q])
+    @count  = Aide.notnil().includes(:pc_name, :world, :enemy, :employ).ransack(params[:q]).result.hit_count()
+    @search = Aide.notnil().includes(:pc_name, :world, :enemy, :employ).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @aides  = @search.result.per(50)
   end

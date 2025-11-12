@@ -8,8 +8,8 @@ class SuperpowersController < ApplicationController
     placeholder_set
     param_set
 
-    @count  = Superpower.distinct.notnil().includes(:pc_name, :world, :superpower, :place, :party).search(params[:q]).result.count()
-    @search = Superpower.distinct.notnil().includes(:pc_name, :world, :superpower, :place, :party).page(params[:page]).search(params[:q])
+    @count  = Superpower.distinct.notnil().includes(:pc_name, :world, :superpower, :place, :party).ransack(params[:q]).result.count()
+    @search = Superpower.distinct.notnil().includes(:pc_name, :world, :superpower, :place, :party).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @superpowers  = @search.result.per(50)
   end
@@ -21,8 +21,8 @@ class SuperpowersController < ApplicationController
     placeholder_set
     param_set_combination
 
-    @count  = Name.notnil().combination_includes(params, @superpower_datas).combination_groups(params).search(params[:q]).result.hit_count()
-    @search = Name.notnil().combination_includes(params, @superpower_datas).combination_groups(params).page(params[:page]).search(params[:q])
+    @count  = Name.notnil().combination_includes(params, @superpower_datas).combination_groups(params).ransack(params[:q]).result.hit_count()
+    @search = Name.notnil().combination_includes(params, @superpower_datas).combination_groups(params).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @superpowers  = @search.result.per(50)
   end

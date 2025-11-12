@@ -8,8 +8,8 @@ class BattleActersController < ApplicationController
     placeholder_set
     param_set
 
-    @count  = BattleActer.notnil().includes(:battle_info, :pc_name, :world, :party, :enemy).search(params[:q]).result.hit_count()
-    @search = BattleActer.notnil().includes(:battle_info, :pc_name, :world, :party, :enemy).page(params[:page]).search(params[:q])
+    @count  = BattleActer.notnil().includes(:battle_info, :pc_name, :world, :party, :enemy).ransack(params[:q]).result.hit_count()
+    @search = BattleActer.notnil().includes(:battle_info, :pc_name, :world, :party, :enemy).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @battle_acters = @search.result.per(50)
   end

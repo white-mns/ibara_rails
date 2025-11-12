@@ -9,8 +9,8 @@ class BattleUseSkillConcatenationsController < ApplicationController
     skill_data_set
     param_set
 
-    @count  = BattleUseSkillConcatenation.notnil().includes(:pc_name, :world, :party, :equips, :equip_0, :equip_1, :equip_2, :equip_3).search(params[:q]).result.hit_count()
-    @search = BattleUseSkillConcatenation.notnil().includes(:pc_name, :world, :party, :equips, :equip_0, :equip_1, :equip_2, :equip_3).page(params[:page]).search(params[:q])
+    @count  = BattleUseSkillConcatenation.notnil().includes(:pc_name, :world, :party, :equips, :equip_0, :equip_1, :equip_2, :equip_3).ransack(params[:q]).result.hit_count()
+    @search = BattleUseSkillConcatenation.notnil().includes(:pc_name, :world, :party, :equips, :equip_0, :equip_1, :equip_2, :equip_3).page(params[:page]).ransack(params[:q])
     @search.sorts = "battle_id asc" if @search.sorts.empty?
     @battle_use_skill_concatenations = @search.result.per(50)
   end

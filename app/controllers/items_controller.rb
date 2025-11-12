@@ -8,8 +8,8 @@ class ItemsController < ApplicationController
     placeholder_set
     param_set
 
-    @count  = Item.distinct.notnil().includes(:pc_name, :world, :kind, :effect_1, :effect_2, :effect_3, :place, :party).search(params[:q]).result.hit_count()
-    @search = Item.distinct.notnil().includes(:pc_name, :world, :kind, :effect_1, :effect_2, :effect_3, :place, :party).page(params[:page]).search(params[:q])
+    @count  = Item.distinct.notnil().includes(:pc_name, :world, :kind, :effect_1, :effect_2, :effect_3, :place, :party).ransack(params[:q]).result.hit_count()
+    @search = Item.distinct.notnil().includes(:pc_name, :world, :kind, :effect_1, :effect_2, :effect_3, :place, :party).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @items  = @search.result.per(50)
   end

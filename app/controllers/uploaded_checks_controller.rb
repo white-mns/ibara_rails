@@ -8,8 +8,8 @@ class UploadedChecksController < ApplicationController
     placeholder_set
     param_set
 
-    @count  = UploadedCheck.notnil().search(params[:q]).result.hit_count()
-    @search = UploadedCheck.notnil().page(params[:page]).search(params[:q])
+    @count  = UploadedCheck.notnil().ransack(params[:q]).result.hit_count()
+    @search = UploadedCheck.notnil().page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @uploaded_checks = @search.result.per(50)
   end

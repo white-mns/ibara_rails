@@ -8,8 +8,8 @@ class StatusesController < ApplicationController
     placeholder_set
     param_set
 
-    @count  = Status.notnil().includes(:pc_name, :world, :place, :party).search(params[:q]).result.count()
-    @search = Status.notnil().includes(:pc_name, :world, :place, :party).page(params[:page]).search(params[:q])
+    @count  = Status.notnil().includes(:pc_name, :world, :place, :party).ransack(params[:q]).result.count()
+    @search = Status.notnil().includes(:pc_name, :world, :place, :party).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @statuses = @search.result.per(50)
   end

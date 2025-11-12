@@ -8,8 +8,8 @@ class MealsController < ApplicationController
     placeholder_set
     param_set
 
-    @count  = Meal.notnil().includes(:pc_name, :world, :last_item, :effect_1, :effect_2, :effect_3, :party).search(params[:q]).result.hit_count()
-    @search = Meal.notnil().includes(:pc_name, :world, :last_item, :effect_1, :effect_2, :effect_3, :party).page(params[:page]).search(params[:q])
+    @count  = Meal.notnil().includes(:pc_name, :world, :last_item, :effect_1, :effect_2, :effect_3, :party).ransack(params[:q]).result.hit_count()
+    @search = Meal.notnil().includes(:pc_name, :world, :last_item, :effect_1, :effect_2, :effect_3, :party).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @meals  = @search.result.per(50)
   end

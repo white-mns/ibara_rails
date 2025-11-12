@@ -8,8 +8,8 @@ class CookPassivesController < ApplicationController
     placeholder_set
     param_set
 
-    @count  = CookPassive.notnil().includes(:pc_name, :world, :skill, [cook: [:pc_name, :world, :party, item: [:kind, :effect_1, :effect_2, :effect_3]]]).search(params[:q]).result.hit_count()
-    @search = CookPassive.notnil().includes(:pc_name, :world, :skill, [cook: [:pc_name, :world, :party, item: [:kind, :effect_1, :effect_2, :effect_3]]]).page(params[:page]).search(params[:q])
+    @count  = CookPassive.notnil().includes(:pc_name, :world, :skill, [cook: [:pc_name, :world, :party, item: [:kind, :effect_1, :effect_2, :effect_3]]]).ransack(params[:q]).result.hit_count()
+    @search = CookPassive.notnil().includes(:pc_name, :world, :skill, [cook: [:pc_name, :world, :party, item: [:kind, :effect_1, :effect_2, :effect_3]]]).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @cook_passives = @search.result.per(50)
   end

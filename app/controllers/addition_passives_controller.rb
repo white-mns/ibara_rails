@@ -8,8 +8,8 @@ class AdditionPassivesController < ApplicationController
     placeholder_set
     param_set
 
-    @count  = AdditionPassive.notnil().includes(:pc_name, :world, :skill, [addition: [:pc_name, :world, :party, item: [:kind, :effect_1, :effect_2, :effect_3]]]).search(params[:q]).result.hit_count()
-    @search = AdditionPassive.notnil().includes(:pc_name, :world, :skill, [addition: [:pc_name, :world, :party, item: [:kind, :effect_1, :effect_2, :effect_3]]]).page(params[:page]).search(params[:q])
+    @count  = AdditionPassive.notnil().includes(:pc_name, :world, :skill, [addition: [:pc_name, :world, :party, item: [:kind, :effect_1, :effect_2, :effect_3]]]).ransack(params[:q]).result.hit_count()
+    @search = AdditionPassive.notnil().includes(:pc_name, :world, :skill, [addition: [:pc_name, :world, :party, item: [:kind, :effect_1, :effect_2, :effect_3]]]).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @addition_passives = @search.result.per(50)
   end

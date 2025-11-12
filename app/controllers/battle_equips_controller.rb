@@ -8,8 +8,8 @@ class BattleEquipsController < ApplicationController
     placeholder_set
     param_set
 
-    @count  = BattleEquip.notnil().includes(:battle_info, :pc_name, :world, :party).search(params[:q]).result.hit_count()
-    @search = BattleEquip.notnil().includes(:battle_info, :pc_name, :world, :party).page(params[:page]).search(params[:q])
+    @count  = BattleEquip.notnil().includes(:battle_info, :pc_name, :world, :party).ransack(params[:q]).result.hit_count()
+    @search = BattleEquip.notnil().includes(:battle_info, :pc_name, :world, :party).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @battle_equips = @search.result.per(50)
   end

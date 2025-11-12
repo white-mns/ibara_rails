@@ -8,8 +8,8 @@ class BattleInfosController < ApplicationController
     placeholder_set
     param_set
 
-    @count  = BattleInfo.notnil().search(params[:q]).result.hit_count()
-    @search = BattleInfo.notnil().page(params[:page]).search(params[:q])
+    @count  = BattleInfo.notnil().ransack(params[:q]).result.hit_count()
+    @search = BattleInfo.notnil().page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @battle_infos = @search.result.per(50)
   end

@@ -9,8 +9,8 @@ class SkillsController < ApplicationController
     skill_data_set
     param_set
 
-    @count  = Skill.distinct.notnil().includes(:pc_name, :world, :place, :party, :status).groups(params).search(params[:q]).result.hit_count()
-    @search = Skill.distinct.notnil().includes(:pc_name, :world, :place, :party, :status).groups(params).aggregations(params).having_order(params).page(params[:page]).search(params[:q])
+    @count  = Skill.distinct.notnil().includes(:pc_name, :world, :place, :party, :status).groups(params).ransack(params[:q]).result.hit_count()
+    @search = Skill.distinct.notnil().includes(:pc_name, :world, :place, :party, :status).groups(params).aggregations(params).having_order(params).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty? && params["ex_sort"] != "on"
     @skills = @search.result.per(50)
   end
@@ -103,7 +103,7 @@ class SkillsController < ApplicationController
     params_to_form(params_tmp, form_params, column_name: "name", params_name: "ex_name_form", type: "number")
 
     if params["exclude_initial_active"] || params["exclude_initial_passive"]
-      exclude_array = SkillDatum.search(params_tmp[:q]).result.pluck(:skill_id)
+      exclude_array = SkillDatum.ransack(params_tmp[:q]).result.pluck(:skill_id)
       params[:q]["skill_id_not_eq_all"] = exclude_array
 
     end

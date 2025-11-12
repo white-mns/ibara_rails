@@ -8,8 +8,8 @@ class AdditionsController < ApplicationController
     placeholder_set
     param_set
 
-    @count  = Addition.notnil().includes(:pc_name, :world, :requester, :party, [item: [:kind, :effect_1, :effect_2, :effect_3]]).search(params[:q]).result.hit_count()
-    @search = Addition.notnil().includes(:pc_name, :world, :requester, :party, [item: [:kind, :effect_1, :effect_2, :effect_3]]).page(params[:page]).search(params[:q])
+    @count  = Addition.notnil().includes(:pc_name, :world, :requester, :party, [item: [:kind, :effect_1, :effect_2, :effect_3]]).ransack(params[:q]).result.hit_count()
+    @search = Addition.notnil().includes(:pc_name, :world, :requester, :party, [item: [:kind, :effect_1, :effect_2, :effect_3]]).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @additions = @search.result.per(50)
   end

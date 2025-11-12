@@ -8,8 +8,8 @@ class DropItemsController < ApplicationController
     placeholder_set
     param_set
 
-    @count  = DropItem.notnil().includes(:pc_name, :world, :place, :party, item: [:world, :kind, :effect_1, :effect_2, :effect_3]).search(params[:q]).result.hit_count()
-    @search = DropItem.notnil().includes(:pc_name, :world, :place, :party, item: [:world, :kind, :effect_1, :effect_2, :effect_3]).page(params[:page]).search(params[:q])
+    @count  = DropItem.notnil().includes(:pc_name, :world, :place, :party, item: [:world, :kind, :effect_1, :effect_2, :effect_3]).ransack(params[:q]).result.hit_count()
+    @search = DropItem.notnil().includes(:pc_name, :world, :place, :party, item: [:world, :kind, :effect_1, :effect_2, :effect_3]).page(params[:page]).ransack(params[:q])
     if @search.sorts.empty? then
       @search.sorts = params["is_form"] ? "id asc" : "plus desc"
     end

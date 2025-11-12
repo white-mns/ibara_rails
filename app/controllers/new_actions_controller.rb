@@ -9,8 +9,8 @@ class NewActionsController < ApplicationController
     skill_data_set
     param_set
 
-    @count  = NewAction.notnil().includes(:skill, :fuka).search(params[:q]).result.hit_count()
-    @search = NewAction.notnil().includes(:skill, :fuka).page(params[:page]).search(params[:q])
+    @count  = NewAction.notnil().includes(:skill, :fuka).ransack(params[:q]).result.hit_count()
+    @search = NewAction.notnil().includes(:skill, :fuka).page(params[:page]).ransack(params[:q])
     @search.sorts = "id asc" if @search.sorts.empty?
     @new_actions = @search.result.per(50)
   end
