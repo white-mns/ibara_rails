@@ -10,11 +10,11 @@
 # 動作環境
 以下の環境での動作を確認しています  
   
-OS:CentOS Linux release 8.2.2004  
-DB:MySQL 8.0.21  
-Ruby:2.7.1  
+OS:Rocky Linux release 10.0  
+DB:MySQL 8.4.4  
+Ruby:3.3.9  
 Rails:6.x  
-gcc:8.3.1
+gcc:14.2.1  
 
 ## 使い方
 ・Railsの使い方を調べてなんやかんやして自分のRailsアプリが動くようにします。  
