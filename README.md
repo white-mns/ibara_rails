@@ -1,5 +1,5 @@
 # 荊街データ小屋　表示用Railsアプリ
-荊街データ小屋は騒乱イバラシティを解析して得られるデータを扱った情報サイトです。  
+荊街データ小屋は『騒乱イバラシティ』を解析して得られるデータを扱った情報サイトです。  
 このプログラムは荊街データ小屋で実際に使用している表示用のRailsアプリです。  
 データ小屋の解析部分については[別リポジトリ](https://github.com/white-mns/ibara_parse)を参照ください。
 
@@ -31,6 +31,7 @@ gcc:14.2.1
  
     bundle exec rake db:create
     bundle exec rake db:migrate
+    bundle exec rails dartsass:build
     ./unicorn start
     
 他の方法でRailsが動かせるならUnicornである必要はありません。  
