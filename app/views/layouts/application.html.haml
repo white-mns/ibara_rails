@@ -18,12 +18,12 @@
     %nav.navbar.navbar-expand-md.fixed-top.navbar-light.bg-light.navbar-custom.p-0
       .container
         = link_to "荊街テストプレイ データ小屋", root_path, :class => "navbar-brand"
-        %button.navbar-toggler{type: "button", data: {toggle: "collapse", target: "#navbarResponsive"}, area: {controls: "navbarResponsive", expanded: "false", label: "Toggle navigation"}}
+        %button.navbar-toggler{type: "button", data: {bs: {toggle: "collapse", target: "#navbarNavDropdown"}}, aria: {controls: "navbarNavDropdown", expanded: "false", label: "Toggle navigation"}}
           %span.navbar-toggler-icon
-        .collapse.navbar-collapse#navbarResponsive
+        .collapse.navbar-collapse#navbarNavDropdown
           %ul.navbar-nav
             %li.nav-item.dropdown
-              %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
+              %a.nav-link.dropdown-toggle#navbarDropdownMenuLink{ data: {bs: {:toggle =>"dropdown"}}, :href => "#", role: "button", aria: {expanded: "false"}}
                 個人
                 %span.caret
               .dropdown-menu
@@ -43,7 +43,7 @@
                 = link_to "スキル研究一覧", studies_path, class: "dropdown-item"
                 = link_to ">　スキル研究ランキング", studies_path + "?group_skill=on&ex_sort=on", class: "dropdown-item"
             %li.nav-item.dropdown
-              %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
+              %a.nav-link.dropdown-toggle#navbarDropdownMenuLink{ data: {bs: {:toggle =>"dropdown"}}, :href => "#", role: "button", aria: {expanded: "false"}}
                 行動
                 %span.caret
               .dropdown-menu
@@ -55,7 +55,7 @@
                 = link_to "次回予告NPC戦一覧", next_battle_infos_path, class: "dropdown-item"
                 = link_to "次回予告対人戦一覧", next_duel_infos_path, class: "dropdown-item"
             %li.nav-item.dropdown
-              %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
+              %a.nav-link.dropdown-toggle#navbarDropdownMenuLink{ data: {bs: {:toggle =>"dropdown"}}, :href => "#", role: "button", aria: {expanded: "false"}}
                 戦闘
                 %span.caret
               .dropdown-menu
@@ -74,13 +74,13 @@
                 .dropdown-item 戦闘ランキング（PT合計）
                 = link_to ">　ふふぁさーPTランキング", battle_ranking_pt_totals_path + "?damage_type_dodge=on&show_target_pt=1&target_pc=on&show_dodge=1&sort_total_dodge=on&ex_sort=on", class: "dropdown-item"
             %li.nav-item.dropdown
-              %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
+              %a.nav-link.dropdown-toggle#navbarDropdownMenuLink{ data: {bs: {:toggle =>"dropdown"}}, :href => "#", role: "button", aria: {expanded: "false"}}
                 グラフ
                 %span.caret
               .dropdown-menu
                 = link_to "所属世界グラフ", world_graphs_path, class: "dropdown-item"
             %li.nav-item.dropdown
-              %a.nav-link.dropdown-toggle#themes{ :data => {:toggle =>"dropdown"}, :href => "#"}
+              %a.nav-link.dropdown-toggle#navbarDropdownMenuLink{ data: {bs: {:toggle =>"dropdown"}}, :href => "#", role: "button", aria: {expanded: "false"}}
                 新出
                 %span.caret
               .dropdown-menu
